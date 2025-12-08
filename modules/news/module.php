@@ -22,7 +22,8 @@
 			global $db,$cfg;
 			$this->db=$db;
 			$this->cfg=$cfg;
-			$this->uid=$_SESSION['uid'];
+            if (!empty($_SESSION['uid']))
+                $this->uid=$_SESSION['uid'];
 			//$this->db->debug=true;		
 		}
 		

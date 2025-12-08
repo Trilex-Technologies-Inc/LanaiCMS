@@ -43,8 +43,7 @@
 	define("_NEWS_READ_TOTAL","reads");
 
 	define("_POST_COMMENT","Post Comment");
-	define("_POST_COMMENT","Post Comment");
-	define("_NAME","Name");
+
 	define("_EMAIL","E-mail");
 	define("_COMMENT_INTR","Comment");
 	define("_NWS_POST_COMMENT","Post comment");

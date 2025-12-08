@@ -10,7 +10,7 @@ $rs = $objbanner->Load("banId=" . $_REQUEST['id']);
 if (!$rs) {
     $sys_lanai->getErrorBox("Data not found!");
 } else {
-    if ($_REQUEST['ac'] == "edit") {
+    if (!empty($_REQUEST['ac']) && $_REQUEST['ac'] == "edit") {
 
         $result = $objbanner->saveBanner($_REQUEST);
 

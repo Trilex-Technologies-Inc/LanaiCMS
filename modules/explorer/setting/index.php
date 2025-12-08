@@ -41,8 +41,10 @@
 <th><?=_FILEPERMS; ?></th>
 <th colspan="2">&nbsp;</th>
 </tr>
-<?
 
+
+    <?
+    $dir = isset($_REQUEST['dir']) ? $_REQUEST['dir'] : '';
     /* load dir */
     $dirarr=$objExpl->loadDir($vardir);
     for ($i=0;$i<count($dirarr);$i++){
@@ -52,7 +54,7 @@
         if ($dirarr[$i]['name']==".") {
             $linkpath="";
         } else if ($dirarr[$i]['name']=="..") {
-            $spath=split("/",$_REQUEST['dir']);
+            $spath=split("/",$dir);
                 for ($j=0;$j<(count($spath)-1);$j++){
                    $linkpath.=$spath[$j]."/";
                 }
@@ -81,7 +83,7 @@
      <td><?=$objExpl->getMimeIcon($vardir.$filearr[$i]['name'],0); ?></td>
      <td><?=$filearr[$i]['name']; ?></td>
      <td><?=$filearr[$i]['size']; ?></td>
-     <td align="center"><?=$filearr[$i]['mime']; ?></td>
+     <td align="center"><?=isset($filearr[$i]['mime']) ? $filearr[$i]['mime'] : ''; ?></td>
      <td align="center"><?=$filearr[$i]['perms']; ?></td>
      <td><a href="modules/explorer/download.php?f=<?=$path.$filearr[$i]['name'];?>"><img src="modules/explorer/images/db_update.png" border="0" alt="<?=_SAVE; ?>"/></td>
      <td><a href="javascript:deletex('<?=$filearr[$i]['name'];?>')"><img src="modules/explorer/images/cnrdelete-all.png" border="0" alt="<?=_DELETE; ?>"/></a></td>
@@ -93,7 +95,7 @@
 <script language="JavaScript" type="text/javascript">
     function deletex(f){
         if (confirm("<?=_DELETE_QUESTION; ?>")) {
-            location.href="setting.php?modname=explorer&mf=delete&dir=<?=$_REQUEST['dir']; ?>&f="+f
+            location.href="setting.php?modname=explorer&mf=delete&dir=<?=$dir; ?>&f="+f
         }
     }
 </script>

@@ -30,8 +30,7 @@ define("_RSS_VIEWAS","View type");
 define("_LIST","List"); 
 define("_COLUMN","Column"); 
 define("_HORIZONTAL","Horizontal"); 
-define("_YES","Yes"); 
-define("_NO","No"); 
+
 define("_RSS_ITEMCOUNT","Total Item"); 
 define("_RSS_SHOWDES","Show description");  
 define("_RSS_NUMCOL","Number of Column"); 

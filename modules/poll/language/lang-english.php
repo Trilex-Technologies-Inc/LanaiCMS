@@ -30,8 +30,7 @@ define("_POLL_SEC","Sec.");
 define("_POLL_OPTION","Option"); 
 define("_POLL_TOTAL","Total Vote"); 
 define("_POLL_RESULT","Result!"); 
-define("_POLL_VOTE","Vote!"); 
-define("_POLL_RESULT","Poll Result"); 
+define("_POLL_VOTE","Vote!");
 define("_POLL","Poll");
 
 ?>

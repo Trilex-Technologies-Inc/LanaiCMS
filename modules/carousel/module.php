@@ -137,7 +137,7 @@ class bannerPager extends Pager {
       	?>
            <tr class="dataRow">
            <td class="dataColumn">
-           <input type="checkbox"  name="midId[]" >
+           <input type="checkbox"  name="midId[]" value="<?=$this->rs->fields['banId']; ?>" >
            <input type="hidden" name="banId[]" value="<?=$this->rs->fields['banId']; ?>" >
            </td>
            <td class="dataColumn"><?=$this->rs->fields['banTitle']; ?></td>

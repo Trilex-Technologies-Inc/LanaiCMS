@@ -12,7 +12,7 @@ if (isset($_REQUEST['vertexlogin']) && $_REQUEST['vertexlogin'] == "1") {
         $sys_lanai->goBack(1);
     }
 } else {
-    if ($_SESSION['uid'] <= 0) {
+    if (empty($_SESSION['uid']) || $_SESSION['uid'] <= 0) {
         // show login form
         ?>
         <div class="login-form">

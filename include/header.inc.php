@@ -4,6 +4,12 @@ $timer->start('main');
 
 $modname = isset($_REQUEST['modname']) ? $_REQUEST['modname'] : null;
 
+$description = is_array($obMeta->mtadescription) ? implode(', ', $obMeta->mtadescription) : $obMeta->mtadescription;
+$abstract = is_array($obMeta->mtaabstract) ? implode(', ', $obMeta->mtaabstract) : $obMeta->mtaabstract;
+$author = is_array($obMeta->mtaauthor) ? implode(', ', $obMeta->mtaauthor) : $obMeta->mtaauthor;
+$distribution = is_array($obMeta->mtadistribution) ? implode(', ', $obMeta->mtadistribution) : $obMeta->mtadistribution;
+$keywords = is_array($obMeta->mtakeywords) ? implode(', ', $obMeta->mtakeywords) : $obMeta->mtakeywords;
+
 $sys_lanai->loadAjaxFunction($modname);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -12,11 +18,11 @@ $sys_lanai->loadAjaxFunction($modname);
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=<?= _CHARSET; ?>" />
     <meta http-equiv="expires" content="0">
-    <meta name="keywords" content="<?= $obMeta->mtakeywords; ?>" />
-    <meta name="description" content="<?= $obMeta->mtadescription; ?>" />
-    <meta name="abstract" content="<?= $obMeta->mtaabstract; ?>" />
-    <meta name="author" content="<?= $obMeta->mtaauthor; ?>">
-    <meta name="distribution" content="<?= $obMeta->mtadistribution; ?>">
+    <meta name="description" content="<?= $description ?>" />
+    <meta name="abstract" content="<?= $abstract ?>" />
+    <meta name="author" content="<?= $author ?>" />
+    <meta name="distribution" content="<?= $distribution ?>" />
+    <meta name="keywords" content="<?= $keywords ?>" />
     <meta name="copyright" content="Copyright 2007 redline software">
     <meta name="generator" content="Lanai Core - Copyright 2006 Lanai Core Content Management Framework.  All rights reserved." />
     <meta name="robots" content="FOLLOW,INDEX">

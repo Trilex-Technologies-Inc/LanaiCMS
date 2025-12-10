@@ -806,7 +806,7 @@ dbexecute("Update Block Data",$sql);
 					(13, 0, 'Statistic', NULL, NULL, 0, 27, 'm', 'y', 11),
 					(4, 0, 'Contact', NULL, NULL, 0, 2, 'm', 'y', 12),	
 					(6, 0, 'Site Map', NULL, NULL, 0, 11, 'm', 'y', 13),					
-					(7, 0, 'Login', '".$_SESSION['cfg_url']."/login/', NULL, 0, 0, 'l', 'y', 14)					
+					(7, 0, 'Login', 'module.php?modname=member&mf=memloginform', NULL, 0, 0, 'l', 'y', 14)					
             ";
     dbexecute("Update Menu Data",$sql);
 ?>

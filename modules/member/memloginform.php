@@ -13,7 +13,7 @@ $mem_lanai = new User();
 
 <div class="card shadow-sm border-0 mt-3  m-auto" style="width: 330px">
   <div class="card-body">
-    <?php if ($_SESSION['uid'] > 0): ?>
+    <?php if (!empty($_SESSION['uid']) && $_SESSION['uid'] > 0): ?>
       <div class="d-flex align-items-center mb-3">
         <?php if ($mem_lanai->isUserImageExist($_SESSION['uid'])): ?>
           <img src="<?= "datacenter/uimage/u" . $_SESSION['uid'] . ".gif"; ?>" class="rounded-circle me-3" width="96" height="96" alt="User">

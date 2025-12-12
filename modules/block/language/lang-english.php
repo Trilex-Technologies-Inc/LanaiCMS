@@ -37,7 +37,6 @@
 	define("_BLOCK_FILE","Browse ");
 	define("_BLOCK_EXTRACTED_PATH","Exist Block Path ");
 	define("_BLOCK_PATH_NOT_EXIST","Block path dose not exist! ");
-	define("_SAVEWEIGHT","Save Weight Value");
-	define("_WEIGHT","Weight");
+
 
 ?>

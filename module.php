@@ -9,7 +9,11 @@ $smarty->assign ("siteName", $cfg['title']);
 $smarty->assign("getFooter", $theme->getFooter());
 $smarty->assign("setBlockLeft", $theme->setBlock("l"));
 $smarty->assign("setBlockRight", $theme->setBlock("r"));
-$smarty->assign("setModule", $theme->getModule($_REQUEST['modname'], $_REQUEST['mf']));
+$modname = isset($_REQUEST['modname']) ? $_REQUEST['modname'] : '';
+$mf      = isset($_REQUEST['mf']) ? $_REQUEST['mf'] : '';
+
+$smarty->assign("setModule", $theme->getModule($modname, $mf));
+
 $smarty->assign("nameModule", $_REQUEST['modname']);
 $smarty->assign("mf", isset($_REQUEST['mf']) ? $_REQUEST['mf'] : null);
 

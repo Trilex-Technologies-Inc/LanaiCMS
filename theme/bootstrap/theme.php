@@ -12,7 +12,9 @@
   	}
   	
   	function getLogoHeader() {
-	
+        if (!isset($s)) {
+            $s = '';
+        }
 		return $s;
   	}
   	

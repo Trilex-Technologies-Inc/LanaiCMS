@@ -18,8 +18,6 @@
 /*                                                                        */
 /**************************************************************************/
     define("_SETUP_CHARSET","UTF-8");
-	define("_CHANGE_PASSWORD","Change Password");
-	define("_CHANGE_PASSWORD_MESSAGE","Your new password is ");
 	define("_USER_SIGNUP_INSTRUCTION","To signup new member, please complete the following form.");
 	define("_USER_FNAME","First Name");  
 	define("_USER_LNAME","Last Name");  
@@ -67,7 +65,6 @@
 	define("_MEMBER_ACTIVATE_COMPLETE","Your account has been activated, thank you. Login to the system <a href=\"module.php?modname=member&mf=memloginform\">click here</a>.");
 	define("_MEMBER_CANNOT_ACTIVATE","Your account cannot activate, please check your activation information.");
 	define("_MEMBER_CAPTEXT","Verification code");
-	define("_RESET","Cancel");
 	define("_SIGNIN","Sign In");
 	define("_MEMBER_LOGIN","Sign In");
 	define("_USERNAME","Username");  

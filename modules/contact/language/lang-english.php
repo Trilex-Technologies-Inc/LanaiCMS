@@ -26,7 +26,6 @@
 	define("_CONTACT_TITLE","Subject");  
 	define("_CONTACT_MESSAGE","Message");  
    	define("_SEND","Send!");
-	define("_RESET","Reset");
 	define("_USER_FNAME","First Name"); 
 	define("_USER_LNAME","Last Name");
 	define("_USER_POSITION","Position");

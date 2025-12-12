@@ -146,7 +146,7 @@
         <h1 class="display-5 fw-bold">The Future of Technology</h1>
         <div class="article-meta mt-2">
           <i class="fas fa-calendar-alt"></i> October 25, 2025 &nbsp;|&nbsp;
-          <i class="fas fa-user"></i> By Admin &nbsp;|&nbsp;{$modname}
+          <i class="fas fa-user"></i> By Admin &nbsp;|&nbsp;{$nameModule}
           <i class="fas fa-folder"></i> Tech
         </div>
       </div>

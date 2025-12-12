@@ -5,7 +5,7 @@ if (!eregi("setting.php", $_SERVER['PHP_SELF'])) {
 }
 
 
-if ($_REQUEST['ac']=="add") {
+if (!empty($_REQUEST['ac']) && $_REQUEST['ac']=="add") {
 	
 $objbanner=new banner();
 $objbanner->banTitle=$_REQUEST['banTitle'];

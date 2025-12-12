@@ -22,6 +22,7 @@
 
 
 <script src="include/tinymce/js/tinymce/tinymce.min.js"></script>
+<script>
 tinymce.init({
   selector: 'textarea.tinymce',
    height: 500,

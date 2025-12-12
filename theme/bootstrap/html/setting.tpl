@@ -281,6 +281,12 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
               <li><a class="dropdown-item" href="setting.php?modname=setting"><i class="bi bi-gear me-2"></i>Settings</a></li>
               <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item" href="index.php" target="_blank">
+                  <i class="bi bi-house me-2"></i>Home
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="module.php?modname=member&mf=memlogout"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
             </ul>
           </div>

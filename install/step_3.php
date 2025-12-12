@@ -743,7 +743,7 @@ dbexecute("Update Block Data",$sql);
     <li>
 <?
     $sql="INSERT INTO ".$_SESSION['tablepre']."contact 
-    				VALUES	(1, 'Anuchit', 'Chalothorn', 'Project Manager', 'RedLine Software', '107 Moo 10 T.Suranaree', 'A.Muang', 'Nakhon Ratchasima', 'TH', '30000', '+66 44 214 187', '+66 44 214 187', '+ 66 898 433 717', 'anuchit@redlinesoft.net', 'http://www,redlinesoft.net', 'y');";
+    				VALUES	(1, 'Anuchit', 'Chalothorn', 'Project Manager', ' Software', '107 Moo 10 T.Suranaree', 'A.Muang', 'Nakhon Ratchasima', 'TH', '30000', '+66 44 214 187', '+66 44 214 187', '+ 66 898 433 717', 'anuchit@laniacms.com', 'http://www,lanaicms.com/', 'y');";
     dbexecute("Update Contact Sample Data",$sql);
 ?>
 	<li>
@@ -806,13 +806,13 @@ dbexecute("Update Block Data",$sql);
 					(13, 0, 'Statistic', NULL, NULL, 0, 27, 'm', 'y', 11),
 					(4, 0, 'Contact', NULL, NULL, 0, 2, 'm', 'y', 12),	
 					(6, 0, 'Site Map', NULL, NULL, 0, 11, 'm', 'y', 13),					
-					(7, 0, 'Login', '".$_SESSION['cfg_url']."/login/', NULL, 0, 0, 'l', 'y', 14)					
+					(7, 0, 'Login', 'module.php?modname=member&mf=memloginform', NULL, 0, 0, 'l', 'y', 14)					
             ";
     dbexecute("Update Menu Data",$sql);
 ?>
  <li>
 <?
-    $sql="INSERT INTO ".$_SESSION['tablepre']."meta VALUES (1, 'redlinesoft, opensharepoint, opensource, lanai, lanai-cms', 'This is my site.', 'This is my site.', 'lanaicms@redlinesoft.net', 'Global', 'Copyright (c) 2007 La-Nai Content Managment System.')";
+    $sql="INSERT INTO ".$_SESSION['tablepre']."meta VALUES (1, 'lanaicms, opensharepoint, opensource, lanai, lanai-cms', 'This is my site.', 'This is my site.', 'lanaicms@lanaicms.com/', 'Global', 'Copyright (c) 2007 to 2025')";
     dbexecute("Update Meta data",$sql);
 ?>
 </ul>

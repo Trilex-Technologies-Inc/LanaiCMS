@@ -24,7 +24,6 @@
 	define("_REQUIRE_FIELDS_BACK","Require fields <a href=\"javascript:history.back();\">back</a>");
 	define("_REQUIRE_LOGIN","Please login befor access this page.");
 	define("_WRONG_IMAGE_TYPE","Wrong image type <a href=\"javascript:history.back();\">back</a>");
-	define("_CANNOT_UPLOAD_FILE","Cannot upload file! <a href=\"javascript:history.back();\">back</a>");
 	define("_PASSWORD_NOT_EQUAL_BACK","Password not equal <a href=\"javascript:history.back();\">back</a>");
 	define("_CANNOT_UPLOAD_FILE","Cannot upload file!");
 	define("_NO_MOD_FILE","Module file not found!");

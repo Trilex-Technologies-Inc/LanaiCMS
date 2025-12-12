@@ -17,19 +17,15 @@
 /*    Translator : Mr.Wutthipron Eamjikuson <webmaster@siamhostdd.com>    */
 /*                                                                        */
 /**************************************************************************/
-    define("_CHARSET","UTF-8");
 	define("_BACKUP_SETTING","Back up Setting");
 	define("_BACKUP_INSTRUCTION","Click 'New' to create new backup, click 'Back' go to site setting menu."); 
-	define("_BACK","Back");    
 	define("_FILENAME","Filename");
 	define("_SIZE","Size");
 	define("_MODIFIED","Modified"); 
 	define("_DOWNLOAD","Download");
 	define("_RESTORE","Restore");
 	define("_BACKUP_CHOOSE_TABLE_SETTING","Choose Table to Back up.");
-	define("_BACKUP_CHOOSE_TABLE_INSTRUCTION","Click 'Save' to create new back up table , click 'Back' go to site setting menu.");  
-	define("_SAVE","Save");    
-	define("_DELETE","Delete"); 
+	define("_BACKUP_CHOOSE_TABLE_INSTRUCTION","Click 'Save' to create new back up table , click 'Back' go to site setting menu.");
 	define("_BACKUP_SCHEMA","Backup schema");
 	define("_BACKUP_VALUE","Backup value");
 	define("_RESTORE_QUESTION","Do you want restore your data ?");

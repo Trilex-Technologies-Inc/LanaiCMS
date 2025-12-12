@@ -1,7 +1,7 @@
 <?
 include_once("include/lanai/class.system.php");
 $sys_lanai = new Systems();
-if ($_REQUEST['vertexlogin'] == "1") {
+if (isset($_REQUEST['vertexlogin']) && $_REQUEST['vertexlogin'] == "1") {
     // do login script
     $uxid = $sys_lanai->getUserAuthentication($_REQUEST['txtLogin'], $_REQUEST['txtPassword']);
     if ($uxid > 0) {
@@ -12,7 +12,7 @@ if ($_REQUEST['vertexlogin'] == "1") {
         $sys_lanai->goBack(1);
     }
 } else {
-    if ($_SESSION['uid'] <= 0) {
+    if (empty($_SESSION['uid']) || $_SESSION['uid'] <= 0) {
         // show login form
         ?>
         <div class="login-form">

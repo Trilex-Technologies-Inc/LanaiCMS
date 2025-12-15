@@ -9,17 +9,30 @@ include_once($modfunction);
 
 // get user info
 $mem_lanai = new User();
-$rslogin = $mem_lanai->getUserLogin($_REQUEST['userLogin']);
+
+// use isset() to avoid undefined index
+$userLogin = isset($_REQUEST['userLogin']) ? $_REQUEST['userLogin'] : '';
+$ac = isset($_REQUEST['ac']) ? $_REQUEST['ac'] : '';
+
+$rslogin = $mem_lanai->getUserLogin($userLogin);
 
 if ($rslogin->recordcount() > 0) {
     $sys_lanai->getErrorBox(_LOGIN_EXIST . " <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
 } else {
-    if ($_REQUEST['ac'] == "lostpass") {
-        if (empty($_REQUEST['userFname']) || empty($_REQUEST['userLname']) || empty($_REQUEST['userEmail']) || empty($_REQUEST['userLogin']) || empty($_REQUEST['userPassword1']) || empty($_REQUEST['userPassword2'])) {
+    if ($ac == "lostpass") {
+        // use isset for all fields
+        $userFname = isset($_REQUEST['userFname']) ? $_REQUEST['userFname'] : '';
+        $userLname = isset($_REQUEST['userLname']) ? $_REQUEST['userLname'] : '';
+        $userEmail = isset($_REQUEST['userEmail']) ? $_REQUEST['userEmail'] : '';
+        $userPassword1 = isset($_REQUEST['userPassword1']) ? $_REQUEST['userPassword1'] : '';
+        $userPassword2 = isset($_REQUEST['userPassword2']) ? $_REQUEST['userPassword2'] : '';
+        $captext = isset($_REQUEST['captext']) ? $_REQUEST['captext'] : '';
+
+        if (empty($userFname) || empty($userLname) || empty($userEmail) || empty($userLogin) || empty($userPassword1) || empty($userPassword2)) {
             $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
         } else {
-            if ($_REQUEST['userPassword1'] == $_REQUEST['userPassword2'] && $_REQUEST['captext'] == $_SESSION['captcha']) {
-                $rs = $mem_lanai->setUserRegister($_REQUEST['userFname'], $_REQUEST['userLname'], $_REQUEST['userEmail'], $_REQUEST['userLogin'], $_REQUEST['userPassword1']);
+            if ($userPassword1 == $userPassword2 && $captext == $_SESSION['captcha']) {
+                $rs = $mem_lanai->setUserRegister($userFname, $userLname, $userEmail, $userLogin, $userPassword1);
                 if (empty($rs)) {
                     $sys_lanai->getErrorBox(_CANNOT_REGISTER . " <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
                 } else {

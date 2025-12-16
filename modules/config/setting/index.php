@@ -10,6 +10,11 @@ $objMeta = new Meta();
 $objMeta->_table = $cfg['tablepre'] . "meta";
 $objMeta->mtaId=1;
 $objMeta->Load("mtaId=1");
+if (!isset($cfg['title'])) {
+    $cfg_title = '';
+}
+else
+    $cfg_title= $cfg['title'];
 
 ?>
 
@@ -39,6 +44,18 @@ $objMeta->Load("mtaId=1");
             $varno = ($status == "no") ? "selected" : "";
             $varyes = ($status == "yes") ? "selected" : "";
             ?>
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">
+                    <?php echo defined('_CFG_SITE_TITLE') ? _CFG_SITE_TITLE : 'Site Title'; ?>
+                </label>
+                <div class="col-sm-9">
+                    <input type="text"
+                           name="cfg_title"
+                           maxlength="255"
+                           class="form-control"
+                           value="<?php echo htmlspecialchars($cfg_title, ENT_QUOTES, 'UTF-8'); ?>">
+                </div>
+            </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-3 col-form-label"><?=_CFG_OFFLINE; ?></label>

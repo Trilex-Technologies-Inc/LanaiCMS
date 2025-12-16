@@ -23,8 +23,10 @@ if (!$rs) {
         'mtadistribution' => $_POST['mtaDistribution'],
         'mtacopyright'    => $_POST['mtaCopyright']
     ]);
-
-    if (!$result) $sys_lanai->getErrorBox($objConfig->ErrorMsg()); else $sys_lanai->go2Page("setting.php?modname=config");
+    $objStatus->setUpdateStatus($_REQUEST['cfgStatus']);
+    $objStatus->setSiteTitle($_REQUEST['cfg_title']);
+    sleep(2);
+    if (!$result) $sys_lanai->getErrorBox($objConfig->ErrorMsg()); else $sys_lanai->go2Page("setting.php?modname=config&mf=confirm");
 }
 
 ?>

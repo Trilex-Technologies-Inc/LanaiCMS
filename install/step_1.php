@@ -50,25 +50,33 @@
     </li>
 </ul>
 
-<div class="d-flex justify-content-between mt-4">
-    <!-- Back Button -->
-    <form method="get" action="<?= $_SERVER['PHP_SELF']; ?>">
-        <input type="hidden" name="step" value="b">
-        <button type="submit" class="btn btn-secondary">
-            <i class="bi bi-arrow-left"></i> <?= _SETUP_BACK; ?>
-        </button>
-    </form>
+<div class="d-flex justify-content-between align-items-center mt-4">
+    <div class="d-flex gap-2">
+        <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <input type="hidden" name="step" value="b">
+            <button type="submit" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> <?php echo _SETUP_BACK; ?>
+            </button>
+        </form>
 
-    <!-- Next Button -->
-    <form method="get" action="<?= $_SERVER['PHP_SELF']; ?>">
+        <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <input type="hidden" name="step" value="<?php echo isset($_GET['step']) ? $_GET['step'] : '1'; ?>">
+            <button type="submit" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-clockwise"></i>
+                <?php echo defined('_SETUP_REFRESH') ? _SETUP_REFRESH : 'Refresh'; ?>
+            </button>
+        </form>
+    </div>
+
+    <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <input type="hidden" name="step" value="2">
         <?php if ($d1 && $d2 && $d3 && $d4): ?>
             <button type="submit" class="btn btn-primary">
-                <?= _SETUP_CONFIG; ?> <i class="bi bi-arrow-right"></i>
+                <?php echo _SETUP_CONFIG; ?> <i class="bi bi-arrow-right"></i>
             </button>
         <?php else: ?>
             <button type="button" class="btn btn-outline-secondary" disabled>
-                <?= _SETUP_CONFIG; ?> <i class="bi bi-arrow-right"></i>
+                <?php echo _SETUP_CONFIG; ?> <i class="bi bi-arrow-right"></i>
             </button>
         <?php endif; ?>
     </form>

@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_id() == '') {
+    session_start();
+}
 
 if (!empty($_REQUEST['set'])) {
     $_SESSION['lang'] = $_REQUEST['set'];

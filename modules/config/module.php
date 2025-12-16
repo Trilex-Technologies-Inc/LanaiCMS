@@ -60,9 +60,30 @@ class SysConfig {
 			}
 		}
 	}
-	
-	function setUpdateStatus($tname){
-		$lines = file('config.inc.php');			
+    function _get_title_line(){
+        $lines = file('config.inc.php');
+        foreach ($lines as $i => $line) {
+            if (strpos($line, '$cfg_title') !== false) {
+                return $i;
+            }
+        }
+        return false;
+    }
+    function setSiteTitle($title){
+        $lines = file('config.inc.php');
+        $lineNumber = $this->_get_title_line();
+
+        $lines[$lineNumber] = "\t$"."cfg_title=\"".$title."\";\n";
+
+        $handle = fopen('config.inc.php', "w+");
+        foreach ($lines as $line) {
+            fwrite($handle, $line);
+        }
+        fclose($handle);
+    }
+
+    function setUpdateStatus($tname){
+		$lines = file('config.inc.php');
 		$lines[$this->_get_line()]="\t$"."cfg_off=\"".$tname."\"".";\n";
 		$handle = fopen('config.inc.php', "w+");
 		foreach ($lines as $i => $line) {

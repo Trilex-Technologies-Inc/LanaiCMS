@@ -100,7 +100,7 @@ function getLanguage() {
                 <?php
                     $pwdarr = array_merge(range('a','z'), range('A','Z'), range('0','9'));
                     $pwsstr = '';
-                    for ($i=0; $i<6; $i++) { $pwsstr .= $pwdarr[rand(0,61)]; }
+                    for ($i=0; $i<16; $i++) { $pwsstr .= $pwdarr[rand(0,61)]; }
                 ?>
                 <input type="text" name="password" class="form-control" value="<?=$pwsstr; ?>">
             </div>

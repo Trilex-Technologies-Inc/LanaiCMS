@@ -47,23 +47,60 @@ class Content
 
     function setEditContent($conId, $conTitle, $conBody1, $conBody2)
     {
-        $sql = "UPDATE " . $this->cfg['tablepre'] . "content 
-					SET userId=" . $this->uid . ",conTitle='" . $conTitle . "',conBody1='" . $conBody1 . "',
-						conBody2='" . $conBody2 . "',conModified=NOW()
-					WHERE conId=$conId";
-        $rs = $this->db->execute($sql);
-        return $rs;
+        $conId = (int)$conId;
+        $uid = (int)$this->uid;
+
+        $conTitle = $this->db->qstr($conTitle);
+        $conBody1 = $this->db->qstr($conBody1);
+        $conBody2 = $this->db->qstr($conBody2);
+
+        $sql = "
+        UPDATE {$this->cfg['tablepre']}content
+        SET
+            userId      = $uid,
+            conTitle    = $conTitle,
+            conBody1    = $conBody1,
+            conBody2    = $conBody2,
+            conModified = NOW()
+        WHERE conId = $conId
+    ";
+
+        $rs = $this->db->Execute($sql);
+
+        if (!$rs) {
+            echo 'DB Error: ' . $this->db->ErrorMsg();
+            return false;
+        }
+
+        return true;
     }
+
 
     //conId  userId  conTitle  conBody1  conBody2  conModified  conActive
     function setNewContent($conTitle, $conBody1, $conBody2)
     {
-        $sql = "INSERT INTO " . $this->cfg['tablepre'] . "content 
-					(userId,conTitle,conBody1,conBody2,conModified,conActive) 
-					VALUES (" . $this->uid . ",'" . $conTitle . "','" . $conBody1 . "','" . $conBody2 . "',NOW(),'y')";
-        $rs = $this->db->execute($sql);
-        return $rs;
+        $uid = (int)$this->uid;
+
+        $conTitle = $this->db->qstr($conTitle);
+        $conBody1 = $this->db->qstr($conBody1);
+        $conBody2 = $this->db->qstr($conBody2);
+
+        $sql = "
+        INSERT INTO {$this->cfg['tablepre']}content
+        (userId, conTitle, conBody1, conBody2, conModified, conActive)
+        VALUES ($uid, $conTitle, $conBody1, $conBody2, NOW(), 'y')
+    ";
+
+        $rs = $this->db->Execute($sql);
+
+        if (!$rs) {
+            echo 'DB Error: ' . $this->db->ErrorMsg();
+            return false;
+        }
+
+        return true;
     }
+
 
     function setDeleteContent($mid)
     {

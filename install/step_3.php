@@ -32,7 +32,7 @@
     $db->query($charset);*/
 
     function dbexecute($title,$sql) {
-        global $db;        
+        global $db;
         $rs=$db->execute($sql);
         //$db->debug=true;
         if ($rs) {
@@ -48,29 +48,41 @@
 <ul>
     <li>
 <?
-    $sql="CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."user` (
-            `userId` int(11) NOT NULL auto_increment,
-            `userFname` varchar(40) default NULL,
-            `userLname` varchar(40) default NULL,
-            `userAddress1` varchar(80) default NULL,
-            `userAddress2` varchar(80) default NULL,
-            `userCity` varchar(50) default NULL,
-            `userState` varchar(50) default NULL,
-            `cntId` char(2) default 'TH',
-            `userZipcode` varchar(5) default NULL,
-            `userPhone` varchar(11) default NULL,
-            `userFax` varchar(20) default NULL,
-            `userMobile` varchar(20) default NULL,
-            `userEmail` varchar(30) default NULL,
-            `userURL` varchar(80) default NULL,
-            `userLogin` varchar(20) default NULL,
-            `userPassword` varchar(60) default NULL,
-            `userPrivilege` enum('a','m','u') NOT NULL default 'u',
-            `userCreated` datetime default NULL,
-            `userActive` enum('y','n') default 'y',
-            PRIMARY KEY  (`userId`)
-          )";
-    dbexecute("Create Table Users",$sql);
+$sql = "CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."user` (
+    `userId` INT(11) NOT NULL AUTO_INCREMENT,
+
+    `userFname` VARCHAR(100) DEFAULT NULL,
+    `userLname` VARCHAR(100) DEFAULT NULL,
+
+    `userAddress1` VARCHAR(150) DEFAULT NULL,
+    `userAddress2` VARCHAR(150) DEFAULT NULL,
+
+    `userCity` VARCHAR(100) DEFAULT NULL,
+    `userState` VARCHAR(100) DEFAULT NULL,
+
+    `cntId` CHAR(2) DEFAULT 'TH',
+
+    `userZipcode` VARCHAR(15) DEFAULT NULL,
+
+    `userPhone` VARCHAR(20) DEFAULT NULL,
+    `userFax` VARCHAR(20) DEFAULT NULL,
+    `userMobile` VARCHAR(20) DEFAULT NULL,
+
+    `userEmail` VARCHAR(254) DEFAULT NULL,
+    `userURL` VARCHAR(255) DEFAULT NULL,
+
+    `userLogin` VARCHAR(50) DEFAULT NULL,
+    `userPassword` VARCHAR(255) DEFAULT NULL,
+
+    `userPrivilege` ENUM('a','m','u') NOT NULL DEFAULT 'u',
+
+    `userCreated` DATETIME DEFAULT NULL,
+    `userActive` ENUM('y','n') DEFAULT 'y',
+
+    PRIMARY KEY (`userId`)
+)";
+
+dbexecute("Create Table Users",$sql);
 
 ?>
     <li>

@@ -46,11 +46,27 @@ if (isset($_REQUEST['vertexlogin']) && $_REQUEST['vertexlogin'] == "1") {
                 ?>Welcome, <?= $mem->fields['userFname'] . " " . $mem->fields['userLname']; ?>.</span>
         </div>
         <div>
-        <?
+        <?php
         if ($mem_lanai->getUserPrivilege($_SESSION['uid']) == "a") {
-            ?>&nbsp;&nbsp;Now you can <a  class="btn btn-light btn-sm me-2"
-                                          href="<?= "setting.php?modname=setting"; ?>">  <i class="fas fa-cog me-1"></i>setting</a> your site or <a class="btn btn-outline-light btn-sm"
-                                                                                                                                                    href="<?= "module.php?modname=member&mf=memlogout"; ?>"><i class="fas fa-sign-out-alt me-1"></i>Signout</a>.<?
+            ?>
+            &nbsp;&nbsp;Now you can
+            <a class="btn btn-light btn-sm me-2" href="setting.php?modname=setting">
+                <i class="fas fa-cog me-1"></i>Setting
+            </a> your site or
+            <a class="btn btn-outline-light btn-sm" href="module.php?modname=member&mf=memlogout">
+                <i class="fas fa-sign-out-alt me-1"></i>Signout
+            </a>.
+            <?php
+        } else {
+            ?>
+            &nbsp;&nbsp;View your
+            <a class="btn btn-light btn-sm me-2" href="module.php?modname=member&mf=meminfo#">
+                <i class="fas fa-user me-1"></i>Profile
+            </a> or
+            <a class="btn btn-outline-light btn-sm" href="module.php?modname=member&mf=memlogout">
+                <i class="fas fa-sign-out-alt me-1"></i>Logout
+            </a>.
+            <?php
         }
         ?>
 

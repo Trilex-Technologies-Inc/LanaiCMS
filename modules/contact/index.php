@@ -23,24 +23,21 @@ $cnt = new Contact();
             alert('<?=_REQUIRE_FIELDS;?> <?=_CONTACT_MESSAGE;?>');
             return false;
         }
+        if (frmObj.captcha.value.trim() === "") {
+            alert('<?=_REQUIRE_FIELDS;?> <?=_VERIFY;?>');
+            return false;
+        }
         return true;
     }
-    function MM_jumpMenu(targ,selObj,restore){ //v3.0
-        eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
-        if (restore) selObj.selectedIndex=0;
-    }
 </script>
+
 <div class="col-md-8">
     <div class="article-content bg-white p-4 rounded shadow-sm">
         <div class="container my-4">
             <h3 class="mb-3 text-primary"><?= _CONTACT; ?></h3>
             <p class="text-muted"><?= _CONTACT_INSTRUCTION; ?></p>
 
-            <form method="post" action="<?= $_SERVER['PHP_SELF'] ?>" onsubmit="return validate(this)"
-                  class="needs-validation"
-                  novalidate>
-
-
+            <form method="post" action="<?= $_SERVER['PHP_SELF'] ?>" onsubmit="return validate(this)" class="needs-validation" novalidate>
                 <input type="hidden" name="modname" value="<?= $module_name; ?>">
                 <input type="hidden" name="mf" value="send">
                 <input type="hidden" name="cid" value="<?= $_REQUEST['cid']; ?>">
@@ -70,24 +67,30 @@ $cnt = new Contact();
                     <label class="form-label"><?= _CONTACT_MESSAGE; ?> <span class="text-danger">*</span></label>
                     <textarea name="message" rows="5" class="form-control" required></textarea>
                 </div>
-                <!-- Cloudflare Turnstile -->
-                <div class="mb-3">
-                    <div class="cf-turnstile"
-                         data-sitekey="0x4AAAAAACICBBvpGhV3p5ux">
-                    </div>
-                </div>
 
-                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+                <!-- CAPTCHA -->
+                <div class="mb-3">
+                    <label class="form-label"><?= _VERIFY; ?> <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <input type="text" name="captcha" class="form-control" required>
+                        <span class="input-group-text p-0">
+                            <img src="images/captcha.php" alt="captcha"
+                                 onclick="this.src='images/captcha.php?'+Math.random();"
+                                 style="height:38px; cursor:pointer;">
+                        </span>
+                    </div>
+                    <small class="text-muted">Click image to refresh</small>
+                </div>
 
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-primary"><?= _SEND; ?></button>
                     <button type="reset" class="btn btn-secondary"><?= _RESET; ?></button>
                 </div>
-
             </form>
         </div>
     </div>
 </div>
+
 <div class="col-md-4">
     <div class="sidebar">
         <?php
@@ -122,4 +125,3 @@ $cnt = new Contact();
         ?>
     </div>
 </div>
-

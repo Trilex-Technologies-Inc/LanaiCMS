@@ -32,7 +32,10 @@ if (file_exists($configFile)) {
             </p>
         <?php endif; ?>
 
-        <p><?= $title; ?>&nbsp;&nbsp;[<?= $statusLabel; ?>]</p>
+        <p>
+            <?= isset($title) ? $title : ''; ?>
+            &nbsp;&nbsp;[<?= isset($statusLabel) ? $statusLabel : ''; ?>]
+        </p>
 
         <div class="d-flex justify-content-between mt-4">
             <!-- Back Button -->

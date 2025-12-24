@@ -1,7 +1,16 @@
 <?
 include_once('setconfig.inc.php');
 include_once('include/header.inc.php');
-
+include_once("modules/member/module.php");
+$mem_lanai = new User();
+if (empty($_SESSION['uid']) || $_SESSION['uid'] <= 0) {
+    $sys_lanai->go2Page("index.php");
+}else{
+    $mem = $mem_lanai->getUser($_SESSION['uid']);
+    if ($mem_lanai->getUserPrivilege($_SESSION['uid']) != "a")
+        $sys_lanai->go2Page("index.php");
+}
+$mem = $mem_lanai->getUser($_SESSION['uid']);
 $theme = new Theme();
 $smarty->assign("getLogoHeader", $theme->getLogoHeader());
 $smarty->assign("getFooter", $theme->getFooter());

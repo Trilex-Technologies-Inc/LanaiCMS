@@ -85,6 +85,7 @@ class Contact
     {
         $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "contact WHERE conActive='y' ORDER BY conFName ASC";
         $rs = $this->db->execute($sql);
+        $selectedCid = isset($_REQUEST['cid']) ? $_REQUEST['cid'] : 0;
         ?>
         <select
                 name="<?= $name; ?>"
@@ -97,7 +98,7 @@ class Contact
             </option>
             <?php
             while (!$rs->EOF) {
-                $selected = ($_REQUEST['cid'] == $rs->fields['conId']) ? 'selected' : '';
+                $selected = ($selectedCid == $rs->fields['conId']) ? 'selected' : '';
                 ?>
                 <option
                         value="<?= $_SERVER['PHP_SELF'] . "?modname=" . $_REQUEST['modname'] . "&cid=" . $rs->fields['conId']; ?>"

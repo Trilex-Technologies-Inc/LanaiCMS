@@ -44,7 +44,8 @@ $cnt = new Contact();
             <form method="post" action="<?= $_SERVER['PHP_SELF'] ?>" onsubmit="return validate(this)" class="needs-validation" novalidate>
                 <input type="hidden" name="modname" value="<?= $module_name; ?>">
                 <input type="hidden" name="mf" value="send">
-                <input type="hidden" name="cid" value="<?= $_REQUEST['cid']; ?>">
+                <input type="hidden" name="cid" value="<?= isset($_REQUEST['cid']) ? $_REQUEST['cid'] : '' ?>">
+
                 <input type="hidden" name="ac" value="send">
 
                 <div class="mb-3">

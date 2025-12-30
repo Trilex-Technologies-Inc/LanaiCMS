@@ -23,6 +23,7 @@
         $vardir=$cfg['dir'].$sys_lanai->getPath();
         $path="";
     }
+$dir = isset($_REQUEST['dir']) ? $_REQUEST['dir'] : '';
 ?>
 <span class="txtContentTitle"><?=_EXPLORER_SETTING; ?></span><br/><br/>
 <?=_EXPLORER_INSTRUCTION; ?><br/><br/>

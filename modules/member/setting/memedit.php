@@ -35,22 +35,44 @@
 				}
 				
 				// Upload Image
-				if (!empty($_FILES['userAvatar']['name'])) {
-					if (strtolower(substr($_FILES['userAvatar']['name'],strlen($_FILES['userAvatar']['name'])-3,3))!="gif") {
-					    $sys_lanai->getErrorBox(_WRONG_IMAGE_TYPE);
-					} else {
-						// upload file
-						global $cfg_datadir;
-						$uploaddir = $cfg_datadir;
-						$uploadfile = $uploaddir .$sys_lanai->getPath()."uimage".$sys_lanai->getPath(). "u".$member->getUserIdByLogin($_REQUEST['userLogin']).".gif";
-						//echo $uploadfile;
-						if (move_uploaded_file($_FILES['userAvatar']['tmp_name'], $uploadfile)) {
-						    $sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
-						} else {
-						    $sys_lanai->getErrorBox(_CANNOT_UPLOAD_FILE);
-						}
-					}
-				} else {
+            if (!empty($_FILES['userAvatar']['name'])) {
+
+                $tmpFile = $_FILES['userAvatar']['tmp_name'];
+                $imgInfo = getimagesize($tmpFile);
+
+                if ($imgInfo === false) {
+                    $sys_lanai->getErrorBox(_WRONG_IMAGE_TYPE);
+                    exit;
+                }
+
+                $allowedTypes = array(
+                    IMAGETYPE_GIF  => 'gif',
+                    IMAGETYPE_JPEG => 'jpg',
+                    IMAGETYPE_PNG  => 'png'
+                );
+
+                if (!isset($allowedTypes[$imgInfo[2]])) {
+                    $sys_lanai->getErrorBox(_WRONG_IMAGE_TYPE);
+                    exit;
+                }
+
+                $ext = $allowedTypes[$imgInfo[2]];
+
+                global $cfg_datadir;
+                $uploaddir = $cfg_datadir;
+                $uploadfile = $uploaddir
+                    . $sys_lanai->getPath()
+                    . "uimage"
+                    . $sys_lanai->getPath()
+                    . "u" . intval($member->getUserIdByLogin($_REQUEST['userLogin'])) . "." . $ext;
+
+                if (move_uploaded_file($tmpFile, $uploadfile)) {
+                    $sys_lanai->go2Page($_SERVER['PHP_SELF'] . "?modname=" . $module_name);
+                } else {
+                    $sys_lanai->getErrorBox(_CANNOT_UPLOAD_FILE);
+                }
+            }
+            else {
 					$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
 				}
 			break;
@@ -105,26 +127,49 @@
 						}
 					}
 				}
-				
-				if (!empty($_FILES['userAvatar']['name'])) {
-					if (strtolower(substr($_FILES['userAvatar']['name'],strlen($_FILES['userAvatar']['name'])-3,3))!="gif") {
-					    $sys_lanai->getErrorBox(_WRONG_IMAGE_TYPE);
-					} else {
-						// upload file
-						global $cfg_datadir;
-						$uploaddir = $cfg_datadir;
-						$uploadfile = $uploaddir .$sys_lanai->getPath()."uimage".$sys_lanai->getPath(). "u".$_REQUEST['mid'].".gif";
-						//echo $uploadfile;
-						if (move_uploaded_file($_FILES['userAvatar']['tmp_name'], $uploadfile)) {
-						   $sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
-						} else {
-						    $sys_lanai->getErrorBox(_CANNOT_UPLOAD_FILE);
-						}
-					}
-				} else {
-					$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
-				}
-			break;
+
+            if (!empty($_FILES['userAvatar']['name'])) {
+
+                $tmpFile = $_FILES['userAvatar']['tmp_name'];
+                $imgInfo = getimagesize($tmpFile);
+
+                if ($imgInfo === false) {
+                    $sys_lanai->getErrorBox(_WRONG_IMAGE_TYPE);
+                    exit;
+                }
+
+                $allowedTypes = array(
+                    IMAGETYPE_GIF  => 'gif',
+                    IMAGETYPE_JPEG => 'jpg',
+                    IMAGETYPE_PNG  => 'png'
+                );
+
+                if (!isset($allowedTypes[$imgInfo[2]])) {
+                    $sys_lanai->getErrorBox(_WRONG_IMAGE_TYPE);
+                    exit;
+                }
+
+                $ext = $allowedTypes[$imgInfo[2]];
+
+                global $cfg_datadir;
+                $uploaddir = $cfg_datadir;
+                $uploadfile = $uploaddir
+                    . $sys_lanai->getPath()
+                    . "uimage"
+                    . $sys_lanai->getPath()
+                    . "u" . intval($_REQUEST['mid']) . "." . $ext;
+
+                if (move_uploaded_file($tmpFile, $uploadfile)) {
+                    $sys_lanai->go2Page($_SERVER['PHP_SELF'] . "?modname=" . $module_name);
+                } else {
+                    $sys_lanai->getErrorBox(_CANNOT_UPLOAD_FILE);
+                }
+
+            } else {
+                $sys_lanai->go2Page($_SERVER['PHP_SELF'] . "?modname=" . $module_name);
+            }
+
+            break;
 		
 	} // switch
 		

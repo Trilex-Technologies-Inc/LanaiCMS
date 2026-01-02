@@ -13,6 +13,7 @@ include_once('include/header.inc.php');
 $theme = new Theme();
 $smarty->assign("getLogoHeader", $theme->getLogoHeader());
 $smarty->assign("siteName", $cfg['title']);
+$smarty->assign("logo", $obMeta->MTALOGO);
 $smarty->assign("getFooter", $theme->getFooter());
 $smarty->assign("setBlockLeft", $theme->setBlock("l"));
 $smarty->assign("setBlockRight", $theme->setBlock("r"));

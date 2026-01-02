@@ -16,6 +16,7 @@ include_once('include/phptimer/class.phpTimer.php');
 
 $cfg['url'] = $cfg_url;
 $cfg['title'] = $cfg_title;
+
 $cfg['theme'] = $cfg_theme;
 $cfg['lang'] = $cfg_lang;
 $cfg['dir'] = $cfg_dir;

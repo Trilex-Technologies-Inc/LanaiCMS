@@ -17,12 +17,20 @@ function safeMeta($field) {
     }
     return (string)$field;
 }
+$description  = safeMeta($obMeta->MTADESCRIPTION);
+$abstract     = safeMeta($obMeta->MTAABSTRACT);
+$author       = safeMeta($obMeta->MTAAUTHOR);
+$distribution = safeMeta($obMeta->MTADISTRIBUTION);
+$keywords     = safeMeta($obMeta->MTAKEYWORDS);
 
-$description   = safeMeta($obMeta->mtadescription);
-$abstract      = safeMeta($obMeta->mtaabstract);
-$author        = safeMeta($obMeta->mtaauthor);
-$distribution  = safeMeta($obMeta->mtadistribution);
-$keywords      = safeMeta($obMeta->mtakeywords);
+$favicon = !empty($obMeta->MTAFAVICON)
+    ? $obMeta->MTAFAVICON
+    : 'favicon.ico';
+
+$logo = !empty($obMeta->MTALOGO)
+    ? $obMeta->MTALOGO
+    : '';
+
 
 $sys_lanai->loadAjaxFunction($modname);
 ?>
@@ -40,7 +48,8 @@ $sys_lanai->loadAjaxFunction($modname);
     <meta name="copyright" content="Copyright 2007 redline software">
     <meta name="generator" content="Lanai Core - Copyright 2006 Lanai Core Content Management Framework. All rights reserved." />
     <meta name="robots" content="FOLLOW,INDEX">
-    <link rel="shortcut icon" href="favicon.ico">
+
+    <link rel="shortcut icon" href="<?= $favicon ?>">
     <link rel="alternate" type="application/rss+xml" title="<?= htmlspecialchars($cfg['title'], ENT_QUOTES); ?> - RSS Feed" href="<?= $cfg['url']; ?>/feed.php" />
     <link rel="alternate" type="application/atom+xml" title="<?= htmlspecialchars($cfg['title'], ENT_QUOTES); ?> - Atom" href="<?= $cfg['url']; ?>/feed.php?feed=ATOM"  />
     <title><?= htmlspecialchars($cfg_title, ENT_QUOTES); ?></title>

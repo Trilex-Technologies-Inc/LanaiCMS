@@ -28,7 +28,7 @@ $dir = isset($_REQUEST['dir']) ? $_REQUEST['dir'] : '';
 <span class="txtContentTitle"><?=_EXPLORER_SETTING; ?></span><br/><br/>
 <?=_EXPLORER_INSTRUCTION; ?><br/><br/>
 <img src="modules/explorer/images/db_comit.png" border="0" align="absmiddle"/>
-<a href="setting.php?modname=explorer&mf=upload&dir=<?=$_REQUEST['dir']; ?>"><?=_UPLOAD; ?></a>&nbsp;&nbsp;
+<a href="setting.php?modname=explorer&mf=upload&dir=<?=  $dir ?>"><?=_UPLOAD; ?></a>&nbsp;&nbsp;
 <img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
 <a href="module.php?modname=setting" >
 <?=_CANCEL; ?></a>&nbsp;&nbsp;

@@ -300,16 +300,18 @@ dbexecute("Create Table Users",$sql);
 ?>
     <li>
 <?
-    $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
-			  mtaId int(10) unsigned NOT NULL default '1',
-			  mtaKeywords varchar(255) default NULL,
-			  mtaDescription varchar(255) default NULL,
-			  mtaAbstract varchar(100) default NULL,
-			  mtaAuthor varchar(75) default NULL,
-			  mtaDistribution varchar(20) default NULL,
-			  mtaCopyright varchar(255) default NULL,
-			  PRIMARY KEY  (mtaId)
-          )";
+$sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
+    mtaId INT(10) UNSIGNED NOT NULL DEFAULT '1',
+    mtaKeywords VARCHAR(255) DEFAULT NULL,
+    mtaDescription VARCHAR(255) DEFAULT NULL,
+    mtaAbstract VARCHAR(100) DEFAULT NULL,
+    mtaAuthor VARCHAR(75) DEFAULT NULL,
+    mtaDistribution VARCHAR(20) DEFAULT NULL,
+    mtaCopyright VARCHAR(255) DEFAULT NULL,
+    mtaLogo VARCHAR(255) DEFAULT NULL,
+    mtaFavicon VARCHAR(255) DEFAULT NULL,
+    PRIMARY KEY (mtaId)
+)";
     dbexecute("Create Table Meta-data",$sql);
 ?>
     <li>
@@ -824,8 +826,19 @@ dbexecute("Update Block Data",$sql);
 ?>
  <li>
 <?
-    $sql="INSERT INTO ".$_SESSION['tablepre']."meta VALUES (1, 'lanaicms, opensharepoint, opensource, lanai, lanai-cms', 'This is my site.', 'This is my site.', 'lanaicms@lanaicms.com/', 'Global', 'Copyright (c) 2007 to 2025')";
-    dbexecute("Update Meta data",$sql);
+$sql = "INSERT INTO ".$_SESSION['tablepre']."meta
+(mtaId, mtaKeywords, mtaDescription, mtaAbstract, mtaAuthor, mtaDistribution, mtaCopyright, mtaLogo, mtaFavicon)
+VALUES (
+    1,
+    'lanaicms, opensharepoint, opensource, lanai, lanai-cms',
+    'This is my site.',
+    'This is my site.',
+    'lanaicms@lanaicms.com/',
+    'Global',
+    'Copyright (c) 2007 to 2025',
+    NULL,
+    NULL
+)";
 ?>
 </ul>
 <TABLE  ALIGN="right" >

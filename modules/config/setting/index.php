@@ -13,15 +13,13 @@ $objMeta->_table = $cfg['tablepre'] . "meta";
 $objMeta->mtaId = 1;
 $objMeta->Load("mtaId=1");
 
-$mtaLogo    = !empty($objMeta->MTALOGO) ? $objMeta->MTALOGO : '';
-$mtaFavicon = !empty($objMeta->MTAFAVICON) ? $objMeta->MTAFAVICON : '';
+/* Meta values */
+$mtaLogo          = !empty($objMeta->MTALOGO) ? $objMeta->MTALOGO : '';
+$mtaFavicon       = !empty($objMeta->MTAFAVICON) ? $objMeta->MTAFAVICON : '';
+$mtaShowSiteName  = isset($objMeta->MTASHOWSITENAME) ? (int)$objMeta->MTASHOWSITENAME : 1;
 
 /* Site title */
-if (!isset($cfg['title'])) {
-    $cfg_title = '';
-} else {
-    $cfg_title = $cfg['title'];
-}
+$cfg_title = isset($cfg['title']) ? $cfg['title'] : '';
 ?>
 
 <div class="container mt-4">
@@ -51,7 +49,7 @@ if (!isset($cfg['title'])) {
             $varyes = ($status == "yes") ? "selected" : "";
             ?>
 
-
+            <!-- Site Title -->
             <div class="mb-3 row">
                 <label class="col-sm-3 col-form-label">
                     <?php echo defined('_CFG_SITE_TITLE') ? _CFG_SITE_TITLE : 'Site Title'; ?>
@@ -62,7 +60,26 @@ if (!isset($cfg['title'])) {
                 </div>
             </div>
 
+            <!-- Show Site Name (TRUE/FALSE) -->
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">
+                    Show Site Name
+                </label>
+                <div class="col-sm-9">
+                    <div class="form-check ">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               name="mtaShowSiteName"
+                               value="1"
+                            <?php echo ($mtaShowSiteName === 1) ? 'checked' : ''; ?>>
+                        <label class="form-check-label">
+                            Enable site name display
+                        </label>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Offline -->
             <div class="mb-3 row">
                 <label class="col-sm-3 col-form-label"><?php echo _CFG_OFFLINE; ?></label>
                 <div class="col-sm-9">
@@ -73,7 +90,7 @@ if (!isset($cfg['title'])) {
                 </div>
             </div>
 
-
+            <!-- Keywords -->
             <div class="mb-3 row">
                 <label class="col-sm-3 col-form-label"><?php echo _CFG_KEYWORDS; ?></label>
                 <div class="col-sm-9">
@@ -82,7 +99,7 @@ if (!isset($cfg['title'])) {
                 </div>
             </div>
 
-
+            <!-- Description -->
             <div class="mb-3 row">
                 <label class="col-sm-3 col-form-label"><?php echo _CFG_DESCRIPTION; ?></label>
                 <div class="col-sm-9">
@@ -91,7 +108,7 @@ if (!isset($cfg['title'])) {
                 </div>
             </div>
 
-
+            <!-- Abstract -->
             <div class="mb-3 row">
                 <label class="col-sm-3 col-form-label"><?php echo _CFG_ABSTRACT; ?></label>
                 <div class="col-sm-9">
@@ -100,7 +117,7 @@ if (!isset($cfg['title'])) {
                 </div>
             </div>
 
-
+            <!-- Author -->
             <div class="mb-3 row">
                 <label class="col-sm-3 col-form-label"><?php echo _CFG_AUTHOR; ?></label>
                 <div class="col-sm-9">
@@ -116,7 +133,7 @@ if (!isset($cfg['title'])) {
             else $v3 = "selected";
             ?>
 
-
+            <!-- Distribution -->
             <div class="mb-3 row">
                 <label class="col-sm-3 col-form-label"><?php echo _CFG_DISTRIBUTION; ?></label>
                 <div class="col-sm-9">
@@ -128,7 +145,7 @@ if (!isset($cfg['title'])) {
                 </div>
             </div>
 
-
+            <!-- Copyright -->
             <div class="mb-3 row">
                 <label class="col-sm-3 col-form-label"><?php echo _CFG_COPY; ?></label>
                 <div class="col-sm-9">
@@ -137,22 +154,20 @@ if (!isset($cfg['title'])) {
                 </div>
             </div>
 
-
+            <!-- Logo -->
             <div class="mb-3 row">
                 <label class="col-sm-3 col-form-label">Site Logo</label>
                 <div class="col-sm-9">
                     <input type="text" name="mtaLogo" class="form-control"
-
                            value="<?php echo htmlspecialchars($mtaLogo, ENT_QUOTES, 'UTF-8'); ?>">
                 </div>
             </div>
 
-
+            <!-- Favicon -->
             <div class="mb-3 row">
                 <label class="col-sm-3 col-form-label">Favicon</label>
                 <div class="col-sm-9">
                     <input type="text" name="mtaFavicon" class="form-control"
-
                            value="<?php echo htmlspecialchars($mtaFavicon, ENT_QUOTES, 'UTF-8'); ?>">
                 </div>
             </div>

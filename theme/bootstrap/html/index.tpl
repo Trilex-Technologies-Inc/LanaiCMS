@@ -484,8 +484,11 @@
             <a class="navbar-brand fw-bold text-uppercase" href="{$smarty.server.PHP_SELF|dirname}">
                 {if $logo neq ''}
                     <img src="{$logo}" alt="{$siteName}" class="img-fluid" style="max-height:40px;">
-                {else}
+
                     {$siteName}
+                {/if}
+                {if showSiteName eq '1'}
+                {$siteName}
                 {/if}
             </a>
 

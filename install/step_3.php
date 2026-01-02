@@ -302,11 +302,11 @@ dbexecute("Create Table Users",$sql);
 <?
 $sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
     mtaId INT(10) UNSIGNED NOT NULL DEFAULT '1',
+    mtaSiteName VARCHAR(150) NOT NULL,
+    mtaShowSiteName TINYINT(1) NOT NULL DEFAULT 1,
     mtaKeywords VARCHAR(255) DEFAULT NULL,
     mtaDescription VARCHAR(255) DEFAULT NULL,
-    mtaAbstract VARCHAR(100) DEFAULT NULL,
     mtaAuthor VARCHAR(75) DEFAULT NULL,
-    mtaDistribution VARCHAR(20) DEFAULT NULL,
     mtaCopyright VARCHAR(255) DEFAULT NULL,
     mtaLogo VARCHAR(255) DEFAULT NULL,
     mtaFavicon VARCHAR(255) DEFAULT NULL,

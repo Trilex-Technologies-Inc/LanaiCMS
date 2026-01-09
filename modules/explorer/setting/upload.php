@@ -9,7 +9,7 @@
 
     $objExpl=new Explorer();
 
-    if ($_REQUEST["ac"]=="upload") {
+    if (!empty($_REQUEST["ac"]) && $_REQUEST["ac"]=="upload") {
         foreach ($_FILES["userfile"]["error"] as $key => $error) {
     	    if ($error == UPLOAD_ERR_OK) {
     	        $tmp_name = $_FILES["userfile"]["tmp_name"][$key];

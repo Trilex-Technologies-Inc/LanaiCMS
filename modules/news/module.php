@@ -115,33 +115,72 @@
 		}  
 		
 		//nwsId  chnId  userId  nwsTitle  nwsPreface  nwsBody  nwsActive  nwsCreate  nwsModified  
-		
-		function setNewNews($chnId,$nwsTitle,$nwsPreface,$nwsBody){
-			$sql="INSERT INTO ".$this->cfg['tablepre']."news 
-					(chnId,userId,nwsTitle,nwsPreface,nwsBody,nwsCreate,nwsModified,nwsActive) 
-					VALUES (".$chnId.",".$this->uid.",'".$nwsTitle."','".$nwsPreface."','".$nwsBody."',NOW(),NOW(),'y')";
-			$rs=$this->db->execute($sql);	
-			return $rs;	
-		}
-		
-		function setNewGroup($chnTitle,$chnDescription){
+
+        function setNewNews($chnId, $nwsTitle, $nwsPreface, $nwsBody)
+        {
+            $sql = "
+        INSERT INTO {$this->cfg['tablepre']}news
+        (chnId, userId, nwsTitle, nwsPreface, nwsBody, nwsCreate, nwsModified, nwsActive)
+        VALUES (?, ?, ?, ?, ?, NOW(), NOW(), 'y')
+    ";
+
+            $rs = $this->db->Execute($sql, [
+                (int)$chnId,
+                (int)$this->uid,
+                $nwsTitle,     
+                $nwsPreface,   
+                $nwsBody       
+            ]);
+
+            if (!$rs) {
+                echo 'DB Error: ' . $this->db->ErrorMsg();
+                return false;
+            }
+
+            return true;
+        }
+
+        function setNewGroup($chnTitle,$chnDescription){
 			$sql="INSERT INTO ".$this->cfg['tablepre']."news_channel 
 					(chnTitle,chnDescription,chnActive,chnModified) 
 					VALUES ('".$chnTitle."','".$chnDescription."','y',NOW())";
 			$rs=$this->db->execute($sql);	
 			return $rs;	
 		}
-		
-		function setEditNews($nwsId,$chnId,$nwsTitle,$nwsPreface,$nwsBody){
-			$sql="UPDATE ".$this->cfg['tablepre']."news 
-					SET chnId=".$chnId.",userId=".$this->uid.",nwsTitle='".$nwsTitle."',nwsPreface='".$nwsPreface."',
-						nwsBody='".$nwsBody."',nwsModified=NOW()
-					WHERE nwsId=$nwsId";
-			$rs=$this->db->execute($sql);	
-			return $rs;
-		}
-		
-		function setEditGroup($chnId,$chnTitle,$chnDescription){
+
+        function setEditNews($nwsId, $chnId, $nwsTitle, $nwsPreface, $nwsBody)
+        {
+            $sql = "
+        UPDATE {$this->cfg['tablepre']}news
+        SET
+            chnId        = ?,
+            userId       = ?,
+            nwsTitle     = ?,
+            nwsPreface   = ?,
+            nwsBody      = ?,
+            nwsModified  = NOW()
+        WHERE nwsId = ?
+    ";
+
+            $rs = $this->db->Execute($sql, [
+                (int)$chnId,
+                (int)$this->uid,
+                $nwsTitle,     
+                $nwsPreface,   
+                $nwsBody,      
+                (int)$nwsId
+            ]);
+
+            if (!$rs) {
+                echo 'DB Error: ' . $this->db->ErrorMsg();
+                return false;
+            }
+
+            return true;
+        }
+
+
+        function setEditGroup($chnId,$chnTitle,$chnDescription){
 			$sql="UPDATE ".$this->cfg['tablepre']."news_channel 
 					SET chnTitle='".$chnTitle."',chnDescription='".$chnDescription."',
 						chnModified=NOW()

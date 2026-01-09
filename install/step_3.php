@@ -32,7 +32,7 @@
     $db->query($charset);*/
 
     function dbexecute($title,$sql) {
-        global $db;        
+        global $db;
         $rs=$db->execute($sql);
         //$db->debug=true;
         if ($rs) {
@@ -48,29 +48,41 @@
 <ul>
     <li>
 <?
-    $sql="CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."user` (
-            `userId` int(11) NOT NULL auto_increment,
-            `userFname` varchar(40) default NULL,
-            `userLname` varchar(40) default NULL,
-            `userAddress1` varchar(80) default NULL,
-            `userAddress2` varchar(80) default NULL,
-            `userCity` varchar(50) default NULL,
-            `userState` varchar(50) default NULL,
-            `cntId` char(2) default 'TH',
-            `userZipcode` varchar(5) default NULL,
-            `userPhone` varchar(11) default NULL,
-            `userFax` varchar(20) default NULL,
-            `userMobile` varchar(20) default NULL,
-            `userEmail` varchar(30) default NULL,
-            `userURL` varchar(80) default NULL,
-            `userLogin` varchar(20) default NULL,
-            `userPassword` varchar(60) default NULL,
-            `userPrivilege` enum('a','m','u') NOT NULL default 'u',
-            `userCreated` datetime default NULL,
-            `userActive` enum('y','n') default 'y',
-            PRIMARY KEY  (`userId`)
-          )";
-    dbexecute("Create Table Users",$sql);
+$sql = "CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."user` (
+    `userId` INT(11) NOT NULL AUTO_INCREMENT,
+
+    `userFname` VARCHAR(100) DEFAULT NULL,
+    `userLname` VARCHAR(100) DEFAULT NULL,
+
+    `userAddress1` VARCHAR(150) DEFAULT NULL,
+    `userAddress2` VARCHAR(150) DEFAULT NULL,
+
+    `userCity` VARCHAR(100) DEFAULT NULL,
+    `userState` VARCHAR(100) DEFAULT NULL,
+
+    `cntId` CHAR(2) DEFAULT 'TH',
+
+    `userZipcode` VARCHAR(15) DEFAULT NULL,
+
+    `userPhone` VARCHAR(20) DEFAULT NULL,
+    `userFax` VARCHAR(20) DEFAULT NULL,
+    `userMobile` VARCHAR(20) DEFAULT NULL,
+
+    `userEmail` VARCHAR(254) DEFAULT NULL,
+    `userURL` VARCHAR(255) DEFAULT NULL,
+
+    `userLogin` VARCHAR(50) DEFAULT NULL,
+    `userPassword` VARCHAR(255) DEFAULT NULL,
+
+    `userPrivilege` ENUM('a','m','u') NOT NULL DEFAULT 'u',
+
+    `userCreated` DATETIME DEFAULT NULL,
+    `userActive` ENUM('y','n') DEFAULT 'y',
+
+    PRIMARY KEY (`userId`)
+)";
+
+dbexecute("Create Table Users",$sql);
 
 ?>
     <li>
@@ -288,16 +300,18 @@
 ?>
     <li>
 <?
-    $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
-			  mtaId int(10) unsigned NOT NULL default '1',
-			  mtaKeywords varchar(255) default NULL,
-			  mtaDescription varchar(255) default NULL,
-			  mtaAbstract varchar(100) default NULL,
-			  mtaAuthor varchar(75) default NULL,
-			  mtaDistribution varchar(20) default NULL,
-			  mtaCopyright varchar(255) default NULL,
-			  PRIMARY KEY  (mtaId)
-          )";
+$sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
+    mtaId INT(10) UNSIGNED NOT NULL DEFAULT '1',
+    mtaSiteName VARCHAR(150) NOT NULL,
+    mtaShowSiteName TINYINT(1) NOT NULL DEFAULT 1,
+    mtaKeywords VARCHAR(255) DEFAULT NULL,
+    mtaDescription VARCHAR(255) DEFAULT NULL,
+    mtaAuthor VARCHAR(75) DEFAULT NULL,
+    mtaCopyright VARCHAR(255) DEFAULT NULL,
+    mtaLogo VARCHAR(255) DEFAULT NULL,
+    mtaFavicon VARCHAR(255) DEFAULT NULL,
+    PRIMARY KEY (mtaId)
+)";
     dbexecute("Create Table Meta-data",$sql);
 ?>
     <li>
@@ -812,8 +826,19 @@ dbexecute("Update Block Data",$sql);
 ?>
  <li>
 <?
-    $sql="INSERT INTO ".$_SESSION['tablepre']."meta VALUES (1, 'lanaicms, opensharepoint, opensource, lanai, lanai-cms', 'This is my site.', 'This is my site.', 'lanaicms@lanaicms.com/', 'Global', 'Copyright (c) 2007 to 2025')";
-    dbexecute("Update Meta data",$sql);
+$sql = "INSERT INTO ".$_SESSION['tablepre']."meta
+(mtaId, mtaKeywords, mtaDescription, mtaAbstract, mtaAuthor, mtaDistribution, mtaCopyright, mtaLogo, mtaFavicon)
+VALUES (
+    1,
+    'lanaicms, opensharepoint, opensource, lanai, lanai-cms',
+    'This is my site.',
+    'This is my site.',
+    'lanaicms@lanaicms.com/',
+    'Global',
+    'Copyright (c) 2007 to 2025',
+    NULL,
+    NULL
+)";
 ?>
 </ul>
 <TABLE  ALIGN="right" >

@@ -7,8 +7,13 @@ $module_name = basename(dirname(__FILE__));
 $modfunction = "modules/$module_name/module.php";
 include_once($modfunction);
 $cnt = new Contact();
+
+
+$turnstile_site_key = 'your site key';
+$turnstile_secret_key = 'your secret key';
 ?>
 
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script>
     function validate(frmObj) {
         if (frmObj.name.value.trim() === "") {
@@ -23,12 +28,19 @@ $cnt = new Contact();
             alert('<?=_REQUIRE_FIELDS;?> <?=_CONTACT_MESSAGE;?>');
             return false;
         }
-        if (frmObj.captcha.value.trim() === "") {
-            alert('<?=_REQUIRE_FIELDS;?> <?=_VERIFY;?>');
-            return false;
+        
+        // Check if Turnstile widget is loaded and completed
+        if (typeof turnstile !== 'undefined') {
+            const response = turnstile.getResponse();
+            if (!response) {
+                alert('<?=_REQUIRE_FIELDS;?> Please complete the security verification');
+                return false;
+            }
         }
+        
         return true;
     }
+    
     function MM_jumpMenu(targ,selObj,restore){ //v3.0
         eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
         if (restore) selObj.selectedIndex=0;
@@ -45,7 +57,6 @@ $cnt = new Contact();
                 <input type="hidden" name="modname" value="<?= $module_name; ?>">
                 <input type="hidden" name="mf" value="send">
                 <input type="hidden" name="cid" value="<?= isset($_REQUEST['cid']) ? $_REQUEST['cid'] : '' ?>">
-
                 <input type="hidden" name="ac" value="send">
 
                 <div class="mb-3">
@@ -73,18 +84,15 @@ $cnt = new Contact();
                     <textarea name="message" rows="5" class="form-control" required></textarea>
                 </div>
 
-                <!-- CAPTCHA -->
+                <!-- Cloudflare Turnstile -->
                 <div class="mb-3">
-                    <label class="form-label"><?= _VERIFY; ?> <span class="text-danger">*</span></label>
-                    <div class="input-group">
-                        <input type="text" name="captcha" class="form-control" required>
-                        <span class="input-group-text p-0">
-                            <img src="images/captcha.php" alt="captcha"
-                                 onclick="this.src='images/captcha.php?'+Math.random();"
-                                 style="height:38px; cursor:pointer;">
-                        </span>
+                    <label class="form-label">Security Verification <span class="text-danger">*</span></label>
+                    <div class="cf-turnstile" 
+                         data-sitekey="<?= $turnstile_site_key; ?>"
+                         data-theme="light"
+                         data-language="en">
                     </div>
-                    <small class="text-muted">Click image to refresh</small>
+                    <small class="text-muted">Complete the verification to submit the form</small>
                 </div>
 
                 <div class="d-flex gap-2">

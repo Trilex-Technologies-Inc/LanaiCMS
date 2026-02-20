@@ -1,70 +1,67 @@
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{$siteName}</title>
 
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<style type="text/css">
-  @import url("theme/{$cfgTheme}/style/dhtml-horiz.css");
-</style>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<!--[if gte IE 5.5]>
+  <style type="text/css">
+    @import url("theme/{$cfgTheme}/style/dhtml-horiz.css");
+  </style>
+
+  <!--[if gte IE 5.5]>
     <script language="JavaScript" src="theme/{$cfgTheme}/style/dhtml.js" type="text/JavaScript"></script>
     <![endif]-->
 
-<style>
-  body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f8f9fa;
-  }
-  .article-hero {
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/article-bg.jpg') center/cover no-repeat;
-    color: #fff;
-    padding: 6rem 0;
-    text-align: center;
-  }
-  .article-meta {
-    font-size: 0.9rem;
-    color: #ccc;
-  }
-  .article-content p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin-bottom: 1rem;
-  }
-  .sidebar {
-    background: #fff;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  footer {
-    border-top: 1px solid #ddd;
-    padding: 2rem 0;
-    text-align: center;
-    color: #777;
-  }
-</style>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+    }
+    .article-hero {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/article-bg.jpg') center/cover no-repeat;
+      color: #fff;
+      padding: 6rem 0;
+      text-align: center;
+    }
+    .article-meta {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    .article-content p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .sidebar {
+      background: #fff;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    footer {
+      border-top: 1px solid #ddd;
+      padding: 2rem 0;
+      text-align: center;
+      color: #777;
+    }
+  </style>
+</head>
 
-
-
+<body>
 <header data-bs-theme="dark">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
     <div class="container-fluid">
-      <a class="navbar-brand fw-bold text-uppercase" href="{$smarty.server.PHP_SELF|dirname}">
-        {if $logo neq ''}
-          <img src="{$logo}" alt="{$siteName}" class="img-fluid" style="max-height:40px;">
-
-          {$siteName}
-        {/if}
-        {if showSiteName eq '1'}
-          {$siteName}
-        {/if}
-      </a>
-
+      <a class="navbar-brand fw-bold text-uppercase" href="{$smarty.server.PHP_SELF|dirname}">{$siteName}</a>
       {include_php file="blocks/bmenu/index.php"}
     </div>
   </nav>
@@ -158,39 +155,29 @@
     <!-- Main Article Content -->
     <div class="container my-5">
       <div class="row g-5">
-        {if $nameModule|strstr:'forum'}
-          <div class="col-md-12">
-            <div class="article-content bg-white p-4 rounded shadow-sm">
-              {$setModule}
-            </div>
+        <!-- Article -->
+        <div class="col-md-8">
+          <div class="article-content bg-white p-4 rounded shadow-sm">
+            {$setModule}
           </div>
+        </div>
 
-        {elseif $nameModule|strstr:'contact' || $nameModule|strstr:'ezshopingcart'}
-          {$setModule}
-        {else}
-          <div class="col-md-8">
-            <div class="article-content bg-white p-4 rounded shadow-sm">
-              {$setModule}
-            </div>
+        <!-- Sidebar -->
+        <div class="col-md-4">
+          <div class="sidebar">
+            <h5 class="fw-bold mb-3">Related Articles</h5>
+            <ul class="list-unstyled">
+              <li><a href="#" class="text-decoration-none">How AI is Changing the World</a></li>
+              <li><a href="#" class="text-decoration-none">Top 10 Gadgets of 2025</a></li>
+              <li><a href="#" class="text-decoration-none">The Rise of Quantum Computing</a></li>
+            </ul>
+            <hr>
+            <h5 class="fw-bold mb-3">Categories</h5>
+            <span class="badge bg-secondary me-1">Tech</span>
+            <span class="badge bg-secondary me-1">Science</span>
+            <span class="badge bg-secondary me-1">Innovation</span>
           </div>
-
-          <!-- Sidebar -->
-          <div class="col-md-4">
-            <div class="sidebar">
-              <h5 class="fw-bold mb-3">Related Articles</h5>
-              <ul class="list-unstyled">
-                <li><a href="#" class="text-decoration-none">How AI is Changing the World</a></li>
-                <li><a href="#" class="text-decoration-none">Top 10 Gadgets of 2025</a></li>
-                <li><a href="#" class="text-decoration-none">The Rise of Quantum Computing</a></li>
-              </ul>
-              <hr>
-              <h5 class="fw-bold mb-3">Categories</h5>
-              <span class="badge bg-secondary me-1">Tech</span>
-              <span class="badge bg-secondary me-1">Science</span>
-              <span class="badge bg-secondary me-1">Innovation</span>
-            </div>
-          </div>
-        {/if}
+        </div>
       </div>
     </div>
   {/if}
@@ -205,3 +192,5 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

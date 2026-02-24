@@ -364,5 +364,6 @@
     // Removed content.classList.toggle('active') to avoid conflicts
   });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

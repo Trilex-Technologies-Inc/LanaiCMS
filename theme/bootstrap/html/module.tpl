@@ -155,13 +155,31 @@
     <!-- Main Article Content -->
     <div class="container my-5">
       <div class="row g-5">
+<<<<<<< Updated upstream
         <!-- Article -->
         <div class="col-md-8">
           <div class="article-content bg-white p-4 rounded shadow-sm">
             {$setModule}
+=======
+        {if $nameModule|strstr:'forum'}
+          <div class="col-md-12">
+            <div class="article-content bg-white p-4 rounded shadow-sm">
+              {$setModule}
+            </div>
+          </div>
+
+        {elseif $nameModule|strstr:'contact' || $nameModule|strstr:'ezshopingcart'}
+          {$setModule}
+        {else}
+          <div class="col-md-12">
+            <div class="article-content bg-white p-4 rounded shadow-sm">
+              {$setModule}
+            </div>
+>>>>>>> Stashed changes
           </div>
         </div>
 
+<<<<<<< Updated upstream
         <!-- Sidebar -->
         <div class="col-md-4">
           <div class="sidebar">
@@ -178,6 +196,10 @@
             <span class="badge bg-secondary me-1">Innovation</span>
           </div>
         </div>
+=======
+        
+        {/if}
+>>>>>>> Stashed changes
       </div>
     </div>
   {/if}
@@ -192,5 +214,9 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<<<<<<< Updated upstream
 </body>
 </html>
+=======
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+>>>>>>> Stashed changes

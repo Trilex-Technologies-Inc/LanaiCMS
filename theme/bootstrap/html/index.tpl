@@ -481,9 +481,6 @@
 <header data-bs-theme="dark">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
         <div class="container-fluid">
-<<<<<<< Updated upstream
-            <a class="navbar-brand fw-bold text-uppercase" href="{$smarty.server.PHP_SELF|dirname}">{$siteName}</a>
-=======
             <a class="navbar-brand fw-bold text-uppercase" href="{$smarty.server.PHP_SELF|dirname}">
                 {if $logo neq ''}
                     <img src="{$logo}" alt="{$siteName}" class="img-fluid" style="max-height:40px;">
@@ -495,9 +492,9 @@
                 {/if}
             </a>
 
->>>>>>> Stashed changes
             {include_php file="blocks/bmenu/index.php"}
         </div>
+
     </nav>
 
     <!-- Search Collapse -->

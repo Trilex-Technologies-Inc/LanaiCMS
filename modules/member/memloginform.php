@@ -8,8 +8,18 @@ $modfunction = "modules/$module_name/module.php";
 include_once($modfunction);
 
 $mem_lanai = new User();
+$captcha_provider = isset($cfg['captcha_provider']) ? $cfg['captcha_provider'] : 'default';
+if ($captcha_provider !== 'cloudflare') {
+    $captcha_provider = 'default';
+}
+$turnstile_site_key = isset($cfg['turnstile_site_key']) ? trim($cfg['turnstile_site_key']) : '';
+$turnstile_secret_key = isset($cfg['turnstile_secret_key']) ? trim($cfg['turnstile_secret_key']) : '';
+$turnstile_enabled = ($captcha_provider === 'cloudflare' && $turnstile_site_key !== '' && $turnstile_secret_key !== '');
 ?>
 
+<?php if ($turnstile_enabled) { ?>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<?php } ?>
 <div class="card shadow-sm border-0 mt-3 m-auto" style="max-width: 400px;">
     <div class="card-body">
         <?php if (!empty($_SESSION['uid']) && $_SESSION['uid'] > 0): ?>
@@ -67,14 +77,26 @@ $mem_lanai = new User();
                     <input type="password" name="password" class="form-control" placeholder="<?= _PASSWORD; ?>" required>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label"><?= _MEMBER_CAPTEXT; ?></label>
-                    <div class="d-flex align-items-center gap-2">
-                        <input type="text" name="captext" class="form-control w-auto" size="12" maxlength="5" placeholder="<?= _ENTER_CAPTCHA; ?>">
-                        <img src="images/captcha.php?hash=<?= md5(time()); ?>" alt="Captcha" class="border rounded">
+                <?php if ($captcha_provider === 'default') { ?>
+                    <div class="mb-3">
+                        <label class="form-label"><?= _MEMBER_CAPTEXT; ?></label>
+                        <div class="d-flex align-items-center gap-2">
+                            <input type="text" name="captext" class="form-control w-auto" size="12" maxlength="5" placeholder="<?= defined('_ENTER_CAPTCHA') ? _ENTER_CAPTCHA : 'Enter captcha'; ?>">
+                            <img src="images/captcha.php?hash=<?= md5(time()); ?>" alt="Captcha" class="border rounded">
+                        </div>
+                        <small class="text-muted">Enter the captcha text as shown above.</small>
                     </div>
-                    <small class="text-muted">Enter the captcha text as shown above.</small>
-                </div>
+                <?php } elseif ($turnstile_enabled) { ?>
+                    <div class="mb-3">
+                        <label class="form-label"><?= _MEMBER_CAPTEXT; ?></label>
+                        <div class="cf-turnstile" data-sitekey="<?= $turnstile_site_key; ?>" data-theme="light" data-language="en"></div>
+                        <small class="text-muted">Complete the verification to sign in.</small>
+                    </div>
+                <?php } else { ?>
+                    <div class="alert alert-warning">
+                        Turnstile is not fully configured. Please set both Site Key and Secret Key in Config.
+                    </div>
+                <?php } ?>
 
                 <div class="text-end">
                     <button type="submit" class="btn btn-primary"><?= _SIGNIN; ?></button>

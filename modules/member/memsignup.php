@@ -9,6 +9,13 @@ include_once($modfunction);
 
 // get user info
 $mem_lanai = new User();
+$captcha_provider = isset($cfg['captcha_provider']) ? $cfg['captcha_provider'] : 'default';
+if ($captcha_provider !== 'cloudflare') {
+    $captcha_provider = 'default';
+}
+$turnstile_site_key = isset($cfg['turnstile_site_key']) ? trim($cfg['turnstile_site_key']) : '';
+$turnstile_secret_key = isset($cfg['turnstile_secret_key']) ? trim($cfg['turnstile_secret_key']) : '';
+$turnstile_enabled = ($captcha_provider === 'cloudflare' && $turnstile_site_key !== '' && $turnstile_secret_key !== '');
 
 // use isset() to avoid undefined index
 $userLogin = isset($_REQUEST['userLogin']) ? $_REQUEST['userLogin'] : '';
@@ -26,12 +33,42 @@ if ($rslogin->recordcount() > 0) {
         $userEmail = isset($_REQUEST['userEmail']) ? $_REQUEST['userEmail'] : '';
         $userPassword1 = isset($_REQUEST['userPassword1']) ? $_REQUEST['userPassword1'] : '';
         $userPassword2 = isset($_REQUEST['userPassword2']) ? $_REQUEST['userPassword2'] : '';
-        $captext = isset($_REQUEST['captext']) ? $_REQUEST['captext'] : '';
+        $captext = isset($_REQUEST['captext']) ? trim($_REQUEST['captext']) : '';
+        $captchaOk = false;
+
+        if ($captcha_provider === 'default') {
+            $sessionCaptcha = isset($_SESSION['captcha']) ? trim($_SESSION['captcha']) : '';
+            $captchaOk = ($captext !== '' && $sessionCaptcha !== '' && strcasecmp($captext, $sessionCaptcha) === 0);
+        } elseif ($turnstile_enabled) {
+            $turnstile_response = isset($_POST['cf-turnstile-response']) ? trim($_POST['cf-turnstile-response']) : '';
+            if ($turnstile_response !== '') {
+                $verify_data = array(
+                    'secret' => $turnstile_secret_key,
+                    'response' => $turnstile_response,
+                    'remoteip' => $_SERVER['REMOTE_ADDR']
+                );
+                $ch = curl_init('https://challenges.cloudflare.com/turnstile/v0/siteverify');
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($verify_data));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                $response = curl_exec($ch);
+                if (!curl_errno($ch)) {
+                    $result = json_decode($response, true);
+                    $captchaOk = !empty($result['success']);
+                }
+                curl_close($ch);
+            }
+        } else {
+            $sys_lanai->getErrorBox("Turnstile is not fully configured. Please set both Site Key and Secret Key in Config.");
+            return;
+        }
 
         if (empty($userFname) || empty($userLname) || empty($userEmail) || empty($userLogin) || empty($userPassword1) || empty($userPassword2)) {
             $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
         } else {
-            if ($userPassword1 == $userPassword2 && $captext == $_SESSION['captcha']) {
+            if ($userPassword1 == $userPassword2 && $captchaOk) {
                 $rs = $mem_lanai->setUserRegister($userFname, $userLname, $userEmail, $userLogin, $userPassword1);
                 if (empty($rs)) {
                     $sys_lanai->getErrorBox(_CANNOT_REGISTER . " <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
@@ -44,10 +81,15 @@ if ($rslogin->recordcount() > 0) {
                     </div>
                     <?php
                 }
+            } else {
+                $sys_lanai->getErrorBox("Invalid captcha. Please try again.");
             }
         }
     } else {
         ?>
+        <?php if ($turnstile_enabled) { ?>
+            <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+        <?php } ?>
         <h5 class="mb-2 fw-bold text-primary"><?=_USER_SIGNUP;?></h5>
 
         <p class="mb-4 text-muted small"><?=_USER_SIGNUP_INSTRUCTION;?></p>
@@ -87,14 +129,27 @@ if ($rslogin->recordcount() > 0) {
                 <input type="password" class="form-control" id="userPassword2" name="userPassword2">
             </div>
 
-            <div class="col-md-6">
-                <label for="captext" class="form-label"><?=_MEMBER_CAPTEXT;?></label>
-                <input type="text" class="form-control" id="captext" name="captext" maxlength="5">
-            </div>
+            <?php if ($captcha_provider === 'default') { ?>
+                <div class="col-md-6">
+                    <label for="captext" class="form-label"><?=_MEMBER_CAPTEXT;?></label>
+                    <input type="text" class="form-control" id="captext" name="captext" maxlength="5" placeholder="<?= defined('_ENTER_CAPTCHA') ? _ENTER_CAPTCHA : 'Enter captcha'; ?>">
+                </div>
 
-            <div class="col-md-6 d-flex align-items-end">
-                <img src="images/captcha.php?hash=<?=md5(time()); ?>" alt="captcha" class="img-fluid">
-            </div>
+                <div class="col-md-6 d-flex align-items-end">
+                    <img src="images/captcha.php?hash=<?=md5(time()); ?>" alt="captcha" class="img-fluid">
+                </div>
+            <?php } elseif ($turnstile_enabled) { ?>
+                <div class="col-12">
+                    <label class="form-label"><?=_MEMBER_CAPTEXT;?></label>
+                    <div class="cf-turnstile" data-sitekey="<?= $turnstile_site_key; ?>" data-theme="light" data-language="en"></div>
+                </div>
+            <?php } else { ?>
+                <div class="col-12">
+                    <div class="alert alert-warning mb-0">
+                        Turnstile is not fully configured. Please set both Site Key and Secret Key in Config.
+                    </div>
+                </div>
+            <?php } ?>
 
             <div class="col-12">
                 <button type="submit" class="btn btn-primary">

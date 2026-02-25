@@ -10,11 +10,22 @@ class Meta extends ADOdb_Active_Record {
     function updateSetting($data = []) {
         global $db; // ADOdb connection
 
+        $existingColumns = array();
+        $rsColumns = $db->Execute("SHOW COLUMNS FROM {$this->_table}");
+        if ($rsColumns) {
+            while (!$rsColumns->EOF) {
+                $existingColumns[] = strtolower($rsColumns->fields['Field']);
+                $rsColumns->MoveNext();
+            }
+        }
 
         $setParts = [];
         $params = [];
 
         foreach ($data as $key => $value) {
+            if (!in_array(strtolower($key), $existingColumns, true)) {
+                continue;
+            }
             $setParts[] = "$key = ?";
             $params[] = $value;
         }
@@ -99,6 +110,50 @@ class SysConfig {
 			return false;
 		}		
 	}
+
+    function _set_config_var($varName, $value) {
+        $lines = file('config.inc.php');
+        $pattern = '/^\s*\\$' . preg_quote($varName, '/') . '\s*=/';
+        $newLine = "\t$" . $varName . "=\"" . addcslashes($value, "\\\"") . "\";\n";
+        $updated = false;
+
+        foreach ($lines as $i => $line) {
+            if (preg_match($pattern, $line)) {
+                $lines[$i] = $newLine;
+                $updated = true;
+                break;
+            }
+        }
+
+        if (!$updated) {
+            $insertIndex = count($lines);
+            foreach ($lines as $i => $line) {
+                if (preg_match('/^\s*\?>\s*$/', $line)) {
+                    $insertIndex = $i;
+                    break;
+                }
+            }
+            array_splice($lines, $insertIndex, 0, array($newLine));
+        }
+
+        $handle = fopen('config.inc.php', "w+");
+        foreach ($lines as $line) {
+            fwrite($handle, $line);
+        }
+        fclose($handle);
+    }
+
+    function setTurnstileSiteKey($key) {
+        $this->_set_config_var('cfg_turnstile_site_key', $key);
+    }
+
+    function setTurnstileSecretKey($key) {
+        $this->_set_config_var('cfg_turnstile_secret_key', $key);
+    }
+
+    function setCaptchaProvider($provider) {
+        $this->_set_config_var('cfg_captcha_provider', $provider);
+    }
 	
 }
 

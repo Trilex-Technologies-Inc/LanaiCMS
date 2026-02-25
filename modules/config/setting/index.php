@@ -20,6 +20,12 @@ $mtaShowSiteName  = isset($objMeta->MTASHOWSITENAME) ? (int)$objMeta->MTASHOWSIT
 
 /* Site title */
 $cfg_title = isset($cfg['title']) ? $cfg['title'] : '';
+$captchaProvider = isset($cfg['captcha_provider']) ? $cfg['captcha_provider'] : 'default';
+if ($captchaProvider !== 'cloudflare') {
+    $captchaProvider = 'default';
+}
+$turnstileSiteKey = isset($cfg['turnstile_site_key']) ? $cfg['turnstile_site_key'] : '';
+$turnstileSecretKey = isset($cfg['turnstile_secret_key']) ? $cfg['turnstile_secret_key'] : '';
 ?>
 
 <div class="container mt-4">
@@ -172,6 +178,40 @@ $cfg_title = isset($cfg['title']) ? $cfg['title'] : '';
                 </div>
             </div>
 
+            <!-- Captcha Provider -->
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Captcha Provider</label>
+                <div class="col-sm-9">
+                    <select id="cfg_captcha_provider" name="cfg_captcha_provider" class="form-select">
+                        <option value="default" <?php echo ($captchaProvider === 'default') ? 'selected' : ''; ?>>
+                            System Default Captcha
+                        </option>
+                        <option value="cloudflare" <?php echo ($captchaProvider === 'cloudflare') ? 'selected' : ''; ?>>
+                            Cloudflare Turnstile
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Cloudflare Turnstile Site Key -->
+            <div id="turnstileSiteKeyRow" class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Turnstile Site Key</label>
+                <div class="col-sm-9">
+                    <input type="text" name="cfg_turnstile_site_key" class="form-control"
+                           value="<?php echo htmlspecialchars($turnstileSiteKey, ENT_QUOTES, 'UTF-8'); ?>">
+                </div>
+            </div>
+
+            <!-- Cloudflare Turnstile Secret Key -->
+            <div id="turnstileSecretKeyRow" class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Turnstile Secret Key</label>
+                <div class="col-sm-9">
+                    <input type="password" name="cfg_turnstile_secret_key" class="form-control"
+                           value="<?php echo htmlspecialchars($turnstileSecretKey, ENT_QUOTES, 'UTF-8'); ?>"
+                           autocomplete="off">
+                </div>
+            </div>
+
             <div class="text-end">
                 <button type="submit" class="btn btn-success">
                     <i class="bi bi-save"></i> <?php echo _SAVE; ?>
@@ -179,5 +219,24 @@ $cfg_title = isset($cfg['title']) ? $cfg['title'] : '';
             </div>
 
         </form>
+        <script type="text/javascript">
+            (function () {
+                var providerEl = document.getElementById('cfg_captcha_provider');
+                var siteRow = document.getElementById('turnstileSiteKeyRow');
+                var secretRow = document.getElementById('turnstileSecretKeyRow');
+
+                function toggleTurnstileRows() {
+                    var isCloudflare = providerEl && providerEl.value === 'cloudflare';
+                    var displayStyle = isCloudflare ? '' : 'none';
+                    if (siteRow) siteRow.style.display = displayStyle;
+                    if (secretRow) secretRow.style.display = displayStyle;
+                }
+
+                if (providerEl) {
+                    providerEl.addEventListener('change', toggleTurnstileRows);
+                    toggleTurnstileRows();
+                }
+            })();
+        </script>
     <?php endif; ?>
 </div>

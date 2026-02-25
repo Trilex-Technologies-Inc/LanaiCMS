@@ -58,9 +58,9 @@
         {if $logo neq ''}
           <img src="{$logo}" alt="{$siteName}" class="img-fluid" style="max-height:40px;">
 
-          {$siteName}
+         
         {/if}
-        {if showSiteName eq '1'}
+        {if $showSiteName eq '1'}
           {$siteName}
         {/if}
       </a>

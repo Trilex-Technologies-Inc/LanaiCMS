@@ -30,6 +30,9 @@ $cfg['smtp_host'] = $cfg_smtp_host;
 $cfg['smtp_port'] = $cfg_smtp_port;
 $cfg['offset_time'] = $cfg_offsettime;
 $cfg['seo'] = $cfg_seo;
+$cfg['captcha_provider'] = isset($cfg_captcha_provider) ? $cfg_captcha_provider : 'default';
+$cfg['turnstile_site_key'] = isset($cfg_turnstile_site_key) ? $cfg_turnstile_site_key : '';
+$cfg['turnstile_secret_key'] = isset($cfg_turnstile_secret_key) ? $cfg_turnstile_secret_key : '';
 
 $ADODB_CACHE_DIR = $cfg['datadir'] . "/cache/";
 $db =& ADONewConnection($dbtype);

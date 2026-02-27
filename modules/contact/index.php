@@ -8,12 +8,19 @@ $modfunction = "modules/$module_name/module.php";
 include_once($modfunction);
 $cnt = new Contact();
 
+$captcha_provider = isset($cfg['captcha_provider']) ? $cfg['captcha_provider'] : 'default';
+if ($captcha_provider !== 'cloudflare') {
+    $captcha_provider = 'default';
+}
 
-$turnstile_site_key = 'your site key';
-$turnstile_secret_key = 'your secret key';
+$turnstile_site_key = isset($cfg['turnstile_site_key']) ? trim($cfg['turnstile_site_key']) : '';
+$turnstile_secret_key = isset($cfg['turnstile_secret_key']) ? trim($cfg['turnstile_secret_key']) : '';
+$turnstile_enabled = ($captcha_provider === 'cloudflare' && $turnstile_site_key !== '' && $turnstile_secret_key !== '');
 ?>
 
+<?php if ($turnstile_enabled) { ?>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<?php } ?>
 <script>
     function validate(frmObj) {
         if (frmObj.name.value.trim() === "") {
@@ -28,7 +35,15 @@ $turnstile_secret_key = 'your secret key';
             alert('<?=_REQUIRE_FIELDS;?> <?=_CONTACT_MESSAGE;?>');
             return false;
         }
+
+        <?php if ($captcha_provider === 'default') { ?>
+        if (frmObj.captext.value.trim() === "") {
+            alert('<?=_REQUIRE_FIELDS;?> Captcha');
+            return false;
+        }
+        <?php } ?>
         
+        <?php if ($turnstile_enabled) { ?>
         // Check if Turnstile widget is loaded and completed
         if (typeof turnstile !== 'undefined') {
             const response = turnstile.getResponse();
@@ -37,6 +52,7 @@ $turnstile_secret_key = 'your secret key';
                 return false;
             }
         }
+        <?php } ?>
         
         return true;
     }
@@ -84,16 +100,30 @@ $turnstile_secret_key = 'your secret key';
                     <textarea name="message" rows="5" class="form-control" required></textarea>
                 </div>
 
-                <!-- Cloudflare Turnstile -->
-                <div class="mb-3">
-                    <label class="form-label">Security Verification <span class="text-danger">*</span></label>
-                    <div class="cf-turnstile" 
-                         data-sitekey="<?= $turnstile_site_key; ?>"
-                         data-theme="light"
-                         data-language="en">
+                <?php if ($captcha_provider === 'default') { ?>
+                    <div class="mb-3">
+                        <label class="form-label">Captcha <span class="text-danger">*</span></label>
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <input type="text" name="captext" class="form-control w-auto" size="12" maxlength="5" placeholder="Enter captcha">
+                            <img src="images/captcha.php?hash=<?= md5(time()); ?>" alt="Captcha" class="border rounded">
+                        </div>
                     </div>
-                    <small class="text-muted">Complete the verification to submit the form</small>
-                </div>
+                <?php } elseif ($turnstile_enabled) { ?>
+                    <!-- Cloudflare Turnstile -->
+                    <div class="mb-3">
+                        <label class="form-label">Security Verification <span class="text-danger">*</span></label>
+                        <div class="cf-turnstile" 
+                             data-sitekey="<?= $turnstile_site_key; ?>"
+                             data-theme="light"
+                             data-language="en">
+                        </div>
+                        <small class="text-muted">Complete the verification to submit the form</small>
+                    </div>
+                <?php } elseif ($turnstile_site_key !== '' || $turnstile_secret_key !== '') { ?>
+                    <div class="alert alert-warning">
+                        Turnstile is not fully configured. Please set both Site Key and Secret Key in Config.
+                    </div>
+                <?php } ?>
 
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-primary"><?= _SEND; ?></button>

@@ -65,6 +65,7 @@
 	define("_MEMBER_ACTIVATE_COMPLETE","Your account has been activated, thank you. Login to the system <a href=\"module.php?modname=member&mf=memloginform\">click here</a>.");
 	define("_MEMBER_CANNOT_ACTIVATE","Your account cannot activate, please check your activation information.");
 	define("_MEMBER_CAPTEXT","Verification code");
+	define("_ENTER_CAPTCHA","Enter captcha");
 	define("_SIGNIN","Sign In");
 	define("_MEMBER_LOGIN","Sign In");
 	define("_USERNAME","Username");  

@@ -44,6 +44,11 @@
     ## SEO
     $cfg_seo="no";
 
+    ## Captcha
+    $cfg_captcha_provider="default";
+    $cfg_turnstile_site_key="";
+    $cfg_turnstile_secret_key="";
+
 ?&gt;
                 </textarea>
             </div>

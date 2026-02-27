@@ -67,6 +67,7 @@
 	define("_MEMBER_ACTIVATE_COMPLETE","ยืนยันชื่อบัญชีสมาชิกของคุณเรียบร้อยแล้ว ต้องการเข้าสู่ระบบ <a href=\"module.php?modname=member&mf=memloginform\">คลิกที่นี่</a>.");
 	define("_MEMBER_CANNOT_ACTIVATE","ไม่สามารถยืนยันชื่อบัญชีสมาชิกของคุณได้ กรุณาตรวจสอบข้อมูลการยืนยันชื่อบัญชีสมาชิก");
 	define("_MEMBER_CAPTEXT","รหัสอ้างอิง");
+	define("_ENTER_CAPTCHA","กรอกรหัสอ้างอิง");
 	define("_RESET","ยกเลิก");
 	define("_SIGNIN","เข้าสู่ระบบ");
 	define("_MEMBER_LOGIN","เข้าสู่ ละไน ซีเอ็มเอส");

@@ -302,11 +302,13 @@ dbexecute("Create Table Users",$sql);
 <?
 $sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
     mtaId INT(10) UNSIGNED NOT NULL DEFAULT '1',
-    mtaSiteName VARCHAR(150) NOT NULL,
+    mtaSiteName VARCHAR(150) DEFAULT NULL,
     mtaShowSiteName TINYINT(1) NOT NULL DEFAULT 1,
     mtaKeywords VARCHAR(255) DEFAULT NULL,
     mtaDescription VARCHAR(255) DEFAULT NULL,
+    mtaAbstract VARCHAR(100) DEFAULT NULL,
     mtaAuthor VARCHAR(75) DEFAULT NULL,
+    mtaDistribution VARCHAR(20) DEFAULT NULL,
     mtaCopyright VARCHAR(255) DEFAULT NULL,
     mtaLogo VARCHAR(255) DEFAULT NULL,
     mtaFavicon VARCHAR(255) DEFAULT NULL,
@@ -827,8 +829,10 @@ dbexecute("Update Block Data",$sql);
  <li>
 <?
 $sql = "INSERT INTO ".$_SESSION['tablepre']."meta
-(mtaId, mtaKeywords, mtaDescription, mtaAbstract, mtaAuthor, mtaDistribution, mtaCopyright, mtaLogo, mtaFavicon)
+(mtaId, mtaSiteName, mtaShowSiteName, mtaKeywords, mtaDescription, mtaAbstract, mtaAuthor, mtaDistribution, mtaCopyright, mtaLogo, mtaFavicon)
 VALUES (
+    1,
+    '".addslashes($_SESSION['cfg_title'])."',
     1,
     'lanaicms, opensharepoint, opensource, lanai, lanai-cms',
     'This is my site.',
@@ -839,6 +843,7 @@ VALUES (
     NULL,
     NULL
 )";
+    dbexecute("Update Meta Data",$sql);
 ?>
 </ul>
 <TABLE  ALIGN="right" >

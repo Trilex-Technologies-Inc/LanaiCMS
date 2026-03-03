@@ -37,7 +37,7 @@ if ($rs->recordcount() > 0) {
 <!-- Main Article Content -->
 <div class="container my-5">
     <div class="row g-5">
-        <div class="col-md-8">
+        <div class="col-md-12">
 
             <!-- Article Section -->
             <article class="mb-5">
@@ -155,24 +155,8 @@ if ($rs->recordcount() > 0) {
             ?>
         </div>
 
-        <!-- Sidebar -->
-        <div class="col-md-4">
-            <div class="sidebar">
-                <h5 class="fw-bold mb-3">Related Articles</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-decoration-none">How AI is Changing the World</a></li>
-                    <li><a href="#" class="text-decoration-none">Top 10 Gadgets of 2025</a></li>
-                    <li><a href="#" class="text-decoration-none">The Rise of Quantum Computing</a></li>
-                </ul>
-
-                <hr>
-
-                <h5 class="fw-bold mb-3">Categories</h5>
-                <span class="badge bg-secondary me-1">Tech</span>
-                <span class="badge bg-secondary me-1">Science</span>
-                <span class="badge bg-secondary me-1">Innovation</span>
-            </div>
-        </div>
+      
+       
     </div>
 </div>
 

@@ -29,7 +29,7 @@ function getLanguage() {
         <div class="mb-3 row">
             <label class="col-sm-3 col-form-label"><?=_SETUP_URL; ?></label>
             <div class="col-sm-9">
-                <input type="text" name="cfg_url" class="form-control" value="http://<?=$_SERVER["SERVER_NAME"]; ?>">
+                <input type="text" name="cfg_url" class="form-control" value="https://<?=$_SERVER["SERVER_NAME"]; ?>">
             </div>
         </div>
 

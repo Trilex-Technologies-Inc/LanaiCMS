@@ -30,6 +30,9 @@ $cfg['smtp_host'] = $cfg_smtp_host;
 $cfg['smtp_port'] = $cfg_smtp_port;
 $cfg['offset_time'] = $cfg_offsettime;
 $cfg['seo'] = $cfg_seo;
+$cfg['captcha_provider'] = isset($cfg_captcha_provider) ? $cfg_captcha_provider : 'default';
+$cfg['turnstile_site_key'] = isset($cfg_turnstile_site_key) ? $cfg_turnstile_site_key : '';
+$cfg['turnstile_secret_key'] = isset($cfg_turnstile_secret_key) ? $cfg_turnstile_secret_key : '';
 
 $ADODB_CACHE_DIR = $cfg['datadir'] . "/cache/";
 $db =& ADONewConnection($dbtype);
@@ -47,33 +50,42 @@ include_once('include/lanai/class.html.php');
 include_once('include/lanai/class.pager.php');
 $sys_lanai = new Systems();
 
-/* secound security level check */
+
+/* second security level check */
 if (($sys_lanai->security_check()) and (!$sys_lanai->isWin())) {
-    ?>
-    <div style="position:fixed; left:0px; top:0px; width:100%;	height:auto; z-index:1; background-color: #66CCCC; ">
-        <table cellpadding="5" cellspacing="2" width="100%">
-            <tr>
-                <td>
-                    <h2>Security check list</h2>
-                    <ul>
-                        <li>your configuration file 'config.inc.php' MUST NOT WRITEABLE</li>
-                        <li>directory 'blocks' MUST NOT WRITEABLE</li>
-                        <li>directory 'modules' MUST NOT WRITEABLE</li>
-                        <li>directory 'theme' MUST NOT WRITEABLE</li>
-                    </ul>
-                    <p>* Please backup your data every day or every week! &nbsp;And offend change your administrator
-                        username and password.
-                        <br>** This software is distributed in the hope that it will be useful,but WITHOUT ANY WARRANTY;
-                        without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See
-                        the GNU Lesser General Public License for more details.
-                    </p>
-                </td>
-            <tr>
-        </table>
-    </div>
-    <?
-    //exit;
+?>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 10000,
+        timerProgressBar: true,
+    });
+
+    Toast.fire({
+        icon: 'warning',
+        title: 'Security issue detected. Please review file permissions.',
+    html: `
+            <div style="text-align:left; font-size:13px;">
+                <ul style="margin:5px 0 0 18px; padding:0;">
+                    <li><b>config.inc.php</b> must NOT be writable</li>
+                    <li><b>blocks</b> directory must NOT be writable</li>
+                    <li><b>modules</b> directory must NOT be writable</li>
+                    <li><b>theme</b> directory must NOT be writable</li>
+                </ul>
+            </div>
+        `,
+        background: '#fff3cd',
+        color: '#856404',
+        iconColor: '#ffb300'
+    });
+});
+</script>
+<?php
 }
+
 
 // EzShoping Cart
 if (empty($loadlang) || $loadlang === 'yes') {

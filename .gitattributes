@@ -1,8 +1,0 @@
-# Set default behavior to automatically normalize line endings
-* text=auto
-
-# Explicitly declare files you want to always be normalized and converted
-*.php text
-*.html text
-*.css text
-*.js text

@@ -41,7 +41,12 @@ $cid = intval($_REQUEST['cid']);
 
             if ($captcha_provider === 'default') {
                 $captext = isset($_POST['captext']) ? trim($_POST['captext']) : '';
-                if ($captext === '' || !isset($_SESSION['captcha']) || $captext != $_SESSION['captcha']) {
+                $sessionCaptcha = isset($_SESSION['captcha']) ? trim($_SESSION['captcha']) : '';
+                if (
+                    $captext === '' ||
+                    $sessionCaptcha === '' ||
+                    strcasecmp($captext, $sessionCaptcha) !== 0
+                ) {
                     ?>
                     <div class="alert alert-danger">
                         <img src="theme/<?php echo $cfg['theme']; ?>/images/worning.gif" align="absmiddle" />

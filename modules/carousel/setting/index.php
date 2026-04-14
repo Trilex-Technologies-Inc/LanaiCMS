@@ -29,7 +29,7 @@ if (!eregi("setting.php", $_SERVER['PHP_SELF'])) {
 <input type="hidden" name="ac" value="">
 <?
 $objbanner=new banner();
-$sql="SELECT * FROM ".$objbanner->_table." ORDER BY banTitle ASC";
+$sql="SELECT * FROM ".$objbanner->_table." ORDER BY banPosition ASC, banTitle ASC";
 $pager=new bannerPager($db,$sql,30);
 $pager->link="setting.php?modname=carousel&";
 $pager->renderPage();

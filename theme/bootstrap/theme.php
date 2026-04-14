@@ -85,7 +85,8 @@
                     'title' => $rs->fields['banTitle'],
                     'description' => $rs->fields['banDescription'],
                     'image' => $rs->fields['banImage'],
-                    'url' => $rs->fields['banURL']
+                    'url' => $rs->fields['banURL'],
+                    'position' => !empty($rs->fields['banPosition']) ? $rs->fields['banPosition'] : 'l'
                 );
                 $rs->movenext();
             }

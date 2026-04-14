@@ -27,6 +27,12 @@ define("_BANN_EDIT","Edit");
 define("_BANN_DES","Description");
 define("_BANN_IMAGE_URL","Image URL ");
 define("_BANN_URL","URL");
+define("_BANN_POSITION","Position");
+define("_BANN_POSITION_LEFT","Left");
+define("_BANN_POSITION_RIGHT","Right");
+define("_BANN_POSITION_CENTER","Center");
+define("_BANN_POSITION_TOP","Top");
+define("_BANN_POSITION_BOTTOM","Bottom");
 define("_BANN_NEW_ITEM","Add New Banner");
 define("_BANN_NEW_INSTRUCTION","Please complete the following form (*) are required.");
 define("_BANN_EDIT_ITEM","Edit Banner");
@@ -37,5 +43,6 @@ define("_BANN_TITLE_EMPTY","Please enter carousel title.");
 define("_BANN_DES_EMPTY","Please enter carousel description.");
 define("_BANN_IMAGE_URL_EMPTY","Please enter carousel image URL.");
 define("_BANN_URL_EMPTY","Please enter URL.");
+define("_BANN_POSITION_EMPTY","Please enter position.");
 
 ?>

@@ -29,6 +29,7 @@ if (!$rs) {
 
         <table>
             <form name="addform" method="get" action="setting.php">
+                <?php $positions = $objbanner->getPositionOptions(); ?>
                 <input type="hidden" name="modname" value="carousel">
                 <input type="hidden" name="mf" value="edit">
                 <input type="hidden" name="ac" value="edit">
@@ -56,6 +57,11 @@ if (!$rs) {
                 </tr>
 
                 <tr>
+                    <td><?=_BANN_POSITION; ?></td>
+                    <td><select id="banPosition" name="banPosition"><?php foreach ($positions as $key => $label) { ?><option value="<?=$key; ?>"<?=$objbanner->BANPOSITION == $key ? ' selected' : ''; ?>><?=$label; ?></option><?php } ?></select>*</td>
+                </tr>
+
+                <tr>
                     <td>&nbsp;</td>
                     <td><img src="<?=$objbanner->BANIMAGE;?>" name="banView"></td>
                 </tr>
@@ -78,6 +84,7 @@ if (!$rs) {
             frmvalidator.addValidation("banDescription","req","<?=_BANN_DES_EMPTY; ?>");
             frmvalidator.addValidation("banImage","req","<?=_BANN_IMAGE_URL_EMPTY; ?>");
             frmvalidator.addValidation("banURL","req","<?=_BANN_URL_EMPTY; ?>");
+            frmvalidator.addValidation("banPosition","req","<?=_BANN_POSITION_EMPTY; ?>");
         </script>
         <?php
     }

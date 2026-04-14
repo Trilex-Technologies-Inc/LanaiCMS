@@ -21,11 +21,18 @@
         ?>
         <span class="txtContentTitle">Create Necessary Tables </span>
         <br /><br />
-        Please edit this message for create necessary tables script.
+        This step adds the carousel position field if it does not already exist.
         <br /><br />
-        <?
-        $sql="";
-        $objPackage->execQuery($sql);
+        <?php
+        global $db;
+        $columns = $db->MetaColumns("tbl_ln_banner");
+        if (!isset($columns['BANPOSITION'])) {
+            $sql="ALTER TABLE tbl_ln_banner ADD banPosition ENUM('l','r','c','t','b') NOT NULL DEFAULT 'l' AFTER banURL";
+            $objPackage->execQuery($sql);
+        } else {
+            $sql="ALTER TABLE tbl_ln_banner MODIFY banPosition ENUM('l','r','c','t','b') NOT NULL DEFAULT 'l'";
+            $objPackage->execQuery($sql);
+        }
         ?>
         <!-- form button -->
         <input type="button" class="inputButton" value="Next ->" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>&mf=install&step=2';">
@@ -53,10 +60,10 @@
         ?>
         <span class="txtContentTitle">Install banner Module</span>
         <br /><br />
-        Please edit this message for custom module installation script.
+        Install the carousel module and add support for banner position ordering.
         <br /><br />
         <!-- form button -->
-        <input type="button" class="inputButton" value="Next ->" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>&mf=install&step=2';">
+        <input type="button" class="inputButton" value="Next ->" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>&mf=install&step=1';">
         <?
     }
 

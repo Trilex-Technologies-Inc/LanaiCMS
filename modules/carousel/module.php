@@ -9,6 +9,26 @@ ADOdb_Active_Record::SetDatabaseAdapter($db);
 class banner extends ADOdb_Active_Record {
     var $_table = 'tbl_ln_banner';
 
+    function getPositionOptions() {
+        return array(
+            'l' => _BANN_POSITION_LEFT,
+            'r' => _BANN_POSITION_RIGHT,
+            'c' => _BANN_POSITION_CENTER,
+            't' => _BANN_POSITION_TOP,
+            'b' => _BANN_POSITION_BOTTOM
+        );
+    }
+
+    function normalizePosition($position) {
+        $positions = $this->getPositionOptions();
+        return isset($positions[$position]) ? $position : 'l';
+    }
+
+    function getPositionLabel($position) {
+        $positions = $this->getPositionOptions();
+        return isset($positions[$position]) ? $positions[$position] : $positions['l'];
+    }
+
     function getMax(){
         global $db;
         $sql="SELECT MAX(banId) FROM ".$this->_table;
@@ -58,6 +78,9 @@ class banner extends ADOdb_Active_Record {
 
         $id = intval($data['banId']);
         $banDate = !empty($data['banDate']) ? $data['banDate'] : date("Y-m-d H:i:s");
+        $banPosition = $this->normalizePosition(isset($data['banPosition']) ? $data['banPosition'] : 'l');
+        $banShow = isset($data['banShow']) ? intval($data['banShow']) : 0;
+        $banClick = isset($data['banClick']) ? intval($data['banClick']) : 0;
 
 
         $sql = "
@@ -67,9 +90,10 @@ class banner extends ADOdb_Active_Record {
             bandescription = " . $db->qstr($data['banDescription']) . ",
             banimage      = " . $db->qstr($data['banImage']) . ",
             banurl        = " . $db->qstr($data['banURL']) . ",
+            banposition   = " . $db->qstr($banPosition) . ",
             bandate       = " . $db->qstr($banDate) . ",
-            banshow       = " . intval($data['banShow']) . ",
-            banclick      = " . intval($data['banClick']) . "
+            banshow       = " . $banShow . ",
+            banclick      = " . $banClick . "
         WHERE banId = $id
     ";
 
@@ -84,10 +108,51 @@ class banner extends ADOdb_Active_Record {
 
     }
 
+    function createBanner($data) {
+        global $db;
+
+        $banDate = !empty($data['banDate']) ? $data['banDate'] : date("Y-m-d H:i:s");
+        $banPosition = $this->normalizePosition(isset($data['banPosition']) ? $data['banPosition'] : 'l');
+        $banShow = isset($data['banShow']) ? intval($data['banShow']) : 0;
+        $banClick = isset($data['banClick']) ? intval($data['banClick']) : 0;
+
+        $sql = "
+        INSERT INTO {$this->_table}
+            (banTitle, banDescription, banImage, banURL, banPosition, banDate, banShow, banClick)
+        VALUES
+            (" . $db->qstr($data['banTitle']) . ",
+             " . $db->qstr($data['banDescription']) . ",
+             " . $db->qstr($data['banImage']) . ",
+             " . $db->qstr($data['banURL']) . ",
+             " . $db->qstr($banPosition) . ",
+             " . $db->qstr($banDate) . ",
+             " . $banShow . ",
+             " . $banClick . ")
+        ";
+
+        $result = $db->Execute($sql);
+        return ($result !== false);
+    }
+
 
 }
 
 class bannerPager extends Pager {
+
+	function getPositionOptions() {
+		return array(
+			'l' => _BANN_POSITION_LEFT,
+			'r' => _BANN_POSITION_RIGHT,
+			'c' => _BANN_POSITION_CENTER,
+			't' => _BANN_POSITION_TOP,
+			'b' => _BANN_POSITION_BOTTOM
+		);
+	}
+
+	function getPositionLabel($position) {
+		$positions = $this->getPositionOptions();
+		return isset($positions[$position]) ? $positions[$position] : $positions['l'];
+	}
 	
 	function bannerPager($db,$sql,$offset) {
 		Pager::Pager($db,$sql,$offset);
@@ -118,12 +183,13 @@ class bannerPager extends Pager {
 		<tr class="dataRowHeader">
 		<td class="dataColumnHeader"><input type="checkbox" value="select_all" onclick="selectall(this);" class="radioButton" /></td>
 		<td class="dataColumnHeader" width="30%" align="center"><?=_BANN_TITLE; ?></td>
+		<td class="dataColumnHeader" align="center"><?=_BANN_POSITION; ?></td>
 		<td class="dataColumnHeader" width="60%" align="center"><?=_BANN_DESCRIPTION; ?></td>
 		<td class="dataColumnHeader" align="center"><?=_BANN_SHOW; ?></td>
 		<td class="dataColumnHeader" align="center"><?=_BANN_CLICK; ?></td>
 		<td class="dataColumnHeader" align="center"><?=_BANN_EDIT; ?></td>
         	</tr>
-        <?
+        <?php
         $s = ob_get_contents();
         ob_end_clean();
         return $s;
@@ -141,6 +207,7 @@ class bannerPager extends Pager {
            <input type="hidden" name="banId[]" value="<?=$this->rs->fields['banId']; ?>" >
            </td>
            <td class="dataColumn"><?=$this->rs->fields['banTitle']; ?></td>
+           <td class="dataColumn" align="center"><?=$this->getPositionLabel($this->rs->fields['banPosition']); ?></td>
            <td class="dataColumn"><?=$this->rs->fields['banDescription']; ?></td>
            <td class="dataColumn" align="center">
            <? 
@@ -162,7 +229,7 @@ class bannerPager extends Pager {
            <td class="dataColumn" align="center">
           <a href="setting.php?modname=carousel&mf=edit&id=<?=$this->rs->fields['banId']; ?>" ><img src="theme/<?=$cfg['theme']; ?>/images/edit.gif" border="0" align="absmiddle"/></a>
            </tr>
-           <?
+           <?php
           $this->rs->movenext();
       }
       $s = ob_get_contents();

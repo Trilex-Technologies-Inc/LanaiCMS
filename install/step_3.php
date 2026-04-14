@@ -379,6 +379,7 @@ $sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
 			  banDescription text NOT NULL,
 			  banImage varchar(255) NOT NULL,
 			  banURL varchar(255) NOT NULL,
+			  banPosition enum('l','r','c','t','b') NOT NULL default 'l',
 			  banDate datetime NOT NULL,
 			  banShow int(10) unsigned default '0',
 			  banClick int(10) unsigned default '0',
@@ -388,24 +389,30 @@ $sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
 ?>
     <li>
 <?
-$sql1 = "INSERT INTO ".$_SESSION['tablepre']."banner 
+$sql1 = "INSERT INTO ".$_SESSION['tablepre']."banner
+(`banId`, `banTitle`, `banDescription`, `banImage`, `banURL`, `banPosition`, `banDate`, `banShow`, `banClick`)
 VALUES (NULL, 'example 1', 'description 1',
 'https://wowslider.com/sliders/demo-93/data1/images/landscape.jpg',
 'https://wowslider.com/sliders/demo-93/data1/images/landscape.jpg',
+'l',
 '2025-12-02 10:24:13', NULL, NULL)";
 dbexecute("Insert Banner 1", $sql1);
 
-$sql2 = "INSERT INTO ".$_SESSION['tablepre']."banner 
+$sql2 = "INSERT INTO ".$_SESSION['tablepre']."banner
+(`banId`, `banTitle`, `banDescription`, `banImage`, `banURL`, `banPosition`, `banDate`, `banShow`, `banClick`)
 VALUES (NULL, 'example 2', 'description 2',
 'https://wowslider.com/sliders/demo-93/data1/images/sunset.jpg',
 'https://wowslider.com/sliders/demo-93/data1/images/sunset.jpg',
+'c',
 '2025-12-02 10:25:18', NULL, NULL)";
 dbexecute("Insert Banner 2", $sql2);
 
-$sql3 = "INSERT INTO ".$_SESSION['tablepre']."banner 
+$sql3 = "INSERT INTO ".$_SESSION['tablepre']."banner
+(`banId`, `banTitle`, `banDescription`, `banImage`, `banURL`, `banPosition`, `banDate`, `banShow`, `banClick`)
 VALUES (NULL, 'example 3', 'description 3',
 'https://fastly.picsum.photos/id/52/1024/480.jpg?hmac=EhPOe5u6CjvoQFyYjJFtpUOCAiW8-49KWTIgBmH4ct4',
 'https://fastly.picsum.photos/id/52/1024/480.jpg?hmac=EhPOe5u6CjvoQFyYjJFtpUOCAiW8-49KWTIgBmH4ct4',
+'r',
 '2025-12-03 09:00:26', 0, 0)";
 dbexecute("Insert Banner 3", $sql3);
 

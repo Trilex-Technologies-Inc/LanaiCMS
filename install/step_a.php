@@ -46,7 +46,7 @@ $langar = getLanguage();
                         foreach ($langar as $value) {
                             $xvalue = substr($value, 5, strlen($value));
                             $xvalue = substr($xvalue, 0, strlen($xvalue) - 4);
-                            $selected = (($_SESSION['lang'] ?? '') == $xvalue) ? "selected" : "";
+                            $selected = ((isset($_SESSION['lang']) ? $_SESSION['lang'] : '') == $xvalue) ? "selected" : "";
                             ?>
                             <option value="index.php?set=<?= $xvalue; ?>" <?= $selected; ?>>
                                 <?= ucwords($xvalue); ?>

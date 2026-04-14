@@ -4,17 +4,11 @@ if (!eregi("setting.php", $_SERVER['PHP_SELF'])) {
 		die ("You can't access this file directly...");
 }
 
+$objbanner = new banner();
 
 if (!empty($_REQUEST['ac']) && $_REQUEST['ac']=="add") {
-	
-$objbanner=new banner();
-$objbanner->banTitle=$_REQUEST['banTitle'];
-$objbanner->banDescription=$_REQUEST['banDescription'];
-$objbanner->banImage=$_REQUEST['banImage'];
-$objbanner->banURL=$_REQUEST['banURL'];
-$objbanner->banDate=date("Y-m-d H:i:s");
 
-$result=$objbanner->save();
+	$result = $objbanner->createBanner($_REQUEST);
 
 if (!$result) { 
 	$sys_lanai->getErrorBox($objbanner->ErrorMsg());
@@ -43,10 +37,12 @@ if (!$result) {
 <input type="hidden" name="modname" value="carousel">
 <input type="hidden" name="mf" value="add">
 <input type="hidden" name="ac" value="add">
+<?php $positions = $objbanner->getPositionOptions(); ?>
 <tr><td><?=_BANN_TITLE; ?></td><td><input type="text" id="banTitle" name="banTitle" size="30">*</td></tr>
 <tr><td valign="top"><?=_BANN_DES; ?></td><td><textarea name="banDescription" cols="30" rows="5"></textarea>*</td></tr>
 <tr><td><?=_BANN_IMAGE_URL; ?></td><td><input type="text" id="banImage" name="banImage" size="50" onblur="javacript:loadImage()">*</td></tr>
 <tr><td><?=_BANN_URL; ?></td><td><input type="text" id="banURL" name="banURL" size="40">*</td></tr>
+<tr><td><?=_BANN_POSITION; ?></td><td><select id="banPosition" name="banPosition"><?php foreach ($positions as $key => $label) { ?><option value="<?=$key; ?>"<?=$key == 'l' ? ' selected' : ''; ?>><?=$label; ?></option><?php } ?></select>*</td></tr>
 <tr><td>&nbsp;</td><td><img src="modules/carousel/images/space.gif" name="banView" ></td></tr>
 <tr><td>&nbsp;</td><td><input  type="submit" value="<?=_SAVE; ?>" class="inputButton"> <input  type="reset" value="<?=_RESET; ?>" class="inputButton"></td></tr>
 </form>
@@ -59,7 +55,8 @@ if (!$result) {
 	frmvalidator.addValidation("banDescription","req","<?=_BANN_DES_EMPTY; ?>");
 	frmvalidator.addValidation("banImage","req","<?=_BANN_IMAGE_URL_EMPTY; ?>");
 	frmvalidator.addValidation("banURL","req","<?=_BANN_URL_EMPTY; ?>");
+	frmvalidator.addValidation("banPosition","req","<?=_BANN_POSITION_EMPTY; ?>");
 </script>
-<?
+<?php
 	} // check add
 ?>

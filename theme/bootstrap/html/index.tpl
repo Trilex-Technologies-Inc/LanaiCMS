@@ -139,9 +139,49 @@
             z-index: 10;
             padding: 1.25rem;
             border-radius: 0.75rem;
+            left: 50%;
+            right: auto;
+            width: min(90%, 42rem);
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        .carousel-caption.caption-left {
             left: 5%;
+            right: auto;
+            transform: none;
+            text-align: left;
+        }
+
+        .carousel-caption.caption-right {
+            left: auto;
             right: 5%;
-            width: 90%;
+            transform: none;
+            text-align: right;
+        }
+
+        .carousel-caption.caption-center {
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        .carousel-caption.caption-top {
+            top: 1.5rem;
+            bottom: auto;
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        .carousel-caption.caption-bottom {
+            bottom: 1.5rem;
+            top: auto;
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%);
             text-align: center;
         }
 
@@ -300,9 +340,22 @@
             .carousel-caption {
                 bottom: 0.5rem;
                 padding: 0.75rem;
-                left: 3%;
-                right: 3%;
+                left: 50%;
+                right: auto;
                 width: 94%;
+                transform: translateX(-50%);
+            }
+
+            .carousel-caption.caption-left {
+                left: 3%;
+                right: auto;
+                transform: none;
+            }
+
+            .carousel-caption.caption-right {
+                left: auto;
+                right: 3%;
+                transform: none;
             }
 
             .carousel-caption h1 {
@@ -589,7 +642,7 @@
                 <div class="carousel-item {if $i == 0}active{/if}">
                     <img src="{$banner.image}" class="d-block w-100" alt="{$banner.title}">
                     <div class="container">
-                        <div class="carousel-caption {if $i == 0}text-start{elseif $i == count($banners)-1}text-end{else}text-center{/if}">
+                        <div class="carousel-caption {if $banner.position eq 'l'}caption-left{elseif $banner.position eq 'r'}caption-right{elseif $banner.position eq 't'}caption-top{elseif $banner.position eq 'b'}caption-bottom{else}caption-center{/if}">
                             <h1>{$banner.title}</h1>
                             <p class="opacity-75">{$banner.description}</p>
                             {if $banner.url}

@@ -54,9 +54,9 @@ $sys_lanai->loadAjaxFunction($modname);
     <link rel="alternate" type="application/atom+xml" title="<?= htmlspecialchars($cfg['title'], ENT_QUOTES); ?> - Atom" href="<?= $cfg['url']; ?>/feed.php?feed=ATOM"  />
     <title><?= htmlspecialchars($cfg_title, ENT_QUOTES); ?></title>
     <link href="theme/<?= htmlspecialchars($cfg_theme, ENT_QUOTES); ?>/style/style.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+    <link href="assets/vendor/fonts/poppins.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <?php
     $sys_lanai->loadAjaxCode($modname);

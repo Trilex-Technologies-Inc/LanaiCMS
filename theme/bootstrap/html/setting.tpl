@@ -6,7 +6,7 @@
 <!--[if gte IE 5.5]>
 <script language="JavaScript" src="theme/{$cfgTheme}/style/dhtml.js" type="text/JavaScript"></script>
 <![endif]-->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="assets/vendor/bootstrap-icons/font/bootstrap-icons.css">
 <style>
 
   :root {
@@ -326,7 +326,7 @@
 </div>
 
 <!-- Bootstrap JS Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -364,6 +364,6 @@
     // Removed content.classList.toggle('active') to avoid conflicts
   });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="assets/vendor/sweetalert2/sweetalert2.all.min.js"></script>
 </body>
 </html>

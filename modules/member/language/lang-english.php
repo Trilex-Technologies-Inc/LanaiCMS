@@ -62,6 +62,10 @@
 	define("_USER_PRIVILEGE","Privilege");
 	define("_MEMBER_NEW","Member Setting");
 	define("_MEMBER_NEW_INSTRUCTION","Please complete following form (*) are required!");
+	define("_MEMBER_ACTIVATE_SUBJECT","Activate your account");
+	define("_MEMBER_ACTIVATE_EMAIL_MESSAGE","Thank you for registering. Please open the link below to activate your account:");
+	define("_MEMBER_ACTIVATE_EMAIL_SENT","An activation link has been sent to your E-Mail.");
+	define("_MEMBER_ALREADY_ACTIVATED","Your account is already active. Login to the system <a href=\"module.php?modname=member&mf=memloginform\">click here</a>.");
 	define("_MEMBER_ACTIVATE_COMPLETE","Your account has been activated, thank you. Login to the system <a href=\"module.php?modname=member&mf=memloginform\">click here</a>.");
 	define("_MEMBER_CANNOT_ACTIVATE","Your account cannot activate, please check your activation information.");
 	define("_MEMBER_CAPTEXT","Verification code");

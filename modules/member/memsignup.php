@@ -9,6 +9,71 @@ include_once($modfunction);
 
 // get user info
 $mem_lanai = new User();
+$signupSendResult = null;
+
+function member_get_activation_url($userLogin, $passwordHash)
+{
+    global $cfg;
+
+    $baseUrl = isset($cfg['url']) ? trim($cfg['url']) : '';
+    $scriptDir = isset($_SERVER['SCRIPT_NAME']) ? dirname($_SERVER['SCRIPT_NAME']) : '';
+    if ($scriptDir == '\\' || $scriptDir == '/') {
+        $scriptDir = '';
+    }
+
+    if ($baseUrl == '') {
+        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
+        $baseUrl = $scheme . '://' . $_SERVER['HTTP_HOST'] . $scriptDir;
+    } else {
+        $parsedUrl = parse_url($baseUrl);
+        $configuredPath = isset($parsedUrl['path']) ? trim($parsedUrl['path'], '/') : '';
+
+        if ($configuredPath == '' && $scriptDir != '') {
+            $baseUrl = rtrim($baseUrl, '/') . $scriptDir;
+        }
+    }
+
+    return rtrim($baseUrl, '/') . '/module.php?modname=member&mf=memactivate&u=' . urlencode($userLogin) . '&p=' . urlencode($passwordHash);
+}
+
+function member_send_activation_email($userFname, $userLname, $userEmail, $userLogin, $passwordHash)
+{
+    global $cfg;
+
+    if ($userEmail == '') {
+        return false;
+    }
+
+    require_once("include/phpmailer/class.phpmailer.php");
+
+    $activationUrl = member_get_activation_url($userLogin, $passwordHash);
+    $fromEmail = !empty($cfg['email']) ? $cfg['email'] : $userEmail;
+    $fromName = !empty($cfg['title']) ? $cfg['title'] : 'Lanai CMS';
+
+    $mail = new phpmailer();
+    $mail->Mailer = "smtp";
+    $mail->Host = $cfg['smtp_host'];
+    $mail->Port = $cfg['smtp_port'];
+
+    if (!empty($cfg['smtp_user'])) {
+        $mail->SMTPAuth = true;
+        $mail->Username = $cfg['smtp_user'];
+        $mail->Password = $cfg['smtp_pass'];
+    }
+
+    $mail->From = $fromEmail;
+    $mail->FromName = $fromName;
+    $mail->Subject = _MEMBER_ACTIVATE_SUBJECT;
+    $mail->Body = _MEMBER_ACTIVATE_EMAIL_MESSAGE . "\n\n" . $activationUrl;
+    $mail->IsHTML(false);
+    $mail->AddAddress($userEmail, $userFname . " " . $userLname);
+
+    $sent = $mail->Send();
+    $mail->ClearAddresses();
+
+    return $sent;
+}
+
 $captcha_provider = isset($cfg['captcha_provider']) ? $cfg['captcha_provider'] : 'default';
 if ($captcha_provider !== 'cloudflare') {
     $captcha_provider = 'default';
@@ -73,11 +138,15 @@ if ($rslogin->recordcount() > 0) {
                 if (empty($rs)) {
                     $sys_lanai->getErrorBox(_CANNOT_REGISTER . " <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
                 } else {
+                    $signupSendResult = member_send_activation_email($userFname, $userLname, $userEmail, $userLogin, md5($userPassword1));
                     // success message
                     ?>
                     <div class="alert alert-success d-flex align-items-center" role="alert">
                         <img src="theme/<?=$cfg['theme']; ?>/images/ok.gif" class="me-2" />
-                        <div><?=_REG_COMPLETE;?></div>
+                        <div>
+                            <?=_REG_COMPLETE;?><br>
+                            <?=($signupSendResult ? _MEMBER_ACTIVATE_EMAIL_SENT : _REG_CANNOT_SEND);?>
+                        </div>
                     </div>
                     <?php
                 }

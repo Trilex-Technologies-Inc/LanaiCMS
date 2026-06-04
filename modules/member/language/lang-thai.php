@@ -64,6 +64,10 @@
 	define("_USER_PRIVILEGE","สิทธิ์");
 	define("_MEMBER_NEW","ตั้งค่าสมาชิก");
 	define("_MEMBER_NEW_INSTRUCTION","กรุณากรอกข้อมูลให้ครบสมบูรณ์");
+	define("_MEMBER_ACTIVATE_SUBJECT","ยืนยันบัญชีสมาชิกของคุณ");
+	define("_MEMBER_ACTIVATE_EMAIL_MESSAGE","ขอบคุณที่สมัครสมาชิก กรุณาเปิดลิงก์ด้านล่างเพื่อยืนยันบัญชีของคุณ:");
+	define("_MEMBER_ACTIVATE_EMAIL_SENT","ส่งลิงก์ยืนยันบัญชีไปยังอีเมล์ของคุณเรียบร้อยแล้ว");
+	define("_MEMBER_ALREADY_ACTIVATED","บัญชีสมาชิกของคุณเปิดใช้งานแล้ว ต้องการเข้าสู่ระบบ <a href=\"module.php?modname=member&mf=memloginform\">คลิกที่นี่</a>.");
 	define("_MEMBER_ACTIVATE_COMPLETE","ยืนยันชื่อบัญชีสมาชิกของคุณเรียบร้อยแล้ว ต้องการเข้าสู่ระบบ <a href=\"module.php?modname=member&mf=memloginform\">คลิกที่นี่</a>.");
 	define("_MEMBER_CANNOT_ACTIVATE","ไม่สามารถยืนยันชื่อบัญชีสมาชิกของคุณได้ กรุณาตรวจสอบข้อมูลการยืนยันชื่อบัญชีสมาชิก");
 	define("_MEMBER_CAPTEXT","รหัสอ้างอิง");

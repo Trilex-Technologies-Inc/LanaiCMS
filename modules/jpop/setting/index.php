@@ -1,6 +1,6 @@
 <?php
 
-if (!eregi("setting.php", $_SERVER['PHP_SELF'])) {
+if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 		die ("You can't access this file directly...");
 }
 
@@ -8,7 +8,7 @@ if (!eregi("setting.php", $_SERVER['PHP_SELF'])) {
 <span class="txtContentTitle"><?=_JPOP_SETTING; ?></span><br><br>
 <a href="setting.php?modname=jpop&mf=popadd" ><?=_JPOP_NEW; ?></a> | 
 <a href="module.php?modname=setting" ><?=_JPOP_BACK; ?></a><br><br>
-<?
+<?php
 
 $objJpop=new Jpop();
 $objJpop->_table=$cfg['tablepre']."jpop";

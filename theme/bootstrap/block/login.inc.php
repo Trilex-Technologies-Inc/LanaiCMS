@@ -1,4 +1,4 @@
-<?
+<?php
 include_once("include/lanai/class.system.php");
 $sys_lanai = new Systems();
 if (!empty($_REQUEST['vertexlogin']) && $_REQUEST['vertexlogin'] == "1") {
@@ -32,7 +32,7 @@ if (!empty($_REQUEST['vertexlogin']) && $_REQUEST['vertexlogin'] == "1") {
 
         </div>
 
-        <?
+        <?php
     } else {
         // show user info
         include_once("modules/member/module.php");
@@ -42,7 +42,7 @@ if (!empty($_REQUEST['vertexlogin']) && $_REQUEST['vertexlogin'] == "1") {
         <div class="user-info d-flex justify-content-between align-items-center text-white">
         <div>
             <i class="fas fa-user-circle me-2"></i>
-            <span> <?
+            <span> <?php
                 ?>Welcome, <?= $mem->fields['userFname'] . " " . $mem->fields['userLname']; ?>.</span>
         </div>
         <div>
@@ -70,7 +70,7 @@ if (!empty($_REQUEST['vertexlogin']) && $_REQUEST['vertexlogin'] == "1") {
         }
         ?>
 
-        <?
+        <?php
     }
 }
 ?>

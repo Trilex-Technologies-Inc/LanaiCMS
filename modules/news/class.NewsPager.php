@@ -11,12 +11,12 @@
 	 **/
 	class NewsPager extends ADODB_Pager {
 	
-		function NewsPager(&$db,$sql,$id = 'adodb', $showPageLinks = false){
+		function __construct(&$db,$sql,$id = 'adodb', $showPageLinks = false){
             parent::__construct($db, $sql, $id, $showPageLinks);
             $this->page = _PAGE;
 		}
 		
-		function RenderLayout($header,$grid,$footer)
+		function RenderLayout($header,$grid,$footer,$attributes='')
 		{
 			echo "<table width=\"100%\" ><tr><td>",
 				 "</td></tr><tr><td>",
@@ -126,7 +126,7 @@
 				<th class="tblRowSolidTopDown"><?=_ACTIVE; ?></th>
 				<th class="tblRowSolidTopDown"><?=_EDIT; ?></th>
 			</tr>
-			<?
+			<?php
 			while(!$this->rs->EOF){
 			?>
 			<tr>
@@ -141,19 +141,19 @@
 					<?=$mod_lanai->getNewsGroupTitleById($this->rs->fields['chnId']); ?>
 				</td>
 				<td class="tblRowDash" align="center">
-				<?
+				<?php
 					if ($this->rs->fields['nwsActive']=='y') {
 					    ?>
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=nwsedit&v=n&ac=active&mid=<?=$this->rs->fields['nwsId']; ?>">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/ok.gif" border="0" align="absmiddle">
 						</a>
-						<?
+						<?php
 					} else {
 						?>
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=nwsedit&v=y&ac=active&mid=<?=$this->rs->fields['nwsId']; ?>">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/cancel.gif" border="0" align="absmiddle">
 						</a>
-						<?
+						<?php
 					}
 				?>					
 				</td>
@@ -164,10 +164,10 @@
 				</td>
 				
 			</tr>
-			<?
+			<?php
 				$this->rs->movenext();
 			} // while{
-			?></table><?
+			?></table><?php
 			$s = ob_get_contents();
 			ob_end_clean();
 			return $s;

@@ -1,5 +1,5 @@
-<?
-	if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+<?php
+	if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	} 
 	
@@ -25,7 +25,7 @@
 	<input type="hidden" name="ac" value="new">	
 	<input type="hidden" name="m" value="<?=$_REQUEST['m']?>">
 
-<?
+<?php
 	switch($_REQUEST['m']){
 		case 'c': 
 			// content type
@@ -74,7 +74,7 @@
 		</td>
 	</tr>
 
-<?
+<?php
 			break;
 		case 'b': 
 			// upload file
@@ -100,7 +100,7 @@
 		<td><input type="file" name="userfile" size="50"></td>
 	</tr>
 
-<?
+<?php
 			break;
 		case 'r':
 			// rss/url
@@ -130,7 +130,7 @@
 		<td><input type="text" name="blcRssRefesh" size="5" value="600"></td>
 	</tr>
 
-<?
+<?php
 			break;
 		case 'p': 
 			// block path
@@ -156,7 +156,7 @@
 		<td><input type="text" name="blcPath" size="20"></td>
 	</tr>
 
-<?
+<?php
 			break;
 	} // switch
 ?>	

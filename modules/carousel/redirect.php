@@ -1,4 +1,4 @@
-<?
+<?php
 	/* load data to edit */
 	$objbanner=new banner();
 

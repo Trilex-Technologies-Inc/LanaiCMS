@@ -1,5 +1,5 @@
-<?
-	if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+<?php
+	if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	}
 
@@ -36,19 +36,19 @@
 <input type="hidden" name="mf" value="upload">
 <input type="hidden" name="dir" value="<?=$_REQUEST['dir']; ?>">
 <input type="hidden" name="ac" value="upload">
-<?
+<?php
     for ($i=0;$i<10;$i++) {
 ?>
   <tr>
     <td><?=_FILE; ?> <?=($i+1); ?></td>
     <td><input name="userfile[]" type="file" /></td>
   </tr>
-<?
+<?php
     }
 ?>
 </form>
 </table>
-<?
+<?php
     }
 
 ?>

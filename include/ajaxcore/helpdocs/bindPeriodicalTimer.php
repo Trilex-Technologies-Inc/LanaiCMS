@@ -35,7 +35,7 @@ $ajax->setJSCode("mybutton",$ajax->htmlDisable("mybutton").$ajax->htmlEnable("st
 		<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
 		<script type="text/javascript" src="../prototype.js"></script> <!-- include stantard prototype library -->
 		<script type="text/javascript" src="../AjaxCore.js"></script> <!-- include AjaxCore library -->
-		<? echo $ajax->getJSCode(); /* print some header content to handle the results from the request */ ?>
+		<?php echo $ajax->getJSCode(); /* print some header content to handle the results from the request */ ?>
 	</head>
 	<body>
 		<table align="center" width="740">
@@ -54,9 +54,9 @@ $ajax->setJSCode("mybutton",$ajax->htmlDisable("mybutton").$ajax->htmlEnable("st
 					
 					
 					<input type="button" id="mybutton" name="mybutton" value="press me!" />
-					<? echo $ajax->bindPeriodicalTimer("mybutton","onclick","getRandomNumber","mytimer","1500"); /* Bind a PeriodicalTimer to an HTML object to an JavaScript event to call PHP function */ ?>
+					<?php echo $ajax->bindPeriodicalTimer("mybutton","onclick","getRandomNumber","mytimer","1500"); /* Bind a PeriodicalTimer to an HTML object to an JavaScript event to call PHP function */ ?>
 				
-					<input type="button" id="stoptimer" name="stoptimer" value="kill timer!" disabled="disabled" onclick="<? echo $ajax->stopTimer("mytimer"); ?>"/>
+					<input type="button" id="stoptimer" name="stoptimer" value="kill timer!" disabled="disabled" onclick="<?php echo $ajax->stopTimer("mytimer"); ?>"/>
 					<div id="results" name="results" >  
 						<!-- div where results will be placed -->
 					</div>

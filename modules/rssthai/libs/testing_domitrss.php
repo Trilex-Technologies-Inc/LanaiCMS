@@ -44,12 +44,12 @@ class test_domitrss {
 		    switch($this->rssparser){
 		    	case ("domit_rss_lite"):
 					require_once(DOMIT_RSS_INCLUDE_PATH . 'xml_domit_rss_lite.php');
-					$this->rssdoc =& new xml_domit_rss_document_lite($this->rssurl);
+					$this->rssdoc = new xml_domit_rss_document_lite($this->rssurl);
 					break;
 					
 		    	case ("domit_rss"):
 		    		require_once(DOMIT_RSS_INCLUDE_PATH . 'xml_domit_rss.php');
-					$this->rssdoc =& new xml_domit_rss_document($this->rssurl);
+					$this->rssdoc = new xml_domit_rss_document($this->rssurl);
 					break;
 		    } // switch
 			

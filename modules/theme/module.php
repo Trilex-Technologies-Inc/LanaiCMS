@@ -1,4 +1,4 @@
-<?	
+<?php	
 	/**
 	 * Theme
 	 * 
@@ -16,7 +16,7 @@
 		var $_sql;		
 				
 		
-		function Themes() {
+		function __construct() {
 			global $db,$cfg;
 			$this->db=$db;
 			$this->cfg=$cfg;
@@ -42,8 +42,8 @@
 		function getCurrentTheme() {
 			$lines = file('config.inc.php');
 			foreach ($lines as $line) {
-			    if (eregi('cfg_theme=', $line)) {
-					list($key,$value)=split("=",$line,2);
+			    if (stripos($line, 'cfg_theme=') !== false) {
+					list($key,$value)=explode("=",$line,2);
 					$value=trim($value);
 					$valuex=ltrim($value,"\"");
 					$valuex=substr($valuex,0,strlen($valuex)-2);
@@ -55,7 +55,7 @@
 		function _get_line(){
 			$lines = file('config.inc.php');			
 			foreach ($lines as $i => $line) {
-				if (eregi('cfg_theme=', $line)) {
+				if (stripos($line, 'cfg_theme=') !== false) {
 					return $i;
 				}
 			}

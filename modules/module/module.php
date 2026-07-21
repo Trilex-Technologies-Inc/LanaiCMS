@@ -1,4 +1,4 @@
-<?
+<?php
 	include_once("class.ModulePager.php");
 	
 	/**
@@ -18,7 +18,7 @@
 		var $_sql;		
 		
 		
-		function Module() {
+		function __construct() {
 			global $db,$cfg;
 			$this->db=$db;
 			$this->cfg=$cfg;

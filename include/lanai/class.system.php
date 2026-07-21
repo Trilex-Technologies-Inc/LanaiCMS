@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  *  System Class (Sys Lanai)
@@ -22,7 +22,7 @@ class Systems
             document.title = "<?=$title; ?>";
             //-->
         </SCRIPT>
-        <?
+        <?php
     }
 
     /**
@@ -234,10 +234,10 @@ class Systems
         global $cfg_lang;
         if ((!$_SESSION['uid'])) {
             ?>[<a href="module.php?m=member&f=login" class="txtIcon"><?= _NOT_LOGIN; ?></a>] [<a
-                    href="module.php?m=member&f=signup" class="txtIcon"><?= _SIGNUP; ?></a>]<?
+                    href="module.php?m=member&f=signup" class="txtIcon"><?= _SIGNUP; ?></a>]<?php
         } else {
             ?><?= _LOGIN_AS; ?> <a href="module.php?m=member" class="txtIcon"><?= $this->getUserInfo(); ?></a>
-            [<a href="module.php?m=member&f=logout" class="txtIcon"><?= _LOGOUT; ?></a>]<?
+            [<a href="module.php?m=member&f=logout" class="txtIcon"><?= _LOGOUT; ?></a>]<?php
         }
     }
 
@@ -251,7 +251,7 @@ class Systems
                 <td><span class="txtWorning"><?= $errmessage; ?></span></td>
             </tr>
         </table>
-        <?
+        <?php
     }
 
     function getInfoBox($errmessage = "")
@@ -264,7 +264,7 @@ class Systems
                 <td><span class="txtWorning"><?= $errmessage; ?></span></td>
             </tr>
         </table>
-        <?
+        <?php
     }
 
     function getErrorAlertBox($errmessage = "")
@@ -276,19 +276,19 @@ class Systems
             alert('<?=$errmessage; ?>')
             //-->
         </SCRIPT>
-        <?
+        <?php
     }
 
     function go2Page($page)
     {
         ?>
-        <script> location.href = "<?=$page; ?>";   </script><?
+        <script> location.href = "<?=$page; ?>";   </script><?php
     }
 
     function goBack($page = 1)
     {
         ?>
-        <script> history.back(<?=$page; ?>);   </script><?
+        <script> history.back(<?=$page; ?>);   </script><?php
     }
 
     function setLogs()
@@ -384,7 +384,7 @@ class Systems
                         src="include/ajaxcore/prototype.js"></script> <!-- include stantard prototype library -->
                 <script type="text/javascript"
                         src="include/ajaxcore/AjaxCore.js"></script> <!-- include AjaxCore library -->
-                <?
+                <?php
                 echo $this->ajax->getJSCode();
             }
         }

@@ -16,7 +16,7 @@
             $this->page = _PAGE;
         }
 		
-		function RenderLayout($header,$grid,$footer)
+		function RenderLayout($header,$grid,$footer,$attributes='')
 		{
 			echo "<table width=\"100%\" ><tr><td>",
 				 "</td></tr><tr><td>",
@@ -129,7 +129,7 @@
 				<th class="tblRowSolidTopDown"><?=_ACTIVE; ?></th>
 				<th class="tblRowSolidTopDown"><?=_EDIT; ?></th>
 			</tr>
-			<?
+			<?php
 			$rownum=1;
 			while(!$this->rs->EOF){			
 			?>
@@ -142,12 +142,12 @@
 					<?=$this->rs->fields['mnuTitle']; ?>
 				</td>
 				<td class="tblRowDash">				
-					<? 
+					<?php 
 						$rs=$mod_lanai->getMenuById($this->rs->fields['mnuParentId']); 
 						if (($rs->recordcount())>0) {
-						    ?><?=$rs->fields['mnuTitle']; ?><?
+						    ?><?=$rs->fields['mnuTitle']; ?><?php
 						} else {
-						    ?><?=_MENU_NONE; ?><?
+						    ?><?=_MENU_NONE; ?><?php
 						}
 					?>					
 				</td>
@@ -159,7 +159,7 @@
 					<input type="hidden" name="mnuOrderId[]" value="<?=$this->rs->fields['mnuId']; ?>">
 				</td>
 				<td class="tblRowDash">				
-				<?
+				<?php
 					if ($rownum==1) {
 					    ?>
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>">
@@ -168,7 +168,7 @@
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=mnuedit&ac=order&v=dn&mid=<?=$this->rs->fields['mnuId']; ?>">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/downarrow.gif" border="0" align="absmiddle">
 						</a>
-						<?
+						<?php
 					} else if ($rownum==$this->rs->recordcount()) {
 					    ?>
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=mnuedit&ac=order&v=up&mid=<?=$this->rs->fields['mnuId']; ?>">
@@ -177,7 +177,7 @@
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/space.gif" border="0" align="absmiddle">
 						</a>
-						<?
+						<?php
 					} else {
 						?>
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=mnuedit&ac=order&v=up&mid=<?=$this->rs->fields['mnuId']; ?>">
@@ -186,29 +186,29 @@
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=mnuedit&ac=order&v=dn&mid=<?=$this->rs->fields['mnuId']; ?>">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/downarrow.gif" border="0" align="absmiddle">
 						</a>
-						<?
+						<?php
 					}
 				?>	
 				</td>				
 				<td class="tblRowDash" align="center">
-				<?
+				<?php
 					if ($this->rs->fields['mnuActive']=='y') {
 					    ?>
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=mnuedit&v=n&ac=active&mid=<?=$this->rs->fields['mnuId']; ?>">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/ok.gif" border="0" align="absmiddle">
 						</a>
-						<?
+						<?php
 					} else {
 						?>
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=mnuedit&v=y&ac=active&mid=<?=$this->rs->fields['mnuId']; ?>">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/cancel.gif" border="0" align="absmiddle">
 						</a>
-						<?
+						<?php
 					}
 				?>					
 				</td>
 				<td class="tblRowDash" align="center">
-					<?
+					<?php
 						if ($this->rs->fields['mnuType']=="l") {
 						    $link="&m=l";
 						} else if ($this->rs->fields['mnuType']=="m") {
@@ -222,11 +222,11 @@
 					</a>
 				</td>				
 			</tr>
-			<?
+			<?php
 				$rownum++;
 				$this->rs->movenext();
 			} // while{
-			?></table><?
+			?></table><?php
 			$s = ob_get_contents();
 			ob_end_clean();
 			return $s;

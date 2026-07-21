@@ -30,7 +30,7 @@ $ajax=new AjaxTest(); // create an instance of the inherited class
     <title>Ajax bindPeriodicalTimert Test Page</title>
     <script type="text/javascript" src="../prototype.js"></script> <!-- include stantard prototype library -->
      <script type="text/javascript" src="../AjaxCore.js"></script> <!-- include AjaxCore library -->
-    <? echo $ajax->getJSCode(); /* print some header content to handle the results from the request */ ?>
+    <?php echo $ajax->getJSCode(); /* print some header content to handle the results from the request */ ?>
 </head>
 <body>
 This is a simple test file to check out the <a href="http://sourceforge.net/projects/ajaxcore/">AjaxCore</a> framework. <br />
@@ -41,7 +41,7 @@ When the button is pressed,a <b>Timer</b> starts with the milliseconds specified
 
 <center>
 	<input type="button" id="mybutton" name="mybutton" value="press me!">
-	<? echo $ajax->bindPeriodicalTimer("mybutton","onclick","getRandomNumber","mytimer","5000"); /* Bind a PeriodicalTimer to an HTML object to an JavaScript event to call PHP function */ ?>
+	<?php echo $ajax->bindPeriodicalTimer("mybutton","onclick","getRandomNumber","mytimer","5000"); /* Bind a PeriodicalTimer to an HTML object to an JavaScript event to call PHP function */ ?>
 	<div id="results" name="results" >  <!-- div where results will be placed -->
 	</div>
 </center>

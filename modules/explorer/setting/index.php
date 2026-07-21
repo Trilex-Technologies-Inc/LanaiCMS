@@ -1,5 +1,5 @@
-<?
-	if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+<?php
+    if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	}
 
@@ -44,18 +44,18 @@ $dir = isset($_REQUEST['dir']) ? $_REQUEST['dir'] : '';
 </tr>
 
 
-    <?
+    <?php
     $dir = isset($_REQUEST['dir']) ? $_REQUEST['dir'] : '';
     /* load dir */
     $dirarr=$objExpl->loadDir($vardir);
     for ($i=0;$i<count($dirarr);$i++){
     ?>
     <tr bgcolor="#EEEEEE">
-     <?
+     <?php
         if ($dirarr[$i]['name']==".") {
             $linkpath="";
         } else if ($dirarr[$i]['name']=="..") {
-            $spath=split("/",$dir);
+            $spath=explode("/",$dir);
                 for ($j=0;$j<(count($spath)-1);$j++){
                    $linkpath.=$spath[$j]."/";
                 }
@@ -73,7 +73,7 @@ $dir = isset($_REQUEST['dir']) ? $_REQUEST['dir'] : '';
      <td>&nbsp;</td>
      <td>&nbsp;</td>
     </tr>
-    <?
+    <?php
     }
 
     /* load file */
@@ -89,7 +89,7 @@ $dir = isset($_REQUEST['dir']) ? $_REQUEST['dir'] : '';
      <td><a href="modules/explorer/download.php?f=<?=$path.$filearr[$i]['name'];?>"><img src="modules/explorer/images/db_update.png" border="0" alt="<?=_SAVE; ?>"/></td>
      <td><a href="javascript:deletex('<?=$filearr[$i]['name'];?>')"><img src="modules/explorer/images/cnrdelete-all.png" border="0" alt="<?=_DELETE; ?>"/></a></td>
     </tr>
-    <?
+    <?php
    }
 ?>
 </table>
@@ -101,4 +101,4 @@ $dir = isset($_REQUEST['dir']) ? $_REQUEST['dir'] : '';
     }
 </script>
 <br/>
-<div><? include_once("modules/explorer/version.txt"); ?></div>
+<div><?php include_once("modules/explorer/version.txt"); ?></div>

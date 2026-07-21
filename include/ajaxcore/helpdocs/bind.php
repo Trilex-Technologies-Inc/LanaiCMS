@@ -35,7 +35,7 @@ $ajax->setJSCode("mybutton",$ajax->htmlDisable("mybutton"),$ajax->htmlEnable("my
 		<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
 		<script type="text/javascript" src="../prototype.js"></script> <!-- include stantard prototype library -->
 		<script type="text/javascript" src="../AjaxCore.js"></script> <!-- include AjaxCore library -->
-		<? echo $ajax->getJSCode(); /* print some header content to handle the results from the request */ ?>
+		<?php echo $ajax->getJSCode(); /* print some header content to handle the results from the request */ ?>
 	</head>
 	<body>
 		<table align="center" width="740">
@@ -54,7 +54,7 @@ $ajax->setJSCode("mybutton",$ajax->htmlDisable("mybutton"),$ajax->htmlEnable("my
 					
 					
 					<input type="button" id="mybutton" name="mybutton" value="press me!" />
-					<? echo $ajax->bind("mybutton","onclick","getRandomNumber"); /* Bind an HTML object to a JavaScript event to call a PHP function  */ ?>
+					<?php echo $ajax->bind("mybutton","onclick","getRandomNumber"); /* Bind an HTML object to a JavaScript event to call a PHP function  */ ?>
 					
 					<div id="results" name="results" >  
 						<!-- div where results will be placed -->

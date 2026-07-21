@@ -5,8 +5,9 @@
 /* Load config */
 @set_time_limit(900);
 include_once('config.inc.php');
+include_once('include/lanai/php_compat.php');
 include_once('include/adodb/adodb.inc.php');
-$db = NewADOConnection("mysql://".$dbuser.":".$dbpw."@".$dbhost."/".$dbname);
+$db = NewADOConnection(lanai_normalize_dbtype($dbtype) . "://" . $dbuser . ":" . $dbpw . "@" . $dbhost . "/" . $dbname);
 if (!$db) die("Connection failed");   
 /* Greeting welcome to module */
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++\n";

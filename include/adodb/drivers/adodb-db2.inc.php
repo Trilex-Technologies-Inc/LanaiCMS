@@ -78,16 +78,6 @@ class ADODB_db2 extends ADOConnection {
 	public $nameQuote = '"';
 
 	/*
-	 * Executed after successful connection
-	 */
-	public $connectStmt = '';
-
-	/*
-	 * Holds the current database name
-	 */
-	private $databaseName = '';
-
-	/*
 	 * Holds information about the stored procedure request
 	 * currently being built
 	 */
@@ -113,17 +103,18 @@ class ADODB_db2 extends ADOConnection {
 
 	private function doDB2Connect($argDSN, $argUsername, $argPassword, $argDatabasename, $persistent=false)
 	{
-		global $php_errormsg;
 
 		if (!function_exists('db2_connect')) {
 			ADOConnection::outp("DB2 extension not installed.");
 			return null;
 		}
 
-		$connectionParameters = $this->unpackParameters($argDSN,
-														$argUsername,
-														$argPassword,
-														$argDatabasename);
+		$connectionParameters = $this->unpackParameters(
+			$argDSN,
+			$argUsername,
+			$argPassword,
+			$argDatabasename
+		);
 
 		if ($connectionParameters == null)
 		{
@@ -140,7 +131,12 @@ class ADODB_db2 extends ADOConnection {
 		$useCataloguedConnection = $connectionParameters['catalogue'];
 
 		if ($this->debug){
-			if ($useCataloguedConnection){
+			if (strcmp($argDSN,'*LOCAL') == 0)
+			{
+				$connectMessage = '*LOCAL connection';
+			}
+			else if ($useCataloguedConnection)
+			{
 				$connectMessage = "Catalogued connection using parameters: ";
 				$connectMessage .= "DB=$argDatabasename / ";
 				$connectMessage .= "UID=$argUsername / ";
@@ -152,6 +148,7 @@ class ADODB_db2 extends ADOConnection {
 			}
 			ADOConnection::outp($connectMessage);
 		}
+
 		/*
 		 * This needs to be set before the connect().
 		 */
@@ -175,22 +172,27 @@ class ADODB_db2 extends ADOConnection {
 		}
 
 		if ($useCataloguedConnection)
+		{
 			$this->_connectionID = $db2Function($argDatabasename,
 												$argUsername,
 												$argPassword,
 												$db2Options);
+		}
 		else
+
 			$this->_connectionID = $db2Function($argDSN,
-												null,
-												null,
+												'',
+												'',
 												$db2Options);
 
-		$php_errormsg = '';
 
 		$this->_errorMsg = @db2_conn_errormsg();
 
 		if ($this->_connectionID && $this->connectStmt)
 			$this->execute($this->connectStmt);
+
+		if ($this->_connectionID && $argDatabasename)
+			$this->execute("SET SCHEMA=$argDatabasename");
 
 		return $this->_connectionID != false;
 
@@ -209,14 +211,26 @@ class ADODB_db2 extends ADOConnection {
 	private function unpackParameters($argDSN, $argUsername, $argPassword, $argDatabasename)
 	{
 
-		global $php_errormsg;
 
-		$connectionParameters = array('dsn'=>'',
-									  'uid'=>'',
-									  'pwd'=>'',
-									  'database'=>'',
-									  'catalogue'=>true
-									  );
+		$connectionParameters = array(
+			'dsn'=>'',
+			'uid'=>'',
+			'pwd'=>'',
+			'database'=>'',
+			'catalogue'=>true
+		);
+
+		/*
+		* Shortcut for *LOCAL
+		*/
+		if (strcmp($argDSN,'*LOCAL') == 0)
+		{
+			$connectionParameters['dsn']      = $argDSN;
+			$connectionParameters['database'] = $argDatabasename;
+			$connectionParameters['catalogue'] = false;
+
+			return $connectionParameters;
+		}
 
 		/*
 		 * Uou can either connect to a catalogued connection
@@ -260,7 +274,7 @@ class ADODB_db2 extends ADOConnection {
 				$errorMessage = 'Supply uncatalogued connection parameters ';
 				$errorMessage.= 'in either the database or DSN arguments, ';
 				$errorMessage.= 'but not both';
-				$php_errormsg = $errorMessage;
+
 				if ($this->debug)
 					ADOConnection::outp($errorMessage);
 				return null;
@@ -285,7 +299,7 @@ class ADODB_db2 extends ADOConnection {
 			{
 				$errorMessage = 'For uncatalogued connections, provide ';
 				$errorMessage.= 'both UID and PWD in the connection string';
-				$php_errormsg = $errorMessage;
+
 				if ($this->debug)
 					ADOConnection::outp($errorMessage);
 				return null;
@@ -310,7 +324,7 @@ class ADODB_db2 extends ADOConnection {
 			}
 			elseif ($argDatabasename)
 			{
-				$this->databaseName = $argDatabasename;
+				$this->database = $argDatabasename;
 				$argDSN .= ';database=' . $argDatabasename;
 				$argDatabasename = '';
 				$useCataloguedConnection = false;
@@ -320,7 +334,7 @@ class ADODB_db2 extends ADOConnection {
 			{
 				$errorMessage = 'Uncatalogued connection parameters ';
 				$errorMessage.= 'must contain a database= argument';
-				$php_errormsg = $errorMessage;
+
 				if ($this->debug)
 					ADOConnection::outp($errorMessage);
 				return null;
@@ -350,9 +364,9 @@ class ADODB_db2 extends ADOConnection {
 		}
 
 		if ($argDatabasename)
-			$this->databaseName = $argDatabasename;
-		elseif (!$this->databaseName)
-			$this->databaseName = $this->getDatabasenameFromDsn($argDSN);
+			$this->database = $argDatabasename;
+		elseif (!$this->database)
+			$this->database = $this->getDatabasenameFromDsn($argDSN);
 
 
 		$connectionParameters = array('dsn'=>$argDSN,
@@ -523,7 +537,7 @@ class ADODB_db2 extends ADOConnection {
 
 	function selectLimit($sql,$nrows=-1,$offset=-1,$inputArr=false,$secs2cache=0)
 	{
-		$nrows = (integer) $nrows;
+		$nrows = (int) $nrows;
 
 		if ($offset <= 0)
 		{
@@ -684,16 +698,17 @@ class ADODB_db2 extends ADOConnection {
 	}
 
 	/**
-	 * returns assoc array where keys are tables, and values are foreign keys
+	 * Returns a list of Foreign Keys associated with a specific table.
 	 *
-	 * @param	string	$table
-	 * @param	string	$owner		[optional][discarded]
-	 * @param	bool	$upper		[optional][discarded]
-	 * @param	bool	$associative[optional][discarded]
+	 * @param string $table
+	 * @param string $owner       discarded
+	 * @param bool   $upper       discarded
+	 * @param bool   $associative discarded
 	 *
-	 * @return	mixed[]			Array of foreign key information
+	 * @return string[]|false An array where keys are tables, and values are foreign keys;
+	 *                        false if no foreign keys could be found.
 	 */
-	public function metaForeignKeys($table, $owner = FALSE, $upper = FALSE, $asociative = FALSE )
+	public function metaForeignKeys($table, $owner = '', $upper = false, $associative = false)
 	{
 
 		global $ADODB_FETCH_MODE;
@@ -1005,7 +1020,7 @@ class ADODB_db2 extends ADOConnection {
 	  */
 	public function metaDatabases(){
 
-		$dbName = $this->getMetaCasedValue($this->databaseName);
+		$dbName = $this->getMetaCasedValue($this->database);
 
 		return (array)$dbName;
 
@@ -1044,7 +1059,7 @@ See http://msdn.microsoft.com/library/default.asp?url=/library/en-us/db2/htm/db2
 */
 	function DB2Types($t)
 	{
-		switch ((integer)$t) {
+		switch ((int)$t) {
 		case 1:
 		case 12:
 		case 0:
@@ -1580,15 +1595,8 @@ See http://msdn.microsoft.com/library/default.asp?url=/library/en-us/db2/htm/db2
 	 *
 	 * @return mixed				either the queryID or false
 	 */
-	function _query(&$sql,$inputarr=false)
+	function _query($sql, $inputarr = false)
 	{
-
-		GLOBAL $php_errormsg;
-
-		if (isset($php_errormsg))
-			$php_errormsg = '';
-		$this->_error = '';
-
 		$db2Options = array();
 		/*
 		 * Use DB2 Internal case handling for best speed
@@ -1622,7 +1630,12 @@ See http://msdn.microsoft.com/library/default.asp?url=/library/en-us/db2/htm/db2
 
 				if ($stmtid == false)
 				{
-					$this->_errorMsg = isset($php_errormsg) ? $php_errormsg : '';
+					$this->_errorMsg  = @db2_stmt_errormsg();
+					$this->_errorCode = @db2_stmt_error();
+
+					if ($this->debug)
+						ADOConnection::outp($this->_errorMsg);
+
 					return false;
 				}
 			}
@@ -1996,14 +2009,13 @@ class ADORecordSet_db2 extends ADORecordSet {
 		$ok = @db2_free_result($this->_queryID);
 		if (!$ok)
 		{
-			$this->_errorMsg  = @db2_stmt_errormsg($this->_queryId);
-			$this->_errorCode = @db2_stmt_error();
+			$this->connection->_errorMsg  = @db2_stmt_errormsg($this->_queryID);
+			$this->connection->_errorCode = @db2_stmt_error();
 
 			if ($this->debug)
-				ADOConnection::outp($this->_errorMsg);
+				ADOConnection::outp($this->connection->_errorMsg);
 			return false;
 		}
-
 	}
 
 }

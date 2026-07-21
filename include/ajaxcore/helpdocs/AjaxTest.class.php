@@ -23,10 +23,10 @@
 require_once("../AjaxCore.class.php");
 class AjaxTest extends AjaxCore
 {
-	function AjaxTest()
+	function __construct()
 	{	
 		$this->setup();
-		parent::AjaxCore();
+		parent::__construct();
 	}
 	
 	function setup()

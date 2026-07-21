@@ -1,6 +1,6 @@
-<?
+<?php
 
-    if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+    if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
        die ( "You can't access this file directly..." );
     }
 
@@ -36,7 +36,7 @@
         ?>
         <!-- form button -->
         <input type="button" class="inputButton" value="Next ->" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>&mf=install&step=2';">
-        <?
+        <?php
       break;
       case "2":
         ?>
@@ -44,7 +44,7 @@
         <br /><br />
         Please edit this message for insert module and menu information script.
         <br /><br />
-        <?
+        <?php
         /* insert module */
         $objPackage->setupModule($cus_modname);
         /* insert menu */
@@ -54,7 +54,7 @@
         ?>
         <!-- form button -->
         <input type="button" class="inputButton" value="Next ->" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>';">
-        <?
+        <?php
       break;
       default:
         ?>
@@ -64,7 +64,7 @@
         <br /><br />
         <!-- form button -->
         <input type="button" class="inputButton" value="Next ->" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>&mf=install&step=1';">
-        <?
+        <?php
     }
 
 ?>

@@ -1,6 +1,6 @@
-<?
+<?php
 
-	if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+	if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	} 
 	
@@ -21,7 +21,7 @@
 	<img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
 	<a href="#" onClick="javascript:history.back();"><?=_BACK; ?></a>
 	<br><br>
-	<?
+	<?php
 	//conFname  conLname  conPosition  conAddress1  conAddress2  conCity  conState  cntId  conZipcode  conPhone  conFax  conMobile  conEmail  conURL  conActive 
 		
 	?>

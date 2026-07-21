@@ -42,7 +42,7 @@ class AjaxCore
 	* @access protected
 	* @param string $lastbind it's the name of the last JavaScript event triggered.
 	*/
-	function AjaxCore($lastbind=false)
+	function __construct($lastbind=false)
 	{
 		$this->lastbind=$lastbind;
 		$this->parseCache();

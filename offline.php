@@ -1,4 +1,4 @@
-<?
+<?php
 	$offpage="yes";		
 	include_once('setconfig.inc.php');
 	if ($cfg_off=="no") {
@@ -16,7 +16,7 @@
 <?=$cfg_url; ?>
 </h2>
 </div>
-<?
+<?php
 	include_once('include/footer.inc.php');
 		
 ?>

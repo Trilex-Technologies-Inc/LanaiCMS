@@ -1,6 +1,6 @@
 <?php
 
-if (!eregi("setting.php", $_SERVER['PHP_SELF'])) {
+if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 		die ("You can't access this file directly...");
 }
 
@@ -15,7 +15,7 @@ if (!eregi("setting.php", $_SERVER['PHP_SELF'])) {
 <tr><td><?=_JPOP_TITLE; ?> : </td><td><input type="text" id="popTitle" size="50" name="popTitle" ></td></tr>
 <tr><td valign="top"><?=_JPOP_DES; ?> : </td>
 <td>
-	<? 
+	<?php 
 				$sBasePath = "include/fckeditor/";
 				$oFCKeditor1 = new FCKeditor('popDescription') ;
 				$oFCKeditor1->ToolbarSet	= "MyToolbar" ;

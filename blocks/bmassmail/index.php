@@ -1,4 +1,4 @@
-<?
+<?php
 	//include_once("modules/massmail/module.php");
 	include_once("modules/massmail/language/lang-".$cfg['lang'].".php");
 ?>

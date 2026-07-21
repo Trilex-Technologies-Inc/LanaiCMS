@@ -1,6 +1,6 @@
 <?php
 
-if (!eregi("setting.php", $_SERVER['PHP_SELF'])) {
+if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 		die ("You can't access this file directly...");
 }
 
@@ -20,8 +20,6 @@ if (!$result) {
 ?>
 <span class="txtContentTitle"><?=_BANN_NEW_ITEM; ?></span><br><br>
 <?=_BANN_NEW_INSTRUCTION; ?><br/><br/>
-<!--<img src="theme/<?=$cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-<a href="#" onClick="javascript:document.addform.submit();"><?=_BANN_SAVE; ?></a> -->
 <img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
 <a href="setting.php?modname=carousel" ><?=_BACK; ?></a><br><br>
 <script>

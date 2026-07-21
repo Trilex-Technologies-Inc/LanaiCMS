@@ -1,4 +1,4 @@
-<?
+<?php
 $configFile = "../config.inc.php";
 
 if (file_exists($configFile)) {
@@ -7,18 +7,19 @@ if (file_exists($configFile)) {
     die("Config file not found!");
 }
 
+include_once("../include/lanai/php_compat.php");
 include_once("../include/adodb/adodb.inc.php");
 
 $ADODB_CACHE_DIR = "./datacenter/cache/";
-$db = &ADONewConnection($dbtype);
+$db = ADONewConnection(lanai_normalize_dbtype($dbtype));
 
 function dbexecute($title, $sql) {
     global $db;
     $rs = $db->execute($sql);
     if ($rs) {
-        ?><?=$title."&nbsp;&nbsp;["; ?><span style="color:green;">OK</span>]<?
+        ?><?=$title."&nbsp;&nbsp;["; ?><span style="color:green;">OK</span>]<?php
     } else {
-        ?><?=$title."&nbsp;&nbsp;["; ?><span style="color:red;">FAILED</span>]<?
+        ?><?=$title."&nbsp;&nbsp;["; ?><span style="color:red;">FAILED</span>]<?php
     }
 }
 
@@ -47,12 +48,12 @@ function upgradeBannerTableAlt() {
             $result = $db->execute($alterSQL);
             
             if ($result) {
-                ?>Upgrade Banner Table - Adding banPosition column&nbsp;&nbsp;[<span style="color:green;">OK</span>]<?
+                ?>Upgrade Banner Table - Adding banPosition column&nbsp;&nbsp;[<span style="color:green;">OK</span>]<?php
             } else {
-                ?>Upgrade Banner Table - Adding banPosition column&nbsp;&nbsp;[<span style="color:red;">FAILED</span>]<?
+                ?>Upgrade Banner Table - Adding banPosition column&nbsp;&nbsp;[<span style="color:red;">FAILED</span>]<?php
             }
         } else {
-            ?>Upgrade Banner Table - banPosition column already exists&nbsp;&nbsp;[<span style="color:green;">OK</span>]<?
+            ?>Upgrade Banner Table - banPosition column already exists&nbsp;&nbsp;[<span style="color:green;">OK</span>]<?php
         }
     }
 }
@@ -62,11 +63,11 @@ if ($db->NConnect($dbhost, $dbuser, $dbpw, $dbname)) {
 <b>Upgrading Database Structure:</b>
 <ul>
     <li>
-<?
+<?php
     upgradeBannerTableAlt();
 ?>
     </li>
 </ul>
-<?
+<?php
 }
 ?>

@@ -104,7 +104,7 @@ class xml_domit_rss_document extends xml_domit_rss_base_document {
 	* @param string Expiration time (in seconds) for the cache file
 	* @return Object A new instance of xml_domit_rss_document
 	*/
-	function xml_domit_rss_document($url = '', $cacheDir = './', $cacheTime = '3600') {
+	function __construct($url = '', $cacheDir = './', $cacheTime = '3600') {
 	    $this->parser = 'DOMIT_RSS';
 		$this->xml_domit_rss_base_document($url, $cacheDir, $cacheTime);
 	} //xml_domit_rss_document
@@ -124,25 +124,25 @@ class xml_domit_rss_document extends xml_domit_rss_base_document {
 
 			switch ($tagName) {
 				case DOMIT_RSS_ELEMENT_ITEM:					
-					$this->domit_rss_items[$itemCounter] =& new xml_domit_rss_item($currNode);
+					$this->domit_rss_items[$itemCounter] = new xml_domit_rss_item($currNode);
 					$itemCounter++;
 					break;
 				case DOMIT_RSS_ELEMENT_CHANNEL:
-					$this->domit_rss_channels[$channelCounter] =& new xml_domit_rss_channel($currNode);
+					$this->domit_rss_channels[$channelCounter] = new xml_domit_rss_channel($currNode);
 					$channelCounter++;
 					break;
 				case DOMIT_RSS_ELEMENT_CATEGORY:
-					$this->domit_rss_categories[$categoryCounter] =& new xml_domit_rss_category($currNode);
+					$this->domit_rss_categories[$categoryCounter] = new xml_domit_rss_category($currNode);
 					$categoryCounter++;
 					break;
 				case DOMIT_RSS_ELEMENT_IMAGE:
-					$this->DOMIT_RSS_indexer[$tagName] =& new xml_domit_rss_image($currNode);
+					$this->DOMIT_RSS_indexer[$tagName] = new xml_domit_rss_image($currNode);
 					break;
 				case DOMIT_RSS_ELEMENT_CLOUD:
-					$this->indexer[$tagName] =& new xml_domit_rss_cloud($currNode);
+					$this->indexer[$tagName] = new xml_domit_rss_cloud($currNode);
 					break;
 				case DOMIT_RSS_ELEMENT_TEXTINPUT:
-					$this->indexer[$tagName] =& new xml_domit_rss_textinput($currNode);
+					$this->indexer[$tagName] = new xml_domit_rss_textinput($currNode);
 					break;
 				case DOMIT_RSS_ELEMENT_TITLE:
                 case DOMIT_RSS_ELEMENT_LINK:
@@ -159,7 +159,7 @@ class xml_domit_rss_document extends xml_domit_rss_base_document {
 				case DOMIT_RSS_ELEMENT_RATING:
 				case DOMIT_RSS_ELEMENT_SKIPHOURS:
 				case DOMIT_RSS_ELEMENT_SKIPDAYS:
-				    $this->DOMIT_RSS_indexer[$tagName] =& new xml_domit_rss_simpleelement($currNode);
+				    $this->DOMIT_RSS_indexer[$tagName] = new xml_domit_rss_simpleelement($currNode);
 				    break;
 				default:
 				    $this->addIndexedElement($currNode);
@@ -210,7 +210,7 @@ class xml_domit_rss_channel extends xml_domit_rss_elementindexer {
 	* @param Object A DOM node containing channel data
 	* @param boolean True if channel elements are siblings of the channel rather than children
 	*/
-	function xml_domit_rss_channel(&$channel, $externalElements = false) {
+	function __construct(&$channel, $externalElements = false) {
 		$this->node =& $channel;
 		$this->rssDefinedElements = array('title','link','description','language','copyright',
 											'managingEditor','webmaster','pubDate','lastBuildDate',
@@ -234,21 +234,21 @@ class xml_domit_rss_channel extends xml_domit_rss_elementindexer {
 			
 			switch($tagName) {
 				case DOMIT_RSS_ELEMENT_ITEM:
-					$this->domit_rss_items[$itemCounter] =& new xml_domit_rss_item($currNode);
+					$this->domit_rss_items[$itemCounter] = new xml_domit_rss_item($currNode);
 					$itemCounter++;
 					break;
 				case DOMIT_RSS_ELEMENT_CATEGORY:
-					$this->domit_rss_categories[$categoryCounter] =& new xml_domit_rss_category($currNode);
+					$this->domit_rss_categories[$categoryCounter] = new xml_domit_rss_category($currNode);
 					$categoryCounter++;
 					break;
 				case DOMIT_RSS_ELEMENT_IMAGE:
-					$this->DOMIT_RSS_indexer[$tagName] =& new xml_domit_rss_image($currNode);
+					$this->DOMIT_RSS_indexer[$tagName] = new xml_domit_rss_image($currNode);
 					break;
 				case DOMIT_RSS_ELEMENT_CLOUD:
-					$this->DOMIT_RSS_indexer[$tagName] =& new xml_domit_rss_cloud($currNode);
+					$this->DOMIT_RSS_indexer[$tagName] = new xml_domit_rss_cloud($currNode);
 					break;
 				case DOMIT_RSS_ELEMENT_TEXTINPUT:
-					$this->DOMIT_RSS_indexer[$tagName] =& new xml_domit_rss_textinput($currNode);
+					$this->DOMIT_RSS_indexer[$tagName] = new xml_domit_rss_textinput($currNode);
 					break;
                 case DOMIT_RSS_ELEMENT_TITLE:
                 case DOMIT_RSS_ELEMENT_LINK:
@@ -265,7 +265,7 @@ class xml_domit_rss_channel extends xml_domit_rss_elementindexer {
 				case DOMIT_RSS_ELEMENT_RATING:
 				case DOMIT_RSS_ELEMENT_SKIPHOURS:
 				case DOMIT_RSS_ELEMENT_SKIPDAYS:
-				    $this->DOMIT_RSS_indexer[$tagName] =& new xml_domit_rss_simpleelement($currNode);
+				    $this->DOMIT_RSS_indexer[$tagName] = new xml_domit_rss_simpleelement($currNode);
 				    break;
 				default:
 				    $this->addIndexedElement($currNode);
@@ -356,7 +356,7 @@ class xml_domit_rss_item extends xml_domit_rss_elementindexer {
 	* Constructor
 	* @param Object A DOM node containing item data
 	*/
-	function xml_domit_rss_item(&$item) {
+	function __construct(&$item) {
 		$this->node =& $item;
 		$this->rssDefinedElements = array('title','link','description','author','comments',
 											'enclosure','guid','pubDate','source','domit_rss_categories');
@@ -376,17 +376,17 @@ class xml_domit_rss_item extends xml_domit_rss_elementindexer {
 		
 		    switch ($tagName) {
 		        case DOMIT_RSS_ELEMENT_CATEGORY:
-		            $this->categories[$categoryCounter] =& new xml_domit_rss_category($currNode);
+		            $this->categories[$categoryCounter] = new xml_domit_rss_category($currNode);
 					$categoryCounter++;
 		            break;
                 case DOMIT_RSS_ELEMENT_ENCLOSURE:
-                    $this->DOMIT_RSS_indexer[$tagName] =& new xml_domit_rss_enclosure($currNode);
+                    $this->DOMIT_RSS_indexer[$tagName] = new xml_domit_rss_enclosure($currNode);
 		            break;
                 case DOMIT_RSS_ELEMENT_SOURCE:
-                    $this->DOMIT_RSS_indexer[$tagName] =& new xml_domit_rss_source($currNode);
+                    $this->DOMIT_RSS_indexer[$tagName] = new xml_domit_rss_source($currNode);
 		            break;
                 case DOMIT_RSS_ELEMENT_GUID:
-                    $this->DOMIT_RSS_indexer[$tagName] =& new xml_domit_rss_guid($currNode);
+                    $this->DOMIT_RSS_indexer[$tagName] = new xml_domit_rss_guid($currNode);
 		            break;
                 case DOMIT_RSS_ELEMENT_TITLE:
                 case DOMIT_RSS_ELEMENT_LINK:
@@ -394,7 +394,7 @@ class xml_domit_rss_item extends xml_domit_rss_elementindexer {
                 case DOMIT_RSS_ELEMENT_AUTHOR:
 				case DOMIT_RSS_ELEMENT_COMMENTS:
 				case DOMIT_RSS_ELEMENT_PUBDATE:
-				    $this->DOMIT_RSS_indexer[$tagName] =& new xml_domit_rss_simpleelement($currNode);
+				    $this->DOMIT_RSS_indexer[$tagName] = new xml_domit_rss_simpleelement($currNode);
 				    break;
 				default:
 				    $this->addIndexedElement($currNode);
@@ -462,7 +462,7 @@ class xml_domit_rss_category extends xml_domit_rss_elementindexer {
 	* Constructor
 	* @param Object A DOM node containing category data
 	*/
-	function xml_domit_rss_category(&$category) {
+	function __construct(&$category) {
 		$this->node =& $category;
 		$this->_init();
 	} //xml_domit_rss_category
@@ -496,7 +496,7 @@ class xml_domit_rss_image extends xml_domit_rss_elementindexer {
 	* Constructor
 	* @param Object A DOM node containing image data
 	*/
-	function xml_domit_rss_image(&$image) {
+	function __construct(&$image) {
 		$this->node =& $image;
 		$this->rssDefinedElements = array('title','link','description','url',
 											'width', 'height');
@@ -520,7 +520,7 @@ class xml_domit_rss_image extends xml_domit_rss_elementindexer {
                 case DOMIT_RSS_ELEMENT_URL:
 				case DOMIT_RSS_ELEMENT_WIDTH:
 				case DOMIT_RSS_ELEMENT_HEIGHT:
-				    $this->DOMIT_RSS_indexer[$tagName] =& new xml_domit_rss_simpleelement($currNode);
+				    $this->DOMIT_RSS_indexer[$tagName] = new xml_domit_rss_simpleelement($currNode);
 				    break;
 				default:
 				    $this->addIndexedElement($currNode);
@@ -608,7 +608,7 @@ class xml_domit_rss_textinput extends xml_domit_rss_elementindexer {
 	* Constructor
 	* @param Object A DOM node containing text input data
 	*/
-	function xml_domit_rss_textinput(&$textinput) {
+	function __construct(&$textinput) {
 		$this->node =& $textinput;
 		$this->rssDefinedElements = array('title','link','description','name');
 		$this->_init();
@@ -629,7 +629,7 @@ class xml_domit_rss_textinput extends xml_domit_rss_elementindexer {
                 case DOMIT_RSS_ELEMENT_LINK:
                 case DOMIT_RSS_ELEMENT_DESCRIPTION:
                 case DOMIT_RSS_ELEMENT_NAME:
-				    $this->DOMIT_RSS_indexer[$tagName] =& new xml_domit_rss_simpleelement($currNode);
+				    $this->DOMIT_RSS_indexer[$tagName] = new xml_domit_rss_simpleelement($currNode);
 				    break;
 				default:
 				    $this->addIndexedElement($currNode);
@@ -683,7 +683,7 @@ class xml_domit_rss_cloud extends xml_domit_rss_elementindexer {
 	* Constructor
 	* @param Object A DOM node containing cloud data
 	*/
-	function xml_domit_rss_cloud(&$cloud) {
+	function __construct(&$cloud) {
 		$this->node =& $cloud;
 		$this->_init();
 	} //xml_domit_rss_cloud
@@ -741,7 +741,7 @@ class xml_domit_rss_enclosure extends xml_domit_rss_elementindexer {
 	* Constructor
 	* @param Object A DOM node containing enclosure data
 	*/
-	function xml_domit_rss_enclosure(&$enclosure) {
+	function __construct(&$enclosure) {
 		$this->node =& $enclosure;
 		$this->_init();
 	} //xml_domit_rss_enclosure
@@ -783,7 +783,7 @@ class xml_domit_rss_guid extends xml_domit_rss_elementindexer {
 	* Constructor
 	* @param Object A DOM node containing guid data
 	*/
-	function xml_domit_rss_guid(&$guid) {
+	function __construct(&$guid) {
 		$this->node =& $guid;
 		$this->_init();
 	} //xml_domit_rss_guid
@@ -822,7 +822,7 @@ class xml_domit_rss_source extends xml_domit_rss_elementindexer {
 	* Constructor
 	* @param Object A DOM node containing source data
 	*/
-	function xml_domit_rss_source(&$source) {
+	function __construct(&$source) {
 		$this->node =& $source;
 		$this->_init();
 	} //xml_domit_rss_source

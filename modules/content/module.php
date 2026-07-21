@@ -1,4 +1,4 @@
-<?
+<?php
 
 include_once("class.ContentPager.php");
 
@@ -18,7 +18,7 @@ class Content
     var $cfg;
     var $_sql;
 
-    function Content()
+    function __construct()
     {
         global $db, $cfg;
         $this->db = $db;

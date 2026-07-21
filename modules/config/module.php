@@ -7,6 +7,17 @@ ADOdb_Active_Record::SetDatabaseAdapter($db);
 /*	Class Meta	*/
 class Meta extends ADOdb_Active_Record {
 	var $_table = 'tbl_ln_meta';
+
+    function __construct($table = false, $pkeyarr = false, $db = false) {
+        global $cfg;
+
+        if ($table === false && !empty($cfg['tablepre'])) {
+            $table = $cfg['tablepre'] . 'meta';
+        }
+
+        parent::__construct($table, $pkeyarr, $db);
+    }
+
     function updateSetting($data = []) {
         global $db; // ADOdb connection
 
@@ -53,8 +64,8 @@ class SysConfig {
 	function getCurrentStatus() {
 			$lines = file('config.inc.php');
 			foreach ($lines as $line) {
-			    if (eregi('cfg_off=', $line)) {
-					list($key,$value)=split("=",$line,2);
+                if (stripos($line, 'cfg_off=') !== false) {
+                    list($key,$value)=explode("=",$line,2);
 					$value=trim($value);
 					$valuex=ltrim($value,"\"");
 					$valuex=substr($valuex,0,strlen($valuex)-2);
@@ -66,7 +77,7 @@ class SysConfig {
 	function _get_line(){
 		$lines = file('config.inc.php');			
 		foreach ($lines as $i => $line) {
-			if (eregi('cfg_off=', $line)) {
+            if (stripos($line, 'cfg_off=') !== false) {
 				return $i;
 			}
 		}

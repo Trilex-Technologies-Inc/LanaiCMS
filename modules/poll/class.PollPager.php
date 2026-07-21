@@ -16,7 +16,7 @@ class PollPager extends ADODB_Pager {
         $this->page = _PAGE;
     }
 	
-	function RenderLayout($header,$grid,$footer)
+	function RenderLayout($header,$grid,$footer,$attributes='')
 	{
 		echo "<table width=\"100%\" ><tr><td>",
 			 "</td></tr><tr><td>",
@@ -125,7 +125,7 @@ class PollPager extends ADODB_Pager {
 			<th class="tblRowSolidTopDown" width="10%"><?=_EDIT; ?></th>
 			<!-- <th class="tblRowSolidTopDown"><?=_DELETE; ?></th>-->
 		</tr>
-		<?
+		<?php
 		while(!$this->rs->EOF){
 		?>
 		<tr>
@@ -137,19 +137,19 @@ class PollPager extends ADODB_Pager {
 				<?=$this->rs->fields['pllTitle']; ?>
 			</td>
 			<td class="tblRowDash" align="center">
-			<?
+			<?php
 				if ($this->rs->fields['pllActive']=='y') {
 				    ?>
 					<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=plledit&v=n&ac=active&mid=<?=$this->rs->fields['pllId']; ?>">
 					<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/ok.gif" border="0" align="absmiddle">
 					</a>
-					<?
+					<?php
 				} else {
 					?>
 					<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=plledit&v=y&ac=active&mid=<?=$this->rs->fields['pllId']; ?>">
 					<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/cancel.gif" border="0" align="absmiddle">
 					</a>
-					<?
+					<?php
 				}
 			?>					
 			</td>
@@ -159,10 +159,10 @@ class PollPager extends ADODB_Pager {
 				</a>
 			</td>
 		</tr>		
-		<?
+		<?php
 			$this->rs->movenext();
 		} // while{
-		?></form> </table><?
+		?></form> </table><?php
 		$s = ob_get_contents();
 		ob_end_clean();
 		return $s;

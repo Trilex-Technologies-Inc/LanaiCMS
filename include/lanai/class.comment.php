@@ -4,7 +4,7 @@ class Comment {
 	var $db;
 	var $cfg;
 	
-	function Comment() {
+	function __construct() {
 		global $db,$cfg;
 		$this->db=$db;
 		$this->cfg=$cfg;

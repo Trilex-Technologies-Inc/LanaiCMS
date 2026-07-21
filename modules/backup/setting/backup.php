@@ -1,5 +1,5 @@
-<?
-    if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+<?php
+    if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	}
 
@@ -17,7 +17,7 @@
       if (!empty($sqlStr)) {
         $filename=date("YmdHis");
         $bup->SaveFile($sqlStr,$filename);
-        ?><?=_BACKUP_COMPLETE." : ".$filename; ?><br/><?
+        ?><?=_BACKUP_COMPLETE." : ".$filename; ?><br/><?php
         $sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=backup");
       }
     }

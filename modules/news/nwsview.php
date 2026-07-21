@@ -1,5 +1,5 @@
 <?php
-if (!eregi("module.php", $_SERVER['PHP_SELF'])) {
+if (stripos($_SERVER['PHP_SELF'], "module.php") === false) {
     die("You can't access this file directly...");
 }
 
@@ -159,6 +159,5 @@ if ($rs->recordcount() > 0) {
        
     </div>
 </div>
-
 
 

@@ -34,6 +34,15 @@ class ADODB2_db2 extends ADODB_DataDict {
 	
  	function ActualType($meta)
 	{
+		$meta = strtoupper($meta);
+		
+		/*
+		* Add support for custom meta types. We do this
+		* first, that allows us to override existing types
+		*/
+		if (isset($this->connection->customMetaTypes[$meta]))
+			return $this->connection->customMetaTypes[$meta]['actual'];
+		
 		switch($meta) {
 		case 'C': return 'VARCHAR';
 		case 'XL': return 'CLOB';
@@ -63,7 +72,7 @@ class ADODB2_db2 extends ADODB_DataDict {
 	}
 
 	// return string must begin with space
-	function _CreateSuffix($fname,&$ftype,$fnotnull,$fdefault,$fautoinc,$fconstraint,$funsigned)
+	function _createSuffix($fname, &$ftype, $fnotnull, $fdefault, $fautoinc, $fconstraint, $funsigned, $fprimary, &$pkey)
 	{
 		$suffix = '';
 		if ($fautoinc) return ' GENERATED ALWAYS AS IDENTITY'; # as identity start with

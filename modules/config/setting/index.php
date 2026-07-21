@@ -8,15 +8,47 @@ $objConfig = new SysConfig();
 $status = $objConfig->getCurrentStatus();
 
 /* Load Meta */
-$objMeta = new Meta();
-$objMeta->_table = $cfg['tablepre'] . "meta";
-$objMeta->mtaId = 1;
-$objMeta->Load("mtaId=1");
+global $db;
+$previousFetchMode = $db->SetFetchMode(ADODB_FETCH_ASSOC);
+$metaRow = $db->GetRow(
+    "SELECT * FROM " . $cfg['tablepre'] . "meta WHERE mtaId = ?",
+    array(1)
+);
+$db->SetFetchMode($previousFetchMode);
+$metaFields = array();
+if (is_array($metaRow)) {
+    foreach ($metaRow as $field => $value) {
+        if (is_string($field)) {
+            $metaFields[strtolower($field)] = $value;
+        }
+    }
+}
 
 /* Meta values */
-$mtaLogo          = !empty($objMeta->MTALOGO) ? $objMeta->MTALOGO : '';
-$mtaFavicon       = !empty($objMeta->MTAFAVICON) ? $objMeta->MTAFAVICON : '';
-$mtaShowSiteName  = isset($objMeta->MTASHOWSITENAME) ? (int)$objMeta->MTASHOWSITENAME : 1;
+$metaValue = static function ($value) {
+    if (!is_array($value)) {
+        return isset($value) ? (string)$value : '';
+    }
+
+    $values = array();
+    array_walk_recursive($value, static function ($item) use (&$values) {
+        if (is_scalar($item)) {
+            $values[] = (string)$item;
+        }
+    });
+
+    return implode(', ', $values);
+};
+
+$mtaKeywords      = $metaValue(isset($metaFields['mtakeywords']) ? $metaFields['mtakeywords'] : '');
+$mtaDescription   = $metaValue(isset($metaFields['mtadescription']) ? $metaFields['mtadescription'] : '');
+$mtaAbstract      = $metaValue(isset($metaFields['mtaabstract']) ? $metaFields['mtaabstract'] : '');
+$mtaAuthor        = $metaValue(isset($metaFields['mtaauthor']) ? $metaFields['mtaauthor'] : '');
+$mtaDistribution  = $metaValue(isset($metaFields['mtadistribution']) ? $metaFields['mtadistribution'] : '');
+$mtaCopyright     = $metaValue(isset($metaFields['mtacopyright']) ? $metaFields['mtacopyright'] : '');
+$mtaLogo          = $metaValue(isset($metaFields['mtalogo']) ? $metaFields['mtalogo'] : '');
+$mtaFavicon       = $metaValue(isset($metaFields['mtafavicon']) ? $metaFields['mtafavicon'] : '');
+$mtaShowSiteName  = isset($metaFields['mtashowsitename']) ? (int)$metaValue($metaFields['mtashowsitename']) : 1;
 
 /* Site title */
 $cfg_title = isset($cfg['title']) ? $cfg['title'] : '';
@@ -101,7 +133,7 @@ $turnstileSecretKey = isset($cfg['turnstile_secret_key']) ? $cfg['turnstile_secr
                 <label class="col-sm-3 col-form-label"><?php echo _CFG_KEYWORDS; ?></label>
                 <div class="col-sm-9">
                     <input type="text" name="mtaKeywords" class="form-control"
-                           value="<?php echo htmlspecialchars($objMeta->MTAKEYWORDS, ENT_QUOTES, 'UTF-8'); ?>">
+                           value="<?php echo htmlspecialchars($mtaKeywords, ENT_QUOTES, 'UTF-8'); ?>">
                 </div>
             </div>
 
@@ -110,7 +142,7 @@ $turnstileSecretKey = isset($cfg['turnstile_secret_key']) ? $cfg['turnstile_secr
                 <label class="col-sm-3 col-form-label"><?php echo _CFG_DESCRIPTION; ?></label>
                 <div class="col-sm-9">
                     <input type="text" name="mtaDescription" class="form-control"
-                           value="<?php echo htmlspecialchars($objMeta->MTADESCRIPTION, ENT_QUOTES, 'UTF-8'); ?>">
+                           value="<?php echo htmlspecialchars($mtaDescription, ENT_QUOTES, 'UTF-8'); ?>">
                 </div>
             </div>
 
@@ -119,7 +151,7 @@ $turnstileSecretKey = isset($cfg['turnstile_secret_key']) ? $cfg['turnstile_secr
                 <label class="col-sm-3 col-form-label"><?php echo _CFG_ABSTRACT; ?></label>
                 <div class="col-sm-9">
                     <input type="text" name="mtaAbstract" class="form-control"
-                           value="<?php echo htmlspecialchars($objMeta->MTAABSTRACT, ENT_QUOTES, 'UTF-8'); ?>">
+                           value="<?php echo htmlspecialchars($mtaAbstract, ENT_QUOTES, 'UTF-8'); ?>">
                 </div>
             </div>
 
@@ -128,14 +160,14 @@ $turnstileSecretKey = isset($cfg['turnstile_secret_key']) ? $cfg['turnstile_secr
                 <label class="col-sm-3 col-form-label"><?php echo _CFG_AUTHOR; ?></label>
                 <div class="col-sm-9">
                     <input type="text" name="mtaAuthor" class="form-control"
-                           value="<?php echo htmlspecialchars($objMeta->MTAAUTHOR, ENT_QUOTES, 'UTF-8'); ?>">
+                           value="<?php echo htmlspecialchars($mtaAuthor, ENT_QUOTES, 'UTF-8'); ?>">
                 </div>
             </div>
 
             <?php
             $v1 = $v2 = $v3 = "";
-            if ($objMeta->MTADISTRIBUTION == "Global") $v1 = "selected";
-            else if ($objMeta->MTADISTRIBUTION == "Local") $v2 = "selected";
+            if ($mtaDistribution == "Global") $v1 = "selected";
+            else if ($mtaDistribution == "Local") $v2 = "selected";
             else $v3 = "selected";
             ?>
 
@@ -156,7 +188,7 @@ $turnstileSecretKey = isset($cfg['turnstile_secret_key']) ? $cfg['turnstile_secr
                 <label class="col-sm-3 col-form-label"><?php echo _CFG_COPY; ?></label>
                 <div class="col-sm-9">
                     <input type="text" name="mtaCopyright" class="form-control"
-                           value="<?php echo htmlspecialchars($objMeta->MTACOPYRIGHT, ENT_QUOTES, 'UTF-8'); ?>">
+                           value="<?php echo htmlspecialchars($mtaCopyright, ENT_QUOTES, 'UTF-8'); ?>">
                 </div>
             </div>
 

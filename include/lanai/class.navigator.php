@@ -1,4 +1,4 @@
-<?
+<?php
 		class Navigator {
 		
 				function getIsParentMenu($mnuParentId) {

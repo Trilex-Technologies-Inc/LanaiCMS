@@ -1,5 +1,5 @@
 <html><body><pre>
-<?
+<?php
 
 // Check and see if a feed has been supplied to us.
 if(isset($_GET['feedurl'])) {
@@ -35,7 +35,7 @@ print_r($info);
 	
 ?>
 </pre>
-<?
+<?php
 
 echo $info['channel']['title']."<br>";
 echo $info['channel']['description']."<br>";

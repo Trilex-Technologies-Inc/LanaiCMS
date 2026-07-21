@@ -1,6 +1,6 @@
-<?
+<?php
 
-	if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+	if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	} 
 	
@@ -26,7 +26,7 @@
 	<a href="module.php?modname=setting" ><?=_BACK; ?></a>
 	<br><br>
 	
-	<?
+	<?php
 		$xlang=$lng_lanai->getLanguage();
 	?>
 	<table cellpadding="3" cellspacing="1">
@@ -40,7 +40,7 @@
 		</td>
 		<td>
 		<select name="lngname" size="5" style="width:300px;">
-		<?
+		<?php
 			
 			foreach ($xlang as $value) {
 				$xvalue=substr($value,5,strlen($value));
@@ -52,7 +52,7 @@
 				}				
 		  	  ?>
 			  	<option value="<?=$xvalue; ?>" <?=$selected; ?> ><?=ucwords($xvalue); ?></option>
-			  <?
+			  <?php
 			}	
 		?>
 		</select >		
@@ -60,7 +60,7 @@
 	</tr>
 	</form>
 	</table>
-	<?
+	<?php
 		} // check writable config 
 		
 	 ?>

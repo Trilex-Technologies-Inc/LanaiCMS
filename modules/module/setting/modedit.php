@@ -1,6 +1,6 @@
-<?
+<?php
 
-	if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+	if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	} 
 	
@@ -85,19 +85,19 @@
 	<!-- <tr>
 		<td><?=_MODULE_ACTIVE; ?></td>
 		<td>
-		<?
+		<?php
 			if ($rs->fields['modActive']=='y') {
 			    ?>
 				<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=modedit&v=n&ac=active&mid=<?=$_REQUEST['mid']; ?>">
 				<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/ok.gif" border="0" align="absmiddle">
 				</a>
-				<?
+				<?php
 			} else {
 				?>
 				<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=modedit&v=y&ac=active&mid=<?=$_REQUEST['mid']; ?>">
 				<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/cancel.gif" border="0" align="absmiddle">
 				</a>
-				<?
+				<?php
 			}
 		?>					
 		</td>
@@ -105,7 +105,7 @@
 	</tr> -->
 	</form>
 	</table>
-	<?
+	<?php
 			break;
 		
 	} // switch

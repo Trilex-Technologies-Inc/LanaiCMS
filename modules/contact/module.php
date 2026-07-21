@@ -1,4 +1,4 @@
-<?
+<?php
 include_once("class.ContactPager.php");
 
 class Contact
@@ -11,7 +11,7 @@ class Contact
 
     //conFname  conLname  conPosition  conAddress1  conAddress2  conCity  conState  cntId  conZipcode  conPhone  conFax  conMobile  conEmail  conURL  conActive
 
-    function Contact()
+    function __construct()
     {
         global $db, $cfg;
         $this->db = $db;
@@ -122,7 +122,7 @@ class Contact
         $rs = $db->execute($sql);
         ?>
         <select name="<?= $name; ?>">
-            <?
+            <?php
             while (!$rs->EOF) {
                 if ($cntid == $rs->fields['cntId']) {
                     $select = "selected";
@@ -131,12 +131,12 @@ class Contact
                 }
                 ?>
                 <option value="<?= $rs->fields['cntId']; ?>" <?= $select; ?>><?= $rs->fields['cntName']; ?></option>
-                <?
+                <?php
                 $rs->movenext();
             } // while
             ?>
         </select>
-        <?
+        <?php
     }
 
 

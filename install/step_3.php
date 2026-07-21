@@ -1,4 +1,4 @@
-<?
+<?php
     $_SESSION['cfg_title']=$_REQUEST['cfg_title'];
     $_SESSION['cfg_url']=$_REQUEST['cfg_url'];
     $_SESSION['cfg_dir']=$_REQUEST['cfg_dir'];
@@ -23,11 +23,11 @@
 
 ?>
 <br />
-<?
+<?php
 
     include_once("../include/adodb/adodb.inc.php");
     $ADODB_CACHE_DIR=$_SESSION['cfg_dir']."/datacenter/cache/";
-    $db=&ADONewConnection($_SESSION['dbtype']);
+    $db=ADONewConnection($_SESSION['dbtype']);
 /* $charset = "SET NAMES 'utf8'"; 
     $db->query($charset);*/
 
@@ -36,9 +36,9 @@
         $rs=$db->execute($sql);
         //$db->debug=true;
         if ($rs) {
-            ?><?=$title."&nbsp;&nbsp;["; ?><span style="color:green;"><?=_SETUP_OK; ?></span>]<?
+            ?><?=$title."&nbsp;&nbsp;["; ?><span style="color:green;"><?=_SETUP_OK; ?></span>]<?php
         } else {
-            ?><?=$title."&nbsp;&nbsp;["; ?><span style="color:red;"><?=_SETUP_FAILD; ?></span>]<?
+            ?><?=$title."&nbsp;&nbsp;["; ?><span style="color:red;"><?=_SETUP_FAILD; ?></span>]<?php
         }
     }
 
@@ -47,7 +47,7 @@
 <b><?=_SETUP_CREATE_SYSTEM_TABLE; ?> :</b>
 <ul>
     <li>
-<?
+<?php
 $sql = "CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."user` (
     `userId` INT(11) NOT NULL AUTO_INCREMENT,
 
@@ -86,7 +86,7 @@ dbexecute("Create Table Users",$sql);
 
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."privilege` (
             `modAccess` enum('y','n') NOT NULL default 'y',
             `modId` int(10) unsigned NOT NULL,
@@ -95,7 +95,7 @@ dbexecute("Create Table Users",$sql);
     dbexecute("Create Table Privilege",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."module` (
             `modId` int(10) unsigned NOT NULL auto_increment,
             `modTitle` varchar(50) NOT NULL,
@@ -109,7 +109,7 @@ dbexecute("Create Table Users",$sql);
 
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."block` (
             `blcId` int(10) unsigned NOT NULL auto_increment,
             `blcTitle` varchar(150) default NULL,
@@ -128,7 +128,7 @@ dbexecute("Create Table Users",$sql);
 
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."menu` (
             `mnuId` int(10) unsigned NOT NULL auto_increment,
             `mnuParentId` int(11) NOT NULL default '0',
@@ -146,7 +146,7 @@ dbexecute("Create Table Users",$sql);
 
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."contact` (
             `conId` int(11) NOT NULL auto_increment,
             `conFname` varchar(40) default NULL ,
@@ -170,7 +170,7 @@ dbexecute("Create Table Users",$sql);
 
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."content` (
             `conId` int(10) unsigned NOT NULL auto_increment,
             `userId` int(11) NOT NULL,
@@ -186,7 +186,7 @@ dbexecute("Create Table Users",$sql);
 
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."news` (
             `nwsId` int(11) NOT NULL auto_increment,
             `chnId` int(11) NOT NULL default '0',
@@ -203,7 +203,7 @@ dbexecute("Create Table Users",$sql);
 
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."news_channel` (
             `chnId` int(11) NOT NULL auto_increment,
             `chnTitle` varchar(200) default NULL,
@@ -216,7 +216,7 @@ dbexecute("Create Table Users",$sql);
 
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."rss` (
             `rssId` int(10) unsigned NOT NULL auto_increment,
             `rssTitle` varchar(120) default NULL,
@@ -240,7 +240,7 @@ dbexecute("Create Table Users",$sql);
     dbexecute("Create Table RSS",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."country` (
             `cntId` char(2) NOT NULL,
             `cntName` varchar(100),
@@ -249,7 +249,7 @@ dbexecute("Create Table Users",$sql);
     dbexecute("Create Table Country",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."poll (
 					  pllId INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
 					  pllTitle VARCHAR(200) NULL,
@@ -261,7 +261,7 @@ dbexecute("Create Table Users",$sql);
     dbexecute("Create Table Poll",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."poll_option (
 					  ppoId INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
 					  pllId INTEGER UNSIGNED NOT NULL,
@@ -272,7 +272,7 @@ dbexecute("Create Table Users",$sql);
     dbexecute("Create Table Poll Option ",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."poll_stat (
 					  pllId INTEGER UNSIGNED NOT NULL,
 					  pstIP VARCHAR(20) NULL,
@@ -281,7 +281,7 @@ dbexecute("Create Table Users",$sql);
     dbexecute("Create Table Poll Stat ",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."tag (
 			  tagId INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
 			  tagWord VARCHAR(80) NOT NULL,
@@ -290,7 +290,7 @@ dbexecute("Create Table Users",$sql);
     dbexecute("Create Table TAG ",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."item_tag (
 			  tagId INTEGER UNSIGNED NOT NULL,
 			  itmId INTEGER UNSIGNED NOT NULL,
@@ -299,7 +299,7 @@ dbexecute("Create Table Users",$sql);
     dbexecute("Create Table Item TAG ",$sql);
 ?>
     <li>
-<?
+<?php
 $sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
     mtaId INT(10) UNSIGNED NOT NULL DEFAULT '1',
     mtaSiteName VARCHAR(150) DEFAULT NULL,
@@ -317,7 +317,7 @@ $sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
     dbexecute("Create Table Meta-data",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."read (
 			  catTitle VARCHAR(20) ,
 			  redId INTEGER UNSIGNED NOT NULL,
@@ -326,7 +326,7 @@ $sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
     dbexecute("Create Table Read",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."comment (
 			  comId INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
 			  catTitle VARCHAR(25) NOT NULL,
@@ -340,7 +340,7 @@ $sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
     dbexecute("Create Table Comment",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."log (
 			  logDatetime datetime NOT NULL,
 			  logUAgent varchar(300) NOT NULL,
@@ -352,7 +352,7 @@ $sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
     dbexecute("Create Table Log",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."log_page (
 			  pagId int(10) unsigned NOT NULL auto_increment,
 			  pagTitle varchar(300) default NULL,
@@ -362,7 +362,7 @@ $sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
     dbexecute("Create Table Page",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."log_stat (
 			  statDate date NOT NULL,
 			  statHit int(10) unsigned NOT NULL,
@@ -372,7 +372,7 @@ $sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
     dbexecute("Create Table Stat",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."banner (
 			  banId int(10) unsigned NOT NULL auto_increment,
 			  banTitle varchar(200) NOT NULL,
@@ -388,7 +388,7 @@ $sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
     dbexecute("Create Table Banner",$sql);
 ?>
     <li>
-<?
+<?php
 $sql1 = "INSERT INTO ".$_SESSION['tablepre']."banner
 (`banId`, `banTitle`, `banDescription`, `banImage`, `banURL`, `banPosition`, `banDate`, `banShow`, `banClick`)
 VALUES (NULL, 'example 1', 'description 1',
@@ -421,7 +421,7 @@ dbexecute("Insert Banner 3", $sql3);
 <b><?=_SETUP_UPDATE_SYSTEM_TABLE; ?> :</b>
 <ul>
     <li>
-<?
+<?php
     $sql="INSERT INTO `".$_SESSION['tablepre']."user` (`userId`, `userFname`, `userLname`, `userAddress1`, `userAddress2`, `userCity`, `userState`, `cntId`, `userZipcode`, `userPhone`, `userFax`, `userMobile`, `userEmail`, `userURL`, `userLogin`, `userPassword`, `userPrivilege`, `userCreated`, `userActive`)
             VALUES (1, 'Lanai', 'Core',
                 ' ', ' ',
@@ -434,7 +434,7 @@ dbexecute("Insert Banner 3", $sql3);
     dbexecute("Update Adminstrator information",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="INSERT INTO `".$_SESSION['tablepre']."country` (`cntId`, `cntName`)
             VALUES ('AF', 'Afghanistan'),
             ('AL', 'Albania'),
@@ -690,7 +690,7 @@ dbexecute("Insert Banner 3", $sql3);
     dbexecute("Update Country Data",$sql);
 ?>
     <li>
-<?
+<?php
 $sql = "INSERT INTO `".$_SESSION['tablepre']."block` 
 (`blcId`, `blcTitle`, `blcName`, `blcType`, `blcRssUrl`, `blcRssRefesh`, `blcRssTime`, `blcContent`, `blcPosition`, `blcOrder`, `blcActive`)
 VALUES
@@ -727,13 +727,13 @@ VALUES
 dbexecute("Update Block Data",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="INSERT INTO ".$_SESSION['tablepre']."news_channel 
     			VALUES (1, 'General', 'News & Information in general category.', 'y', '2009-01-12 19:28:55');";
     dbexecute("Update Channel Sample Data",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="INSERT INTO ".$_SESSION['tablepre']."news 
     			VALUES 	(1, 1, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu felis. Nulla mattis massa eu erat. Nullam facilisis dolor a mi. Suspendisse libero ante, mollis ultrices, tincidunt a, lacinia non, libero. Ut ultricies lacus eu diam. Nunc sit amet est ac lacus hendrerit rutrum. Cras a metus. Fusce volutpat laoreet dolor. Integer ac massa. Maecenas id erat. Maecenas pulvinar, velit sed aliquam faucibus, elit nulla rhoncus magna, eu fermentum metus velit in sapien. Vivamus interdum rutrum tortor.</p>', '<p>Sed nunc. Duis suscipit ante sed libero. Suspendisse hendrerit sollicitudin enim. Ut at libero. Morbi rutrum adipiscing turpis. Ut lacinia magna at ante. Nulla suscipit augue eget sem. Donec hendrerit ullamcorper lacus. Proin non libero quis mi congue blandit. Donec consequat, quam mollis facilisis ultrices, odio ipsum commodo tortor, at hendrerit risus augue ut nulla. Vestibulum a odio. Donec interdum urna eu felis. Etiam tempus, nunc vel dignissim hendrerit, neque ante euismod justo, eget dignissim sapien diam ut tortor. Cras pharetra lobortis nisl. Mauris congue. Nam vel sem. Maecenas id neque. Maecenas blandit nulla. Maecenas lacinia ligula a tellus lacinia semper.</p>', 'y', '2009-01-12 19:31:18', '2009-01-12 19:31:18'),
 						(2, 1, 1, 'Cras tortor. Cras et sem sed magna lobortis pharetra', '<p>Cras tortor. Cras et sem sed magna lobortis pharetra. Etiam a metus. Aenean id urna et ante ornare molestie. Mauris iaculis, tellus ac tempus vestibulum, nisl neque facilisis velit, in sagittis erat arcu vitae mauris. Nulla tellus. Sed convallis, ipsum sit amet mattis faucibus, pede enim auctor turpis, at pulvinar orci orci feugiat mauris. Sed lectus felis, interdum eu, condimentum nec, pretium eget, justo. Phasellus lobortis mauris ac quam. Praesent lacus enim, dictum et, vehicula at, lacinia et, dolor. Cras condimentum justo quis lorem. Aliquam arcu. Nullam nunc. Fusce eu elit. Nam posuere, lectus vulputate laoreet eleifend, risus nisl molestie metus, ut suscipit massa dolor tincidunt risus.</p>', '<p>Vivamus quis augue quis neque pharetra venenatis. Ut nisi pede, accumsan ut, aliquet ac, commodo ultricies, pede. Praesent nec pede id mauris suscipit porttitor. Mauris sollicitudin, est non varius tincidunt, velit diam hendrerit orci, eget consequat ligula lectus vel nisl. Praesent venenatis ante sed nisi egestas egestas. Donec tellus est, pharetra non, pellentesque semper, pellentesque sit amet, tortor. Sed eget turpis. Nullam felis urna, vehicula eget, consectetur non, bibendum ac, ante. Sed faucibus nunc tempor arcu. Fusce erat nulla, lobortis nec, adipiscing quis, blandit quis, orci. Aenean et risus. Morbi a quam et nibh bibendum tristique. Nullam nec felis eu mauris pharetra varius. Etiam at nibh. Vestibulum adipiscing.</p>', 'y', '2009-01-12 19:31:51', '2009-01-12 19:40:26');";
@@ -741,13 +741,13 @@ dbexecute("Update Block Data",$sql);
 ?>
 
     <li>
-<?
+<?php
     $sql="INSERT INTO ".$_SESSION['tablepre']."poll 
     				VALUES	(1, 'What color do you like?', 86400, 'y', '2009-01-12 20:20:56');";
     dbexecute("Update Poll Sample Data",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="INSERT INTO ".$_SESSION['tablepre']."poll_option 
     				VALUES	(1, 1, 'Red', 0),
 							(2, 1, 'Green', 0),
@@ -764,13 +764,13 @@ dbexecute("Update Block Data",$sql);
     dbexecute("Update Poll Items Sample Data",$sql);
 ?>
     <li>
-<?
+<?php
     $sql="INSERT INTO ".$_SESSION['tablepre']."contact 
     				VALUES	(1, 'Anuchit', 'Chalothorn', 'Project Manager', ' Software', '107 Moo 10 T.Suranaree', 'A.Muang', 'Nakhon Ratchasima', 'TH', '30000', '+66 44 214 187', '+66 44 214 187', '+ 66 898 433 717', 'anuchit@laniacms.com', 'http://www,lanaicms.com/', 'y');";
     dbexecute("Update Contact Sample Data",$sql);
 ?>
 	<li>
-<?
+<?php
     $sql="INSERT INTO `".$_SESSION['tablepre']."module` (`modId`, `modTitle`, `modName`, `modActive`, `modOrder`, `modSetting`)
             VALUES  
 					(1, 'block', 'block', 'y', 2, 'y'),
@@ -798,7 +798,7 @@ dbexecute("Update Block Data",$sql);
     dbexecute("Update Module Data",$sql);
 ?>
    <li>
-<?
+<?php
     $sql="INSERT INTO `".$_SESSION['tablepre']."privilege` (`modAccess`, `modId`, `userPrivilege`)
             VALUES ('y', 1, 'a'),
 					('y', 2, 'a'),
@@ -820,7 +820,7 @@ dbexecute("Update Block Data",$sql);
     dbexecute("Update Privilege Data",$sql);
 ?>
    <li>
-<?
+<?php
     $sql="INSERT INTO  `".$_SESSION['tablepre']."menu` (`mnuId`, `mnuParentId`, `mnuTitle`, `mnuUrl`, `mnuTarget`, `conId`, `modId`, `mnuType`, `mnuActive`, `mnuOrder`)
             VALUES  (1, 0, 'Home', '".$_SESSION['cfg_url']."', '', 0, 0, 'l', 'y', 1),
 					(2, 0, 'News', NULL, NULL, 0, 8, 'm', 'y', 2),
@@ -834,7 +834,7 @@ dbexecute("Update Block Data",$sql);
     dbexecute("Update Menu Data",$sql);
 ?>
  <li>
-<?
+<?php
 $sql = "INSERT INTO ".$_SESSION['tablepre']."meta
 (mtaId, mtaSiteName, mtaShowSiteName, mtaKeywords, mtaDescription, mtaAbstract, mtaAuthor, mtaDistribution, mtaCopyright, mtaLogo, mtaFavicon)
 VALUES (
@@ -867,12 +867,12 @@ VALUES (
 </TR>
 </FORM>
 </TABLE>
-<?
+<?php
     } else {
     ?>
     <CENTER>
 	<IMG SRC="../theme/default/images/worning.gif" ALIGN="absmiddle">&nbsp;<STRONG><?=_SETUP_CANNOT_CONNECT; ?> '<?=$_SESSION['dbname']; ?>' <?=_SETUP_CANNOT_CONNECT_REFRESH; ?></STRONG>
 	</CENTER>
-    <?
+    <?php
     }
 ?>

@@ -18,7 +18,7 @@
 		var $cfg;
 		var $_sql;
 		
-		function News() {
+		function __construct() {
 			global $db,$cfg;
 			$this->db=$db;
 			$this->cfg=$cfg;
@@ -51,7 +51,7 @@
 			return $rs;
 		}
 		
-		function getShowNewsByGroup($rows=30,$gid){
+			function getShowNewsByGroup($rows,$gid){
 			$sql="SELECT * FROM ".$this->cfg['tablepre']."news  WHERE nwsActive='y' AND chnId=$gid ORDER BY nwsCreate DESC";
 			$this->_sql=$sql;
 			$pager=new NewsListPager($this->db,$this->_sql,true);
@@ -230,7 +230,7 @@
 			$sql="SELECT * FROM ".$this->cfg['tablepre']."news_channel 
 					ORDER BY chnTitle ASC";
 			$rs=$this->db->execute($sql);	
-			?><select name="<?=$name; ?>" style="width:200px; " ><?
+			?><select name="<?=$name; ?>" style="width:200px; " ><?php
 			while(!$rs->EOF){
 				if ($value==$rs->fields['chnId']) {
 				    $selected="selected";
@@ -239,10 +239,10 @@
 				}
 			?>
 				<option <?=$selected; ?> value="<?=$rs->fields['chnId']; ?>" ><?=$rs->fields['chnTitle']; ?></option>
-			<?
+			<?php
 				$rs->movenext();
 			} // while
-			?></select><?
+			?></select><?php
 		}
 				
 		
@@ -299,7 +299,7 @@
        <img src="modules/news/images/icerocket.png" border="0">
        </a>&nbsp;       
        
-        <?
+        <?php
 
         }
 		

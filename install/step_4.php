@@ -8,7 +8,7 @@
             <div class="mb-3">
                 <label for="configCode" class="form-label fw-semibold">Generated Configuration</label>
                 <textarea id="configCode" class="form-control" rows="15" readonly>
-&lt;?
+&lt;?php
 
     ## Config your database server
     $dbname="<?=$_SESSION['dbname']; ?>";

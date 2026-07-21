@@ -1,6 +1,6 @@
-<?
+<?php
 
-	if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+	if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	} 
 	
@@ -44,7 +44,7 @@
 	<tr>
 	  <td><?=_RSS_VIEWAS; ?></td>
 	  <td>
-	  <?
+	  <?php
 	  		if ($rs->fields['rssView']=="list") {
 	  		    $sellist="selected";
 	  		} else if ($rs->fields['rssView']=="column") {
@@ -67,7 +67,7 @@
 	<tr>
 	  <td><?=_RSS_SHOWDES; ?></td>
 	  <td>
-	  <?
+	  <?php
 	  		if ($rs->fields['rssShowDescription']=="y") {
 	  		    $selyes="selected";
 	  		} else {
@@ -107,7 +107,7 @@
 	<tr>
 	  <td><?=_RSS_IMAGEALIGN; ?></td>
 	  <td>
-	   <?
+	   <?php
 	  		if ($rs->fields['rssImageAlign']=="left") {
 	  		    $selleft="selected";
 	  		} else if ($rs->fields['rssImageAlign']=="center") {
@@ -128,7 +128,7 @@
 	<tr>
 	  <td><?=_RSS_TARGET; ?></td>
 	  <td>
-	   <?
+	   <?php
 	  		if ($rs->fields['rssTarget']=="") {
 	  		    $selnone="selected";
 	  		} else if ($rs->fields['rssTarget']=="_blank") {

@@ -5,7 +5,7 @@
 include_once('../../config.inc.php');
 include_once('../../include/adodb/adodb.inc.php');
 include_once('module.php');
-$db = NewADOConnection("mysql://".$dbuser.":".$dbpw."@".$dbhost."/".$dbname);
+$db = NewADOConnection("mysqli://".$dbuser.":".$dbpw."@".$dbhost."/".$dbname);
 if (!$db) die("Connection failed");   
 
 /*  replace your data backup file here!!! */

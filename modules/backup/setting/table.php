@@ -1,5 +1,5 @@
-<?
-    if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+<?php
+    if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	}
 	$module_name = basename( dirname( substr( __FILE__, 0, strlen( dirname( __FILE__ ) ) ) ) );
@@ -11,7 +11,7 @@
 <a href="javascript:document.backup.submit();"><?=_SAVE; ?></a>&nbsp;
 <img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
 <a href="setting.php?modname=<?=$module_name; ?>"><?=_BACK; ?></a><br/><br/>
-<?
+<?php
   $bup=new DBBackup();
   $rs=$bup->ListTable();
 ?>
@@ -22,10 +22,10 @@
   <tr>
     <td>
         <select name="table[]" size="10" multiple="multiple">
-        <?
+        <?php
         while (!$rs->EOF) {
           if ($bup->isLanaiTable($rs->fields[0])) {
-            ?><option value="<?=$rs->fields[0]; ?>" selected><?=$rs->fields[0]; ?></option><?
+            ?><option value="<?=$rs->fields[0]; ?>" selected><?=$rs->fields[0]; ?></option><?php
           }
           $rs->movenext();
         }

@@ -1,11 +1,11 @@
-<?
+<?php
 if (!file_exists('config.inc.php')) {
     ?>
     <SCRIPT LANGUAGE="JavaScript">
         <!--
         location.href = "install/";
         //-->
-    </SCRIPT><?
+    </SCRIPT><?php
 }
 include_once('setconfig.inc.php');
 include_once('include/header.inc.php');
@@ -13,8 +13,8 @@ include_once('include/header.inc.php');
 $theme = new Theme();
 $smarty->assign("getLogoHeader", $theme->getLogoHeader());
 $smarty->assign("siteName", $cfg['title']);
-$smarty->assign("logo", $obMeta->MTALOGO);
-$smarty->assign("showSiteName", $obMeta->MTASHOWSITENAME);
+$smarty->assign("logo", $obMeta->mtaLogo);
+$smarty->assign("showSiteName", $obMeta->mtaShowSiteName);
 $smarty->assign("getFooter", $theme->getFooter());
 $smarty->assign("setBlockLeft", $theme->setBlock("l"));
 $smarty->assign("setBlockRight", $theme->setBlock("r"));

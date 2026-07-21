@@ -1,4 +1,4 @@
-<?
+<?php
 include_once("class.MemberPager.php");
 
 /**
@@ -18,7 +18,7 @@ class User
     var $cfg;
     var $_sql;
 
-    function User()
+    function __construct()
     {
         global $db, $cfg;
         $this->db = $db;
@@ -178,7 +178,7 @@ class User
         $rs = $db->execute($sql);
         ?>
         <select name="<?= $name; ?>">
-            <?
+            <?php
             while (!$rs->EOF) {
                 if ($cntid == $rs->fields['cntId']) {
                     $select = "selected";
@@ -187,12 +187,12 @@ class User
                 }
                 ?>
                 <option value="<?= $rs->fields['cntId']; ?>" <?= $select; ?>><?= $rs->fields['cntName']; ?></option>
-                <?
+                <?php
                 $rs->movenext();
             } // while
             ?>
         </select>
-        <?
+        <?php
     }
 
 }

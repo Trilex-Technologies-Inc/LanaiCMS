@@ -1,4 +1,4 @@
-<?
+<?php
 include_once("class.PollPager.php");
 
 
@@ -19,7 +19,7 @@ class Poll
     var $cfg;
     var $_sql;
 
-    function Poll()
+    function __construct()
     {
         global $db, $cfg;
         $this->db = $db;

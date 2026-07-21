@@ -1,11 +1,11 @@
-<?
+<?php
 
 class DBBackup {
 	var $db;
 	var $cfg;
 	var $end="\n";
 
-	function DBBackup() {
+	function __construct() {
 		global $cfg,$db;
 		$this->db=$db;
 		$this->cfg=$cfg;
@@ -54,7 +54,7 @@ class DBBackup {
         while (!$rs->EOF) {
             $fields="";
             for ($i=0;$i<$fcnt;$i++) {
-                $fields.="'".mysql_escape_string($rs->fields[$i])."', ";
+                $fields.=$this->db->qstr($rs->fields[$i]).", ";
             }
             $fields = substr($fields, 0, -2);
             $insertSQL.="<query>INSERT INTO ".$table." VALUES (".$fields.")".$this->end;
@@ -115,7 +115,7 @@ class DBRestore {
 	var $db;
 	var $cfg;
 
-    function DBRestore ($fname) {
+    function __construct ($fname) {
         global $cfg,$db;
 		$this->db=$db;
 		$this->cfg=$cfg;

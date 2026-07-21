@@ -1,4 +1,4 @@
-<?
+<?php
 /*
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -174,7 +174,7 @@ class feedParser {
 
 
 	function parseFeed($xmldata) {
-		$data =& $this->buildStruct(&$xmldata);
+		$data = $this->buildStruct($xmldata);
 		if(is_array($data)) {
 			foreach($data as $child) {
 				if(is_array($child)) {
@@ -182,10 +182,10 @@ class feedParser {
 						case "RSS:RSS":
 						case "UNDEF:RSS":
 						case "RSS2:RSS":
-							$info = $this->parseRSS(&$child);
+							$info = $this->parseRSS($child);
 							break;
 						case "RDF:RDF":
-							$info = $this->parseRDF(&$child);
+							$info = $this->parseRDF($child);
 							break;
 						default:
 							$info["warning"] .= "Unknown document format: " . $child['tag'] . "\n";
@@ -206,11 +206,11 @@ class feedParser {
 					switch($child['tag']) {
 						case "RSS:CHANNEL":
 						case "RDF2:CHANNEL":
-							$channel = $this->getRDFChannel(&$child);
+							$channel = $this->getRDFChannel($child);
 							break;
 						case "RSS:ITEM":
 						case "RDF2:ITEM":
-							$item[] = $this->getRDFItem(&$child);
+							$item[] = $this->getRDFItem($child);
 							break;
 						default:
 							break;
@@ -232,7 +232,7 @@ class feedParser {
 						case "RSS:CHANNEL":
 						case "RSS2:CHANNEL":
 						case "UNDEF:CHANNEL":
-							$info = $this->getRSSChannel(&$child);
+							$info = $this->getRSSChannel($child);
 							break;
 						default:
 							break;
@@ -301,12 +301,12 @@ class feedParser {
 						case "UNDEF:IMAGE":
 						case "RSS:IMAGE":
 						case "RSS2:IMAGE":
-							$image[] = $this->getRSSImage(&$child);
+							$image[] = $this->getRSSImage($child);
 							break;
 						case "UNDEF:ITEM":
 						case "RSS:ITEM":
 						case "RSS2:ITEM":
-							$item[] = $this->getRSSItem(&$child);
+							$item[] = $this->getRSSItem($child);
 							break;
 						case "UNDEF:LASTBUILDDATE":
 						case "RSS:LASTBUILDDATE":

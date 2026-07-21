@@ -26,7 +26,7 @@ class DOMIT_Utilities {
 	/**
 	* Raises an error if an attempt to instantiate the class is made
 	*/
-	function DOMIT_Utilities() {		
+	function __construct() {		
 	    die("DOMIT_Utilities Error: this is a static class that should never be instantiated.\n" . 
 		    "Please use the following syntax to access methods of this class:\n" .
 		    'DOMIT_Utilities::methodName(parameters)');
@@ -38,7 +38,7 @@ class DOMIT_Utilities {
 	* @param boolean True if illegal xml characters in text nodes and attributes should be converted to entities
 	* @return string The formatted string representation 
 	*/
-	function toNormalizedString (&$node, $subEntities=false, $definedEntities) {
+	function toNormalizedString (&$node, $subEntities=false, $definedEntities = array()) {
 		$node_level = 0;
 		$response = '';
 		
@@ -80,7 +80,7 @@ class DOMIT_Utilities {
 	* @param array User defined translation table for entities
 	* @return string The normalized string representation 
 	*/
-	function getNormalizedString(&$node, $node_level, $subEntities=false, $definedEntities) {
+	function getNormalizedString(&$node, $node_level, $subEntities=false, $definedEntities = array()) {
 		$response = '';
 
 		switch ($node->nodeType)  {
@@ -271,7 +271,7 @@ class DOMIT_Utilities {
 		$index = -1;
 		
 		for ($i = ($total - 1); $i >= 0; $i--) {
-			if ($fileName{$i} == '.') {
+			if ($fileName[$i] == '.') {
 				$index = $i;
 			}
 		}

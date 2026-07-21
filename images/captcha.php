@@ -1,4 +1,4 @@
-<?
+<?php
 
 $font = "include/VeraSeBd.ttf";
 $fontsize = 18;

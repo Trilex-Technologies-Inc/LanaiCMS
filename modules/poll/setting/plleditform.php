@@ -1,6 +1,6 @@
-<?
+<?php
 
-	if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+	if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	} 
 	
@@ -39,7 +39,7 @@
 	<tr>
 		<td><?=_POLL_OPTION; ?></td>		
 	</tr>			
-	<? 
+	<?php 
 	 	for ($i=0;$i<12;$i++) {
 		?>
 		<tr> 
@@ -49,7 +49,7 @@
 			<input type="hidden" name="ppoId[]" value="<?=$rsPollOption->fields['ppoId']?>">
 			</td>	
 		</tr>			
-		<? 
+		<?php 
 			$rsPollOption->MoveNext();
 		}
 	?>			

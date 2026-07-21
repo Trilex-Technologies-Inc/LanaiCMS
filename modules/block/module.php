@@ -18,7 +18,7 @@ class Block
     var $cfg;
     var $_sql;
 
-    function Block()
+    function __construct()
     {
         global $db, $cfg;
         $this->db = $db;
@@ -86,7 +86,7 @@ class Block
         return $rs->fields[0];
     }
 
-    function setNewBlock($blcTitle, $blcName, $blcContent, $blcRssUrl, $blcRssRefesh = 600, $blcPosition, $m)
+    function setNewBlock($blcTitle, $blcName, $blcContent, $blcRssUrl, $blcRssRefesh, $blcPosition, $m)
     {
         // Ensure numeric values
         $blcRssRefesh = (int)$blcRssRefesh;
@@ -122,7 +122,7 @@ class Block
         return $rs;
     }
 
-    function setEditBlock($blcId, $blcTitle, $blcName, $blcContent, $blcRssUrl, $blcRssRefesh = 600, $blcPosition, $m)
+    function setEditBlock($blcId, $blcTitle, $blcName, $blcContent, $blcRssUrl, $blcRssRefesh, $blcPosition, $m)
     {
         // Cast numeric values
         $blcId = (int)$blcId;

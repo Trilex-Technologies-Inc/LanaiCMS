@@ -46,7 +46,7 @@ class JPOPSettingPager extends Pager {
 	    ob_start();
 	    ?>
 	    <table class="dataTable" >
-	    <?
+	    <?php
 	    $s = ob_get_contents();
 	    ob_end_clean();
 	    return $s;
@@ -58,7 +58,7 @@ class JPOPSettingPager extends Pager {
 		while (!$this->rs->EOF){
 			?>
 			<tr>
-			<?
+			<?php
 				for ($i=0;$i<2;$i++) {
 					if (!empty($this->rs->fields['popTitle'])) {
 			?>
@@ -76,26 +76,26 @@ class JPOPSettingPager extends Pager {
 			<td valign="top" width="150">
 			&nbsp;&nbsp;<a href="setting.php?modname=jpop&mf=popedi&i=<?=$this->rs->fields['popId']; ?>"><?=_EDIT; ?></a><br>
 			&nbsp;&nbsp;<a href="setting.php?modname=jpop&mf=popdel&i=<?=$this->rs->fields['popId']; ?>"><?=_DELETE; ?></a><br>
-			<?
+			<?php
 				if ($this->rs->fields['popActive']=='y') {
 			?>
 			&nbsp;&nbsp;<a href="setting.php?modname=jpop&mf=popactive&v=n&i=<?=$this->rs->fields['popId']; ?>"><?=_ACTIVED; ?></a><br>
-			<?
+			<?php
 				} else {
 			?>
 			&nbsp;&nbsp;<a href="setting.php?modname=jpop&mf=popactive&v=y&i=<?=$this->rs->fields['popId']; ?>"><?=_DEACTIVED; ?></a><br>
-			<?	
+			<?php	
 				}
 			?>
 			</td>
-			<?
+			<?php
 					$this->rs->movenext();
 					} // if
 				} // for
 				
 			?>
 			</tr>
-			<?
+			<?php
 			
 		}
 		

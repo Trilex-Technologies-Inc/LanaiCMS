@@ -1,5 +1,5 @@
-<?
-	if (!eregi("module.php", $_SERVER['PHP_SELF'])) {
+<?php
+	if (stripos($_SERVER['PHP_SELF'], "module.php") === false) {
 			die ("You can't access this file directly...");
 	}
 
@@ -10,7 +10,7 @@
     $site= new SiteMap();
 ?>
 <span class="txtContentTitle"><?=_SITE_MAP; ?></span><br/>
-<?
+<?php
     $site->render();
 ?>
 <br/>

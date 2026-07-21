@@ -1,4 +1,4 @@
-<?
+<?php
 
 
 class SiteMap
@@ -10,7 +10,7 @@ class SiteMap
     var $_sql;
     var $version = "0.1";
 
-    function SiteMap()
+    function __construct()
     {
         global $db, $cfg;
         $this->db = $db;
@@ -28,33 +28,33 @@ class SiteMap
         $rs = $this->db->execute($sql);
         $num = $rs->recordcount();
         ?>
-        <ul><?
+        <ul><?php
         while (!$rs->EOF) {
             $prelink = $sys_nav->getMenuRealLink($rs);
             ?>
             <li><a href="<?= $prelink; ?>"
-                   target="<?= $rs->fields['mnuTarget']; ?>" ><?= $rs->fields['mnuTitle']; ?></a><?
+                   target="<?= $rs->fields['mnuTarget']; ?>" ><?= $rs->fields['mnuTitle']; ?></a><?php
             // get sub menu
             $sqlsub = "SELECT * FROM " . $this->cfg['tablepre'] . "menu WHERE mnuParentId=" . $rs->fields['mnuId'] . " AND mnuActive='y' ORDER BY mnuOrder ASC";
             $rssub = $this->db->execute($sqlsub);
             if ($rssub->recordcount() > 0) {
                 ?>
-                <ul><?
+                <ul><?php
                 while (!$rssub->EOF) {
                     // find real link
                     $prelink = $sys_nav->getMenuRealLink($rssub);
                     ?>
                     <li><a href="<?= $prelink; ?>"
-                           target="<?= $rssub->fields['mnuTarget']; ?>"><?= $rssub->fields['mnuTitle']; ?></a></li><?
+                           target="<?= $rssub->fields['mnuTarget']; ?>"><?= $rssub->fields['mnuTitle']; ?></a></li><?php
                     $rssub->movenext();
                 } // while
-                ?></ul></li><?
+                ?></ul></li><?php
             } else {
-                ?></li><?
+                ?></li><?php
             }
             $rs->movenext();
         } // while
-        ?></ul><?
+        ?></ul><?php
     }
 
     function feed_render()

@@ -1,4 +1,4 @@
-<?
+<?php
 	include_once("class.MenuPager.php");
 	
 	/**
@@ -19,7 +19,7 @@
 		
 		
 		
-		function Menu() {
+		function __construct() {
 			global $db,$cfg;
 			$this->db=$db;
 			$this->cfg=$cfg;
@@ -117,7 +117,7 @@
 			<option value="_self" <?=$self;?> >_self</option>
 			<option value="_top" <?=$top;?> >_top</option>
 		</select>
-		<?
+		<?php
 		}
 		
 		// menu combo		
@@ -126,17 +126,17 @@
 			?>
 			<select name="<?=$name; ?>" style="width:150px">
 				<option value="0"><?=_NONE; ?></option>
-			<?
+			<?php
 			while(!$rs->EOF){
 				if ($value==$rs->fields['mnuParentId']) {
 				    $select="selected";
 				} else {
 					$select="";
 				}
-				?><option value="<?=$rs->fileds['mnuId']; ?>" <?=$select; ?>><?=$rs->fields['mnuTitle']; ?></option><?
+				?><option value="<?=$rs->fileds['mnuId']; ?>" <?=$select; ?>><?=$rs->fields['mnuTitle']; ?></option><?php
 				$rs->movenext();
 			} // while
-			?></select><?
+			?></select><?php
 		}
 		
 		// module combo
@@ -149,17 +149,17 @@
 			?>
 			<select name="<?=$name; ?>" style="width:150px">
 				<option value="0"><?=_NONE; ?></option>
-			<?
+			<?php
 			while(!$rs->EOF){
 				if ($rs->fields['mnuId']==$value) {
 				    $select="selected";
 				} else {
 					$select="";
 				}
-				?><option value="<?=$rs->fields['mnuId']; ?>" <?=$select; ?>><?=$rs->fields['mnuTitle']; ?></option><?
+				?><option value="<?=$rs->fields['mnuId']; ?>" <?=$select; ?>><?=$rs->fields['mnuTitle']; ?></option><?php
 				$rs->movenext();
 			} // while
-			?></select><?
+			?></select><?php
 		}
 		
 		// module combo
@@ -168,17 +168,17 @@
 					WHERE modActive='y'
 					ORDER By modTitle ASC";
 			$rs=$this->db->execute($sql);	
-			?><select name="<?=$name; ?>" style="width:150px"><?
+			?><select name="<?=$name; ?>" style="width:150px"><?php
 			while(!$rs->EOF){
 				if ($rs->fields['modId']==$value) {
 				    $select="selected";
 				} else {
 					$select="";
 				}
-				?><option value="<?=$rs->fields['modId']; ?>" <?=$select; ?>><?=$rs->fields['modTitle']; ?></option><?
+				?><option value="<?=$rs->fields['modId']; ?>" <?=$select; ?>><?=$rs->fields['modTitle']; ?></option><?php
 				$rs->movenext();
 			} // while
-			?></select><?
+			?></select><?php
 		}
 		
 		// content combo
@@ -186,17 +186,17 @@
 			$sql="SELECT * FROM ".$this->cfg['tablepre']."content 
 					WHERE conActive='y'";
 			$rs=$this->db->execute($sql);	
-			?><select name="<?=$name; ?>" style="width:150px"><?
+			?><select name="<?=$name; ?>" style="width:150px"><?php
 			while(!$rs->EOF){
 				if ($rs->fields['conId']==$value) {
 				    $select="selected";
 				} else {
 					$select="";
 				}
-				?><option value="<?=$rs->fields['conId']; ?>" <?=$select; ?>><?=$rs->fields['conTitle']; ?></option><?
+				?><option value="<?=$rs->fields['conId']; ?>" <?=$select; ?>><?=$rs->fields['conTitle']; ?></option><?php
 				$rs->movenext();
 			} // while
-			?></select><?
+			?></select><?php
 		}
 		
 		

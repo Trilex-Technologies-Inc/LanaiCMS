@@ -1,5 +1,5 @@
-<?
-if (!eregi("module.php", $_SERVER['PHP_SELF'])) {
+<?php
+if (stripos($_SERVER['PHP_SELF'], "module.php") === false) {
     die ("You can't access this file directly...");
 }
 
@@ -83,7 +83,7 @@ if (isset($_REQUEST['ac']) && $_REQUEST['ac'] == "lostpass") {
                     <img src="theme/<?=$cfg['theme'];?>/images/worning.gif" alt="">
                     <?=_LOSTPASS_CANNOT_SEND;?>
                 </div>
-                <?
+                <?php
             } else {
                 $mem_lanai->setUpdateUserPassword(
                     $rs->fields['userId'],
@@ -94,7 +94,7 @@ if (isset($_REQUEST['ac']) && $_REQUEST['ac'] == "lostpass") {
                     <img src="theme/<?=$cfg['theme'];?>/images/ok.gif" alt="">
                     <?=_LOSTPASS_SEND_COMPLETE;?>
                 </div>
-                <?
+                <?php
             }
 
             $mail->ClearAddresses();
@@ -109,9 +109,9 @@ if (isset($_REQUEST['ac']) && $_REQUEST['ac'] == "lostpass") {
 
 } else {
     ?>
-    <? if ($turnstile_enabled) { ?>
+    <?php if ($turnstile_enabled) { ?>
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-    <? } ?>
+    <?php } ?>
     <div class="container mt-4">
         <h4 class="mb-3"><?=_USER_LOSTPASS;?></h4>
         <p class="text-muted"><?=_USER_LOSTPASS_INSTRUCTION;?></p>
@@ -126,7 +126,7 @@ if (isset($_REQUEST['ac']) && $_REQUEST['ac'] == "lostpass") {
                 <input type="text" name="userLogin" class="form-control" required>
             </div>
 
-            <? if ($captcha_provider === 'default') { ?>
+            <?php if ($captcha_provider === 'default') { ?>
                 <div class="mb-3">
                     <label class="form-label"><?=_MEMBER_CAPTEXT;?></label>
                     <input type="text" name="captext" class="form-control w-50" maxlength="5" required placeholder="<?= defined('_ENTER_CAPTCHA') ? _ENTER_CAPTCHA : 'Enter captcha'; ?>">
@@ -135,16 +135,16 @@ if (isset($_REQUEST['ac']) && $_REQUEST['ac'] == "lostpass") {
                 <div class="mb-3">
                     <img src="images/captcha.php?hash=<?=md5(time());?>" alt="captcha">
                 </div>
-            <? } elseif ($turnstile_enabled) { ?>
+            <?php } elseif ($turnstile_enabled) { ?>
                 <div class="mb-3">
                     <label class="form-label"><?=_MEMBER_CAPTEXT;?></label>
                     <div class="cf-turnstile" data-sitekey="<?= $turnstile_site_key; ?>" data-theme="light" data-language="en"></div>
                 </div>
-            <? } else { ?>
+            <?php } else { ?>
                 <div class="alert alert-warning">
                     Turnstile is not fully configured. Please set both Site Key and Secret Key in Config.
                 </div>
-            <? } ?>
+            <?php } ?>
 
             <div class="d-flex gap-3">
                 <button type="submit" class="btn btn-primary">
@@ -157,6 +157,6 @@ if (isset($_REQUEST['ac']) && $_REQUEST['ac'] == "lostpass") {
             </div>
         </form>
     </div>
-    <?
+    <?php
 }
 ?>

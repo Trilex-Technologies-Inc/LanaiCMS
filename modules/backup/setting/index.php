@@ -1,5 +1,5 @@
-<?
-    if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+<?php
+	if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	}
 	$module_name = basename( dirname( substr( __FILE__, 0, strlen( dirname( __FILE__ ) ) ) ) );
@@ -11,7 +11,7 @@
 <a href="setting.php?modname=<?=$module_name; ?>&mf=table"><?=_NEW; ?></a>&nbsp;
 <img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
 <a href="module.php?modname=setting"><?=_BACK; ?></a><br/><br/>
-<?
+<?php
   $bup=new DBBackup();
 ?>
 <script language="JavaScript" type="text/javascript">
@@ -35,7 +35,7 @@
 <th class="tblRowSolidTopDown"><?=_RESTORE; ?></th>
 <th class="tblRowSolidTopDown"><?=_DELETE; ?></th>
 </tr>
-<?
+<?php
     $fArr=$bup->getBackupFile();
     if ((count($fArr)) >0){
     foreach ($fArr as $item) {
@@ -61,7 +61,7 @@
 	<a href="javascript:ckdelete('<?=$item; ?>')"><img src="theme/<?=$cfg['theme'];?>/images/delete.gif" border="0" align="absmiddle"></a>
 </td>
 </tr>
-<?
+<?php
     } } // for each
 ?>
 </table>

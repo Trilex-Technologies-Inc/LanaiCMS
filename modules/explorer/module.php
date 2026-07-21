@@ -1,4 +1,4 @@
-<?
+<?php
 
 class Explorer
 {
@@ -24,7 +24,7 @@ class Explorer
         "xml" => "netscape_doc.png"
     );
 
-    function Explorer()
+    function __construct()
     {
         global $cfg, $sys_lanai;
         $this->cfg = $cfg;
@@ -90,7 +90,7 @@ class Explorer
                 $icon = "modules/explorer/images/unknown.png";
             }
         }
-        ?><img src="<?= $icon; ?>" border="0" align="absmiddle"><?
+        ?><img src="<?= $icon; ?>" border="0" align="absmiddle"><?php
     }
 
     function getFileSize($file_size)

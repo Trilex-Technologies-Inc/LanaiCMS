@@ -1,4 +1,4 @@
-<?
+<?php
 
 
 class Package {
@@ -9,7 +9,7 @@ var $mid;
 var $syslanai;
 
 /* constructore */
-function Package() {
+function __construct() {
     global $db,$cfg,$sys_lanai;
     $this->db=$db;
     $this->cfg=$cfg;

@@ -1,4 +1,4 @@
-<?
+<?php
 
 class Pager {
 
@@ -18,7 +18,7 @@ class Pager {
     var $title=array();
     var $link;
 
-    function Pager(&$db,$sql,$offset){
+    function __construct(&$db,$sql,$offset){
       $this->offset=$offset;
       /* check page */
       if (($_GET['page']==0) OR (empty($_GET['page']))){
@@ -41,11 +41,11 @@ class Pager {
     function renderGrid() {
       ob_start();
       while (!$this->rs->EOF){
-          ?><tr class="dataRow"><?
+          ?><tr class="dataRow"><?php
           for ($i=0;$i<($this->rs->FieldCount());$i++) {
-              ?><td class="dataColumn"><?=$this->rs->fields[$i]; ?></td><?
+              ?><td class="dataColumn"><?=$this->rs->fields[$i]; ?></td><?php
           }
-          ?></tr><?
+          ?></tr><?php
           $this->rs->movenext();
       }
       $s = ob_get_contents();
@@ -59,23 +59,23 @@ class Pager {
         ?>
         <table class="dataTable">
 		<tr class="dataRowHeader">
-        <?
+        <?php
         /* load table column name */
         if (empty($this->title)){
             $fcnt = $this->rs->FieldCount();
             for ($i=0;$i<$fcnt;$i++) {
                 $field = $this->rs->FetchField($i);
-                ?><td class="dataColumnHeader"><?=$field->name; ?></td><?
+                ?><td class="dataColumnHeader"><?=$field->name; ?></td><?php
             }
         } else {
             /* load define title */
             foreach (($this->title) as $item) {
-                ?><td class="dataColumnHeader"><?=$item; ?></td><?
+                ?><td class="dataColumnHeader"><?=$item; ?></td><?php
             }
         }
         ?>
         </tr>
-        <?
+        <?php
         $s = ob_get_contents();
         ob_end_clean();
         return $s;
@@ -84,7 +84,7 @@ class Pager {
     /* render grid footer */
     function renderGridFooter() {
         ob_start();
-        ?></table><?
+        ?></table><?php
         $s = ob_get_contents();
         ob_end_clean();
         return $s;
@@ -113,7 +113,7 @@ class Pager {
 		</tr>
 		</table>
 
-        <?
+        <?php
     }
 
     /* reder navigator link */
@@ -123,16 +123,16 @@ class Pager {
       if ($this->currpage==0) $this->currpage=1;
 	  if (($this->currpage==1) AND ($this->abspage==1))  {} else 
 	  if (($this->currpage==1) AND ($this->abspage>0)) {
-          ?><?=$this->linkNext(); ?><?
-          ?><?=$this->linkLast(); ?><?
+          ?><?=$this->linkNext(); ?><?php
+          ?><?=$this->linkLast(); ?><?php
       } else if ($this->abspage==$this->currpage) {
-          ?><?=$this->linkFirst(); ?><?
-          ?><?=$this->linkPrevious(); ?><?
+          ?><?=$this->linkFirst(); ?><?php
+          ?><?=$this->linkPrevious(); ?><?php
       } else if (($this->currpage<$this->abspage) AND ($this->currpage>1)) {
-          ?><?=$this->linkFirst(); ?><?
-          ?><?=$this->linkPrevious(); ?><?
-          ?><?=$this->linkNext(); ?><?
-          ?><?=$this->linkLast(); ?><?
+          ?><?=$this->linkFirst(); ?><?php
+          ?><?=$this->linkPrevious(); ?><?php
+          ?><?=$this->linkNext(); ?><?php
+          ?><?=$this->linkLast(); ?><?php
       } 
       
       $s = ob_get_contents();
@@ -143,7 +143,7 @@ class Pager {
     /* next link */
     function linkNext() {
         ob_start();
-        ?><a href="<?=$this->link; ?>page=<?=($this->currpage+1); ?>" ><?=$this->nextStr; ?></a>&nbsp;<?
+        ?><a href="<?=$this->link; ?>page=<?=($this->currpage+1); ?>" ><?=$this->nextStr; ?></a>&nbsp;<?php
         $s = ob_get_contents();
 		ob_end_clean();
 		return $s;
@@ -152,7 +152,7 @@ class Pager {
     /* last link */
     function linkLast() {
         ob_start();
-        ?><a href="<?=$this->link; ?>page=<?=$this->abspage; ?>"><?=$this->lastStr; ?></a><?
+        ?><a href="<?=$this->link; ?>page=<?=$this->abspage; ?>"><?=$this->lastStr; ?></a><?php
         $s = ob_get_contents();
 		ob_end_clean();
 		return $s;
@@ -161,7 +161,7 @@ class Pager {
     /* first link */
     function linkFirst() {
         ob_start();
-        ?><a href="<?=$this->link; ?>page=1"><?=$this->firstStr; ?></a>&nbsp;<?
+        ?><a href="<?=$this->link; ?>page=1"><?=$this->firstStr; ?></a>&nbsp;<?php
         $s = ob_get_contents();
 		ob_end_clean();
 		return $s;
@@ -170,7 +170,7 @@ class Pager {
     /* previous link */
     function linkPrevious() {
         ob_start();
-        ?><a href="<?=$this->link; ?>page=<?=($this->currpage-1); ?>" ><?=$this->prevStr; ?></a>&nbsp;<?
+        ?><a href="<?=$this->link; ?>page=<?=($this->currpage-1); ?>" ><?=$this->prevStr; ?></a>&nbsp;<?php
         $s = ob_get_contents();
 		ob_end_clean();
 		return $s;
@@ -180,7 +180,7 @@ class Pager {
     function showPageNumber() {
         ob_start();
 		if (empty($this->currpage)) $this->currpage=1;
-        ?><?=$this->pageStr; ?><?=$this->currpage; ?>/<?=$this->abspage; ?><?
+        ?><?=$this->pageStr; ?><?=$this->currpage; ?>/<?=$this->abspage; ?><?php
         $s = ob_get_contents();
 		ob_end_clean();
 		return $s;
@@ -191,9 +191,9 @@ class Pager {
         ?><?=$this->recStr; ?><?=($this->page+1); ?> -
         <?php
             if (($this->abspage==$this->currpage) AND (($this->page+$this->offset) > $maxrow)) {
-                ?><?=($this->maxrow); ?><?
+                ?><?=($this->maxrow); ?><?php
             } else {
-                ?><?=($this->page+$this->offset); ?><?
+                ?><?=($this->page+$this->offset); ?><?php
             }
         $s = ob_get_contents();
 		ob_end_clean();

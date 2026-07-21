@@ -4,7 +4,7 @@ class ReadTotal {
 	var $db;
 	var $cfg;
 	
-	function ReadTotal($cat,$id) {
+	function __construct($cat,$id) {
 		global $db,$cfg;
 		$this->cfg=$cfg;
 		$this->db=$db;

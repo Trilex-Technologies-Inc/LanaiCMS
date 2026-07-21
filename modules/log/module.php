@@ -39,7 +39,7 @@ class SysLog {
 		// check page exist
 		if (!$this->pageExist($_SERVER['REQUEST_URI'])) {
 			// add page
-			if (!eregi("setting.php", $_SERVER['REQUEST_URI'])) {
+			if (stripos($_SERVER['REQUEST_URI'], "setting.php") === false) {
 				$this->addPage($this->cfg['title'],$_SERVER['REQUEST_URI']);
 			}
 		}
@@ -49,7 +49,7 @@ class SysLog {
 		fwrite($fp,date("YmdHis")."\t".$_SERVER['REMOTE_ADDR']."\t".$_SERVER['REQUEST_URI']."\n");
 		fclose($fp);
 		// add log
-		if (!eregi("setting.php", $_SERVER['REQUEST_URI'])) {
+		if (stripos($_SERVER['REQUEST_URI'], "setting.php") === false) {
 				// get page id
 				$pageid=$this->getPageID($_SERVER['REQUEST_URI']);
 				// get log stat

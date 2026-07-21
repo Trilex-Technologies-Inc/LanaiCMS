@@ -33,7 +33,7 @@ class SYSTag {
 	 *
 	 * @return SYSTag
 	 */
-	function SYSTag () {
+	function __construct () {
 		global $cfg,$db;
 		$this->db=$db;
 		$this->cfg=$cfg;
@@ -48,7 +48,7 @@ class SYSTag {
 	 */
 	function parseTag($tags) {
 		$arrTag=array();
-		$arrTag=split(",",$tags);	
+		$arrTag=explode(",",$tags);	
 		return 	$arrTag;
 	}
 	
@@ -146,7 +146,7 @@ class SYSTag {
 		$rows=$rs->recordcount();
 		ob_start();
 		while (!$rs->EOF) {
-			?><span style="font-size:<?=$this->getScale($rs->fields['Total'])?>;"><?=$rs->fields['tagWord']; ?></span> <?
+			?><span style="font-size:<?=$this->getScale($rs->fields['Total'])?>;"><?=$rs->fields['tagWord']; ?></span> <?php
 			$rs->movenext();
 		}
 		$tCloud = ob_get_contents();

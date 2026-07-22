@@ -47,6 +47,41 @@
     text-align: center;
     color: #777;
   }
+  .article-content img,
+  .article-content video,
+  .article-content iframe {
+    max-width: 100%;
+    height: auto;
+  }
+  .article-content {
+    overflow-wrap: anywhere;
+  }
+  .article-content table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  @media (max-width: 575.98px) {
+    .article-hero {
+      padding: 5rem 0 2.5rem;
+    }
+    .article-hero .display-5 {
+      font-size: 1.75rem;
+    }
+    .article-meta {
+      line-height: 1.8;
+    }
+    main > .container.my-5 {
+      margin-top: 1.5rem !important;
+      margin-bottom: 1.5rem !important;
+    }
+    .article-content {
+      padding: 1rem !important;
+    }
+    footer .float-end {
+      float: none !important;
+    }
+  }
 </style>
 
 
@@ -185,7 +220,7 @@
   <p class="float-end">
     <a href="#">Back to top</a>
   </p>
-  <p>&copy; 2017–2025 powered by <a href="https://lanaicms.com/">LanaiCMS</a> </p>
+  <p>&copy; 2017–{$smarty.now|date_format:"%Y"} powered by <a href="https://lanaicms.com/">LanaiCMS</a> </p>
 
 </footer>
 

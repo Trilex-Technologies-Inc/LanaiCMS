@@ -1,6 +1,6 @@
-<?
+<?php
 
-	if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+	if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	} 
 	
@@ -26,7 +26,7 @@
 	<a href="module.php?modname=setting" ><?=_BACK; ?></a>
 	<br><br>
 	
-	<?
+	<?php
 		$xtheme=$thm_lanai->getTheme();
 
 
@@ -42,7 +42,7 @@
 		</td>
 		<td>
 		<select name="thmname" size="5" style="width:200px;">
-		<?
+		<?php
 			foreach ($xtheme as $value) {
 				if (($thm_lanai->getCurrentTheme())==$value) {
 				    $selected="selected";
@@ -51,7 +51,7 @@
 				}
 		  	  ?>
 			  	<option value="<?=$value; ?>" <?=$selected; ?> ><?=ucwords($value); ?></option>
-			  <?
+			  <?php
 			}	
 		?>
 		</select >		
@@ -59,7 +59,7 @@
 	</tr>
 	</form>
 	</table>
-	<?
+	<?php
 			} // check writable config 
 		
 	 ?>

@@ -30,7 +30,7 @@ $ajax->setJSCode("mybutton",$ajax->htmlEnable("stoptimer"),""); // allow to stop
 		<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
 		<script type="text/javascript" src="../prototype.js"></script> <!-- include stantard prototype library -->
 		<script type="text/javascript" src="../AjaxCore.js"></script> <!-- include AjaxCore library -->
-		<? echo $ajax->getJSCode(); /* print some header content to handle the results from the request */ ?>
+		<?php echo $ajax->getJSCode(); /* print some header content to handle the results from the request */ ?>
 	</head>
 	<body>
 		<table align="center" width="740">
@@ -48,9 +48,9 @@ $ajax->setJSCode("mybutton",$ajax->htmlEnable("stoptimer"),""); // allow to stop
 					In this case we'll use <b>onLoad</b> with a <b>bindPeriodicalTimer</b> to a PHP function.  <br /> <br />
 					
 					
-					<? echo $ajax->onLoad("getRandomNumber","","bindPeriodicalTimer","2000"); /* Bind onLoad JavaScript event to a PHP function within a peridicalTimer  */?>
-					<input type="button" id="stoptimer" name="stoptimer" value="kill timer"  onclick="<? echo $ajax->stopTimer("onLoad").$ajax->htmlDisable("stoptimer").$ajax->htmlEnable("starttimer"); // this timer has a special name, and it is onLoad ?>"/>
-					<input type="button" id="starttimer" name="starttimer" value="restart timer" disabled="disabled" onclick="<? echo $ajax->startTimer("onLoad").$ajax->htmlEnable("stoptimer").$ajax->htmlDisable("starttimer"); // this timer has a special name, and it is onLoad ?>"/>
+					<?php echo $ajax->onLoad("getRandomNumber","","bindPeriodicalTimer","2000"); /* Bind onLoad JavaScript event to a PHP function within a peridicalTimer  */?>
+					<input type="button" id="stoptimer" name="stoptimer" value="kill timer"  onclick="<?php echo $ajax->stopTimer("onLoad").$ajax->htmlDisable("stoptimer").$ajax->htmlEnable("starttimer"); // this timer has a special name, and it is onLoad ?>"/>
+					<input type="button" id="starttimer" name="starttimer" value="restart timer" disabled="disabled" onclick="<?php echo $ajax->startTimer("onLoad").$ajax->htmlEnable("stoptimer").$ajax->htmlDisable("starttimer"); // this timer has a special name, and it is onLoad ?>"/>
 					<div id="results" name="results" >  
 						<!-- div where results will be placed -->
 					</div>

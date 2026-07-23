@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 RSSTHAI News Reader v0.25
 Last modified: 2005-11-05
@@ -89,7 +89,7 @@ class rssthai {
 			}
 
 		    	require_once(DOMIT_RSS_INCLUDE_PATH . 'xml_domit_rss.php');
-			$this->rssdoc =& new xml_domit_rss_document($this->rssuri,$this->cachedir,$this->cachetime);
+			$this->rssdoc = new xml_domit_rss_document($this->rssuri,$this->cachedir,$this->cachetime);
 			
 			$this->displayFeed();
 	} //parse
@@ -193,9 +193,9 @@ class rssthai {
 	{
 		if ($imageuri != "") return $imageuri;
 		$parsedlink = parse_url($itemlink);
-		list($tx,$rx) = split("&",$parsedlink["query"]);
-		list($t,$type) = split("=",$tx);
-		list($r,$rid) = split("=",$rx);
+		list($tx,$rx) = explode("&",$parsedlink["query"], 2);
+		list($t,$type) = explode("=",$tx, 2);
+		list($r,$rid) = explode("=",$rx, 2);
 		$urlquery = "http://www.rssthai.com/images/?t=$type&r=$rid";
 		if (! (strpos($itemlink,"mreader.php") === false)) $urlquery = "http://www.rssthai.com/images/?u=$type&r=$rid";
 		

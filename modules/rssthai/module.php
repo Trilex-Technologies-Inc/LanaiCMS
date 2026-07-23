@@ -1,4 +1,4 @@
-<?
+<?php
 include_once("class.LRSSThaiPager.php");
 
 /**
@@ -18,7 +18,7 @@ class LRSSThai
     var $cfg;
     var $_sql;
 
-    function LRSSThai()
+    function __construct()
     {
         global $db, $cfg;
         $this->db = $db;

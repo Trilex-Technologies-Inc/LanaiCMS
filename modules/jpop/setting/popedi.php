@@ -1,6 +1,6 @@
 <?php
 
-if (!eregi("setting.php", $_SERVER['PHP_SELF'])) {
+if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 		die ("You can't access this file directly...");
 }
 
@@ -37,7 +37,7 @@ if (!$rs) {
 	<tr><td><?=_JPOP_TITLE; ?> : </td><td><input type="text" id="popTitle" name="popTitle" size="40" value="<?=$objJpop->poptitle;?>"></td></tr>
 	<tr valign="top"><td><?=_JPOP_DES; ?> : </td>
 	<td>
-	<? 
+	<?php 
 				$sBasePath = "include/fckeditor/";
 				$oFCKeditor1 = new FCKeditor('popDescription') ;
 				$oFCKeditor1->ToolbarSet	= "MyToolbar" ;
@@ -55,7 +55,7 @@ if (!$rs) {
 	<tr><td>&nbsp;</td><td><input type="submit" value="<?=_SAVE; ?>" class="inputButton">&nbsp;<input type="reset" value="<?=_RESET; ?>" class="inputButton"></td></tr>
 	</form>
 	</table>
-<?
+<?php
 	} // edit action
 } // data found
 ?>

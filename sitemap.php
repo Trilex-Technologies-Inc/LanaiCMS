@@ -1,4 +1,4 @@
-<?
+<?php
 
 include_once("include/feedcreater/feedcreator.class.php");
 include_once("include/lanai/class.navigator.php");

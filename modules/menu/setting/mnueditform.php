@@ -1,6 +1,6 @@
-<?
+<?php
 
-	if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+	if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	} 
 	
@@ -25,7 +25,7 @@
 	<input type="hidden" name="ac" value="edit">	
 	<input type="hidden" name="mnid" value="<?=$_REQUEST['mid']?>">	
 	<input type="hidden" name="m" value="<?=$_REQUEST['m']?>">
-	<? 
+	<?php 
 		$rs=$mnu_lanai->getMenuById($_REQUEST['mid']);
 		switch($_REQUEST['m']){
 			case 'c': 
@@ -47,7 +47,7 @@
 		<td><?=_MENU_PARENT; ?></td>
 		<td><?=$mnu_lanai->getMenuParentCombo("mnuParentId",$rs->fields['mnuParentId']); ?></td>
 	</tr>	
-	<?
+	<?php
 				break;
 			case 'm': 
 				// module
@@ -68,7 +68,7 @@
 		<td><?=_MENU_PARENT; ?></td>
 		<td><?=$mnu_lanai->getMenuParentCombo("mnuParentId",$rs->fields['mnuParentId']); ?></td>
 	</tr>	
-	<?
+	<?php
 				break;
 			case 'l':
 				// like
@@ -89,7 +89,7 @@
 		<td><?=_MENU_PARENT; ?></td>
 		<td><?=$mnu_lanai->getMenuParentCombo("mnuParentId",$rs->fields['mnuParentId']); ?></td>
 	</tr>	
-	<?
+	<?php
 				break;
 		} // switch
 	?>	

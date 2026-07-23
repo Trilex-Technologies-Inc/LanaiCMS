@@ -1,11 +1,11 @@
-<?
+<?php
 	class Theme {
 			
   	function getOffLineMessage(){
 			ob_start();
 				?>
 					<h1>Tempolary Out of Services</h1>
-				<?
+				<?php
 			$s = ob_get_contents();
 			ob_end_clean();
 			return $s;
@@ -21,14 +21,14 @@
   	function getFooter() {
 			ob_start();
   	?>
-		<? global $cfg_footer; ?>
+		<?php global $cfg_footer; ?>
 		<?=$cfg_footer; ?> 		
-		<? 
+		<?php 
   			global $timer;
   			$timer->stop('main');
   			printf(_PAGE_EXECUTION." %s "._SEC,$timer->get_current('main'));
   		?>
-  	<?
+  	<?php
   			$s = ob_get_contents();
 			ob_end_clean();
 			return $s;
@@ -49,19 +49,19 @@
 				} 
   			} else if ($case=='c') {
   				// insert template for block
-  			 	?><?=$rsblock->fields['blcContent']; ?><?
+  			 	?><?=$rsblock->fields['blcContent']; ?><?php
   			} else if ($case=='r'){
   				// rss feed
   				// insert template for block
   				if ((time()-$rs->fields['blcRssTime'])>$rs->fields['blcRssRefesh']) {
   				    $info=$sys_lanai->getRSSFeed($rsblock->fields['blcRssUrl']);
   					if (!empty($info['warning'])) {
-  					   ?><?=$rs->fields['blcContent']; ?><?
+  					   ?><?=$rs->fields['blcContent']; ?><?php
   					} else {
   						$this->setBlock2Db($info,$rsblock->fields['blcId']);
   					}
   				} 
-  				?><?=$rsblock->fields['blcContent']; ?><?
+  				?><?=$rsblock->fields['blcContent']; ?><?php
   			}  			
 
 			$s = ob_get_contents();
@@ -150,7 +150,7 @@
 			{
 				require_once("modules/".$mname."/index.php");
 			} else {
-				?><?=$sys_lanai->getErrorBox(_NO_MOD_FILE." : "."modules/".$mname."/index.php"); ?><?
+				?><?=$sys_lanai->getErrorBox(_NO_MOD_FILE." : "."modules/".$mname."/index.php"); ?><?php
 			}
 		} else {
 			// mod dir exist ?
@@ -158,7 +158,7 @@
 			{
 				require_once("modules/".$mname."/".$mfile.".php");
 			} else {
-				?><?=$sys_lanai->getErrorBox(_NO_FILE." : "."modules/".$mname."/".$mfile.".php"); ?><?
+				?><?=$sys_lanai->getErrorBox(_NO_FILE." : "."modules/".$mname."/".$mfile.".php"); ?><?php
 			}
 		}
 	} else {
@@ -196,7 +196,7 @@
 			{
 				require_once("modules/".$mname."/setting/index.php");
 			} else {
-				?><?=$sys_lanai->getErrorBox(_NO_MOD_FILE." : "."modules/".$mname."/setting/index.php"); ?><?
+				?><?=$sys_lanai->getErrorBox(_NO_MOD_FILE." : "."modules/".$mname."/setting/index.php"); ?><?php
 			}
 		} else {
 			// mod dir exist ?
@@ -204,7 +204,7 @@
 			{
 				require_once("modules/".$mname."/setting/".$mfile.".php");
 			} else {
-				?><?=$sys_lanai->getErrorBox(_NO_FILE." : "."modules/".$mname."/setting/".$mfile.".php"); ?><?
+				?><?=$sys_lanai->getErrorBox(_NO_FILE." : "."modules/".$mname."/setting/".$mfile.".php"); ?><?php
 			}
 		}
 	} else {

@@ -3,10 +3,10 @@
 require_once("../AjaxCore.class.php");  // first we include the AjaxCore class
 class AjaxFunctions extends AjaxCore 
 { 
- function AjaxFunctions()
+ function __construct()
  {
     $this->setup();
-    parent::AjaxCore();
+    parent::__construct();
  } 
 
  function setup()

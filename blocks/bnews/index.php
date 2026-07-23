@@ -1,4 +1,4 @@
-<?
+<?php
 	// modified seo link
 	// 22/11/2006
 
@@ -13,7 +13,7 @@
 		<TABLE>
 		<TR>
 			<TD>
-			<?
+			<?php
 					$link=$sys_lanai->getSEOLink("module.php?modname=news&mf=nwsview&cid=".$rs->fields['nwsId']);
 			?>
 			 <span class="txtContentTitle">
@@ -27,7 +27,7 @@
 		</TR>
 		<tr>
 		<!--<td>
-			<? //$news->getLinkBlogPost($rs->fields['nwsTitle'],$cfg['url']."/module.php?modname=news&mf=nwsview&cid=".$rs->fields['nwsId']); ?>
+			<?php //$news->getLinkBlogPost($rs->fields['nwsTitle'],$cfg['url']."/module.php?modname=news&mf=nwsview&cid=".$rs->fields['nwsId']); ?>
 			<br/><br/>
 		</td>-->
 		</tr>
@@ -42,7 +42,7 @@
 			</TD>
 		</TR>
 		</TABLE><BR>
-		<?
+		<?php
 		$rs->movenext();
 	} // while
 	

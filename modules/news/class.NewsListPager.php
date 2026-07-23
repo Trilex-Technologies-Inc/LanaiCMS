@@ -11,8 +11,8 @@
 	 **/
 	class NewsListPager extends NewsPager {
 	
-		function NewsListPager(&$db,$sql,$id = 'adodb', $showPageLinks = false){
-			NewsPager::NewsPager($db,$sql,$id = 'adodb', $showPageLinks = false);
+		function __construct(&$db,$sql,$id = 'adodb', $showPageLinks = false){
+			parent::__construct($db, $sql, $id, $showPageLinks);
 			$this->page=_PAGE;
 		}
 		
@@ -32,13 +32,13 @@
 			$mod_lanai=new News();
 			?>
 			<table cellpadding="3" cellspacing="1" width="100%">			
-			<?
+			<?php
 			while(!$this->rs->EOF){
 			?>
 			<tr>
 				<td>
 					<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/file.gif" border="0" align="absmiddle">
-					<?
+					<?php
 							global $sys_lanai;
 							$link=$sys_lanai->getSEOLink($_SERVER['PHP_SELF']."?modname=news&mf=nwsview&cid=".$this->rs->fields['nwsId']);	
 					?>
@@ -46,10 +46,10 @@
 					- <span class="txtDateTime"><?=adodb_date2("l,d F Y",$this->rs->fields['nwsCreate'])?></span>
 				</td>
 			</tr>
-			<?
+			<?php
 				$this->rs->movenext();
 			} // while{
-			?></table><?
+			?></table><?php
 			$s = ob_get_contents();
 			ob_end_clean();
 			return $s;

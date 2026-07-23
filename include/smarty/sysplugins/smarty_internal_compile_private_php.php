@@ -142,7 +142,7 @@ class Smarty_Internal_Compile_Private_Php extends Smarty_Internal_CompileBase
             $lex->is_xml = true;
             $lex->phpType = 'xml';
             return;
-        } elseif (strpos($lex->value, '<?') === 0) {
+        } elseif (strpos($lex->value, '<?php') === 0) {
             $lex->phpType = 'php';
         } elseif (strpos($lex->value, '<%') === 0) {
             $lex->phpType = 'asp';

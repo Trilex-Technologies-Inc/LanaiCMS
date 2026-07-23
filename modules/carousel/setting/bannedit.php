@@ -1,4 +1,4 @@
-<?
+<?php
 switch ($_REQUEST['ac']) {
     case "mdelete" :
         $selarr=$_REQUEST['midId'] ;

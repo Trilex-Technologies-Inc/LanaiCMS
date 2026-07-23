@@ -1,4 +1,4 @@
-<?
+<?php
 	include_once("modules/carousel/module.php");
 	$oban=new banner();
 	$banarr=$oban->randomeBann();

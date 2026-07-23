@@ -1,4 +1,4 @@
-<?
+<?php
 	class setting {
 	
 		function getModuleSetting(){

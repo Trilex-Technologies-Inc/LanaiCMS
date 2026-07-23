@@ -1,4 +1,4 @@
-<?
+<?php
 	$obLog=new SysLog();
 	$rs=$obLog->loadLastLog(20);
 ?>
@@ -11,7 +11,7 @@
 	<td ><?=_LOG_IP; ?></td>
 	<td ><?=_LOG_URI; ?></td>
 </tr>
-<?
+<?php
 	while (!$rs->EOF) {
 ?>
 <tr >
@@ -19,7 +19,7 @@
 	<td bgcolor="#FFFFFF" width="120"><?=$rs->fields['logIP'];?></td>
 	<td bgcolor="#FFFFFF" ><?=$rs->fields['pagUrl'];?></td>
 </tr>
-<?
+<?php
 		$rs->movenext();
 	}
 ?>

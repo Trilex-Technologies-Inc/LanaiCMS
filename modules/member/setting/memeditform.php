@@ -1,6 +1,6 @@
-<?
+<?php
 
-if (!eregi("setting.php", $_SERVER['PHP_SELF'])) {
+if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
     die ("You can't access this file directly...");
 }
 
@@ -95,7 +95,7 @@ $rs = $member->getUser($_REQUEST['mid']);
         <tr>
             <td><?= _USER_PRIVILEGE; ?></td>
             <td>
-                <?
+                <?php
                 $aPri = "";
                 $uPri = "";
                 if ($rs->fields['userPrivilege'] == "a") {
@@ -111,14 +111,14 @@ $rs = $member->getUser($_REQUEST['mid']);
                 </select>
             </td>
         </tr>
-        <?
+        <?php
         if (is_writable($cfg['datadir'] . $sys_lanai->getPath() . "uimage")) {
             ?>
             <tr>
                 <td><?= _USER_AVATAR; ?></td>
                 <td><input type="file" name="userAvatar"></td>
             </tr>
-            <?
+            <?php
         }
         ?>
 

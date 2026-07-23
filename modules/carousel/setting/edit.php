@@ -1,14 +1,38 @@
 <?php
 
-if (!eregi("setting.php", $_SERVER['PHP_SELF'])) {
+if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
     die ("You can't access this file directly...");
 }
 
 $objbanner = new banner();
-$rs = $objbanner->Load("banId=" . $_REQUEST['id']);
+$id = isset($_REQUEST['id']) && !is_array($_REQUEST['id'])
+    ? (int) $_REQUEST['id']
+    : 0;
 
-if (!$rs) {
-    $sys_lanai->getErrorBox("Data not found!");
+/*
+ * Do not use Active Record properties to populate this form. Their casing
+ * depends on the database driver (banTitle, bantitle, or BANTITLE), which
+ * caused the edit page to render empty values on some PHP/MySQL versions.
+ */
+$previousFetchMode = $db->SetFetchMode(ADODB_FETCH_ASSOC);
+$bannerRow = $id > 0
+    ? $db->GetRow("SELECT * FROM {$objbanner->_table} WHERE banId = {$id}")
+    : false;
+$bannerQueryError = $db->ErrorMsg();
+$db->SetFetchMode($previousFetchMode);
+
+$banner = array();
+if (is_array($bannerRow)) {
+    foreach ($bannerRow as $field => $value) {
+        $banner[strtolower($field)] = $value;
+    }
+}
+
+if (empty($banner)) {
+    $message = $bannerQueryError !== ''
+        ? "Unable to load carousel: " . htmlspecialchars($bannerQueryError, ENT_QUOTES, 'UTF-8')
+        : "Data not found for carousel ID " . $id . ".";
+    $sys_lanai->getErrorBox($message);
 } else {
     if (!empty($_REQUEST['ac']) && $_REQUEST['ac'] == "edit") {
 
@@ -27,43 +51,43 @@ if (!$rs) {
         <img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
         <a href="setting.php?modname=carousel"><?=_BACK; ?></a><br><br>
 
-        <table>
-            <form name="addform" method="get" action="setting.php">
+        <form name="addform" method="post" action="setting.php">
+            <table>
                 <?php $positions = $objbanner->getPositionOptions(); ?>
                 <input type="hidden" name="modname" value="carousel">
                 <input type="hidden" name="mf" value="edit">
                 <input type="hidden" name="ac" value="edit">
-                <input type="hidden" name="banId" value="<?=$_REQUEST['id']; ?>">
-                <input type="hidden" name="id" value="<?=$_REQUEST['id']; ?>">
+                <input type="hidden" name="banId" value="<?=$id; ?>">
+                <input type="hidden" name="id" value="<?=$id; ?>">
 
                 <tr>
                     <td><?=_BANN_TITLE; ?></td>
-                    <td><input type="text" id="banTitle" name="banTitle" value="<?=$objbanner->BANTITLE;?>" size="30">*</td>
+                    <td><input type="text" id="banTitle" name="banTitle" value="<?=htmlspecialchars((string)$banner['bantitle'], ENT_QUOTES, 'UTF-8'); ?>" size="30">*</td>
                 </tr>
 
                 <tr>
                     <td valign="top"><?=_BANN_DES; ?></td>
-                    <td><textarea id="banDescription" name="banDescription" cols="30" rows="5"><?=$objbanner->BANDESCRIPTION;?></textarea>*</td>
+                    <td><textarea id="banDescription" name="banDescription" cols="30" rows="5"><?=htmlspecialchars((string)$banner['bandescription'], ENT_QUOTES, 'UTF-8'); ?></textarea>*</td>
                 </tr>
 
                 <tr>
                     <td><?=_BANN_IMAGE_URL; ?></td>
-                    <td><input type="text" id="banImage" name="banImage" value="<?=$objbanner->BANIMAGE;?>" size="50" onblur="javacript:loadImage()">*</td>
+                    <td><input type="text" id="banImage" name="banImage" value="<?=htmlspecialchars((string)$banner['banimage'], ENT_QUOTES, 'UTF-8'); ?>" size="50" onblur="loadImage()">*</td>
                 </tr>
 
                 <tr>
                     <td><?=_BANN_URL; ?></td>
-                    <td><input type="text" id="banURL" name="banURL" value="<?=$objbanner->BANURL;?>" size="40">*</td>
+                    <td><input type="text" id="banURL" name="banURL" value="<?=htmlspecialchars((string)$banner['banurl'], ENT_QUOTES, 'UTF-8'); ?>" size="40">*</td>
                 </tr>
 
                 <tr>
                     <td><?=_BANN_POSITION; ?></td>
-                    <td><select id="banPosition" name="banPosition"><?php foreach ($positions as $key => $label) { ?><option value="<?=$key; ?>"<?=$objbanner->BANPOSITION == $key ? ' selected' : ''; ?>><?=$label; ?></option><?php } ?></select>*</td>
+                    <td><select id="banPosition" name="banPosition"><?php foreach ($positions as $key => $label) { ?><option value="<?=$key; ?>"<?=isset($banner['banposition']) && $banner['banposition'] == $key ? ' selected' : ''; ?>><?=htmlspecialchars((string)$label, ENT_QUOTES, 'UTF-8'); ?></option><?php } ?></select>*</td>
                 </tr>
 
                 <tr>
                     <td>&nbsp;</td>
-                    <td><img src="<?=$objbanner->BANIMAGE;?>" name="banView"></td>
+                    <td><img src="<?=htmlspecialchars((string)$banner['banimage'], ENT_QUOTES, 'UTF-8'); ?>" name="banView" alt=""></td>
                 </tr>
 
                 <tr>
@@ -74,8 +98,14 @@ if (!$rs) {
                     </td>
                 </tr>
 
-            </form>
-        </table>
+            </table>
+        </form>
+
+        <script>
+            function loadImage() {
+                document.addform.banView.src = document.addform.banImage.value;
+            }
+        </script>
 
         <script src="include/jsvalidator/gen_validatorv2.js"></script>
         <script>

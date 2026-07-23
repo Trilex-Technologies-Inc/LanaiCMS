@@ -1,5 +1,5 @@
-<?
-	if (!eregi("setting.php", $_SERVER['PHP_SELF'])) {
+<?php
+	if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 			die ("You can't access this file directly...");
 	}
 	
@@ -22,12 +22,12 @@
 		?>
 		<span class="txtContentTitle"><?=_SITE_SETTING; ?></span><br/><br/>
 		<table cellpadding="3"  width="60%">
-		<?
+		<?php
 		global $cfg;
 		
 		$ix=0;
 	 	for ($i=0;$i<(ceil(($rs->recordcount())/2));$i++) {
-		?><tr><?
+		?><tr><?php
 			for ($j=0;$j<2;$j++) {
 				if (!$rs->EOF) {
 				?>
@@ -35,11 +35,11 @@
 				<table border="0">
 				<tr>
 				<td >
-				<?	
+				<?php	
 					if (file_exists($cfg['dir'] . $sys_lanai->getPath()."theme/".$cfg['theme']."/images/setting_".$rs->fields['modName'].".gif")) {
-					?><img src="theme/<?=$cfg['theme'];?>/images/setting_<?=$rs->fields['modName']; ?>.gif" border="0"><?
+					?><img src="theme/<?=$cfg['theme'];?>/images/setting_<?=$rs->fields['modName']; ?>.gif" border="0"><?php
 					} else {
-					?><img src="theme/<?=$cfg['theme'];?>/images/configure.gif" border="0"><?
+					?><img src="theme/<?=$cfg['theme'];?>/images/configure.gif" border="0"><?php
 					}
 				?> 
 				</td>
@@ -47,11 +47,11 @@
 				<td align="center"><a href="setting.php?modname=<?=$rs->fields['modName']; ?>"><?=_SETTING; ?> <?=ucwords($rs->fields['modTitle']); ?></a></td>
 				</tr>
 				</table>
-				<?
+				<?php
 				}
 				$rs->movenext();
 			}			
-		?></tr><?
+		?></tr><?php
 		}
 		
 		//} else {
@@ -59,7 +59,7 @@
 		//}
 		?>
 		</table>
-		<?
+		<?php
 		}
 ?>
 <br><br><br><br>

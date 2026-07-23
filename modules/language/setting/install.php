@@ -1,6 +1,6 @@
-<?
+<?php
 
-	if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+	if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	} 
 	
@@ -12,12 +12,12 @@
 ?>
 <span class="txtContentTitle">Install</span><br/><br/>
 <OL>
-<?
+<?php
 	global $cfg,$db;
 	switch($_REQUEST['step']){
 		case "1": 			
 			// create nessary tables
-			?><LI>Create Table <?=$cfg['tablepre']."carousel" ?> <?
+			?><LI>Create Table <?=$cfg['tablepre']."carousel" ?> <?php
 			
 			// create table script
 			$sql="DROP TABLE IF EXISTS ".$cfg['tablepre']."carousel;";
@@ -35,12 +35,12 @@
 			$rs1=$db->execute($sql);
 			
 			if (empty($rs1)) {
-				?><span style="color:red;">Error!</span><?
+				?><span style="color:red;">Error!</span><?php
 			} else {
-				?><span style="color:green;">OK</span><?
+				?><span style="color:green;">OK</span><?php
 			}
 					
-			?><LI>Create Table <?=$cfg['tablepre']."banner_stat" ?> <?
+			?><LI>Create Table <?=$cfg['tablepre']."banner_stat" ?> <?php
 			$sql="DROP TABLE IF EXISTS ".$cfg['tablepre']."banner_stat;";
 			$db->execute($sql);			
 			$sql="CREATE TABLE ".$cfg['tablepre']."banner_stat (
@@ -51,13 +51,13 @@
 			$rs2=$db->execute($sql);
 			
 			if (empty($rs2)) {
-				?><span style="color:red;">Error!</span><?
+				?><span style="color:red;">Error!</span><?php
 			} else {
-				?><span style="color:green;">OK</span><?
+				?><span style="color:green;">OK</span><?php
 			}
 			
 			if ((!empty($rs1)) AND (!empty($rs2))) {
-				?><br><br><input type="button" class="inputButton" value="Next ->" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>&mf=install&step=2';"><?
+				?><br><br><input type="button" class="inputButton" value="Next ->" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>&mf=install&step=2';"><?php
 			}
 			
 			break;
@@ -85,7 +85,7 @@
 			// select module data
 			$sql="SELECT MAX(modOrder) FROM ".$cfg['tablepre']."module ";
 			$rsOModule=$db->execute($sql);
-			?><LI>Create module data<?
+			?><LI>Create module data<?php
 			// create module data
 			$sql="INSERT INTO ".$cfg['tablepre']."module 
 					(modTitle,modName,modActive,modOrder,modSetting) 
@@ -95,35 +95,35 @@
 			$sql="SELECT COUNT(*),modId FROM ".$cfg['tablepre']."module 
 					WHERE modName='language' GROUP BY modId";
 			$rsIModule=$db->execute($sql);			
-			?><LI>Create privilege data<?
+			?><LI>Create privilege data<?php
 			// create privilege data
 			$sql="INSERT INTO ".$cfg['tablepre']."privilege 
 					(modAccess,modId,userPrivilege)
 					VALUES ('y',".$rsIModule->fields[1].",'a')";
 			$rs3=$db->execute($sql);			
 			if ((!empty($rs1))  AND (!empty($rs3))) {
-				?><br><br><input type="button" class="inputButton" value="Install Complete Click to Setting" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>';"><?
+				?><br><br><input type="button" class="inputButton" value="Install Complete Click to Setting" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>';"><?php
 			}
 			break;
 		default:
 			// check nessary environment			
 			// 1 check safe mode
-			?><LI>PHP Safe Mode is <?
+			?><LI>PHP Safe Mode is <?php
 			if (ini_get('safe_mode')) {
-			    ?><span style="color:green;">ON</span><?
+			    ?><span style="color:green;">ON</span><?php
 			} else {
-				?><span style="color:red;">OFF</span><?
+				?><span style="color:red;">OFF</span><?php
 			}
 			// 2 check dir exist
 			?> 
 			<LI>Module Directory is 
-			<?
+			<?php
 			
 			if ((is_writable($cfg['dir'].$sys_lanai->getPath()."modules")) AND (is_writable($cfg['dir'].$sys_lanai->getPath()."modules"))) {
 				?>
 				<span style="color:green;">WRITABLE</span><br/><br/>
 				<input type="button" class="inputButton" value="Next ->" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>&mf=install&step=2';">
-				<?
+				<?php
 			} 		
 			
 	} // switch

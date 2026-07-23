@@ -30,7 +30,7 @@ $ajax=new AjaxTest(); // create an instance of the inherited class
 		<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
 		<script type="text/javascript" src="../prototype.js"></script> <!-- include stantard prototype library -->
 		<script type="text/javascript" src="../AjaxCore.js"></script> <!-- include AjaxCore library -->
-		<? echo $ajax->getJSCode(); /* print some header content to handle the results from the request */ ?>
+		<?php echo $ajax->getJSCode(); /* print some header content to handle the results from the request */ ?>
 	</head>
 	<body>
 		<table align="center" width="740">
@@ -48,7 +48,7 @@ $ajax=new AjaxTest(); // create an instance of the inherited class
 					In this case we'll use <b>onLoad</b> with a simple <b>bind</b> to a PHP function.  <br /> <br />
 					
 					
-					<? echo $ajax->onLoad("getRandomNumber","","bind","300"); /* Bind onLoad JavaScript event to a PHP function   */ ?>
+					<?php echo $ajax->onLoad("getRandomNumber","","bind","300"); /* Bind onLoad JavaScript event to a PHP function   */ ?>
 					
 					<div id="results" name="results" >  
 						<!-- div where results will be placed -->

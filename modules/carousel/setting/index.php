@@ -1,6 +1,6 @@
 <?php
 
-if (!eregi("setting.php", $_SERVER['PHP_SELF'])) {
+if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 		die ("You can't access this file directly...");
 }
 
@@ -27,7 +27,7 @@ if (!eregi("setting.php", $_SERVER['PHP_SELF'])) {
 <input type="hidden" name="modname" value="carousel">
 <input type="hidden" name="mf" value="bannedit">
 <input type="hidden" name="ac" value="">
-<?
+<?php
 $objbanner=new banner();
 $sql="SELECT * FROM ".$objbanner->_table." ORDER BY banPosition ASC, banTitle ASC";
 $pager=new bannerPager($db,$sql,30);

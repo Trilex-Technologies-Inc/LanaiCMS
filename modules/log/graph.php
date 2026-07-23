@@ -1,11 +1,12 @@
-<?
+<?php
 
 include_once('../../config.inc.php');
+include_once('../../include/lanai/php_compat.php');
 include_once('../../include/adodb/adodb.inc.php');
 include_once ("../../include/jpgraph2/jpgraph.php");
 include_once ("../../include/jpgraph2/jpgraph_bar.php");
 $ADODB_CACHE_DIR=$cfg_dir."/cache/";
-$db=&ADONewConnection($dbtype);
+$db=ADONewConnection(lanai_normalize_dbtype($dbtype));
 $db->NConnect($dbhost, $dbuser, $dbpw, $dbname);
 $cfg['tablepre']=$tablepre;
 include_once("module.php");

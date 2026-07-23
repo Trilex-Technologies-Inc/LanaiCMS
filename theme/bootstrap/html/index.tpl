@@ -688,7 +688,7 @@
 
     <footer class="container">
         <p class="float-end"><a href="#">Back to top</a></p>
-        <p>&copy; 2017–2025 powered by <a href="https://lanaicms.com/">LanaiCMS</a></p>
+        <p>&copy; 2017–{$smarty.now|date_format:"%Y"} powered by <a href="https://lanaicms.com/">LanaiCMS</a></p>
     </footer>
 </main>
 

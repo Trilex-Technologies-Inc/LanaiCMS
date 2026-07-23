@@ -1,6 +1,6 @@
-<?
+<?php
 
-	if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+	if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	} 
 	
@@ -32,7 +32,7 @@
 							    $blc_lanai->setNewBlock($_REQUEST['blcTitle'],$blockname,"","",0,$_REQUEST['blcPosition'],$_REQUEST['m']);
 								$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
 							} else {
-								?><?=$sys_lanai->getErrorBox(_BLOCK_CANNOT_UPLOAD); ?><?
+								?><?=$sys_lanai->getErrorBox(_BLOCK_CANNOT_UPLOAD); ?><?php
 							}
 							break;
 						case 'r': 

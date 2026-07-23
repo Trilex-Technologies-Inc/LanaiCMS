@@ -35,6 +35,16 @@ class ADODB2_sqlite extends ADODB_DataDict {
     
 	function ActualType($meta)
 	{
+		
+		$meta = strtoupper($meta);
+		
+		/*
+		* Add support for custom meta types. We do this
+		* first, that allows us to override existing types
+		*/
+		if (isset($this->connection->customMetaTypes[$meta]))
+			return $this->connection->customMetaTypes[$meta]['actual'];
+		
 		switch(strtoupper($meta)) {
 		case 'C': return 'VARCHAR'; //  TEXT , TEXT affinity
 		case 'XL':return 'LONGTEXT'; //  TEXT , TEXT affinity
@@ -64,13 +74,16 @@ class ADODB2_sqlite extends ADODB_DataDict {
 	}
 
 	// return string must begin with space
-	function _CreateSuffix($fname,&$ftype,$fnotnull,$fdefault,$fautoinc,$fconstraint,$funsigned)
+	function _createSuffix($fname, &$ftype, $fnotnull, $fdefault, $fautoinc, $fconstraint, $funsigned, $fprimary, &$pkey)
 	{
 		$suffix = '';
-		if ($funsigned) $suffix .= ' UNSIGNED';
+		if ($funsigned && !($fprimary && $fautoinc)) $suffix .= ' UNSIGNED';
 		if ($fnotnull) $suffix .= ' NOT NULL';
 		if (strlen($fdefault)) $suffix .= " DEFAULT $fdefault";
-		if ($fautoinc) $suffix .= ' AUTOINCREMENT';
+		if ($fprimary && $fautoinc) {
+			$suffix .= ' PRIMARY KEY AUTOINCREMENT';
+			array_pop($pkey);
+		}
 		if ($fconstraint) $suffix .= ' '.$fconstraint;
 		return $suffix;
 	}

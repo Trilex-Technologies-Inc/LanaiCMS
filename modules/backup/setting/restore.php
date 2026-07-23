@@ -1,5 +1,5 @@
-<?
-    if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+<?php
+    if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	}
 
@@ -8,6 +8,6 @@
         ?>
         <img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
         <a href="setting.php?modname=backup"><?=_BACK; ?></a>
-        <?
+        <?php
     }
 ?>

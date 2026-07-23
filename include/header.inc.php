@@ -1,8 +1,11 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
 <?php
 $timer = new phpTimer();
 $timer->start('main');
 
-$modname = isset($_REQUEST['modname']) ? $_REQUEST['modname'] : null;
+$modname = isset($_REQUEST['modname']) && !is_array($_REQUEST['modname']) ? trim((string)$_REQUEST['modname']) : null;
 
 
 function safeMeta($field) {
@@ -17,28 +20,25 @@ function safeMeta($field) {
     }
     return (string)$field;
 }
-$description  = safeMeta($obMeta->MTADESCRIPTION);
-$abstract     = safeMeta($obMeta->MTAABSTRACT);
-$author       = safeMeta($obMeta->MTAAUTHOR);
-$distribution = safeMeta($obMeta->MTADISTRIBUTION);
-$keywords     = safeMeta($obMeta->MTAKEYWORDS);
+$description  = safeMeta($obMeta->mtaDescription);
+$abstract     = safeMeta($obMeta->mtaAbstract);
+$author       = safeMeta($obMeta->mtaAuthor);
+$distribution = safeMeta($obMeta->mtaDistribution);
+$keywords     = safeMeta($obMeta->mtaKeywords);
 
-$favicon = !empty($obMeta->MTAFAVICON)
-    ? $obMeta->MTAFAVICON
+$favicon = !empty($obMeta->mtaFavicon)
+    ? $obMeta->mtaFavicon
     : 'favicon.ico';
 
-$logo = !empty($obMeta->MTALOGO)
-    ? $obMeta->MTALOGO
+$logo = !empty($obMeta->mtaLogo)
+    ? $obMeta->mtaLogo
     : '';
 
 
 $sys_lanai->loadAjaxFunction($modname);
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
     <meta http-equiv="Content-Type" content="text/html; charset=<?= _CHARSET; ?>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="expires" content="0">
     <meta name="description" content="<?= htmlspecialchars($description, ENT_QUOTES) ?>" />
     <meta name="abstract" content="<?= htmlspecialchars($abstract, ENT_QUOTES) ?>" />

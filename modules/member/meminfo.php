@@ -1,5 +1,5 @@
-<?
-if (!eregi("module.php", $_SERVER['PHP_SELF'])) {
+<?php
+if (stripos($_SERVER['PHP_SELF'], "module.php") === false) {
     die ("You can't access this file directly...");
 }
 
@@ -20,12 +20,12 @@ switch($ac){
             ?>
             <img src="theme/<?=$cfg['theme']; ?>/images/ok.gif" border="0" align="absmiddle"/>
             <?=_MEMBER_ACTIVATE_COMPLETE; ?>
-            <?
+            <?php
         } else {
             ?>
             <img src="theme/<?=$cfg['theme']; ?>/images/worning.gif" border="0" align="absmiddle"/>
             <?=_MEMBER_CANNOT_ACTIVATE; ?>
-            <?
+            <?php
         }
         break;
     case "doedit":
@@ -137,7 +137,7 @@ switch($ac){
                 </tr>
             </form>
         </table>
-        <?
+        <?php
         break;
     default:
         // show data
@@ -204,7 +204,7 @@ switch($ac){
 	-->
             </form>
         </table>
-    <?
+    <?php
 } // switch
 
 ?>

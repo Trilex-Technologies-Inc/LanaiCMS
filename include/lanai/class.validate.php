@@ -1,4 +1,4 @@
-<?
+<?php
 class Validation {
 		function email_validate($email) {
 			if (!preg_match("/^([a-zA-Z0-9])+([\.a-zA-Z0-9_-])*@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-]+)*\.([a-zA-Z]{2,6})$/",  $email)) {
@@ -11,7 +11,7 @@ class Validation {
 
 function checkMail($email)
 {
-	if(ereg("^[a-zA-Z0-9_\.]+@[a-zA-Z0-9\-]+[\.a-zA-Z0-9]+$", $email))
+	if(preg_match('/^[a-zA-Z0-9_\.]+@[a-zA-Z0-9\-]+[\.a-zA-Z0-9]+$/', $email))
 	{
 		return 0;
 	}else {
@@ -21,7 +21,7 @@ function checkMail($email)
 
 function checkAscii($ascii)
 {
-	if(ereg("^[a-zA-Z0-9 \.\,\+\!\@\#\$\%\^\&\*\(\)\~\/]+$", $ascii))
+	if(preg_match('/^[a-zA-Z0-9 \.\,\+\!\@\#\$\%\^\&\*\(\)\~\/]+$/', $ascii))
 	{
 		return 0;
 	}else {
@@ -31,7 +31,7 @@ function checkAscii($ascii)
 
 function checkAlpha($alpha)
 {
-	if(ereg("^[a-zA-Z ]+$", $alpha))
+	if(preg_match('/^[a-zA-Z ]+$/', $alpha))
 	{
 		return 0;
 	}else {
@@ -41,8 +41,8 @@ function checkAlpha($alpha)
 
 function checkAlphaNum ($alphanum)
 {
-	if(ereg("^[0-9a-zA-Z ]+$", $alphanum))
-	{   if (ereg("[^0-9]+", $alphanum))
+	if(preg_match('/^[0-9a-zA-Z ]+$/', $alphanum))
+	{	   if (preg_match('/[^0-9]+/', $alphanum))
 		    return 0;
 		else
 		    return 1;
@@ -63,7 +63,7 @@ function checkLength($str, $length)
 
 function checkNumeric($num)
 {
-	if(ereg("^[0-9]+$", $num))
+	if(preg_match('/^[0-9]+$/', $num))
 	{
 		return 0;
 	}else {
@@ -73,7 +73,7 @@ function checkNumeric($num)
 
 function checkDigit($digit)
 {
-	if(ereg("^[0-9]+$", $digit))
+	if(preg_match('/^[0-9]+$/', $digit))
 	{
 		return 0;
 	}else {
@@ -83,7 +83,7 @@ function checkDigit($digit)
 
 function checkDns($dns)
 {
-	if(eregi("^[a-z0-9\+\.\-]+[a-z]+$", $dns))
+	if(preg_match('/^[a-z0-9\+\.\-]+[a-z]+$/i', $dns))
 	{
 		return 0;
 	}else {
@@ -107,7 +107,7 @@ function onlinenicValidateDomain($domain)
 	{
 		return 1;
 	}
-	if(ereg("^[a-z0-9][a-z0-9\-]+[a-z0-9]$", $domain))
+	if(preg_match('/^[a-z0-9][a-z0-9\-]+[a-z0-9]$/', $domain))
 	{
 		return 0;
 	}else {

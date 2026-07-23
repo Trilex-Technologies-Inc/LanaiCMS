@@ -152,11 +152,11 @@ class php_http_client_generic extends php_http_request {
 	* @param int The port to establish the client connection on
 	* @param int The timeout value for the client connection
 	*/
-	function php_http_client_generic($host = '', $path = '/', $port = 80, $timeout = 0) {
-		$this->connection =& new php_http_connection($host, $path, $port, $timeout);
-		$this->headers =& new php_http_headers();
+	function __construct($host = '', $path = '/', $port = 80, $timeout = 0) {
+		$this->connection = new php_http_connection($host, $path, $port, $timeout);
+		$this->headers = new php_http_headers();
 		$this->requestPath = $path;
-		$this->response =& new php_http_response();
+		$this->response = new php_http_response();
 		$this->setHeaders();
 	} //php_http_client_generic
 	
@@ -168,7 +168,7 @@ class php_http_client_generic extends php_http_request {
 		$this->responseHeadersAsObject = $responseHeadersAsObject;
 		
 		if ($responseHeadersAsObject) {
-			$this->response->headers =& new php_http_headers();
+			$this->response->headers = new php_http_headers();
 		}
 	} //generateResponseHeadersAsObject
 	
@@ -496,7 +496,7 @@ class php_http_connection {
 	* @param int The port to establish the client connection on
 	* @param int The timeout value for the client connection
 	*/
-	function php_http_connection($host = '', $path = '/', $port = 80, $timeout = 0) {
+	function __construct($host = '', $path = '/', $port = 80, $timeout = 0) {
 		$this->host = $this->formatHost($host);
 		$this->path = $this->formatPath($path);
 		$this->port = $port;
@@ -581,7 +581,7 @@ class php_http_headers {
 	/**
 	* HTTP Headers constructor
 	*/
-	function php_http_headers() {
+	function __construct() {
 		$this->headers = array();
 	} //php_http_headers
 	
@@ -723,9 +723,9 @@ class php_http_response {
 	* @return int The response status code
 	*/
 	function getStatusCode() {
-		$statusArray = split(' ', $this->statusLine);
+		$statusArray = preg_split('/\s+/', trim($this->statusLine));
 		
-		if (count($statusArray > 1)) {
+		if (count($statusArray) > 1) {
 			return intval($statusArray[1], 10);
 		}
 		

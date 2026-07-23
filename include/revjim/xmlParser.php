@@ -1,4 +1,4 @@
-<?
+<?php
 /*
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -126,7 +126,7 @@ class XMLParser {
 	function buildXmlTree() {
 		$p = xml_parser_create();
 		xml_parser_set_option($p, XML_OPTION_SKIP_WHITE, 1);
-		xml_parse_into_struct($p, $this->xmldata, &$vals, &$index);
+		xml_parse_into_struct($p, $this->xmldata, $vals, $index);
 		xml_parser_free($p);
 	
 		$this->data = array();

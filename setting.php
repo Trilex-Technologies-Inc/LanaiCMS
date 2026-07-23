@@ -1,7 +1,14 @@
-<?
+<?php
+ob_start();
 include_once('setconfig.inc.php');
+$bootstrapOutput = ob_get_clean();
+if (trim($bootstrapOutput) !== '') {
+    error_log('Unexpected output during setting bootstrap: ' . strip_tags($bootstrapOutput));
+}
 include_once('include/header.inc.php');
 include_once("modules/member/module.php");
+$modname = isset($_REQUEST['modname']) && !is_array($_REQUEST['modname']) ? trim((string)$_REQUEST['modname']) : '';
+$mf = isset($_REQUEST['mf']) && !is_array($_REQUEST['mf']) ? trim((string)$_REQUEST['mf']) : '';
 $mem_lanai = new User();
 if (empty($_SESSION['uid']) || $_SESSION['uid'] <= 0) {
     $sys_lanai->go2Page("index.php");
@@ -17,8 +24,8 @@ if (empty($_SESSION['uid']) || $_SESSION['uid'] <= 0) {
     $smarty->assign("setBlockLeft", $theme->setBlock("l"));
     $smarty->assign("setBlockRight", $theme->setBlock("r"));
     $smarty->assign("setModule", $theme->getSettingModule(
-        isset($_REQUEST['modname']) ? $_REQUEST['modname'] : '',
-        isset($_REQUEST['mf']) ? $_REQUEST['mf'] : ''
+        $modname,
+        $mf
     ));
 
 //$smarty->assign ("setBlockCenter", $theme->setBlock("c"));

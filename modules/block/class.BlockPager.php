@@ -16,7 +16,7 @@
             $this->page = _PAGE;
         }
 		
-		function RenderLayout($header,$grid,$footer)
+		function RenderLayout($header,$grid,$footer,$attributes='')
 		{
 			echo "<table width=\"100%\" ><tr><td>",
 				 "</td></tr><tr><td>",
@@ -130,7 +130,7 @@
 				<th class="tblRowSolidTopDown"><?=_EDIT; ?></th>
 				
 			</tr>
-			<?
+			<?php
 			$rownum=1;
 			while(!$this->rs->EOF){			
 			?>
@@ -153,7 +153,7 @@
 					<input type="hidden" name="blcOrderId[]" value="<?=$this->rs->fields['blcId']; ?>">
 				</td>
 				<td class="tblRowDash">				
-				<?
+				<?php
 					if ($rownum==1) {
 					    ?>
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>">
@@ -162,7 +162,7 @@
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=blcedit&ac=order&v=dn&pos=<?=$this->rs->fields['blcPosition']; ?>&mid=<?=$this->rs->fields['blcId']; ?>">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/downarrow.gif" border="0" align="absmiddle">
 						</a>
-						<?
+						<?php
 					} else if ($rownum==$this->rs->recordcount()) {
 					    ?>
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=blcedit&ac=order&v=up&pos=<?=$this->rs->fields['blcPosition']; ?>&mid=<?=$this->rs->fields['blcId']; ?>">
@@ -171,7 +171,7 @@
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/space.gif" border="0" align="absmiddle">
 						</a>
-						<?
+						<?php
 					} else {
 						?>
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=blcedit&ac=order&v=up&pos=<?=$this->rs->fields['blcPosition']; ?>&mid=<?=$this->rs->fields['blcId']; ?>">
@@ -180,29 +180,29 @@
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=blcedit&ac=order&v=dn&pos=<?=$this->rs->fields['blcPosition']; ?>&mid=<?=$this->rs->fields['blcId']; ?>">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/downarrow.gif" border="0" align="absmiddle">
 						</a>
-						<?
+						<?php
 					}
 				?>	
 				</td>				
 				<td class="tblRowDash" align="center">
-				<?
+				<?php
 					if ($this->rs->fields['blcActive']=='y') {
 					    ?>
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=blcedit&v=n&ac=active&mid=<?=$this->rs->fields['blcId']; ?>">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/ok.gif" border="0" align="absmiddle">
 						</a>
-						<?
+						<?php
 					} else {
 						?>
 						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=blcedit&v=y&ac=active&mid=<?=$this->rs->fields['blcId']; ?>">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/cancel.gif" border="0" align="absmiddle">
 						</a>
-						<?
+						<?php
 					}
 				?>					
 				</td>
 				<td class="tblRowDash" align="center">
-					<?
+					<?php
 						if ($this->rs->fields['blcType']=="b") {
 						    $link="&m=b";
 						} else if ($this->rs->fields['blcType']=="r") {
@@ -223,11 +223,11 @@
 				</td>
 				-->
 			</tr>
-			<?
+			<?php
 				$rownum++;
 				$this->rs->movenext();
 			} // while{
-			?></form></table><?
+			?></form></table><?php
 			$s = ob_get_contents();
 			ob_end_clean();
 			return $s;

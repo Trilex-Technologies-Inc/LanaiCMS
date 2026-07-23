@@ -1,4 +1,4 @@
-<?
+<?php
 /**************************************************************************/
 /* This is the language module with all the system messages               */
 /*                                                                        */

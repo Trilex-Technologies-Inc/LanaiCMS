@@ -1,4 +1,4 @@
-<?
+<?php
 //require_once('include/adodb/adodb-active-record.inc.php');
 global $db;
 
@@ -12,7 +12,7 @@ class LanaiSeach {
 	function getSchema($item) {
 		$scmarr=file("modules/search/schema.syntax");
 		foreach ($scmarr as $val) {
-			list($itemschema,$schama)=split("#",$val);
+			list($itemschema,$schama)=explode("#",$val,2);
 			if ($itemschema==$item) {
 				return $schama;
 			}
@@ -24,8 +24,8 @@ class LanaiSeach {
 class SearchPage extends Pager {
 	var $item="news";
 	
-	function SearchPage ($db,$sql,$offset) {
-		Pager::Pager($db,$sql,$offset);
+	function __construct ($db,$sql,$offset) {
+		parent::__construct($db, $sql, $offset);
 		$this->pageStr=_PAGE;
 		$this->nextStr=_NEXT;
 		$this->prevStr=_PREV;
@@ -40,7 +40,7 @@ class SearchPage extends Pager {
         <?=_FOUND; ?>&nbsp;<?=$this->rs->recordcount(); ?>&nbsp;<?=_ITEMS; ?>
         <br><br>
          <table class="dataTable" cellpadding="0" cellspacing="0" width="100%">
-        <?
+        <?php
         $s = ob_get_contents();
         ob_end_clean();
         return $s;

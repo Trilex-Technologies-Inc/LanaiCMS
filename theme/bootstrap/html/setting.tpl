@@ -229,8 +229,6 @@
       margin-left: 0;
     }
   }</style>
-</head>
-<body>
 <div class="wrapper">
   <!-- Sidebar -->
   <nav id="sidebar">
@@ -365,5 +363,3 @@
   });
 </script>
 <script src="assets/vendor/sweetalert2/sweetalert2.all.min.js"></script>
-</body>
-</html>

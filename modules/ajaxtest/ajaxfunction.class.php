@@ -1,6 +1,6 @@
 <?php
 
-if ((!eregi("module.php", $_SERVER['PHP_SELF'])) AND  (!eregi("setting.php", $_SERVER['PHP_SELF']))) {
+if ((stripos($_SERVER['PHP_SELF'], "module.php") === false) AND  (stripos($_SERVER['PHP_SELF'], "setting.php") === false)) {
 	require_once("../../include/ajaxcore/AjaxCore.class.php");  
 } else {
 	require_once("include/ajaxcore/AjaxCore.class.php");  // first we include the AjaxCore class
@@ -9,9 +9,9 @@ if ((!eregi("module.php", $_SERVER['PHP_SELF'])) AND  (!eregi("setting.php", $_S
 
 class AjaxFunctions extends AjaxCore { 
 	
-	 function AjaxFunctions() {
+	 function __construct() {
 	    $this->setup();
-	    parent::AjaxCore();
+	    parent::__construct();
 	 } 
 	 
 	 function setup()	 {

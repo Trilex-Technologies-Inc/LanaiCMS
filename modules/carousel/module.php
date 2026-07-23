@@ -154,8 +154,8 @@ class bannerPager extends Pager {
 		return isset($positions[$position]) ? $positions[$position] : $positions['l'];
 	}
 	
-	function bannerPager($db,$sql,$offset) {
-		Pager::Pager($db,$sql,$offset);
+	function __construct($db,$sql,$offset) {
+		parent::__construct($db, $sql, $offset);
 		$this->pageStr=_PAGE;
 		$this->nextStr=_NEXT;
 		$this->prevStr=_PREV;
@@ -210,7 +210,7 @@ class bannerPager extends Pager {
            <td class="dataColumn" align="center"><?=$this->getPositionLabel($this->rs->fields['banPosition']); ?></td>
            <td class="dataColumn"><?=$this->rs->fields['banDescription']; ?></td>
            <td class="dataColumn" align="center">
-           <? 
+           <?php 
            		if($this->rs->fields['banShow']==null) {
            			echo "0";
            		} else {
@@ -219,7 +219,7 @@ class bannerPager extends Pager {
            ?>
            </td>
            <td class="dataColumn" align="center">
-          <? 
+          <?php 
            		if($this->rs->fields['banClick']==null) {
            			echo "0";
            		}else {

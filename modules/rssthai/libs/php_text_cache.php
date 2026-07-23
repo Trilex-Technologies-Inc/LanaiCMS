@@ -33,7 +33,7 @@ class php_text_cache extends php_http_connector {
 	* @param string Directory in which to store the cache files
 	* @param int Expiry time for cache file (-1 signifies no expiry limit)
 	*/
-	function php_text_cache($cacheDir = './', $cacheTime = -1) {
+	function __construct($cacheDir = './', $cacheTime = -1) {
 		$this->cacheDir = $cacheDir;
 		$this->cacheTime = $cacheTime;
 	} //php_text_cache	

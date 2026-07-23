@@ -74,7 +74,7 @@ class DOMIT_Node {
 	/**
 	* Raises error if abstract class is directly instantiated
 	*/
-	function DOMIT_Node() {		
+	function __construct() {		
 		DOMIT_DOMException::raiseException(DOMIT_ABSTRACT_CLASS_INSTANTIATION_ERR, 
 			 'Cannot instantiate abstract class DOMIT_Node'); 
 	} //DOMIT_Node
@@ -239,7 +239,7 @@ class DOMIT_Node {
 	function &selectNodes($pattern) {
 		require_once(DOMIT_INCLUDE_PATH . 'xml_domit_xpath.php');
 		
-		$xpParser =& new DOMIT_XPath();
+		$xpParser = new DOMIT_XPath();
 		
 		return $xpParser->parsePattern($this, $pattern);		
 	} //selectNodes	
@@ -397,7 +397,7 @@ class DOMIT_ChildNodes_Interface extends DOMIT_Node {
 	/**
 	* Raises error if abstract class is directly instantiated
 	*/
-	function DOMIT_ChildNodes_Interface() {		
+	function __construct() {		
 		DOMIT_DOMException::raiseException(DOMIT_ABSTRACT_CLASS_INSTANTIATION_ERR, 
 			 'Cannot instantiate abstract class DOMIT_ChildNodes_Interface'); 
 	} //DOMIT_ChildNodes_Interface
@@ -690,7 +690,7 @@ class DOMIT_ChildNodes_Interface extends DOMIT_Node {
 											$returnFirstFoundNode = false) {
 		require_once(DOMIT_INCLUDE_PATH . 'xml_domit_nodemaps.php');
 		
-		$nodelist =& new DOMIT_NodeList();
+		$nodelist = new DOMIT_NodeList();
 		
 		switch ($this->nodeType) {
 			case DOMIT_ELEMENT_NODE:
@@ -794,7 +794,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	/**
 	* DOM Document constructor
 	*/
-	function DOMIT_Document() {
+	function __construct() {
 		$this->_constructor();
 		$this->xmlDeclaration = null;
 		$this->doctype = null;
@@ -803,7 +803,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 		$this->nodeName = '#document';
 		$this->ownerDocument =& $this;
 		$this->parser = '';
-		$this->implementation =& new DOMIT_DOMImplementation();
+		$this->implementation = new DOMIT_DOMImplementation();
 	} //DOMIT_Document	
 	
 	/**
@@ -834,7 +834,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	function setConnection($host, $path = '/', $port = 80, $timeout = 0, $user = null, $password = null) {
 	    require_once(DOMIT_INCLUDE_PATH . 'php_http_client_generic.php');
 		
-		$this->httpConnection =& new php_http_client_generic($host, $path, $port, $timeout, $user, $password);
+		$this->httpConnection = new php_http_client_generic($host, $path, $port, $timeout, $user, $password);
 	} //setConnection
 	
 	/**
@@ -858,7 +858,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	function setProxyConnection($host, $path = '/', $port = 80, $timeout = 0, $user = null, $password = null) {
 	    require_once(DOMIT_INCLUDE_PATH . 'php_http_proxy.php');
 		
-		$this->httpConnection =& new php_http_proxy($host, $path, $port, $timeout, $user, $password);
+		$this->httpConnection = new php_http_proxy($host, $path, $port, $timeout, $user, $password);
 	} //setProxyConnection
 	
 	/**
@@ -1140,7 +1140,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	* @return Object The new document fragment node
 	*/
 	function &createDocumentFragment() {
-		$node =& new DOMIT_DocumentFragment();
+		$node = new DOMIT_DocumentFragment();
 		$node->ownerDocument =& $this;
 		
 		return $node;
@@ -1152,7 +1152,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	* @return Object The new attribute node
 	*/
 	function &createAttribute($name) {
-		$node =& new DOMIT_Attr($name);
+		$node = new DOMIT_Attr($name);
 		
 		return $node;
 	} //createAttribute
@@ -1164,7 +1164,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	* @return Object The new attribute node
 	*/
 	function &createAttributeNS($namespaceURI, $qualifiedName) {
-		$node =& new DOMIT_Attr($qualifiedName);
+		$node = new DOMIT_Attr($qualifiedName);
 		$node->namespaceURI = $namespaceURI;
 		
 		$colonIndex = strpos($qualifiedName, ":");
@@ -1187,7 +1187,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	* @return Object The new element
 	*/
 	function &createElement($tagName) {
-		$node =& new DOMIT_Element($tagName);
+		$node = new DOMIT_Element($tagName);
 		$node->ownerDocument =& $this;
 		
 		return $node;
@@ -1200,7 +1200,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	* @return Object The new element
 	*/
 	function &createElementNS($namespaceURI, $qualifiedName) {
-	    $node =& new DOMIT_Element($qualifiedName);
+	    $node = new DOMIT_Element($qualifiedName);
 
 	    $colonIndex = strpos($qualifiedName, ":");
 		
@@ -1226,7 +1226,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	* @return Object The new text node
 	*/
 	function &createTextNode($data) {
-		$node =& new DOMIT_TextNode($data);
+		$node = new DOMIT_TextNode($data);
 		$node->ownerDocument =& $this;
 	
 		return $node;
@@ -1238,7 +1238,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	* @return Object The new CDATASection node
 	*/
 	function &createCDATASection($data) {
-		$node =& new DOMIT_CDATASection($data);
+		$node = new DOMIT_CDATASection($data);
 		$node->ownerDocument =& $this;
 		
 		return $node;
@@ -1250,7 +1250,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	* @return Object The new comment node
 	*/
 	function &createComment($text) {
-		$node =& new DOMIT_Comment($text);
+		$node = new DOMIT_Comment($text);
 		$node->ownerDocument =& $this;
 		
 		return $node;
@@ -1263,7 +1263,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	* @return Object The new processing instruction node
 	*/
 	function &createProcessingInstruction($target, $data) {
-		$node =& new DOMIT_ProcessingInstruction($target, $data);
+		$node = new DOMIT_ProcessingInstruction($target, $data);
 		$node->ownerDocument =& $this;
 		
 		return $node;
@@ -1275,7 +1275,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	* @return Object A NodeList of found elements
 	*/
 	function &getElementsByTagName($tagName) {
-		$nodeList =& new DOMIT_NodeList();
+		$nodeList = new DOMIT_NodeList();
 		
 		if ($this->documentElement != null) {
 			$this->documentElement->getNamedElements($nodeList, $tagName);
@@ -1291,7 +1291,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	* @return Object A NodeList of found elements
 	*/
 	function &getElementsByTagNameNS($namespaceURI, $localName) {
-		$nodeList =& new DOMIT_NodeList();
+		$nodeList = new DOMIT_NodeList();
 
 		if ($this->documentElement != null) {
 			$this->documentElement->getNamedElementsNS($nodeList, $namespaceURI, $localName);
@@ -1358,7 +1358,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	* @return Object A NodeList containing found nodes	 
 	*/
 	function &getNodesByNodeType($type, &$contextNode) {
-		$nodeList =& new DOMIT_NodeList();
+		$nodeList = new DOMIT_NodeList();
 		
 		if (($type == DOMIT_DOCUMENT_NODE) || ($contextNode->nodeType == DOMIT_DOCUMENT_NODE)){
 			$nodeList->appendNode($this); 
@@ -1386,7 +1386,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	* @return Object A NodeList containing found nodes
 	*/
 	function &getNodesByNodeValue($value, &$contextNode) {
-		$nodeList =& new DOMIT_NodeList();
+		$nodeList = new DOMIT_NodeList();
 		
 		 if ($contextNode->uid == $this->uid) {
 			 if ($this->nodeValue == $value) {
@@ -1418,7 +1418,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
         }
 		
 		if (DOMIT_Utilities::validateXML($xmlText)) {
-			$domParser =& new DOMIT_Parser();
+			$domParser = new DOMIT_Parser();
 			
 			if ($useSAXY || (!function_exists('xml_parser_create'))) {
 				//use SAXY parser to populate xml tree
@@ -1620,7 +1620,7 @@ class DOMIT_Document extends DOMIT_ChildNodes_Interface {
 	*/
 	function &cloneNode($deep = false) {
 		$className = get_class($this);
-		$clone =& new $className($this->nodeName);
+		$clone = new $className($this->nodeName);
 
 		if ($deep) {
 			$total = $this->childCount;
@@ -1675,7 +1675,7 @@ class DOMIT_Element extends DOMIT_ChildNodes_Interface {
 	* DOM Element constructor
 	* @param string The tag name of the element
 	*/
-	function DOMIT_Element($tagName) {
+	function __construct($tagName) {
 		$this->_constructor();		
 		$this->nodeType = DOMIT_ELEMENT_NODE;
 		$this->nodeName = $tagName;
@@ -1773,7 +1773,7 @@ class DOMIT_Element extends DOMIT_ChildNodes_Interface {
 	* @return Object A NodeList of found elements
 	*/
 	function &getElementsByTagName($tagName) {
-		$nodeList =& new DOMIT_NodeList();		
+		$nodeList = new DOMIT_NodeList();		
 		$this->getNamedElements($nodeList, $tagName);
 		
 		return $nodeList;
@@ -1786,7 +1786,7 @@ class DOMIT_Element extends DOMIT_ChildNodes_Interface {
 	* @return Object A NodeList of found elements
 	*/
 	function &getElementsByTagNameNS($namespaceURI, $localName) {
-		$nodeList =& new DOMIT_NodeList();
+		$nodeList = new DOMIT_NodeList();
 		$this->getNamedElementsNS($nodeList, $namespaceURI, $localName);
 
 		return $nodeList;
@@ -1940,7 +1940,7 @@ class DOMIT_Element extends DOMIT_ChildNodes_Interface {
 		$returnNode =& $this->attributes->getNamedItem($name);
 		
 		if ($returnNode == null) {
-			$newAttr =& new DOMIT_Attr($name);
+			$newAttr = new DOMIT_Attr($name);
 			$newAttr->setValue($value);
 			$this->attributes->setNamedItem($newAttr);
 		}
@@ -1970,7 +1970,7 @@ class DOMIT_Element extends DOMIT_ChildNodes_Interface {
 
 		if ($returnNode == null) {
 			//create this manually in case element has no ownerDocument to reference
-			$newAttr =& new DOMIT_Attr($qualifiedName);
+			$newAttr = new DOMIT_Attr($qualifiedName);
 	    	$newAttr->prefix = substr($qualifiedName, 0, $colonIndex);
 	    	$newAttr->localName = $localName;
 	    	$newAttr->namespaceURI = $namespaceURI;
@@ -2143,7 +2143,7 @@ class DOMIT_Element extends DOMIT_ChildNodes_Interface {
 	*/
 	function &cloneNode($deep = false) {
 		$className = get_class($this);
-		$clone =& new $className($this->nodeName);
+		$clone = new $className($this->nodeName);
 		
 		$clone->attributes =& $this->attributes->createClone($deep);
 		
@@ -2220,7 +2220,7 @@ class DOMIT_CharacterData extends DOMIT_Node {
 	* Prevents direct instantiation of DOMIT_CharacterData class
 	* @abstract
 	*/
-	function DOMIT_CharacterData() {		
+	function __construct() {		
 		DOMIT_DOMException::raiseException(DOMIT_ABSTRACT_CLASS_INSTANTIATION_ERR, 
 			 'Cannot instantiate abstract class DOMIT_CharacterData'); 
 	} //DOMIT_CharacterData
@@ -2353,7 +2353,7 @@ class DOMIT_TextNode extends DOMIT_CharacterData {
 	* DOM Text Node constructor
 	* @param string The text of the node
 	*/
-	function DOMIT_TextNode($data) {
+	function __construct($data) {
 		$this->_constructor();	
 		$this->nodeType = DOMIT_TEXT_NODE;
 		$this->nodeName = '#text';
@@ -2399,7 +2399,7 @@ class DOMIT_TextNode extends DOMIT_CharacterData {
 			
 			//create new text node
 			$className = get_class($this);
-			$newTextNode =& new $className($post);
+			$newTextNode = new $className($post);
 			$newTextNode->ownerDocument =& $this->ownerDocument;
 			
 			if ($this->parentNode->lastChild->uid == $this->uid) {
@@ -2428,7 +2428,7 @@ class DOMIT_TextNode extends DOMIT_CharacterData {
 	*/
 	function &cloneNode($deep = false) {
 		$className = get_class($this);
-		$clone =& new $className($this->nodeValue);
+		$clone = new $className($this->nodeValue);
 		
 		return $clone;
 	} //cloneNode
@@ -2464,7 +2464,7 @@ class DOMIT_CDATASection extends DOMIT_TextNode {
 	* DOM CDATA Section node constructor
 	* @param string The text of the node
 	*/
-	function DOMIT_CDATASection($data) {
+	function __construct($data) {
 		$this->_constructor();		
 		$this->nodeType = DOMIT_CDATA_SECTION_NODE;
 		$this->nodeName = '#cdata-section';
@@ -2506,7 +2506,7 @@ class DOMIT_Attr extends DOMIT_Node {
 	* DOM Attr node constructor
 	* @param string The name of the attribute
 	*/
-	function DOMIT_Attr($name) {
+	function __construct($name) {
 		$this->_constructor();	
 		$this->nodeType = DOMIT_ATTRIBUTE_NODE;
 		$this->nodeName =$name;
@@ -2567,7 +2567,7 @@ class DOMIT_Attr extends DOMIT_Node {
 	*/
 	function &cloneNode($deep = false) {
 		$className = get_class($this);
-		$clone =& new $className($this->nodeName);
+		$clone = new $className($this->nodeName);
 		$clone->nodeValue = $this->nodeValue;
 		
 		return $clone;
@@ -2605,7 +2605,7 @@ class DOMIT_DocumentFragment extends DOMIT_ChildNodes_Interface {
 	/**
 	* DOM Document Fragment node constructor
 	*/
-	function DOMIT_DocumentFragment() {
+	function __construct() {
 		$this->_constructor();	
 		$this->nodeType = DOMIT_DOCUMENT_FRAGMENT_NODE;
 		$this->nodeName ='#document-fragment';
@@ -2635,7 +2635,7 @@ class DOMIT_DocumentFragment extends DOMIT_ChildNodes_Interface {
 	*/
 	function &cloneNode($deep = false) {
 		$className = get_class($this);
-		$clone =& new $className();
+		$clone = new $className();
 		
 		if ($deep) {
 			$total = $this->childCount;
@@ -2685,7 +2685,7 @@ class DOMIT_Comment extends DOMIT_CharacterData {
 	* DOM Comment node constructor
 	* @param string The 
 	*/
-	function DOMIT_Comment($nodeValue) {
+	function __construct($nodeValue) {
 		$this->_constructor();	
 		$this->nodeType = DOMIT_COMMENT_NODE;
 		$this->nodeName = '#comment';
@@ -2723,7 +2723,7 @@ class DOMIT_Comment extends DOMIT_CharacterData {
 	*/
 	function &cloneNode($deep = false) {
 		$className = get_class($this);
-		$clone =& new $className($this->nodeValue);
+		$clone = new $className($this->nodeValue);
 		
 		return $clone;
 	} //cloneNode
@@ -2754,7 +2754,7 @@ class DOMIT_ProcessingInstruction extends DOMIT_Node {
 	* DOM Processing Instruction node constructor
 	* @param string The 
 	*/
-	function DOMIT_ProcessingInstruction($target, $data) {
+	function __construct($target, $data) {
 		$this->_constructor();	
 		$this->nodeType = DOMIT_PROCESSING_INSTRUCTION_NODE;
 		$this->nodeName = $target;
@@ -2800,7 +2800,7 @@ class DOMIT_ProcessingInstruction extends DOMIT_Node {
 	*/
 	function &cloneNode($deep = false) {
 		$className = get_class($this);
-		$clone =& new $className($this->nodeName, $this->nodeValue);
+		$clone = new $className($this->nodeName, $this->nodeValue);
 		
 		return $clone;
 	} //cloneNode
@@ -2848,7 +2848,7 @@ class DOMIT_DocumentType extends DOMIT_Node {
 	* DOM Document Type node constructor
 	* @param string The 
 	*/
-	function DOMIT_DocumentType($name, $text) {
+	function __construct($name, $text) {
 		$this->_constructor();	
 		$this->nodeType = DOMIT_DOCUMENT_TYPE_NODE;
 		$this->nodeName = $name;
@@ -2890,7 +2890,7 @@ class DOMIT_DocumentType extends DOMIT_Node {
 	*/
 	function &cloneNode($deep = false) {
 		$className = get_class($this);
-		$clone =& new $className($this->nodeName, $this->text);
+		$clone = new $className($this->nodeName, $this->text);
 		
 		return $clone;
 	} //cloneNode
@@ -2921,7 +2921,7 @@ class DOMIT_Notation extends DOMIT_Node {
 	/**
 	* DOM Notation node constructor (NOT YET IMPLEMENTED!)
 	*/
-	function DOMIT_Notation() {		
+	function __construct() {		
 		DOMIT_DOMException::raiseException(DOMIT_NOT_SUPPORTED_ERR, 
 			 'Cannot instantiate DOMIT_Notation class. Notation nodes not yet supported.'); 
 	} //DOMIT_Notation
@@ -3006,7 +3006,7 @@ class DOMIT_Parser {
 			
 		//parse out whitespace -  (XML_OPTION_SKIP_WHITE = 1 does not 
 		//seem to work consistently across versions of PHP and Expat
-		$xmlText = eregi_replace('>' . "[[:space:]]+" . '<' , '><', $xmlText);
+			$xmlText = preg_replace('/>\s+</', '><', $xmlText);
 		
 		$success = xml_parse($parser, $xmlText);
 		
@@ -3025,14 +3025,14 @@ class DOMIT_Parser {
 	* @param boolean True if CDATA Section nodes are not to be converted into Text nodes
 	* @return boolean True if the parsing is successful
 	*/
-	function parseSAXY(&$myXMLDoc, $xmlText, $preserveCDATA = true, $definedEntities) {
+	function parseSAXY(&$myXMLDoc, $xmlText, $preserveCDATA = true, $definedEntities = array()) {
 		require_once(DOMIT_INCLUDE_PATH . 'xml_saxy_parser.php');
 		
 		$this->xmlDoc =& $myXMLDoc;
 		$this->lastChild =& $this->xmlDoc;
 		
 		//create instance of SAXY parser 
-		$parser =& new SAXY_Parser();
+		$parser = new SAXY_Parser();
 		$parser->appendEntityTranslationTable($definedEntities);
 		
 		if ($this->xmlDoc->isNamespaceAware) {
@@ -3087,11 +3087,9 @@ class DOMIT_Parser {
 		$currentNode =& $this->xmlDoc->createElement($name);
 		$this->lastChild->appendChild($currentNode);
 
-		reset ($attrs);
-			
-		while (list($key, $value) = each ($attrs)) {
-			$currentNode->setAttribute($key, $value);
-		}
+			foreach ($attrs as $key => $value) {
+				$currentNode->setAttribute($key, $value);
+			}
 		
 		$this->lastChild =& $currentNode;
 	} //startElement	
@@ -3125,9 +3123,7 @@ class DOMIT_Parser {
 		$currentNode =& $this->xmlDoc->createElementNS($namespaceURI, $qualifiedName);	
 		$this->lastChild->appendChild($currentNode);
 
-		reset ($attrs);
-			
-		while (list($key, $value) = each ($attrs)) {
+			foreach ($attrs as $key => $value) {
 			$colonIndex = strrpos($key, ":");
 			
 			if ($colonIndex !== false) {
@@ -3202,7 +3198,7 @@ class DOMIT_Parser {
 			$pre = strtoupper(substr($data, 0, 3));
 			
 			switch ($pre) {
-				case '<?X': //xml declaration
+				case '<?phpX': //xml declaration
 					$this->processingInstructionElement($parser, 'xml', substr($data, 6, (strlen($data) - 6 - 2)));
 					break;
 				case '<!E': //dtd entity
@@ -3249,7 +3245,7 @@ class DOMIT_Parser {
 					if ($data == ']') {
 						$this->parseItem = 'doctype';
 					}	
-					else if ($data{(strlen($data) - 1)} == '>') {
+					else if ($data[(strlen($data) - 1)] == '>') {
 						$this->parseContainer .= "\n   ";
 					}
 					break;
@@ -3268,7 +3264,7 @@ class DOMIT_Parser {
 		$end = strpos($name, ' ');
 		$name = substr($name, 0, $end);		
 		
-		$currentNode =& new DOMIT_DocumentType($name, $data);
+		$currentNode = new DOMIT_DocumentType($name, $data);
 		$currentNode->ownerDocument =& $this->xmlDoc;
 		
 		$this->lastChild->appendChild($currentNode);

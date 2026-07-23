@@ -1,4 +1,4 @@
-<?
+<?php
 		class SysDateTime {
 
 			function dateDiff($interval, $datefrom, $dateto, $using_timestamps = false) {

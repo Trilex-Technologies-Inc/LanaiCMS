@@ -1,4 +1,4 @@
-<? 
+<?php 
 	include_once("modules/poll/module.php");
 	include_once("modules/poll/language/lang-".$cfg['lang'].".php");
 	
@@ -15,7 +15,7 @@
 		<tr>
 			<td><span class="txtContentTitle"><?=$rsBPoll->fields['pllTitle']; ?></span></td>
 		</tr>
-		<? 
+		<?php 
 			$rsBPollOption=$bpoll->getPollOptionItemShow($rsBPoll->fields['pllId']);
 			while(!$rsBPollOption->EOF){
 		?>
@@ -25,7 +25,7 @@
 				<?=$rsBPollOption->fields['ppoTitle']; ?>
 			</td>
 		</tr>
-		<? 
+		<?php 
 				$rsBPollOption->moveNext();
 			} // while
 		?>
@@ -37,7 +37,7 @@
 		</tr>
 		</form>
 		</table>
-		<?
+		<?php
 		$rsBPoll->moveNext();
 	} // while
 

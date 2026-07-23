@@ -1,6 +1,6 @@
-<?
+<?php
 
-	if ( !eregi( "setting.php", $_SERVER['PHP_SELF'] ) ) {
+	if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 	    die ( "You can't access this file directly..." );
 	} 
 	
@@ -24,7 +24,7 @@
 	<input type="hidden" name="mf" value="mnuedit">
 	<input type="hidden" name="ac" value="new">	
 	<input type="hidden" name="m" value="<?=$_REQUEST['m']?>">
-	<? 
+	<?php 
 		switch($_REQUEST['m']){
 			case 'c': 
 				// content type
@@ -45,7 +45,7 @@
 		<td><?=_MENU_PARENT; ?></td>
 		<td><?=$mnu_lanai->getMenuParentCombo("mnuParentId",""); ?></td>
 	</tr>	
-	<?
+	<?php
 				break;
 			case 'm': 
 				// module
@@ -66,7 +66,7 @@
 		<td><?=_MENU_PARENT; ?></td>
 		<td><?=$mnu_lanai->getMenuParentCombo("mnuParentId",""); ?></td>
 	</tr>	
-	<?
+	<?php
 				break;
 			case 'l':
 				// like
@@ -87,7 +87,7 @@
 		<td><?=_MENU_PARENT; ?></td>
 		<td><?=$mnu_lanai->getMenuParentCombo("mnuParentId",""); ?></td>
 	</tr>	
-	<?
+	<?php
 				break;
 		} // switch
 	?>	

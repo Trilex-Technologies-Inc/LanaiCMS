@@ -4,7 +4,7 @@ class Rate {
 	var $db;
 	var $cfg;
 	
-	function Rate() {
+	function __construct() {
 		global $db,$cfg;
 		$this->db=$db;
 		$this->cfg=$cfg;

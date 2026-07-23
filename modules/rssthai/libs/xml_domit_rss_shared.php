@@ -190,7 +190,7 @@ class xml_domit_rss_collection extends xml_domit_rss_elementindexer {
 	* Gets a text representation of the collection (applies the toString method to each member and concatenates)
 	* @return string The element text
 	*/
-	function getElementText() {
+	function getElementText($elementName = null) {
 		$total = $this->getElementCount();
   		$result = '';
 
@@ -237,7 +237,7 @@ class xml_domit_rss_elementindexer extends xml_domit_rss_base {
 	    
 	    if (isset($this->DOMIT_RSS_indexer[$tagName])) {
 	        if (strtolower(get_class($this->DOMIT_RSS_indexer[$tagName])) == 'domit_element') {
-	        	$collection =& new xml_domit_rss_collection();
+	        	$collection = new xml_domit_rss_collection();
 	        	$collection->addElement($this->DOMIT_RSS_indexer[$tagName]);
 	        	$collection->addElement($node);
 	        	$this->DOMIT_RSS_indexer[$tagName] =& $collection;
@@ -363,7 +363,7 @@ class xml_domit_rss_elementindexer extends xml_domit_rss_base {
 	* @param string The name of the requested element
 	* @return string The element text, or an empty string
 	*/
-	function getElementText($elementName) {
+	function getElementText($elementName = null) {
 	    return $this->_getElementText($elementName, $this->DOMIT_RSS_indexer);
 	} //getElementText
 
@@ -459,7 +459,7 @@ class xml_domit_rss_base_document extends xml_domit_rss_elementindexer {
 	* @param int Expiration time (in seconds) for the cache file
 	* @return mixed Null if an url was not provided, true if an url was provided and parsing was successful, false otherwise
 	*/
-	function xml_domit_rss_base_document ($url = '', $cacheDir = './', $cacheTime = 3600) {
+	function __construct ($url = '', $cacheDir = './', $cacheTime = 3600) {
 	    $success = null;
 	    $this->createDocument();
 
@@ -483,7 +483,7 @@ class xml_domit_rss_base_document extends xml_domit_rss_elementindexer {
 	function setConnection($host, $path = '/', $port = 80, $timeout = 0, $user = null, $password = null) {
 	    require_once(DOMIT_RSS_INCLUDE_PATH . 'php_http_client_generic.php');
 		
-		$this->httpConnection =& new php_http_client_generic($host, $path, $port, $timeout, $user, $password);
+		$this->httpConnection = new php_http_client_generic($host, $path, $port, $timeout, $user, $password);
 	} //setConnection
 	
 	/**
@@ -507,7 +507,7 @@ class xml_domit_rss_base_document extends xml_domit_rss_elementindexer {
 	function setProxyConnection($host, $path = '/', $port = 80, $timeout = 0, $user = null, $password = null) {
 		require_once(DOMIT_RSS_INCLUDE_PATH . 'php_http_proxy.php');
 				
-		$this->httpConnection =& new php_http_proxy($host, $path, $port, $timeout, $user, $password);
+		$this->httpConnection = new php_http_proxy($host, $path, $port, $timeout, $user, $password);
 	} //setProxyConnection
 	
 	/**
@@ -532,7 +532,7 @@ class xml_domit_rss_base_document extends xml_domit_rss_elementindexer {
 	*/
 	function createDocument() {
 	    require_once(DOMIT_RSS_INCLUDE_PATH . 'xml_domit_include.php');
-		$this->node =& new DOMIT_Document();
+		$this->node = new DOMIT_Document();
 		$this->node->resolveErrors(true);
 	} //createDocument
 	
@@ -554,7 +554,7 @@ class xml_domit_rss_base_document extends xml_domit_rss_elementindexer {
 				require_once($pathToLibrary);
 
 				$cacheOptions = array('cacheDir' => $cacheDir, 'lifeTime' => $cacheTime);
-				$this->cache =& new Cache_Lite($cacheOptions);
+				$this->cache = new Cache_Lite($cacheOptions);
 		    }
 		}
 		else {
@@ -569,7 +569,7 @@ class xml_domit_rss_base_document extends xml_domit_rss_elementindexer {
 	*/
 	function createDefaultCache($cacheDir = './', $cacheTime = 3600) {
 	    require_once(DOMIT_RSS_INCLUDE_PATH . 'php_text_cache.php');
-		$this->cache =& new php_text_cache($cacheDir, $cacheTime);
+		$this->cache = new php_text_cache($cacheDir, $cacheTime);
 	} //initDefaultCache
 	
 	/**
@@ -819,7 +819,7 @@ class xml_domit_rss_simpleelement extends xml_domit_rss_elementindexer {
 	* Constructor
 	* @param Object A DOM node containing element data
 	*/
-	function xml_domit_rss_simpleelement(&$element) {
+	function __construct(&$element) {
 		$this->node =& $element;
 	} //xml_domit_rss_simpleelement
 
@@ -827,7 +827,7 @@ class xml_domit_rss_simpleelement extends xml_domit_rss_elementindexer {
 	* Gets the text of the element
 	* @return string The element text
 	*/
-	function getElementText() {
+	function getElementText($elementName = null) {
 	    $element =& $this->node;
 	    $result = '';
     	$total = $element->childCount;

@@ -1,6 +1,6 @@
-<?
+<?php
  
-	if (!eregi("module.php", $_SERVER['PHP_SELF'])) {
+	if (stripos($_SERVER['PHP_SELF'], "module.php") === false) {
 			die ("You can't access this file directly...");
 	}
 	
@@ -18,7 +18,7 @@
 <?=$sys_lanai->setPageTitle($rs->fields['conTitle']); ?>
 
 
-<?
+<?php
 	} else {
 		$sys_lanai->getErrorBox(_CONTENT_NOT_FOUND);
 	}

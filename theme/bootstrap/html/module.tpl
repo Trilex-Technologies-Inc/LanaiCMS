@@ -21,7 +21,7 @@
     background-color: #f8f9fa;
   }
   .article-hero {
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/article-bg.jpg') center/cover no-repeat;
+    background: linear-gradient(135deg, #343a40, #212529);
     color: #fff;
     padding: 6rem 0;
     text-align: center;

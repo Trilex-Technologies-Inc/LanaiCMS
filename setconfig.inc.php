@@ -176,7 +176,16 @@ $smarty->assign("cfgTheme", $cfg_theme);
 
 // load meta
 include_once("modules/config/module.php");
-$obMeta = new stdClass();
+$obMeta = (object) array(
+    'mtaDescription' => '',
+    'mtaAbstract' => '',
+    'mtaAuthor' => '',
+    'mtaDistribution' => '',
+    'mtaKeywords' => '',
+    'mtaFavicon' => '',
+    'mtaLogo' => '',
+    'mtaShowSiteName' => 1
+);
 $previousFetchMode = $db->SetFetchMode(ADODB_FETCH_ASSOC);
 $metaRow = $db->GetRow(
     "SELECT * FROM " . $cfg['tablepre'] . "meta WHERE mtaId = ?",

@@ -16,6 +16,7 @@
     $_SESSION['dbpw']=$_REQUEST['dbpw'];
     $_SESSION['dbname']=$_REQUEST['dbname'];
     $_SESSION['tablepre']=$_REQUEST['tablepre'];
+    $_SESSION['table_action']=(isset($_REQUEST['table_action']) && $_REQUEST['table_action']==='recreate') ? 'recreate' : 'reuse';
     $_SESSION['smtp_host']=$_REQUEST['smtp_host'];
     $_SESSION['smtp_port']=$_REQUEST['smtp_port'];
     $_SESSION['cfg_sendmail']=$_REQUEST['cfg_sendmail'];
@@ -43,6 +44,42 @@
     }
 
     if ($db->NConnect($_SESSION['dbhost'],$_SESSION['dbuser'], $_SESSION['dbpw'], $_SESSION['dbname'])) {
+        $coreTables = array(
+            'user', 'privilege', 'module', 'block', 'menu', 'contact', 'content',
+            'news', 'news_channel', 'rss', 'country', 'poll', 'poll_option',
+            'poll_stat', 'tag', 'item_tag', 'meta', 'read', 'comment', 'log',
+            'log_page', 'log_stat', 'banner'
+        );
+        $databaseTables = $db->MetaTables('TABLES');
+        $databaseTables = is_array($databaseTables) ? $databaseTables : array();
+        $existingCoreTables = array();
+
+        foreach ($coreTables as $coreTable) {
+            $fullTableName = $_SESSION['tablepre'].$coreTable;
+            if (in_array($fullTableName, $databaseTables, true)) {
+                $existingCoreTables[] = $fullTableName;
+            }
+        }
+
+        if ($_SESSION['table_action'] === 'recreate') {
+            foreach (array_reverse($existingCoreTables) as $existingCoreTable) {
+                $db->execute('DROP TABLE IF EXISTS `'.str_replace('`', '``', $existingCoreTable).'`');
+            }
+            $existingCoreTables = array();
+        }
+
+        $reuseExistingTables = $_SESSION['table_action'] === 'reuse' && count($existingCoreTables) > 0;
+
+        if ($reuseExistingTables) {
+?>
+<div class="alert alert-info"><?=_SETUP_USING_EXISTING_TABLES; ?></div>
+<form method="POST" action="<?=$_SERVER['PHP_SELF']; ?>" class="d-flex justify-content-between">
+    <button type="button" class="btn btn-outline-secondary" onclick="history.back();">&lt; <?=_SETUP_BACK; ?></button>
+    <input type="hidden" name="step" value="<?=($_REQUEST['step']+1)?>">
+    <button type="submit" class="btn btn-primary"><?=_SETUP_CREATE_CONFIG; ?> &gt;</button>
+</form>
+<?php
+        } else {
 ?>
 <b><?=_SETUP_CREATE_SYSTEM_TABLE; ?> :</b>
 <ul>
@@ -868,6 +905,7 @@ VALUES (
 </FORM>
 </TABLE>
 <?php
+        }
     } else {
     ?>
     <CENTER>

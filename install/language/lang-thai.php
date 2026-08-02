@@ -53,6 +53,11 @@
     define("_SETUP_DBPWD","รหัสผ่าน");
     define("_SETUP_DBNAME","ชื่อฐานข้อมูล");
     define("_SETUP_TABLEPRE","คำนำหน้าตาราง");
+    define("_SETUP_EXISTING_TABLES","ตารางเดิม");
+    define("_SETUP_USE_EXISTING_TABLES","ใช้ตารางเดิมและเก็บข้อมูลไว้");
+    define("_SETUP_RECREATE_TABLES","สร้างตาราง CMS ใหม่");
+    define("_SETUP_RECREATE_TABLES_WARNING","การสร้างตารางใหม่จะลบข้อมูล CMS เดิมที่ใช้คำนำหน้านี้อย่างถาวร");
+    define("_SETUP_USING_EXISTING_TABLES","เก็บตาราง CMS เดิมไว้แล้ว ไม่มีการเปลี่ยนแปลงโครงสร้างหรือข้อมูลตัวอย่าง");
 
     define("_SETUP_SMHOST","SMTP โฮส");
     define("_SETUP_SMPORT","SMTP พอร์ต");

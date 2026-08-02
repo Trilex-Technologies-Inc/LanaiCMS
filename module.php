@@ -1,6 +1,13 @@
 <?php
 
+// Some legacy includes close their PHP tags and emit whitespace. Buffer that
+// output so the HTML5 doctype in header.inc.php remains the first response data.
+ob_start();
 include_once('setconfig.inc.php');
+$bootstrapOutput = ob_get_clean();
+if (trim($bootstrapOutput) !== '') {
+    error_log('Suppressed output before document doctype: ' . trim(strip_tags($bootstrapOutput)));
+}
 include_once('include/header.inc.php');
 
 $theme = new Theme();

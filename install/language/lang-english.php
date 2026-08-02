@@ -53,6 +53,11 @@
     define("_SETUP_DBPWD","Password");
     define("_SETUP_DBNAME","Database Name");
     define("_SETUP_TABLEPRE","Table Prefix");
+    define("_SETUP_EXISTING_TABLES","Existing Tables");
+    define("_SETUP_USE_EXISTING_TABLES","Use old tables and preserve their data");
+    define("_SETUP_RECREATE_TABLES","Recreate the CMS tables");
+    define("_SETUP_RECREATE_TABLES_WARNING","Recreating tables permanently deletes existing CMS data with this prefix.");
+    define("_SETUP_USING_EXISTING_TABLES","Existing CMS tables were kept. No schema or sample data was changed.");
 
     define("_SETUP_SMHOST","SMTP Host");
     define("_SETUP_SMPORT","SMTP Port");

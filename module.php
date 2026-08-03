@@ -5,9 +5,8 @@
 ob_start();
 include_once('setconfig.inc.php');
 $bootstrapOutput = ob_get_clean();
-if (trim($bootstrapOutput) !== '') {
-    error_log('Suppressed output before document doctype: ' . trim(strip_tags($bootstrapOutput)));
-}
+// setconfig.inc.php may emit the permission-warning script. Suppress it here so
+// bootstrap output cannot precede the document doctype or pollute the error log.
 include_once('include/header.inc.php');
 
 $theme = new Theme();

@@ -13,7 +13,7 @@ $rss->useCached();
 $rss->title = $cfg['title'];
 $rss->description = "Daily News from ".$cfg['title'];
 $rss->link = $cfg['url']."/module.php?modname=news";
-$rss->syndicationURL = $cfg['url'].$PHP_SELF;
+$rss->syndicationURL = $cfg['url'].(isset($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : '/feed.php');
 
 $image = new FeedImage();
 $image->title = $cfg['title']." logo";

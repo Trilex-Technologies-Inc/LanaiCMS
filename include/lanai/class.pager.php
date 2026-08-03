@@ -33,7 +33,13 @@ class Pager
         $this->rs = $db->execute($sql . " LIMIT $this->page,$this->offset");
         /* calculate max row */
         $arr = $db->execute($sql);
-        $this->maxrow = $arr->recordcount();
+        if ($this->rs === false || $arr === false) {
+            error_log('Pager query failed: ' . $db->ErrorMsg());
+            $this->rs = $db->execute("SELECT NULL AS empty_result WHERE 1=0");
+            $this->maxrow = 0;
+        } else {
+            $this->maxrow = $arr->recordcount();
+        }
         /* calculate absulut page */
         $this->abspage = (ceil($this->maxrow / $this->offset));
         /* get current page */
@@ -201,7 +207,7 @@ class Pager
         if (empty($this->abspage)) $this->abspage = 1;
         ?>
         <?php
-        if (($this->currpage > 1) and ($this->abspag != 1)) {
+        if (($this->currpage > 1) and ($this->abspage != 1)) {
             ?>
             <?= $this->pageStr; ?><?= $this->currpage; ?>/<?= $this->abspage; ?>
             <?php
@@ -217,7 +223,7 @@ class Pager
         ob_start();
         ?><?= $this->recStr; ?><?= ($this->page + 1); ?> -
         <?php
-        if (($this->abspage == $this->currpage) and (($this->page + $this->offset) > $maxrow)) {
+        if (($this->abspage == $this->currpage) and (($this->page + $this->offset) > $this->maxrow)) {
             ?><?= ($this->maxrow); ?><?php
         } else {
             ?><?= ($this->page + $this->offset); ?><?php

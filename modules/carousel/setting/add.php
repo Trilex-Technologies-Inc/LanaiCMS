@@ -41,6 +41,7 @@ if (!$result) {
 <tr><td><?=_BANN_IMAGE_URL; ?></td><td><input type="text" id="banImage" name="banImage" size="50" onblur="javacript:loadImage()">*</td></tr>
 <tr><td><?=_BANN_URL; ?></td><td><input type="text" id="banURL" name="banURL" size="40">*</td></tr>
 <tr><td><?=_BANN_POSITION; ?></td><td><select id="banPosition" name="banPosition"><?php foreach ($positions as $key => $label) { ?><option value="<?=$key; ?>"<?=$key == 'l' ? ' selected' : ''; ?>><?=$label; ?></option><?php } ?></select>*</td></tr>
+<tr><td><?=_BANN_ACTIVE; ?></td><td><select id="banActive" name="banActive"><option value="y" selected><?=_YES; ?></option><option value="n"><?=_NO; ?></option></select></td></tr>
 <tr><td>&nbsp;</td><td><img src="modules/carousel/images/space.gif" name="banView" ></td></tr>
 <tr><td>&nbsp;</td><td><input  type="submit" value="<?=_SAVE; ?>" class="inputButton"> <input  type="reset" value="<?=_RESET; ?>" class="inputButton"></td></tr>
 </form>

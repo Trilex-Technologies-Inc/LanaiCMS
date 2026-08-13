@@ -73,6 +73,17 @@ class banner extends ADOdb_Active_Record {
 
         return false;
     }
+    function setBannerActive($id, $active) {
+        global $db;
+
+        $id = intval($id);
+        $active = $active === 'n' ? 'n' : 'y';
+        return $db->Execute(
+            "UPDATE " . $this->_table .
+            " SET banActive = " . $db->qstr($active) .
+            " WHERE banId = " . $id
+        ) !== false;
+    }
     function saveBanner($data) {
         global $db;
 
@@ -81,6 +92,7 @@ class banner extends ADOdb_Active_Record {
         $banPosition = $this->normalizePosition(isset($data['banPosition']) ? $data['banPosition'] : 'l');
         $banShow = isset($data['banShow']) ? intval($data['banShow']) : 0;
         $banClick = isset($data['banClick']) ? intval($data['banClick']) : 0;
+        $banActive = isset($data['banActive']) && $data['banActive'] === 'n' ? 'n' : 'y';
 
 
         $sql = "
@@ -93,7 +105,8 @@ class banner extends ADOdb_Active_Record {
             banposition   = " . $db->qstr($banPosition) . ",
             bandate       = " . $db->qstr($banDate) . ",
             banshow       = " . $banShow . ",
-            banclick      = " . $banClick . "
+            banclick      = " . $banClick . ",
+            banactive     = " . $db->qstr($banActive) . "
         WHERE banId = $id
     ";
 
@@ -115,10 +128,11 @@ class banner extends ADOdb_Active_Record {
         $banPosition = $this->normalizePosition(isset($data['banPosition']) ? $data['banPosition'] : 'l');
         $banShow = isset($data['banShow']) ? intval($data['banShow']) : 0;
         $banClick = isset($data['banClick']) ? intval($data['banClick']) : 0;
+        $banActive = isset($data['banActive']) && $data['banActive'] === 'n' ? 'n' : 'y';
 
         $sql = "
         INSERT INTO {$this->_table}
-            (banTitle, banDescription, banImage, banURL, banPosition, banDate, banShow, banClick)
+            (banTitle, banDescription, banImage, banURL, banPosition, banDate, banShow, banClick, banActive)
         VALUES
             (" . $db->qstr($data['banTitle']) . ",
              " . $db->qstr($data['banDescription']) . ",
@@ -127,7 +141,8 @@ class banner extends ADOdb_Active_Record {
              " . $db->qstr($banPosition) . ",
              " . $db->qstr($banDate) . ",
              " . $banShow . ",
-             " . $banClick . ")
+             " . $banClick . ",
+             " . $db->qstr($banActive) . ")
         ";
 
         $result = $db->Execute($sql);
@@ -184,6 +199,7 @@ class bannerPager extends Pager {
 		<td class="dataColumnHeader"><input type="checkbox" value="select_all" onclick="selectall(this);" class="radioButton" /></td>
 		<td class="dataColumnHeader" width="30%" align="center"><?=_BANN_TITLE; ?></td>
 		<td class="dataColumnHeader" align="center"><?=_BANN_POSITION; ?></td>
+		<td class="dataColumnHeader" align="center"><?=_BANN_ACTIVE; ?></td>
 		<td class="dataColumnHeader" width="60%" align="center"><?=_BANN_DESCRIPTION; ?></td>
 		<td class="dataColumnHeader" align="center"><?=_BANN_SHOW; ?></td>
 		<td class="dataColumnHeader" align="center"><?=_BANN_CLICK; ?></td>
@@ -208,6 +224,13 @@ class bannerPager extends Pager {
            </td>
            <td class="dataColumn"><?=$this->rs->fields['banTitle']; ?></td>
            <td class="dataColumn" align="center"><?=$this->getPositionLabel($this->rs->fields['banPosition']); ?></td>
+           <td class="dataColumn" align="center">
+           <?php if ($this->rs->fields['banActive'] === 'n') { ?>
+               <a href="setting.php?modname=carousel&amp;mf=bannedit&amp;ac=active&amp;v=y&amp;mid=<?=$this->rs->fields['banId']; ?>"><img src="theme/<?=$cfg['theme']; ?>/images/cancel.gif" border="0" align="absmiddle" alt="<?=_NO; ?>" title="<?=_NO; ?>"></a>
+           <?php } else { ?>
+               <a href="setting.php?modname=carousel&amp;mf=bannedit&amp;ac=active&amp;v=n&amp;mid=<?=$this->rs->fields['banId']; ?>"><img src="theme/<?=$cfg['theme']; ?>/images/ok.gif" border="0" align="absmiddle" alt="<?=_YES; ?>" title="<?=_YES; ?>"></a>
+           <?php } ?>
+           </td>
            <td class="dataColumn"><?=$this->rs->fields['banDescription']; ?></td>
            <td class="dataColumn" align="center">
            <?php 

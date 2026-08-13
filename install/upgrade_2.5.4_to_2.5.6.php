@@ -58,6 +58,20 @@ function upgradeBannerTableAlt() {
     }
 }
 
+function upgradeBannerActiveColumn() {
+    global $db, $tablepre;
+
+    $columns = $db->MetaColumns($tablepre . "banner");
+    if (!isset($columns['BANACTIVE'])) {
+        $sql = "ALTER TABLE `" . $tablepre . "banner`
+                ADD COLUMN `banActive` ENUM('y','n') NOT NULL DEFAULT 'y'
+                AFTER `banPosition`";
+        dbexecute("Upgrade Banner Table - Adding banActive column", $sql);
+    } else {
+        ?>Upgrade Banner Table - banActive column already exists&nbsp;&nbsp;[<span style="color:green;">OK</span>]<?php
+    }
+}
+
 if ($db->NConnect($dbhost, $dbuser, $dbpw, $dbname)) {
 ?>
 <b>Upgrading Database Structure:</b>
@@ -65,6 +79,11 @@ if ($db->NConnect($dbhost, $dbuser, $dbpw, $dbname)) {
     <li>
 <?php
     upgradeBannerTableAlt();
+?>
+    </li>
+    <li>
+<?php
+    upgradeBannerActiveColumn();
 ?>
     </li>
 </ul>

@@ -21,7 +21,7 @@
         ?>
         <span class="txtContentTitle">Create Necessary Tables </span>
         <br /><br />
-        This step adds the carousel position field if it does not already exist.
+        This step adds the carousel position and active fields if they do not already exist.
         <br /><br />
         <?php
         global $db;
@@ -31,6 +31,13 @@
             $objPackage->execQuery($sql);
         } else {
             $sql="ALTER TABLE tbl_ln_banner MODIFY banPosition ENUM('l','r','c','t','b') NOT NULL DEFAULT 'l'";
+            $objPackage->execQuery($sql);
+        }
+        if (!isset($columns['BANACTIVE'])) {
+            $sql="ALTER TABLE tbl_ln_banner ADD banActive ENUM('y','n') NOT NULL DEFAULT 'y' AFTER banPosition";
+            $objPackage->execQuery($sql);
+        } else {
+            $sql="ALTER TABLE tbl_ln_banner MODIFY banActive ENUM('y','n') NOT NULL DEFAULT 'y'";
             $objPackage->execQuery($sql);
         }
         ?>
@@ -60,7 +67,7 @@
         ?>
         <span class="txtContentTitle">Install banner Module</span>
         <br /><br />
-        Install the carousel module and add support for banner position ordering.
+        Install the carousel module and add support for banner position and active status.
         <br /><br />
         <!-- form button -->
         <input type="button" class="inputButton" value="Next ->" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>&mf=install&step=1';">

@@ -119,9 +119,9 @@ class Systems
     function getBanners()
     {
         global $db, $tablepre;
-        $sql = "SELECT * FROM " . $tablepre . "banner 
-				
-					ORDER BY banId  ASC";
+        $sql = "SELECT * FROM " . $tablepre . "banner
+                    WHERE banActive='y'
+					ORDER BY banId ASC";
         $rs = $db->execute($sql);
         return $rs;
     }

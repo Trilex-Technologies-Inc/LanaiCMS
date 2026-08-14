@@ -58,20 +58,18 @@ class banner extends ADOdb_Active_Record {
         global $db;
 
         $id = intval($id);
-
-        $exists = $this->Load("banId = $id");
-        if (!$exists) {
+        if ($id < 1) {
             return false;
         }
 
-        $sql = "DELETE FROM " . $this->_table . " WHERE banId = $id";
-        $result = $db->Execute($sql);
+        // Delete directly. Loading an Active Record first is unnecessary and
+        // can fail when a database driver changes the case of column names.
+        $result = $db->Execute(
+            "DELETE FROM " . $this->_table . " WHERE banId = ?",
+            array($id)
+        );
 
-        if ($result) {
-            return true;
-        }
-
-        return false;
+        return $result !== false;
     }
     function setBannerActive($id, $active) {
         global $db;
@@ -186,10 +184,8 @@ class bannerPager extends Pager {
 	function selectall(obj) { 
 		var checkBoxes = document.getElementsByTagName('input'); 
 		for (i = 0; i < checkBoxes.length; i++) { 
-			if (obj.checked == true) { 
-				checkBoxes[i].checked = true; // this checks all the boxes 
-			} else { 
-				checkBoxes[i].checked = false; // this unchecks all the boxes 
+			if (checkBoxes[i].type === 'checkbox' && checkBoxes[i].name === 'midId[]') {
+				checkBoxes[i].checked = obj.checked;
 			} 
 		} 
 	} 	
@@ -219,8 +215,7 @@ class bannerPager extends Pager {
       	?>
            <tr class="dataRow">
            <td class="dataColumn">
-           <input type="checkbox"  name="midId[]" value="<?=$this->rs->fields['banId']; ?>" >
-           <input type="hidden" name="banId[]" value="<?=$this->rs->fields['banId']; ?>" >
+           <input type="checkbox" name="midId[]" value="<?=$this->rs->fields['banId']; ?>" >
            </td>
            <td class="dataColumn"><?=$this->rs->fields['banTitle']; ?></td>
            <td class="dataColumn" align="center"><?=$this->getPositionLabel($this->rs->fields['banPosition']); ?></td>

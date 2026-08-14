@@ -1,5 +1,9 @@
 <?php
-switch ($_REQUEST['ac']) {
+$action = isset($_REQUEST['ac']) && !is_array($_REQUEST['ac'])
+    ? (string) $_REQUEST['ac']
+    : '';
+
+switch ($action) {
     case "active" :
         $objbanner = new banner();
         $objbanner->setBannerActive(
@@ -10,9 +14,13 @@ switch ($_REQUEST['ac']) {
         break;
     case "mactive" :
         $objbanner = new banner();
-        $selected = isset($_REQUEST['midId']) && is_array($_REQUEST['midId'])
-            ? $_REQUEST['midId']
-            : array();
+        $selected = array();
+        if (isset($_REQUEST['midId']) && is_array($_REQUEST['midId'])) {
+            $selected = $_REQUEST['midId'];
+        } elseif (isset($_REQUEST['mid']) && is_array($_REQUEST['mid'])) {
+            $selected = $_REQUEST['mid'];
+        }
+
         foreach ($selected as $selectedId) {
             $selectedId = intval($selectedId);
             if ($selectedId < 1 || !$objbanner->Load("banId=" . $selectedId)) {
@@ -26,23 +34,31 @@ switch ($_REQUEST['ac']) {
         $sys_lanai->go2Page("setting.php?modname=carousel");
         break;
     case "mdelete" :
-        $selarr=$_REQUEST['midId'] ;
-        $itmarr=$_REQUEST['banId'] ;
-        for ($i=0;$i<count($itmarr);$i++) {
-            //if ($selarr[$i]=="on") {
-            $objbanner=new banner();
-            $rs=$objbanner->Load("banId=".$selarr[$i]);
-            if (!$rs) {
-                /* no data to delete - show error message*/
-                $sys_lanai->getErrorBox("Data not found!");
-            }  else {
-                /* perform delete */
-                $objbanner->deleteBanner($selarr[$i]);
-
-                $sys_lanai->go2Page("setting.php?modname=carousel");
-            }
-            //}
+        $selected = array();
+        if (isset($_REQUEST['midId']) && is_array($_REQUEST['midId'])) {
+            $selected = $_REQUEST['midId'];
+        } elseif (isset($_REQUEST['mid']) && is_array($_REQUEST['mid'])) {
+            $selected = $_REQUEST['mid'];
         }
+
+        if (empty($selected)) {
+            $sys_lanai->getErrorBox("Data not found!");
+            break;
+        }
+
+        foreach ($selected as $selectedId) {
+            $selectedId = intval($selectedId);
+            if ($selectedId < 1) {
+                continue;
+            }
+
+            $objbanner = new banner();
+            if (!$objbanner->deleteBanner($selectedId)) {
+                $sys_lanai->getErrorBox($objbanner->ErrorMsg());
+            }
+        }
+
+        $sys_lanai->go2Page("setting.php?modname=carousel");
         break;
 }
 ?>

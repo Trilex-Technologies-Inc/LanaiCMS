@@ -313,7 +313,7 @@ class Systems
         $remoteAddress = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
         $userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
         $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-        $sql = "INSERT INTO " . $tablepre . "logs VALUES (null," . $uid . ",'" . $this->getCountryByIp($remoteAddress) . "','" . addslashes($userAgent) . "','" . addslashes($remoteAddress) . "','" . addslashes($requestUri) . "'," . $visit . ",'" . $time . "',$time2)";
+        $sql = "INSERT INTO " . $tablepre . "logs VALUES (null," . $uid . "," . $db->qstr($this->getCountryByIp($remoteAddress)) . "," . $db->qstr($userAgent) . "," . $db->qstr($remoteAddress) . "," . $db->qstr($requestUri) . "," . $visit . ",'" . $time . "',$time2)";
         //$db->debug=TRUE;
         $rs = $db->execute($sql);
     }

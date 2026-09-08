@@ -24,20 +24,20 @@
         This step adds the carousel position and active fields if they do not already exist.
         <br /><br />
         <?php
-        global $db;
-        $columns = $db->MetaColumns("tbl_ln_banner");
+        $tableName = $objPackage->cfg['tablepre'] . "banner";
+        $columns = $db->MetaColumns($tableName);
         if (!isset($columns['BANPOSITION'])) {
-            $sql="ALTER TABLE tbl_ln_banner ADD banPosition ENUM('l','r','c','t','b') NOT NULL DEFAULT 'l' AFTER banURL";
+            $sql="ALTER TABLE " . $tableName . " ADD banPosition ENUM('l','r','c','t','b') NOT NULL DEFAULT 'l' AFTER banURL";
             $objPackage->execQuery($sql);
         } else {
-            $sql="ALTER TABLE tbl_ln_banner MODIFY banPosition ENUM('l','r','c','t','b') NOT NULL DEFAULT 'l'";
+            $sql="ALTER TABLE " . $tableName . " MODIFY banPosition ENUM('l','r','c','t','b') NOT NULL DEFAULT 'l'";
             $objPackage->execQuery($sql);
         }
         if (!isset($columns['BANACTIVE'])) {
-            $sql="ALTER TABLE tbl_ln_banner ADD banActive ENUM('y','n') NOT NULL DEFAULT 'y' AFTER banPosition";
+            $sql="ALTER TABLE " . $tableName . " ADD banActive ENUM('y','n') NOT NULL DEFAULT 'y' AFTER banPosition";
             $objPackage->execQuery($sql);
         } else {
-            $sql="ALTER TABLE tbl_ln_banner MODIFY banActive ENUM('y','n') NOT NULL DEFAULT 'y'";
+            $sql="ALTER TABLE " . $tableName . " MODIFY banActive ENUM('y','n') NOT NULL DEFAULT 'y'";
             $objPackage->execQuery($sql);
         }
         ?>

@@ -11,9 +11,17 @@ if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 <a href="setting.php?modname=carousel&mf=add" ><?=_NEW; ?></a>&nbsp;
 <img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
 <a href="module.php?modname=setting" ><?=_BACK; ?></a><br><br>
+<?php
+if (empty($_SESSION['carousel_form_token'])) {
+    $_SESSION['carousel_form_token'] = md5(uniqid((string) mt_rand(), true));
+}
+?>
 <form id="carousel-list-form" name="carousel-list-form" method="post" action="setting.php">
 <input type="hidden" name="modname" value="carousel">
 <input type="hidden" name="mf" value="bannedit">
+<input type="hidden" id="carousel-mid" name="mid" value="">
+<input type="hidden" id="carousel-v" name="v" value="">
+<input type="hidden" name="carousel_form_token" value="<?=htmlspecialchars($_SESSION['carousel_form_token'], ENT_QUOTES, 'UTF-8'); ?>">
 <button type="submit" name="ac" value="mactive" class="btn btn-sm btn-outline-success">
     <img src="theme/<?=$cfg['theme']; ?>/images/ok.gif" border="0" align="absmiddle" alt="">
     <?=_BANN_ACTIVE; ?>

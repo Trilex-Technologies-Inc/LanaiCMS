@@ -168,7 +168,7 @@ class SysLog {
 		$userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 		$remoteAddress = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
 		$sql="INSERT INTO ".$this->cfg['tablepre']."log (logDatetime, logUAgent, logIP, pagId, logState)
-				VALUES ('".$date."','".addslashes($userAgent)."','".addslashes($remoteAddress)."',".(int)$pageid.",'".$logstat."')";
+				VALUES (".$this->db->qstr($date).",".$this->db->qstr($userAgent).",".$this->db->qstr($remoteAddress).",".(int)$pageid.",".$this->db->qstr($logstat).")";
 		$rs=$this->db->execute($sql);
 		return $rs;
 	}

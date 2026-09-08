@@ -188,7 +188,18 @@ class bannerPager extends Pager {
 				checkBoxes[i].checked = obj.checked;
 			} 
 		} 
-	} 	
+	}
+	function prepareCarouselAction(id, value) {
+		var midField = document.getElementById('carousel-mid');
+		var valueField = document.getElementById('carousel-v');
+		if (midField) {
+			midField.value = id;
+		}
+		if (valueField) {
+			valueField.value = value;
+		}
+		return true;
+	}
 	</script> 
         <table class="dataTable" cellpadding="3" cellspacing="1">
 		<tr class="dataRowHeader">
@@ -221,9 +232,13 @@ class bannerPager extends Pager {
            <td class="dataColumn" align="center"><?=$this->getPositionLabel($this->rs->fields['banPosition']); ?></td>
            <td class="dataColumn" align="center">
            <?php if ($this->rs->fields['banActive'] === 'n') { ?>
-               <a href="setting.php?modname=carousel&amp;mf=bannedit&amp;ac=active&amp;v=y&amp;mid=<?=$this->rs->fields['banId']; ?>"><img src="theme/<?=$cfg['theme']; ?>/images/cancel.gif" border="0" align="absmiddle" alt="<?=_NO; ?>" title="<?=_NO; ?>"></a>
+               <button type="submit" name="ac" value="active" onclick="return prepareCarouselAction('<?=$this->rs->fields['banId']; ?>', 'y');" style="border:0;background:none;padding:0;cursor:pointer;">
+                   <img src="theme/<?=$cfg['theme']; ?>/images/cancel.gif" border="0" align="absmiddle" alt="<?=_NO; ?>" title="<?=_NO; ?>">
+               </button>
            <?php } else { ?>
-               <a href="setting.php?modname=carousel&amp;mf=bannedit&amp;ac=active&amp;v=n&amp;mid=<?=$this->rs->fields['banId']; ?>"><img src="theme/<?=$cfg['theme']; ?>/images/ok.gif" border="0" align="absmiddle" alt="<?=_YES; ?>" title="<?=_YES; ?>"></a>
+               <button type="submit" name="ac" value="active" onclick="return prepareCarouselAction('<?=$this->rs->fields['banId']; ?>', 'n');" style="border:0;background:none;padding:0;cursor:pointer;">
+                   <img src="theme/<?=$cfg['theme']; ?>/images/ok.gif" border="0" align="absmiddle" alt="<?=_YES; ?>" title="<?=_YES; ?>">
+               </button>
            <?php } ?>
            </td>
            <td class="dataColumn"><?=$this->rs->fields['banDescription']; ?></td>

@@ -16,6 +16,7 @@
     $_SESSION['dbpw']=$_REQUEST['dbpw'];
     $_SESSION['dbname']=$_REQUEST['dbname'];
     $_SESSION['tablepre']=$_REQUEST['tablepre'];
+    $_SESSION['table_action']=(isset($_REQUEST['table_action']) && $_REQUEST['table_action']==='recreate') ? 'recreate' : 'reuse';
     $_SESSION['smtp_host']=$_REQUEST['smtp_host'];
     $_SESSION['smtp_port']=$_REQUEST['smtp_port'];
     $_SESSION['cfg_sendmail']=$_REQUEST['cfg_sendmail'];
@@ -43,6 +44,42 @@
     }
 
     if ($db->NConnect($_SESSION['dbhost'],$_SESSION['dbuser'], $_SESSION['dbpw'], $_SESSION['dbname'])) {
+        $coreTables = array(
+            'user', 'privilege', 'module', 'block', 'menu', 'contact', 'content',
+            'news', 'news_channel', 'rss', 'country', 'poll', 'poll_option',
+            'poll_stat', 'tag', 'item_tag', 'meta', 'read', 'comment', 'log',
+            'log_page', 'log_stat', 'banner'
+        );
+        $databaseTables = $db->MetaTables('TABLES');
+        $databaseTables = is_array($databaseTables) ? $databaseTables : array();
+        $existingCoreTables = array();
+
+        foreach ($coreTables as $coreTable) {
+            $fullTableName = $_SESSION['tablepre'].$coreTable;
+            if (in_array($fullTableName, $databaseTables, true)) {
+                $existingCoreTables[] = $fullTableName;
+            }
+        }
+
+        if ($_SESSION['table_action'] === 'recreate') {
+            foreach (array_reverse($existingCoreTables) as $existingCoreTable) {
+                $db->execute('DROP TABLE IF EXISTS `'.str_replace('`', '``', $existingCoreTable).'`');
+            }
+            $existingCoreTables = array();
+        }
+
+        $reuseExistingTables = $_SESSION['table_action'] === 'reuse' && count($existingCoreTables) > 0;
+
+        if ($reuseExistingTables) {
+?>
+<div class="alert alert-info"><?=_SETUP_USING_EXISTING_TABLES; ?></div>
+<form method="POST" action="<?=$_SERVER['PHP_SELF']; ?>" class="d-flex justify-content-between">
+    <button type="button" class="btn btn-outline-secondary" onclick="history.back();">&lt; <?=_SETUP_BACK; ?></button>
+    <input type="hidden" name="step" value="<?=($_REQUEST['step']+1)?>">
+    <button type="submit" class="btn btn-primary"><?=_SETUP_CREATE_CONFIG; ?> &gt;</button>
+</form>
+<?php
+        } else {
 ?>
 <b><?=_SETUP_CREATE_SYSTEM_TABLE; ?> :</b>
 <ul>
@@ -380,6 +417,7 @@ $sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
 			  banImage varchar(255) NOT NULL,
 			  banURL varchar(255) NOT NULL,
 			  banPosition enum('l','r','c','t','b') NOT NULL default 'l',
+			  banActive enum('y','n') NOT NULL default 'y',
 			  banDate datetime NOT NULL,
 			  banShow int(10) unsigned default '0',
 			  banClick int(10) unsigned default '0',
@@ -390,29 +428,32 @@ $sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
     <li>
 <?php
 $sql1 = "INSERT INTO ".$_SESSION['tablepre']."banner
-(`banId`, `banTitle`, `banDescription`, `banImage`, `banURL`, `banPosition`, `banDate`, `banShow`, `banClick`)
+(`banId`, `banTitle`, `banDescription`, `banImage`, `banURL`, `banPosition`, `banActive`, `banDate`, `banShow`, `banClick`)
 VALUES (NULL, 'example 1', 'description 1',
 'https://wowslider.com/sliders/demo-93/data1/images/landscape.jpg',
 'https://wowslider.com/sliders/demo-93/data1/images/landscape.jpg',
 'l',
+'y',
 '2025-12-02 10:24:13', NULL, NULL)";
 dbexecute("Insert Banner 1", $sql1);
 
 $sql2 = "INSERT INTO ".$_SESSION['tablepre']."banner
-(`banId`, `banTitle`, `banDescription`, `banImage`, `banURL`, `banPosition`, `banDate`, `banShow`, `banClick`)
+(`banId`, `banTitle`, `banDescription`, `banImage`, `banURL`, `banPosition`, `banActive`, `banDate`, `banShow`, `banClick`)
 VALUES (NULL, 'example 2', 'description 2',
 'https://wowslider.com/sliders/demo-93/data1/images/sunset.jpg',
 'https://wowslider.com/sliders/demo-93/data1/images/sunset.jpg',
 'c',
+'y',
 '2025-12-02 10:25:18', NULL, NULL)";
 dbexecute("Insert Banner 2", $sql2);
 
 $sql3 = "INSERT INTO ".$_SESSION['tablepre']."banner
-(`banId`, `banTitle`, `banDescription`, `banImage`, `banURL`, `banPosition`, `banDate`, `banShow`, `banClick`)
+(`banId`, `banTitle`, `banDescription`, `banImage`, `banURL`, `banPosition`, `banActive`, `banDate`, `banShow`, `banClick`)
 VALUES (NULL, 'example 3', 'description 3',
 'https://fastly.picsum.photos/id/52/1024/480.jpg?hmac=EhPOe5u6CjvoQFyYjJFtpUOCAiW8-49KWTIgBmH4ct4',
 'https://fastly.picsum.photos/id/52/1024/480.jpg?hmac=EhPOe5u6CjvoQFyYjJFtpUOCAiW8-49KWTIgBmH4ct4',
 'r',
+'y',
 '2025-12-03 09:00:26', 0, 0)";
 dbexecute("Insert Banner 3", $sql3);
 
@@ -868,6 +909,7 @@ VALUES (
 </FORM>
 </TABLE>
 <?php
+        }
     } else {
     ?>
     <CENTER>

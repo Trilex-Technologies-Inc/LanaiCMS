@@ -86,6 +86,11 @@ if (empty($banner)) {
                 </tr>
 
                 <tr>
+                    <td><?=_BANN_ACTIVE; ?></td>
+                    <td><select id="banActive" name="banActive"><option value="y"<?=!isset($banner['banactive']) || $banner['banactive'] !== 'n' ? ' selected' : ''; ?>><?=_YES; ?></option><option value="n"<?=isset($banner['banactive']) && $banner['banactive'] === 'n' ? ' selected' : ''; ?>><?=_NO; ?></option></select></td>
+                </tr>
+
+                <tr>
                     <td>&nbsp;</td>
                     <td><img src="<?=htmlspecialchars((string)$banner['banimage'], ENT_QUOTES, 'UTF-8'); ?>" name="banView" alt=""></td>
                 </tr>

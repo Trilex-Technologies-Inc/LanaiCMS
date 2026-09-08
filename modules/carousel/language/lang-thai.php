@@ -28,6 +28,7 @@ define("_BANN_DES","รายละเอียด");
 define("_BANN_IMAGE_URL","ยูอาร์แอลภาพ ");
 define("_BANN_URL","ยูอาร์แอลเว็บ");
 define("_BANN_POSITION","ตำแหน่ง");
+define("_BANN_ACTIVE","ทำงาน");
 define("_BANN_POSITION_LEFT","ซ้าย");
 define("_BANN_POSITION_RIGHT","ขวา");
 define("_BANN_POSITION_CENTER","กลาง");

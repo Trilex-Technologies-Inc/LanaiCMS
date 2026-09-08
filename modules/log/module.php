@@ -33,25 +33,32 @@ class SysLog {
 	}
 	
 	function setLog() {
+		$requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+		$remoteAddress = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
 		// get date
 		$datestr=date("Y-m-d H:i:s");
 		$datestr2=date("Y-m-d");
 		// check page exist
-		if (!$this->pageExist($_SERVER['REQUEST_URI'])) {
+		if (!$this->pageExist($requestUri)) {
 			// add page
-			if (stripos($_SERVER['REQUEST_URI'], "setting.php") === false) {
-				$this->addPage($this->cfg['title'],$_SERVER['REQUEST_URI']);
+			if (stripos($requestUri, "setting.php") === false) {
+				$this->addPage($this->cfg['title'],$requestUri);
 			}
 		}
 		// add log 2 file
 		global $cfg;
 		$fp=fopen($cfg['datadir']."/log/".date("Ymd")."_access.log","a+");
-		fwrite($fp,date("YmdHis")."\t".$_SERVER['REMOTE_ADDR']."\t".$_SERVER['REQUEST_URI']."\n");
-		fclose($fp);
+		if ($fp) {
+			fwrite($fp,date("YmdHis")."\t".$remoteAddress."\t".$requestUri."\n");
+			fclose($fp);
+		}
 		// add log
-		if (stripos($_SERVER['REQUEST_URI'], "setting.php") === false) {
+		if (stripos($requestUri, "setting.php") === false) {
 				// get page id
-				$pageid=$this->getPageID($_SERVER['REQUEST_URI']);
+			$pageid=$this->getPageID($requestUri);
+			if (!$pageid) {
+				return false;
+			}
 				// get log stat
 				$logstat=$this->logStat($datestr);
 				$this->addLog($datestr,$pageid,$logstat);
@@ -137,7 +144,7 @@ class SysLog {
 	function pageExist($uri){
 		$sql="SELECT * FROM ".$this->cfg['tablepre']."log_page WHERE pagURL='".$uri."' ";
 		$rs=$this->db->execute($sql);
-		if ($rs->recordcount($sql)>0) {
+		if ($rs && $rs->recordcount()>0) {
 			return true;
 		} else {
 			return false;
@@ -154,12 +161,14 @@ class SysLog {
 	function getPageID($uri) {
 		$sql="SELECT * FROM ".$this->cfg['tablepre']."log_page WHERE pagURL='".$uri."' ";
 		$rs=$this->db->execute($sql);
-		return ($rs->fields['pagId']);
+		return ($rs && !$rs->EOF) ? $rs->fields['pagId'] : false;
 	}
 	
 	function addLog($date,$pageid,$logstat){
+		$userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+		$remoteAddress = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
 		$sql="INSERT INTO ".$this->cfg['tablepre']."log (logDatetime, logUAgent, logIP, pagId, logState)
-				VALUES ('".$date."','".$_SERVER['HTTP_USER_AGENT']."','".$_SERVER['REMOTE_ADDR']."',".$pageid.",'".$logstat."')";
+				VALUES (".$this->db->qstr($date).",".$this->db->qstr($userAgent).",".$this->db->qstr($remoteAddress).",".(int)$pageid.",".$this->db->qstr($logstat).")";
 		$rs=$this->db->execute($sql);
 		return $rs;
 	}

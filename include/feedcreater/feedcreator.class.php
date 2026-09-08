@@ -469,6 +469,7 @@ class FeedCreator extends HtmlDescribable {
 	* Ignored in the output when empty.
 	*/
 	var $xslStyleSheet = "";
+	var $cssStyleSheet = "";
 	
 	
 	/**

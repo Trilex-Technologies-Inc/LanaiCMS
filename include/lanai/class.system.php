@@ -119,9 +119,9 @@ class Systems
     function getBanners()
     {
         global $db, $tablepre;
-        $sql = "SELECT * FROM " . $tablepre . "banner 
-				
-					ORDER BY banId  ASC";
+        $sql = "SELECT * FROM " . $tablepre . "banner
+                    WHERE banActive='y'
+					ORDER BY banId ASC";
         $rs = $db->execute($sql);
         return $rs;
     }
@@ -310,7 +310,10 @@ class Systems
         } else {
             $visit = 1;
         }
-        $sql = "INSERT INTO " . $tablepre . "logs VALUES (null," . $uid . ",'" . $this->getCountryByIp($_SERVER['REMOTE_ADDR']) . "','" . $_SERVER['HTTP_USER_AGENT'] . "','" . $_SERVER['REMOTE_ADDR'] . "','" . $_SERVER['REQUEST_URI'] . "'," . $visit . ",'" . $time . "',$time2)";
+        $remoteAddress = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
+        $userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+        $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+        $sql = "INSERT INTO " . $tablepre . "logs VALUES (null," . $uid . "," . $db->qstr($this->getCountryByIp($remoteAddress)) . "," . $db->qstr($userAgent) . "," . $db->qstr($remoteAddress) . "," . $db->qstr($requestUri) . "," . $visit . ",'" . $time . "',$time2)";
         //$db->debug=TRUE;
         $rs = $db->execute($sql);
     }

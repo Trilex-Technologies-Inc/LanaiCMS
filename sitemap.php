@@ -11,7 +11,7 @@ $rss->useCached();
 $rss->title = $cfg['title'];
 $rss->description = "Site Map ".$cfg['title'];
 $rss->link = $cfg['url']."/module.php?modname=sitemap";
-$rss->syndicationURL = $cfg['url'].$PHP_SELF;
+$rss->syndicationURL = $cfg['url'].(isset($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : '/sitemap.php');
 
 $image = new FeedImage();
 $image->title = $cfg['title']." logo";

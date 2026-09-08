@@ -1,6 +1,7 @@
 <?php
 $obsearch = new LanaiSeach();
 $schemaarr = $obsearch->loadSchema();
+$schemaarr = is_array($schemaarr) ? $schemaarr : array();
 $ssm = array();
 $ssi = array();
 foreach ($schemaarr as $val) {
@@ -58,24 +59,37 @@ foreach ($schemaarr as $val) {
 
     <?php
     if (!empty($_REQUEST['keyword'])) {
-        $sql = $obsearch->getSchema($_REQUEST['item']);
-        $sql = preg_replace("/%tablepre%/", $cfg['tablepre'], $sql);
-        if ($_REQUEST['method'] == "phase") {
-            $sql = preg_replace("/%keyword%/", "%" . trim($_REQUEST['keyword']) . "%", $sql);
+        $searchItem = isset($_REQUEST['item']) && in_array($_REQUEST['item'], $ssi, true)
+            ? $_REQUEST['item']
+            : (isset($ssi[0]) ? $ssi[0] : '');
+        $searchMethod = isset($_REQUEST['method']) && $_REQUEST['method'] === 'word' ? 'word' : 'phase';
+        $sql = $obsearch->getSchema($searchItem);
+
+        if (empty($sql)) {
+            ?>
+            <div class="alert alert-warning mt-4" role="alert">
+                Search is temporarily unavailable.
+            </div>
+            <?php
         } else {
-            $sql = preg_replace("/%keyword%/", trim($_REQUEST['keyword']), $sql);
+            $sql = preg_replace("/%tablepre%/", $cfg['tablepre'], $sql);
+            if ($searchMethod == "phase") {
+                $sql = preg_replace("/%keyword%/", "%" . trim($_REQUEST['keyword']) . "%", $sql);
+            } else {
+                $sql = preg_replace("/%keyword%/", trim($_REQUEST['keyword']), $sql);
+            }
+
+            $pager = new SearchPage($db, $sql, 30);
+            $pager->item = $searchItem;
+
+            if ($cfg['seo'] == "yes") {
+                $pager->link = "/search/" . urlencode($searchItem) . "/" . urlencode($searchMethod) . "/" . urlencode($_REQUEST['keyword']) . "/?";
+            } else {
+                $pager->link = "module.php?modname=search&keyword=" . urlencode($_REQUEST['keyword']) . "&item=" . urlencode($searchItem) . "&method=" . urlencode($searchMethod) . "&";
+            }
+
+            $pager->renderPage();
         }
-
-        $pager = new SearchPage($db, $sql, 30);
-        $pager->item = $_REQUEST['item'];
-
-        if ($cfg['seo'] == "yes") {
-            $pager->link = "/search/" . urlencode($_REQUEST['item']) . "/" . urlencode($_REQUEST['method']) . "/" . urlencode($_REQUEST['keyword']) . "/?";
-        } else {
-            $pager->link = "module.php?modname=search&keyword=" . urlencode($_REQUEST['keyword']) . "&item=" . urlencode($_REQUEST['item']) . "&method=" . urlencode($_REQUEST['method']) . "&";
-        }
-
-        $pager->renderPage();
     }
     ?>
 </div>

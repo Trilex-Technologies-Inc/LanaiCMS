@@ -159,6 +159,25 @@ function getLanguage() {
                 <input type="text" name="tablepre" class="form-control" value="tbl_ln_">
             </div>
         </div>
+
+        <div class="mb-3 row">
+            <label class="col-sm-3 col-form-label"><?=_SETUP_EXISTING_TABLES; ?></label>
+            <div class="col-sm-9">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="table_action" id="useExistingTables" value="reuse" checked>
+                    <label class="form-check-label" for="useExistingTables">
+                        <?=_SETUP_USE_EXISTING_TABLES; ?>
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="table_action" id="recreateTables" value="recreate">
+                    <label class="form-check-label" for="recreateTables">
+                        <?=_SETUP_RECREATE_TABLES; ?>
+                    </label>
+                </div>
+                <div class="form-text text-danger"><?=_SETUP_RECREATE_TABLES_WARNING; ?></div>
+            </div>
+        </div>
     </div>
 
     <!-- Mail Info Section -->

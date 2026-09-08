@@ -28,6 +28,7 @@ define("_BANN_DES","Description");
 define("_BANN_IMAGE_URL","Image URL ");
 define("_BANN_URL","URL");
 define("_BANN_POSITION","Position");
+define("_BANN_ACTIVE","Active");
 define("_BANN_POSITION_LEFT","Left");
 define("_BANN_POSITION_RIGHT","Right");
 define("_BANN_POSITION_CENTER","Center");

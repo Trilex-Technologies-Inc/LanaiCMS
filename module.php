@@ -1,6 +1,12 @@
 <?php
 
+// Some legacy includes close their PHP tags and emit whitespace. Buffer that
+// output so the HTML5 doctype in header.inc.php remains the first response data.
+ob_start();
 include_once('setconfig.inc.php');
+$bootstrapOutput = ob_get_clean();
+// setconfig.inc.php may emit the permission-warning script. Suppress it here so
+// bootstrap output cannot precede the document doctype or pollute the error log.
 include_once('include/header.inc.php');
 
 $theme = new Theme();

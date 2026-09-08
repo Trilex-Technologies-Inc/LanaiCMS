@@ -14,7 +14,12 @@
 	switch($_REQUEST['ac']){
 		case "new":
 				$prefix=substr(md5(rand(1000,9999)),0,20);
-				$mod_lanai->setNewModule($_REQUEST['method'],$prefix,$_REQUEST['userfile'],$_REQUEST['zippath']);
+				$mod_lanai->setNewModule(
+					$_REQUEST['method'],
+					$prefix,
+					$_FILES['userfile'] ?? null,
+					$_REQUEST['zippath'] ?? null
+				);
 			break;
 		case "active": 
 				$mod_lanai->setModuleActive($_REQUEST['mid'],$_REQUEST['v']);

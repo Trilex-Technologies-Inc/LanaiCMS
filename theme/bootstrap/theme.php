@@ -79,6 +79,10 @@
             $banners = array();
             $rs=$sys_lanai->getBanners();
 
+            if ($rs === false) {
+                return $banners;
+            }
+
             while (!$rs->EOF) {
                 $banners[] = array(
                     'id' => $rs->fields['banId'],

@@ -86,6 +86,11 @@ if (empty($banner)) {
                 </tr>
 
                 <tr>
+                    <td><?=_BANN_COLOR; ?></td>
+                    <td><input type="color" id="banColor" name="banColor" value="<?=htmlspecialchars((string)(!empty($banner['bancolor']) ? $banner['bancolor'] : '#000000'), ENT_QUOTES, 'UTF-8'); ?>"></td>
+                </tr>
+
+                <tr>
                     <td><?=_BANN_ACTIVE; ?></td>
                     <td><select id="banActive" name="banActive"><option value="y"<?=!isset($banner['banactive']) || $banner['banactive'] !== 'n' ? ' selected' : ''; ?>><?=_YES; ?></option><option value="n"<?=isset($banner['banactive']) && $banner['banactive'] === 'n' ? ' selected' : ''; ?>><?=_NO; ?></option></select></td>
                 </tr>

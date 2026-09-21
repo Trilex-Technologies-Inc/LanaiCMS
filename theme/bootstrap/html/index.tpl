@@ -642,7 +642,7 @@
                 <div class="carousel-item {if $i == 0}active{/if}">
                     <img src="{$banner.image}" class="d-block w-100" alt="{$banner.title}">
                     <div class="container">
-                        <div class="carousel-caption {if $banner.position eq 'l'}caption-left{elseif $banner.position eq 'r'}caption-right{elseif $banner.position eq 't'}caption-top{elseif $banner.position eq 'b'}caption-bottom{else}caption-center{/if}">
+                        <div class="carousel-caption {if $banner.position eq 'l'}caption-left{elseif $banner.position eq 'r'}caption-right{elseif $banner.position eq 't'}caption-top{elseif $banner.position eq 'b'}caption-bottom{else}caption-center{/if}"{if $banner.color} style="background-color: {$banner.color}b3;"{/if}>
                             <h1>{$banner.title}</h1>
                             <p class="opacity-75">{$banner.description}</p>
                             {if $banner.url}

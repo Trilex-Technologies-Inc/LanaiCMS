@@ -42,6 +42,10 @@
             $sql="ALTER TABLE " . $tableName . " MODIFY banActive ENUM('y','n') NOT NULL DEFAULT 'y'";
             $objPackage->execQuery($sql);
         }
+        if (!isset($columns['BANCOLOR'])) {
+            $sql="ALTER TABLE " . $tableName . " ADD banColor VARCHAR(20) NOT NULL DEFAULT '#000000' AFTER banPosition";
+            $objPackage->execQuery($sql);
+        }
         ?>
         <!-- form button -->
         <input type="button" class="inputButton" value="Next ->" onClick="javascript:location.href='<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name; ?>&mf=install&step=2';">

@@ -417,6 +417,7 @@ $sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
 			  banImage varchar(255) NOT NULL,
 			  banURL varchar(255) NOT NULL,
 			  banPosition enum('l','r','c','t','b') NOT NULL default 'l',
+			  banColor varchar(20) NOT NULL default '#000000',
 			  banActive enum('y','n') NOT NULL default 'y',
 			  banDate datetime NOT NULL,
 			  banShow int(10) unsigned default '0',

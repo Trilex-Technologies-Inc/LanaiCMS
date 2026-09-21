@@ -4,6 +4,8 @@
        die ( "You can't access this file directly..." );
     }
 
+    global $db;
+
     $module_name = basename( dirname( substr( __FILE__, 0, strlen( dirname( __FILE__ ) ) ) ) );
 
     /* load class package */

@@ -110,6 +110,7 @@ $sql = "CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."user` (
 
     `userLogin` VARCHAR(50) DEFAULT NULL,
     `userPassword` VARCHAR(255) DEFAULT NULL,
+    `userActivationToken` VARCHAR(64) DEFAULT NULL,
 
     `userPrivilege` ENUM('a','m','u') NOT NULL DEFAULT 'u',
 

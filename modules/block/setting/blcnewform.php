@@ -25,6 +25,8 @@
 	<input type="hidden" name="ac" value="new">	
 	<input type="hidden" name="m" value="<?=$_REQUEST['m']?>">
 
+<?php $sys_lanai->renderCsrfField('block'); ?>
+
 <?php
 	switch($_REQUEST['m']){
 		case 'c': 

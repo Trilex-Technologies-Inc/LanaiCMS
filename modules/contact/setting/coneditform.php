@@ -26,11 +26,12 @@
 		
 	?>
 	<table cellpadding="3" cellspacing="1" >
-	<form name="form" method="get"  action="<?=$_SERVER['PHP_SELF']; ?>">
+	<form name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="mf" value="conedit">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="ac" value="edit">
 	<input type="hidden" name="conId" value="<?=$_REQUEST['mid']; ?>">
+	<?php $sys_lanai->renderCsrfField('contact'); ?>
 	<tr>
 		<td valign="top"><?=_USER_FNAME; ?></td>
 		<td><input type="text" name="conFname" value="<?=$rs->fields['conFname']?>" >*</td>	

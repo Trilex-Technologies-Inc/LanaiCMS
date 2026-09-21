@@ -21,6 +21,8 @@ if (isset($_REQUEST['ac']) && $_REQUEST['ac'] == "lostpass") {
 
     if (empty($_REQUEST['userLogin'])) {
         $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <a href=\"#\">_BACK</a>");
+    } elseif (!$sys_lanai->validateCsrfToken('member', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+        $sys_lanai->getErrorBox("Invalid request, please try again.");
     } else {
 
         $rs = $mem_lanai->getUserLogin($_REQUEST['userLogin']);
@@ -87,7 +89,7 @@ if (isset($_REQUEST['ac']) && $_REQUEST['ac'] == "lostpass") {
             } else {
                 $mem_lanai->setUpdateUserPassword(
                     $rs->fields['userId'],
-                    md5($passwd)
+                    $passwd
                 );
                 ?>
                 <div class="alert alert-success d-flex align-items-center gap-2">
@@ -120,6 +122,7 @@ if (isset($_REQUEST['ac']) && $_REQUEST['ac'] == "lostpass") {
             <input type="hidden" name="modname" value="member">
             <input type="hidden" name="mf" value="memlostpass">
             <input type="hidden" name="ac" value="lostpass">
+            <?php $sys_lanai->renderCsrfField('member'); ?>
 
             <div class="mb-3">
                 <label class="form-label"><?=_USER_LOGIN;?></label>

@@ -13,6 +13,10 @@
 	
 	switch($_REQUEST['ac']){
 		case "new":
+				if (!$sys_lanai->validateCsrfToken('module', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				$prefix=substr(md5(rand(1000,9999)),0,20);
 				$mod_lanai->setNewModule(
 					$_REQUEST['method'],
@@ -22,10 +26,18 @@
 				);
 			break;
 		case "active": 
+				if (!$sys_lanai->validateCsrfToken('module', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				$mod_lanai->setModuleActive($_REQUEST['mid'],$_REQUEST['v']);
 				$sys_lanai->goBack();
 			break;
 		case "mactive": 
+				if (!$sys_lanai->validateCsrfToken('module', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				$midarr=$_REQUEST['mid'];
 				for ($i=0;$i<count($midarr);$i++) {
 					$rsdwn=$mod_lanai->getModuleById($midarr[$i]);
@@ -39,6 +51,10 @@
 				$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
 			break;
 		case "mdelete":
+				if (!$sys_lanai->validateCsrfToken('module', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				
 				$midarr=$_REQUEST['mid'];
 				for ($i=0;$i<count($midarr);$i++) {
@@ -48,6 +64,10 @@
 				
 			break;
 		case "doedit": 
+				if (!$sys_lanai->validateCsrfToken('module', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				if (empty($_REQUEST['modTitle'])) {
 					   	$sys_lanai->getErrorBox(_REQUIRE_FIELDS." <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
 				} else {
@@ -79,6 +99,7 @@
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="mid" value="<?=$_REQUEST['mid']; ?>">
 	<input type="hidden" name="ac" value="doedit">
+	<?php $sys_lanai->renderCsrfField('module'); ?>
 	<tr>
 		<td><?=_MODULE_TITLE; ?></td>
 		<td><input type="text" name="modTitle" value="<?=$rs->fields['modTitle']?>">*</td>

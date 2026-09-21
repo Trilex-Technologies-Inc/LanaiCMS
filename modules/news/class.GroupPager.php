@@ -113,12 +113,21 @@
 				} 
 			} 
 			
+			function prepareActiveToggle(id, value) {
+				document.form.ac.value = 'gactive';
+				document.getElementById('single-mid').value = id;
+				document.getElementById('single-v').value = value;
+				return true;
+			}
 			</script> 
 			<table cellpadding="3" cellspacing="1" width="100%">
-			<form name="form" method="get" action="<?=$_SERVER['PHP_SELF']?>">
+			<form name="form" method="post" action="<?=$_SERVER['PHP_SELF']?>">
 			<input type="hidden" name="modname" value="news">
 			<input type="hidden" name="mf" value="nwsedit">
 			<input type="hidden" name="ac" value="">
+			<input type="hidden" name="mid" id="single-mid" value="">
+			<input type="hidden" name="v" id="single-v" value="">
+			<?php global $sys_lanai; $sys_lanai->renderCsrfField('news'); ?>
 			<tr>
 				<th class="tblRowSolidTopDown"  align="center"><input type="checkbox" value="select_all" onclick="selectall(this);" class="radioButton" /></th>
 				<th class="tblRowSolidTopDown" width="90%"><?=_NEWS_GROUP_TITLE; ?></th>
@@ -140,15 +149,15 @@
 				<?php
 					if ($this->rs->fields['chnActive']=='y') {
 					    ?>
-						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=nwsedit&v=n&ac=gactive&mid=<?=$this->rs->fields['chnId']; ?>">
+						<button type="submit" onclick="return prepareActiveToggle('<?=$this->rs->fields['chnId']; ?>','n');" style="border:0;background:none;padding:0;cursor:pointer;">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/ok.gif" border="0" align="absmiddle">
-						</a>
+						</button>
 						<?php
 					} else {
 						?>
-						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=nwsedit&v=y&ac=gactive&mid=<?=$this->rs->fields['chnId']; ?>">
+						<button type="submit" onclick="return prepareActiveToggle('<?=$this->rs->fields['chnId']; ?>','y');" style="border:0;background:none;padding:0;cursor:pointer;">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/cancel.gif" border="0" align="absmiddle">
-						</a>
+						</button>
 						<?php
 					}
 				?>					

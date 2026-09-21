@@ -4,6 +4,11 @@ if (!preg_match('/setting\.php/i', $_SERVER['PHP_SELF'])) {
     die("You can't access this file directly...");
 }
 
+if (!$sys_lanai->validateCsrfToken('config', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+    $sys_lanai->getErrorBox("Invalid request, please try again.");
+    return;
+}
+
 $objStatus = new SysConfig();
 
 global $db;

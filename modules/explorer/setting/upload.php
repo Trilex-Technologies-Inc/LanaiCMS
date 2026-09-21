@@ -10,6 +10,10 @@
     $objExpl=new Explorer();
 
     if (!empty($_REQUEST["ac"]) && $_REQUEST["ac"]=="upload") {
+        if (!$sys_lanai->validateCsrfToken('explorer', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+            $sys_lanai->getErrorBox("Invalid request, please try again.");
+            return;
+        }
         foreach ($_FILES["userfile"]["error"] as $key => $error) {
     	    if ($error == UPLOAD_ERR_OK) {
     	        $tmp_name = $_FILES["userfile"]["tmp_name"][$key];
@@ -36,6 +40,7 @@
 <input type="hidden" name="mf" value="upload">
 <input type="hidden" name="dir" value="<?=$_REQUEST['dir']; ?>">
 <input type="hidden" name="ac" value="upload">
+<?php $sys_lanai->renderCsrfField('explorer'); ?>
 <?php
     for ($i=0;$i<10;$i++) {
 ?>

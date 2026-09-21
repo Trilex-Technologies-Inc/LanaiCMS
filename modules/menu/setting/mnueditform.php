@@ -25,6 +25,7 @@
 	<input type="hidden" name="ac" value="edit">	
 	<input type="hidden" name="mnid" value="<?=$_REQUEST['mid']?>">	
 	<input type="hidden" name="m" value="<?=$_REQUEST['m']?>">
+	<?php $sys_lanai->renderCsrfField('menu'); ?>
 	<?php 
 		$rs=$mnu_lanai->getMenuById($_REQUEST['mid']);
 		switch($_REQUEST['m']){

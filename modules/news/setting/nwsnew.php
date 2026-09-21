@@ -55,6 +55,7 @@ tinymce.init({
 <input type="hidden" name="mf" value="nwsedit">
 <input type="hidden" name="modname" value="<?=$module_name;?>">
 <input type="hidden" name="ac" value="new">
+<?php $sys_lanai->renderCsrfField('news'); ?>
 
 <tr>
   <td><?=_NEWS_TITLE;?></td>

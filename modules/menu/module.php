@@ -37,7 +37,7 @@
 		
 		function getMenuById($mid){
 			$sql="SELECT * FROM ".$this->cfg['tablepre']."menu 
-					WHERE mnuId=$mid";
+					WHERE mnuId=".intval($mid);
 			$this->_sql=$sql;			
 			$rs=$this->db->execute($sql);	
 			return $rs;		
@@ -57,9 +57,9 @@
 		
 		function setEditMenu($mnuid,$mnuParentId,$mnuTitle,$mnuUrl,$mnuTarget,$conId,$modId,$mnuType='l'){
 			$sql="UPDATE ".$this->cfg['tablepre']."menu SET
-					mnuTitle='".$mnuTitle."',mnuParentId=".$mnuParentId.",mnuUrl='".$mnuUrl."',mnuTarget='".$mnuTarget."',
-					conId=".$conId.",modId=".$modId.",mnuType='".$mnuType."'
-					WHERE mnuId=$mnuid";
+					mnuTitle=".$this->db->qstr($mnuTitle).",mnuParentId=".intval($mnuParentId).",mnuUrl=".$this->db->qstr($mnuUrl).",mnuTarget=".$this->db->qstr($mnuTarget).",
+					conId=".intval($conId).",modId=".intval($modId).",mnuType=".$this->db->qstr($mnuType)."
+					WHERE mnuId=".intval($mnuid);
 			$rs=$this->db->execute($sql);
 			return $rs;
 		}
@@ -67,31 +67,32 @@
 		function setNewMenu($mnuTitle,$mnuParentId,$mnuUrl,$mnuTarget,$conId,$modId,$mnuType='l') {
 			$sql="INSERT INTO ".$this->cfg['tablepre']."menu 
 					(mnuParentId,mnuTitle,mnuUrl,mnuTarget,conId,modId,mnuType,mnuActive,mnuOrder) 
-					VALUES (".$mnuParentId.",'".$mnuTitle."','".$mnuUrl."','".$mnuTarget."',".$conId.",".$modId.",'".$mnuType."','y',".($this->getMaxOrderValue()+1).")";
+					VALUES (".intval($mnuParentId).",".$this->db->qstr($mnuTitle).",".$this->db->qstr($mnuUrl).",".$this->db->qstr($mnuTarget).",".intval($conId).",".intval($modId).",".$this->db->qstr($mnuType).",'y',".($this->getMaxOrderValue()+1).")";
 			$rs=$this->db->execute($sql);
 			return $rs;
 		}
 		
 		function setDeleteMenu($mid){
 			$sql="DELETE FROM ".$this->cfg['tablepre']."menu
-					WHERE mnuId=".$mid;
+					WHERE mnuId=".intval($mid);
 			$rs=$this->db->execute($sql);
 			return $rs;
 		}
 		
 		function setMnuOrder($mid,$order){
 			$sql="UPDATE ".$this->cfg['tablepre']."menu
-					SET mnuOrder=$order
-					WHERE mnuId=".$mid;
+					SET mnuOrder=".intval($order)."
+					WHERE mnuId=".intval($mid);
 			$rs=$this->db->execute($sql);
 			return $rs;
 		}
 		
 		
 		function setMenuActive($mid,$value){
+			$value = $value === 'n' ? 'n' : 'y';
 			$sql="UPDATE ".$this->cfg['tablepre']."menu
-					SET mnuActive='".$value."'
-					WHERE mnuId=".$mid;
+					SET mnuActive=".$this->db->qstr($value)."
+					WHERE mnuId=".intval($mid);
 			$rs=$this->db->execute($sql);
 			return $rs;
 		}

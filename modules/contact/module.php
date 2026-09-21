@@ -26,7 +26,7 @@ class Contact
     {
         $sql = "INSERT INTO " . $this->cfg['tablepre'] . "contact 
 					(conFname,conLname,conPosition,conAddress1,conAddress2,conCity,conState,cntId,conZipcode,conPhone,conFax,conMobile,conEmail,conURL,conActive) 
-					VALUES ('" . $conFname . "','" . $conLname . "','" . $conPosition . "','" . $conAddress1 . "','" . $conAddress2 . "','" . $conCity . "','" . $conState . "','" . $cntId . "','" . $conZipcode . "','" . $conPhone . "','" . $conFax . "','" . $conMobile . "','" . $conEmail . "','" . $conURL . "','y')";
+					VALUES (" . $this->db->qstr($conFname) . "," . $this->db->qstr($conLname) . "," . $this->db->qstr($conPosition) . "," . $this->db->qstr($conAddress1) . "," . $this->db->qstr($conAddress2) . "," . $this->db->qstr($conCity) . "," . $this->db->qstr($conState) . "," . $this->db->qstr($cntId) . "," . $this->db->qstr($conZipcode) . "," . $this->db->qstr($conPhone) . "," . $this->db->qstr($conFax) . "," . $this->db->qstr($conMobile) . "," . $this->db->qstr($conEmail) . "," . $this->db->qstr($conURL) . ",'y')";
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -34,10 +34,10 @@ class Contact
     function setUpdateContact($conId, $conFname, $conLname, $conPosition, $conAddress1, $conAddress2, $conCity, $conState, $cntId, $conZipcode, $conPhone, $conFax, $conMobile, $conEmail, $conURL)
     {
         $sql = "UPDATE " . $this->cfg['tablepre'] . "contact 
-					SET conFname='" . $conFname . "',conLname='" . $conLname . "',conPosition='" . $conPosition . "',conAddress1='" . $conAddress1 . "',conAddress2='" . $conAddress2 . "',
-						conCity='" . $conCity . "',conState='" . $conState . "',cntId='" . $cntId . "',conZipcode='" . $conZipcode . "',conPhone='" . $conPhone . "',conFax='" . $conFax . "',
-						conMobile='" . $conMobile . "',conEmail='" . $conEmail . "',conURL='" . $conURL . "' 
-					WHERE conId=$conId";
+					SET conFname=" . $this->db->qstr($conFname) . ",conLname=" . $this->db->qstr($conLname) . ",conPosition=" . $this->db->qstr($conPosition) . ",conAddress1=" . $this->db->qstr($conAddress1) . ",conAddress2=" . $this->db->qstr($conAddress2) . ",
+						conCity=" . $this->db->qstr($conCity) . ",conState=" . $this->db->qstr($conState) . ",cntId=" . $this->db->qstr($cntId) . ",conZipcode=" . $this->db->qstr($conZipcode) . ",conPhone=" . $this->db->qstr($conPhone) . ",conFax=" . $this->db->qstr($conFax) . ",
+						conMobile=" . $this->db->qstr($conMobile) . ",conEmail=" . $this->db->qstr($conEmail) . ",conURL=" . $this->db->qstr($conURL) . " 
+					WHERE conId=" . intval($conId);
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -45,23 +45,24 @@ class Contact
     function setDeleteContact($mid)
     {
         $sql = "DELETE FROM " . $this->cfg['tablepre'] . "contact 
-					WHERE conId=" . $mid;
+					WHERE conId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
 
     function setContactActive($mid, $value)
     {
+        $value = $value === 'n' ? 'n' : 'y';
         $sql = "UPDATE " . $this->cfg['tablepre'] . "contact 
-					SET conActive='" . $value . "'
-					WHERE conId=" . $mid;
+					SET conActive=" . $this->db->qstr($value) . "
+					WHERE conId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
 
     function getContactById($cid)
     {
-        $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "contact WHERE conId=$cid";
+        $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "contact WHERE conId=" . intval($cid);
         $rs = $this->db->execute($sql);
         return $rs;
     }

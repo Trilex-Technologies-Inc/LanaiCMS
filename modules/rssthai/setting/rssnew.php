@@ -25,6 +25,7 @@
 	<input type="hidden" name="mf" value="rssedit">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="ac" value="new">
+	<?php $sys_lanai->renderCsrfField('rssthai'); ?>
 	<tr>
 		<td width="100"><?=_RSS_TITLE; ?></td>
 		<td><input name="rssTitle" type="text" size="40">*</td>

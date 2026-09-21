@@ -59,6 +59,7 @@
 	<input type="hidden" name="mf" value="conedit">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="ac" value="new">
+	<?php $sys_lanai->renderCsrfField('content'); ?>
 
 	<table cellpadding="3" cellspacing="1" border="0">
 		<tr>

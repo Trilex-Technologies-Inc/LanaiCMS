@@ -113,12 +113,21 @@
 				} 
 			} 
 			
+			function prepareActiveToggle(id, value) {
+				document.form.ac.value = 'active';
+				document.getElementById('single-mid').value = id;
+				document.getElementById('single-v').value = value;
+				return true;
+			}
 			</script> 
 			<table cellpadding="3" cellspacing="1" width="100%">
 			<form name="form" method="post" action="<?=$_SERVER['PHP_SELF']?>">
 			<input type="hidden" name="modname" value="rssthai">
 			<input type="hidden" name="mf" value="rssedit">
 			<input type="hidden" name="ac" value="">
+			<input type="hidden" name="mid" id="single-mid" value="">
+			<input type="hidden" name="v" id="single-v" value="">
+			<?php global $sys_lanai; $sys_lanai->renderCsrfField('rssthai'); ?>
 			<tr>
 				<th class="tblRowSolidTopDown"  align="center"><input type="checkbox" value="select_all" onclick="selectall(this);" class="radioButton" /></th>
 				<th class="tblRowSolidTopDown" width="50%"><?=_RSS_TITLE; ?></th>
@@ -183,15 +192,15 @@
 				<?php
 					if ($this->rs->fields['rssActive']=='y') {
 					    ?>
-						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=rssedit&v=n&ac=active&mid=<?=$this->rs->fields['rssId']; ?>">
+						<button type="submit" onclick="return prepareActiveToggle('<?=$this->rs->fields['rssId']; ?>','n');" style="border:0;background:none;padding:0;cursor:pointer;">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/ok.gif" border="0" align="absmiddle">
-						</a>
+						</button>
 						<?php
 					} else {
 						?>
-						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=rssedit&v=y&ac=active&mid=<?=$this->rs->fields['rssId']; ?>">
+						<button type="submit" onclick="return prepareActiveToggle('<?=$this->rs->fields['rssId']; ?>','y');" style="border:0;background:none;padding:0;cursor:pointer;">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/cancel.gif" border="0" align="absmiddle">
-						</a>
+						</button>
 						<?php
 					}
 				?>					

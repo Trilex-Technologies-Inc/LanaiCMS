@@ -148,15 +148,84 @@ class Systems
     function getUserAuthentication($username = "", $password = "")
     {
         global $db, $tablepre;
-        $sql = "SELECT * FROM " . $tablepre . "user WHERE userLogin='$username' AND userPassword='" . md5($password) . "' AND userActive='y'";
-        //$db->debug=true;
-        $rs = $db->execute($sql);
-        if ($rs->recordcount() > 0) {
-            //return $rs->fields['userId'].$rs->fields['userPrivilege'];
-            return $rs->fields['userId'];
-        } else {
+
+        $username = trim((string) $username);
+        if ($username === '' || $password === '') {
             return 0;
         }
+
+        $sql = "SELECT * FROM " . $tablepre . "user WHERE userLogin=" . $db->qstr($username) . " AND userActive='y'";
+        $rs = $db->execute($sql);
+        if (!$rs || $rs->recordcount() < 1) {
+            return 0;
+        }
+
+        $storedHash = $rs->fields['userPassword'];
+        if (!$this->verifyPassword($password, $storedHash)) {
+            return 0;
+        }
+
+        // transparently migrate legacy md5 hashes to bcrypt on successful login
+        if (!$this->isBcryptHash($storedHash)) {
+            $db->Execute(
+                "UPDATE " . $tablepre . "user SET userPassword=" . $db->qstr($this->hashPassword($password)) .
+                " WHERE userId=" . intval($rs->fields['userId'])
+            );
+        }
+
+        return $rs->fields['userId'];
+    }
+
+    /**
+     * Hash a plaintext password for storage.
+     */
+    function hashPassword($password)
+    {
+        return password_hash($password, PASSWORD_BCRYPT);
+    }
+
+    function isBcryptHash($hash)
+    {
+        return is_string($hash) && preg_match('/^\$2[axy]\$/', $hash) === 1;
+    }
+
+    /**
+     * Verify a plaintext password against a stored hash, supporting legacy md5 hashes.
+     */
+    function verifyPassword($password, $hash)
+    {
+        if (!is_string($hash) || $hash === '') {
+            return false;
+        }
+        if ($this->isBcryptHash($hash)) {
+            return password_verify($password, $hash);
+        }
+        // legacy md5 password support (pre-upgrade accounts)
+        return hash_equals(strtolower($hash), md5($password));
+    }
+
+    /**
+     * Get (or create) a CSRF token bound to a form key for the current session.
+     */
+    function getCsrfToken($key)
+    {
+        $sessionKey = 'csrf_' . $key;
+        if (empty($_SESSION[$sessionKey])) {
+            $_SESSION[$sessionKey] = bin2hex(random_bytes(20));
+        }
+        return $_SESSION[$sessionKey];
+    }
+
+    function renderCsrfField($key)
+    {
+        echo '<input type="hidden" name="csrf_token" value="' .
+            htmlspecialchars($this->getCsrfToken($key), ENT_QUOTES, 'UTF-8') . '">';
+    }
+
+    function validateCsrfToken($key, $token)
+    {
+        $expected = isset($_SESSION['csrf_' . $key]) ? $_SESSION['csrf_' . $key] : '';
+        return $expected !== '' && is_string($token) && $token !== '' && hash_equals($expected, $token);
     }
 
     function setMail2($name, $from, $message, $subject)

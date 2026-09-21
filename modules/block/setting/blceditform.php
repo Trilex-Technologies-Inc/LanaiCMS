@@ -24,6 +24,7 @@ $blc_lanai = new Block();
     <input type="hidden" name="ac" value="edit">
     <input type="hidden" name="blcid" value="<?=$_REQUEST['mid']?>">
     <input type="hidden" name="m" value="<?=$_REQUEST['m']?>">
+    <?php $sys_lanai->renderCsrfField('block'); ?>
 
     <table>
     <?php

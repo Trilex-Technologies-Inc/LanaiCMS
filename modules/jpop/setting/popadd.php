@@ -8,10 +8,11 @@ if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 <span class="txtContentTitle"><?=_JPOP_NEW_SETTING; ?></span><br><br>
 <a href="#" onclick="javascript:history.back();"><?=_JPOP_BACK; ?></a><br><br>
 <table>
-<form name="addform" method="get" action="setting.php">
+<form name="addform" method="post" action="setting.php">
 <input type="hidden" name="modname" value="jpop">
 <input type="hidden" name="mf" value="popadd">
 <input type="hidden" name="ac" value="add">
+<?php $sys_lanai->renderCsrfField('jpop'); ?>
 <tr><td><?=_JPOP_TITLE; ?> : </td><td><input type="text" id="popTitle" size="50" name="popTitle" ></td></tr>
 <tr><td valign="top"><?=_JPOP_DES; ?> : </td>
 <td>
@@ -35,6 +36,10 @@ if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 </table>
 <?php
 if ($_REQUEST['ac']=="add") {
+if (!$sys_lanai->validateCsrfToken('jpop', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+	$sys_lanai->getErrorBox("Invalid request, please try again.");
+	return;
+}
 $objJpop=new Jpop();
 $objJpop->_table=$cfg['tablepre']."jpop";
 $objJpop->poptitle=$_REQUEST['popTitle'];

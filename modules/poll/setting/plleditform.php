@@ -28,6 +28,7 @@
 	<input type="hidden" name="ac" value="edit">
 	<input type="hidden" name="mid" value="<?=$_REQUEST['mid']; ?>">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
+	<?php $sys_lanai->renderCsrfField('poll'); ?>
 	<tr>
 		<td><?=_POLL_TITLE; ?></td>
 		<td><input type="text" name="pllTitle" size="30" value="<?=$rsPoll->fields['pllTitle']; ?>">*</td>

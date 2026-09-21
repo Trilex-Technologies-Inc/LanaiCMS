@@ -26,6 +26,7 @@ $member = new User();
     <input type="hidden" name="mf" value="memedit">
     <input type="hidden" name="modname" value="<?=$module_name; ?>">
     <input type="hidden" name="ac" value="new">
+    <?php $sys_lanai->renderCsrfField('member'); ?>
 
     <table border="0" cellspacing="2" cellpadding="3">
 

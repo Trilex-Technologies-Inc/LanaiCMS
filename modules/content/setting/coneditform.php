@@ -57,6 +57,7 @@ $rs = $content->getContentById($_REQUEST['mid']);
     <input type="hidden" name="modname" value="<?= $module_name; ?>">
     <input type="hidden" name="mid" value="<?= $_REQUEST['mid']; ?>">
     <input type="hidden" name="ac" value="edit">
+    <?php $sys_lanai->renderCsrfField('content'); ?>
 
     <table cellpadding="3" cellspacing="1">
         <tr>

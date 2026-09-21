@@ -39,7 +39,7 @@ class Content
     function getContentById($cid)
     {
         $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "content 
-					WHERE conId=$cid";
+					WHERE conId=" . intval($cid);
         $this->_sql = $sql;
         $rs = $this->db->execute($sql);
         return $rs;
@@ -105,16 +105,17 @@ class Content
     function setDeleteContent($mid)
     {
         $sql = "DELETE FROM " . $this->cfg['tablepre'] . "content 
-					WHERE conId=" . $mid;
+					WHERE conId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
 
     function setContentActive($mid, $value)
     {
+        $value = $value === 'n' ? 'n' : 'y';
         $sql = "UPDATE " . $this->cfg['tablepre'] . "content  
-					SET conActive='" . $value . "'
-					WHERE conId=" . $mid;
+					SET conActive=" . $this->db->qstr($value) . "
+					WHERE conId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -129,7 +130,7 @@ class Content
     function getContentIdByTitle($title)
     {
         $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "content 
-						WHERE conTitle LIKE '" . $title . "' 
+						WHERE conTitle LIKE " . $this->db->qstr($title) . " 
 						ORDER BY conId DESC";
         $rs = $this->db->execute($sql);
         return ($rs->fields['conId']);
@@ -139,7 +140,7 @@ class Content
     {
         $sql = "INSERT INTO " . $this->cfg['tablepre'] . "menu 
 					(mnuParentId,mnuTitle,conId,mnuType,mnuActive,mnuOrder)
-					VALUES (0,'" . $title . "',$conid,'c','y'," . $this->getMaxMenuWeight() . ")";
+					VALUES (0," . $this->db->qstr($title) . "," . intval($conid) . ",'c','y'," . $this->getMaxMenuWeight() . ")";
         $rs = $this->db->execute($sql);
         return $rs;
     }

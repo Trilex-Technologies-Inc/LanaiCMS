@@ -52,14 +52,14 @@
 		}
 		
 			function getShowNewsByGroup($rows,$gid){
-			$sql="SELECT * FROM ".$this->cfg['tablepre']."news  WHERE nwsActive='y' AND chnId=$gid ORDER BY nwsCreate DESC";
+			$sql="SELECT * FROM ".$this->cfg['tablepre']."news  WHERE nwsActive='y' AND chnId=".intval($gid)." ORDER BY nwsCreate DESC";
 			$this->_sql=$sql;
 			$pager=new NewsListPager($this->db,$this->_sql,true);
 			$pager->Render($rows);
 		}
 		
 		function getNumGroup($cid=0){
-			$sql="SELECT COUNT(*) FROM ".$this->cfg['tablepre']."news WHERE chnId=$cid AND nwsActive='y' ";
+			$sql="SELECT COUNT(*) FROM ".$this->cfg['tablepre']."news WHERE chnId=".intval($cid)." AND nwsActive='y' ";
 			$this->_sql=$sql;
 			$rs=$this->db->execute($sql);	
 			return ($rs->fields[0]);
@@ -100,7 +100,7 @@
 		
 		function getNewsById($nid){
 			$sql="SELECT * FROM ".$this->cfg['tablepre']."news 
-					WHERE nwsId=$nid";
+					WHERE nwsId=".intval($nid);
 			$this->_sql=$sql;
 			$rs=$this->db->execute($sql);	
 			return $rs;
@@ -108,7 +108,7 @@
 		
 		function getGroupById($nid){
 			$sql="SELECT * FROM ".$this->cfg['tablepre']."news_channel 
-					WHERE chnId=$nid";
+					WHERE chnId=".intval($nid);
 			$this->_sql=$sql;
 			$rs=$this->db->execute($sql);	
 			return $rs;
@@ -143,7 +143,7 @@
         function setNewGroup($chnTitle,$chnDescription){
 			$sql="INSERT INTO ".$this->cfg['tablepre']."news_channel 
 					(chnTitle,chnDescription,chnActive,chnModified) 
-					VALUES ('".$chnTitle."','".$chnDescription."','y',NOW())";
+					VALUES (".$this->db->qstr($chnTitle).",".$this->db->qstr($chnDescription).",'y',NOW())";
 			$rs=$this->db->execute($sql);	
 			return $rs;	
 		}
@@ -182,46 +182,48 @@
 
         function setEditGroup($chnId,$chnTitle,$chnDescription){
 			$sql="UPDATE ".$this->cfg['tablepre']."news_channel 
-					SET chnTitle='".$chnTitle."',chnDescription='".$chnDescription."',
+					SET chnTitle=".$this->db->qstr($chnTitle).",chnDescription=".$this->db->qstr($chnDescription).",
 						chnModified=NOW()
-					WHERE chnId=$chnId";
+					WHERE chnId=".intval($chnId);
 			$rs=$this->db->execute($sql);	
 			return $rs;
 		}
 		
 		function setDeleteNews($mid){
 			$sql="DELETE FROM ".$this->cfg['tablepre']."news 
-					WHERE nwsId=".$mid;
+					WHERE nwsId=".intval($mid);
 			$rs=$this->db->execute($sql);	
 			return $rs;	
 		}
 		
 		function setDeleteNewsGroup($mid){
 			$sql="DELETE FROM ".$this->cfg['tablepre']."news_channel 
-					WHERE chnId=".$mid;
+					WHERE chnId=".intval($mid);
 			$rs=$this->db->execute($sql);	
 			return $rs;	
 		}
 		
 		function setNewsActive($mid,$value){
+			$value = $value === 'n' ? 'n' : 'y';
 			$sql="UPDATE ".$this->cfg['tablepre']."news  
-					SET nwsActive='".$value."'
-					WHERE nwsId=".$mid;
+					SET nwsActive=".$this->db->qstr($value)."
+					WHERE nwsId=".intval($mid);
 			$rs=$this->db->execute($sql);	
 			return $rs;		
 		}
 		
 		function setGroupActive($mid,$value){
+			$value = $value === 'n' ? 'n' : 'y';
 			$sql="UPDATE ".$this->cfg['tablepre']."news_channel   
-					SET chnActive='".$value."'
-					WHERE chnId=".$mid;
+					SET chnActive=".$this->db->qstr($value)."
+					WHERE chnId=".intval($mid);
 			$rs=$this->db->execute($sql);	
 			return $rs;		
 		}
 		
 		function getNewsGroupTitleById($cid) {
 			$sql="SELECT * FROM ".$this->cfg['tablepre']."news_channel 
-					WHERE chnId=$cid";
+					WHERE chnId=".intval($cid);
 			$rs=$this->db->execute($sql);
 			return ($rs->fields['chnTitle']);
 		}

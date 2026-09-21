@@ -112,6 +112,12 @@
 					} 
 				} 
 			} 
+			function prepareActiveToggle(id, value) {
+				document.form.ac.value = 'active';
+				document.getElementById('single-mid').value = id;
+				document.getElementById('single-v').value = value;
+				return true;
+			}
 			
 			</script> 
 			<table cellpadding="3" cellspacing="1" width="100%">
@@ -119,6 +125,9 @@
 			<input type="hidden" name="modname" value="content">
 			<input type="hidden" name="mf" value="conedit">
 			<input type="hidden" name="ac" value="">
+			<input type="hidden" name="mid" id="single-mid" value="">
+			<input type="hidden" name="v" id="single-v" value="">
+			<?php global $sys_lanai; $sys_lanai->renderCsrfField('content'); ?>
 			<tr>
 				<th class="tblRowSolidTopDown"  align="center"><input type="checkbox" value="select_all" onclick="selectall(this);" class="radioButton" /></th>
 				<th class="tblRowSolidTopDown" width="80%"><?=_CONTENT_TITLE; ?></th>
@@ -140,15 +149,15 @@
 				<?php
 					if ($this->rs->fields['conActive']=='y') {
 					    ?>
-						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=conedit&v=n&ac=active&mid=<?=$this->rs->fields['conId']; ?>">
+						<button type="submit" onclick="return prepareActiveToggle('<?=$this->rs->fields['conId']; ?>','n');" style="border:0;background:none;padding:0;cursor:pointer;">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/ok.gif" border="0" align="absmiddle">
-						</a>
+						</button>
 						<?php
 					} else {
 						?>
-						<a href="<?=$_SERVER['PHP_SELF']."?modname=".$_REQUEST['modname']; ?>&mf=conedit&v=y&ac=active&mid=<?=$this->rs->fields['conId']; ?>">
+						<button type="submit" onclick="return prepareActiveToggle('<?=$this->rs->fields['conId']; ?>','y');" style="border:0;background:none;padding:0;cursor:pointer;">
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/cancel.gif" border="0" align="absmiddle">
-						</a>
+						</button>
 						<?php
 					}
 				?>					

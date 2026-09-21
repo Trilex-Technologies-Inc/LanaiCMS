@@ -24,6 +24,7 @@
 	<input type="hidden" name="mf" value="mnuedit">
 	<input type="hidden" name="ac" value="new">	
 	<input type="hidden" name="m" value="<?=$_REQUEST['m']?>">
+	<?php $sys_lanai->renderCsrfField('menu'); ?>
 	<?php 
 		switch($_REQUEST['m']){
 			case 'c': 

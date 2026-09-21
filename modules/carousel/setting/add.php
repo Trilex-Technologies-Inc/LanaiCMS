@@ -8,6 +8,11 @@ $objbanner = new banner();
 
 if (!empty($_REQUEST['ac']) && $_REQUEST['ac']=="add") {
 
+	if (!$sys_lanai->validateCsrfToken('carousel', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+		$sys_lanai->getErrorBox("Invalid request, please try again.");
+		return;
+	}
+
 	$result = $objbanner->createBanner($_REQUEST);
 
 if (!$result) { 
@@ -31,10 +36,11 @@ if (!$result) {
 	}
 </script>
 <table>
-<form name="addform" method="get" action="setting.php">
+<form name="addform" method="post" action="setting.php">
 <input type="hidden" name="modname" value="carousel">
 <input type="hidden" name="mf" value="add">
 <input type="hidden" name="ac" value="add">
+<?php $sys_lanai->renderCsrfField('carousel'); ?>
 <?php $positions = $objbanner->getPositionOptions(); ?>
 <tr><td><?=_BANN_TITLE; ?></td><td><input type="text" id="banTitle" name="banTitle" size="30">*</td></tr>
 <tr><td valign="top"><?=_BANN_DES; ?></td><td><textarea name="banDescription" cols="30" rows="5"></textarea>*</td></tr>

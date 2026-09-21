@@ -27,6 +27,7 @@
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="mid" value="<?=$_REQUEST['mid']; ?>">
 	<input type="hidden" name="ac" value="gedit">
+	<?php $sys_lanai->renderCsrfField('news'); ?>
 	<tr>
 		<td ><?=_NEWS_GROUP_TITLE; ?></td>
 		<td width="100%" ><input type="text" name="chnTitle" size="40" value="<?=$rs->fields['chnTitle']; ?>">*</td>	

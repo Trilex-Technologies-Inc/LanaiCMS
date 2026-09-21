@@ -36,6 +36,11 @@ if (empty($banner)) {
 } else {
     if (!empty($_REQUEST['ac']) && $_REQUEST['ac'] == "edit") {
 
+        if (!$sys_lanai->validateCsrfToken('carousel', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+            $sys_lanai->getErrorBox("Invalid request, please try again.");
+            return;
+        }
+
         $result = $objbanner->saveBanner($_REQUEST);
 
         if (!$result) {
@@ -59,6 +64,7 @@ if (empty($banner)) {
                 <input type="hidden" name="ac" value="edit">
                 <input type="hidden" name="banId" value="<?=$id; ?>">
                 <input type="hidden" name="id" value="<?=$id; ?>">
+                <?php $sys_lanai->renderCsrfField('carousel'); ?>
 
                 <tr>
                     <td><?=_BANN_TITLE; ?></td>

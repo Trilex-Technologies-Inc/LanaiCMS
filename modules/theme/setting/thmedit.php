@@ -11,6 +11,11 @@
 	
 	$thm_lanai=new Themes();
 	
+	if (!$sys_lanai->validateCsrfToken('theme', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+		$sys_lanai->getErrorBox("Invalid request, please try again.");
+		return;
+	}
+
 	$thm_lanai->setUpdateTheme($_REQUEST['thmname']);	
 	$thm_lanai->deleteCache();
 	$sys_lanai->goBack();

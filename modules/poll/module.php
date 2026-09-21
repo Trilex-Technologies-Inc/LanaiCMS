@@ -43,7 +43,7 @@ class Poll
     function getPollItemById($mid)
     {
         $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "poll
-					WHERE pllId=" . $mid;
+					WHERE pllId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -63,7 +63,7 @@ class Poll
     function getPollOptionItemShow($mid)
     {
         $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "poll_option 
-					WHERE pllId=" . $mid . " AND ppoTitle!='' 					
+					WHERE pllId=" . intval($mid) . " AND ppoTitle!='' 					
 					ORDER BY ppoId ASC";
         $this->_sql = $sql;
         $rs = $this->db->execute($sql);
@@ -73,7 +73,7 @@ class Poll
     function getPollOptionItemById($mid)
     {
         $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "poll_option
-					WHERE pllId=" . $mid . " ORDER BY ppoId ASC";
+					WHERE pllId=" . intval($mid) . " ORDER BY ppoId ASC";
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -82,7 +82,7 @@ class Poll
     {
         $sql = "INSERT INTO " . $this->cfg['tablepre'] . "poll
 					(pllTitle,pllLag,pllActive,pllCreate)
-					VALUES ('" . $pllTitle . "'," . $pllLag . ",'y',NOW())";
+					VALUES (" . $this->db->qstr($pllTitle) . "," . intval($pllLag) . ",'y',NOW())";
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -91,7 +91,7 @@ class Poll
     {
         $sql = "INSERT INTO " . $this->cfg['tablepre'] . "poll_option
 					(pllId,ppoTitle,ppoScore)
-					VALUES (" . $mid . ",'" . $ppoItem . "',0)";
+					VALUES (" . intval($mid) . "," . $this->db->qstr($ppoItem) . ",0)";
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -99,8 +99,8 @@ class Poll
     function setEditPollItem($mid, $pllTitle, $pllLag)
     {
         $sql = "UPDATE " . $this->cfg['tablepre'] . "poll 
-					SET pllTitle='" . $pllTitle . "',pllLag=" . $pllLag . " 
-					WHERE pllId=" . $mid;
+					SET pllTitle=" . $this->db->qstr($pllTitle) . ",pllLag=" . intval($pllLag) . " 
+					WHERE pllId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -108,8 +108,8 @@ class Poll
     function setEditPollOption($mid, $ppoItem)
     {
         $sql = "UPDATE " . $this->cfg['tablepre'] . "poll_option 
-					SET ppoTitle='" . $ppoItem . "' 
-					WHERE ppoId=" . $mid;
+					SET ppoTitle=" . $this->db->qstr($ppoItem) . " 
+					WHERE ppoId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -130,15 +130,15 @@ class Poll
     function getPollItemIdByTitle($pllTitle)
     {
         $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "poll
-					WHERE pllTitle LIKE '" . $pllTitle . "'";
+					WHERE pllTitle LIKE " . $this->db->qstr($pllTitle);
         $rs = $this->db->execute($sql);
         return ($rs->fields['pllId']);
     }
 
-    function setDeletePollItem()
+    function setDeletePollItem($mid)
     {
         $sql = "DELETE FROM " . $this->cfg['tablepre'] . "poll 
-					WHERE pllId=" . $mid;
+					WHERE pllId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -146,16 +146,17 @@ class Poll
     function setDeletePollOptionItem($mid)
     {
         $sql = "DELETE FROM " . $this->cfg['tablepre'] . "poll_option  
-					WHERE pllId=" . $mid;
+					WHERE pllId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
 
     function setPollItemActive($mid, $value)
     {
+        $value = $value === 'n' ? 'n' : 'y';
         $sql = "UPDATE " . $this->cfg['tablepre'] . "poll  
-					SET pllActive='" . $value . "'
-					WHERE pllId=" . $mid;
+					SET pllActive=" . $this->db->qstr($value) . "
+					WHERE pllId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -163,13 +164,15 @@ class Poll
     function getLastVoteTimestamp($mid)
     {
         $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "poll_stat 
-					WHERE pllId=" . $mid . " AND pstIP LIKE '" . $_SERVER['REMOTE_ADDR'] . "' ";
+					WHERE pllId=" . intval($mid) . " AND pstIP LIKE " . $this->db->qstr($_SERVER['REMOTE_ADDR']) . " ";
         $rs = $this->db->execute($sql);
         return ($rs->fields['pstTime']);
     }
 
     function setVotePollOptionItem($mid, $voteChoice)
     {
+        $mid = intval($mid);
+        $voteChoice = intval($voteChoice);
         $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "poll_option 
 					WHERE ppoId=" . $voteChoice . " AND pllId=" . $mid;
         $rs = $this->db->execute($sql);
@@ -183,7 +186,7 @@ class Poll
     function getVoteTotal($mid)
     {
         $sql = "SELECT SUM(ppoScore) FROM " . $this->cfg['tablepre'] . "poll_option 
-					WHERE pllId=" . $mid;
+					WHERE pllId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return ($rs->fields[0]);
     }
@@ -192,7 +195,7 @@ class Poll
     {
         $sql = "INSERT INTO " . $this->cfg['tablepre'] . "poll_stat  
 					(pllId,pstIP,pstTime)
-					VALUES (" . $mid . ",'" . $_SERVER['REMOTE_ADDR'] . "'," . time() . ") ";
+					VALUES (" . intval($mid) . "," . $this->db->qstr($_SERVER['REMOTE_ADDR']) . "," . time() . ") ";
         $rs = $this->db->execute($sql);
         return $rs;
     }

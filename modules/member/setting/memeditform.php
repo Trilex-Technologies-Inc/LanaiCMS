@@ -28,6 +28,7 @@ $rs = $member->getUser($_REQUEST['mid']);
         <input type="hidden" name="modname" value="<?= $module_name; ?>">
         <input type="hidden" name="ac" value="edit">
         <input type="hidden" name="mid" value="<?= $rs->fields['userId'] ?>">
+        <?php $sys_lanai->renderCsrfField('member'); ?>
         <tr>
             <td><?= _USER_FNAME; ?></td>
             <td><input type="text" name="userFname" value="<?= $rs->fields['userFname'] ?>">*</td>

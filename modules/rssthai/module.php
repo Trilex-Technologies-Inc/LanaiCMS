@@ -50,7 +50,7 @@ class LRSSThai
     function getRSSById($mid)
     {
         $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "rss 
-					WHERE rssId=$mid";
+					WHERE rssId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -66,7 +66,7 @@ class LRSSThai
     {
         $sql = "INSERT INTO " . $this->cfg['tablepre'] . "rss 
 					(rssTitle,rssURL,rssReload,rssView,rssItemCount,rssShowDescription,rssNumColumn,rssNumImage,rssFixedImage,rssAlterImage,rssImageWidth,rssImageHeight,rssImageAlign,rssTarget,rssOrder) 
-					VALUES ('" . $rssTitle . "','" . $rssURL . "'," . $rssReload . ",'" . $rssView . "'," . $rssItemCount . ",'" . $rssShowDescription . "'," . $rssNumColumn . "," . $rssNumImage . ",'" . $rssFixedImage . "','" . $rssAlterImage . "'," . $rssImageWidth . "," . $rssImageHeight . ",'" . $rssImageAlign . "','" . $rssTarget . "'," . (($this->getRSSMaxOrder()) + 1) . ") ";
+					VALUES (" . $this->db->qstr($rssTitle) . "," . $this->db->qstr($rssURL) . "," . intval($rssReload) . "," . $this->db->qstr($rssView) . "," . intval($rssItemCount) . "," . $this->db->qstr($rssShowDescription) . "," . intval($rssNumColumn) . "," . intval($rssNumImage) . "," . $this->db->qstr($rssFixedImage) . "," . $this->db->qstr($rssAlterImage) . "," . intval($rssImageWidth) . "," . intval($rssImageHeight) . "," . $this->db->qstr($rssImageAlign) . "," . $this->db->qstr($rssTarget) . "," . (($this->getRSSMaxOrder()) + 1) . ") ";
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -74,12 +74,12 @@ class LRSSThai
     function setEditRSS($rssId, $rssTitle, $rssURL, $rssReload, $rssView, $rssItemCount, $rssShowDescription, $rssNumColumn, $rssNumImage, $rssFixedImage, $rssAlterImage, $rssImageWidth, $rssImageHeight, $rssImageAlign, $rssTarget)
     {
         $sql = "UPDATE " . $this->cfg['tablepre'] . "rss SET 
-					rssTitle='" . $rssTitle . "',rssURL='" . $rssURL . "',rssReload=" . $rssReload . ",rssView='" . $rssView . "',
-					rssItemCount=" . $rssItemCount . ",rssShowDescription='" . $rssShowDescription . "',rssNumColumn=" . $rssNumColumn . ",
-					rssNumImage=" . $rssNumImage . ",rssFixedImage='" . $rssFixedImage . "',rssAlterImage='" . $rssAlterImage . "',
-					rssImageWidth=" . $rssImageWidth . ",rssImageHeight=" . $rssImageHeight . ",rssImageAlign='" . $rssImageAlign . "',
-					rssTarget='" . $rssTarget . "'
-					WHERE rssId=$rssId";
+					rssTitle=" . $this->db->qstr($rssTitle) . ",rssURL=" . $this->db->qstr($rssURL) . ",rssReload=" . intval($rssReload) . ",rssView=" . $this->db->qstr($rssView) . ",
+					rssItemCount=" . intval($rssItemCount) . ",rssShowDescription=" . $this->db->qstr($rssShowDescription) . ",rssNumColumn=" . intval($rssNumColumn) . ",
+					rssNumImage=" . intval($rssNumImage) . ",rssFixedImage=" . $this->db->qstr($rssFixedImage) . ",rssAlterImage=" . $this->db->qstr($rssAlterImage) . ",
+					rssImageWidth=" . intval($rssImageWidth) . ",rssImageHeight=" . intval($rssImageHeight) . ",rssImageAlign=" . $this->db->qstr($rssImageAlign) . ",
+					rssTarget=" . $this->db->qstr($rssTarget) . "
+					WHERE rssId=" . intval($rssId);
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -87,17 +87,18 @@ class LRSSThai
     function setRSSOrder($mid, $order)
     {
         $sql = "UPDATE " . $this->cfg['tablepre'] . "rss 
-					SET rssOrder=$order
-					WHERE rssId=" . $mid;
+					SET rssOrder=" . intval($order) . "
+					WHERE rssId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
 
     function setRSSActive($mid, $value)
     {
+        $value = $value === 'n' ? 'n' : 'y';
         $sql = "UPDATE " . $this->cfg['tablepre'] . "rss 
-					SET rssActive='" . $value . "'
-					WHERE rssId=" . $mid;
+					SET rssActive=" . $this->db->qstr($value) . "
+					WHERE rssId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -105,7 +106,7 @@ class LRSSThai
     function setDeleteRSS($mid)
     {
         $sql = "DELETE FROM " . $this->cfg['tablepre'] . "rss 
-					WHERE rssId=" . $mid;
+					WHERE rssId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }

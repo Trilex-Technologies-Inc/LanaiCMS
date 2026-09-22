@@ -63,7 +63,7 @@ if (isset($_REQUEST['ac']) && $_REQUEST['ac'] == "lostpass") {
             require_once("include/phpmailer/class.phpmailer.php");
 
             $mail = new phpmailer();
-            $passwd = substr(md5(date("hms")), 0, 6);
+            $passwd = substr(bin2hex(random_bytes(8)), 0, 10);
 
             $mail->Host   = $cfg['smtp_host'];
             $mail->Port   = $cfg['smtp_port'];

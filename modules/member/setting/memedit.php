@@ -31,7 +31,7 @@
 					 		//$mem_lanai->setUpdateUser($_SESSION['uid'],$_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin']);
 							//$mem_lanai->setUpdateUserPassword($_SESSION['uid'],$_REQUEST['userPassword1']);
 							//$sys_lanai->go2Page("?modname=member&mf=meminfo");
-							$member->setNewUser($_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin'],$_REQUEST['userPassword1'],$_REQUEST['userPrivilege']);
+							$member->setNewUser($_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin'],$_REQUEST['userPassword1'],$_REQUEST['userPrivilege'],isset($_REQUEST['userRoleId']) ? $_REQUEST['userRoleId'] : null);
 						} else {
 							$sys_lanai->getErrorBox(_PASSWORD_NOT_EQUAL." <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
 						}
@@ -134,11 +134,11 @@
 				} else {
 					// update info
 					if ((empty($_REQUEST['userPassword1']) AND empty($_REQUEST['userPassword2']))) {
-					    $member->setUpdateUser($_REQUEST['mid'],$_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin'],$_REQUEST['userPrivilege']);
+					    $member->setUpdateUser($_REQUEST['mid'],$_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin'],$_REQUEST['userPrivilege'],isset($_REQUEST['userRoleId']) ? $_REQUEST['userRoleId'] : null);
 						//$sys_lanai->go2Page("?modname=member&mf=meminfo");
 					} else {
 						if (($_REQUEST['userPassword1'])==($_REQUEST['userPassword2'])){
-						 	$member->setUpdateUser($_REQUEST['mid'],$_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin'],$_REQUEST['userPrivilege']);
+						 	$member->setUpdateUser($_REQUEST['mid'],$_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin'],$_REQUEST['userPrivilege'],isset($_REQUEST['userRoleId']) ? $_REQUEST['userRoleId'] : null);
 							$member->setUpdateUserPassword($_REQUEST['mid'],$_REQUEST['userPassword1']);
 							//$sys_lanai->go2Page("?modname=member&mf=meminfo");
 						} else {

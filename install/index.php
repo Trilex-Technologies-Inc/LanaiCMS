@@ -38,8 +38,26 @@ if (empty($_SESSION['lang'])) {
         }
         .setup-logo {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             margin-bottom: 30px;
+        }
+        .setup-logo .brand {
+            font-size: 2.25rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .setup-logo .brand .brand-lanai {
+            color: #fd7e14;
+        }
+        .setup-logo .brand .brand-cms {
+            color: #212529;
+        }
+        .setup-logo .version {
+            margin-top: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #6c757d;
         }
         .setup-footer {
             text-align: center;
@@ -54,7 +72,8 @@ if (empty($_SESSION['lang'])) {
 
     <div class="container setup-container">
         <div class="setup-logo">
-            <img src="images/logo.gif" alt="Setup Logo" class="img-fluid" style="max-height:80px;">
+            <div class="brand"><span class="brand-lanai">LANAI</span> <span class="brand-cms">CMS</span></div>
+            <div class="version">Version 3.2a</div>
         </div>
 
         <div class="content">

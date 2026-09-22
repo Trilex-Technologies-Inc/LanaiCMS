@@ -26,5 +26,6 @@
 	define("_CONTENT_TITLE","Title");
 	define("_CONTENT_MENU","Create Menu");
 	define("_CONTENT_NOT_FOUND","Content not found");
+	define("_CONTENT_NO_PERMISSION","You don't have permission to do that.");
 	
 ?>

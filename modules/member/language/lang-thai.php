@@ -62,6 +62,8 @@
 	define("_REG_COMPLETE","สมัครสมาชิกเรียบร้อยแล้ว");
 	define("_REG_SEND_COMPLETE","ส่งข้อมูลสมาชิกไปยังอีเมล์ของคุณเรียบร้อยแล้ว");
 	define("_USER_PRIVILEGE","สิทธิ์");
+	define("_USER_ROLE","บทบาท");
+	define("_USER_ROLE_NONE","-- ไม่มี --");
 	define("_MEMBER_NEW","ตั้งค่าสมาชิก");
 	define("_MEMBER_NEW_INSTRUCTION","กรุณากรอกข้อมูลให้ครบสมบูรณ์");
 	define("_MEMBER_ACTIVATE_SUBJECT","ยืนยันบัญชีสมาชิกของคุณ");

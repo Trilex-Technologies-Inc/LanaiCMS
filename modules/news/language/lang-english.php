@@ -36,6 +36,7 @@
 	define("_NEWS_GROUP_EDIT_INSTRUCTION","Please complete following form (*) are required!");
 	define("_NEWS_GROUP_TITLE","Title"); 
 	define("_NEWS_GROUP_DESCTIPRION","Description");
+	define("_NEWS_NO_PERMISSION","You don't have permission to do that.");
 	
 	define("_NWS_LIST","News");
 	define("_NWS_GROUP","News Category");

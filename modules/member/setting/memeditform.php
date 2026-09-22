@@ -7,6 +7,8 @@ if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 $module_name = basename(dirname(substr(__FILE__, 0, strlen(dirname(__FILE__)))));
 $modfunction = "modules/$module_name/module.php";
 include_once($modfunction);
+include_once("modules/role/module.php");
+$role = new Role();
 
 $member = new User();
 
@@ -109,6 +111,25 @@ $rs = $member->getUser($_REQUEST['mid']);
                 <select name="userPrivilege">
                     <option value="u" <?= $uPri; ?> ><?= _USER; ?></option>
                     <option value="a" <?= $aPri; ?> ><?= _ADMIN; ?></option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td><?=_USER_ROLE; ?></td>
+            <td>
+                <select name="userRoleId">
+                    <option value=""><?=_USER_ROLE_NONE; ?></option>
+                    <?php
+                    $rsr = $role->getRoles();
+                    while (!$rsr->EOF) {
+                        $sel = ((int) $rs->fields['userRoleId'] === (int) $rsr->fields['roleId']) ? ' selected' : '';
+                        ?>
+                        <option value="<?=$rsr->fields['roleId'];?>"<?=$sel;?>><?=htmlspecialchars($rsr->fields['roleTitle']);?></option>
+                        <?php
+                        $rsr->movenext();
+                    }
+                    ?>
                 </select>
             </td>
         </tr>

@@ -40,6 +40,11 @@
 					$sys_lanai->getErrorBox("Invalid request, please try again.");
 					break;
 				}
+				$rsown=$news->getNewsById($_REQUEST['mid']);
+				if ($rsown->recordcount()<1 || !$sys_lanai->userCanActOnContent($rsown->fields['userId'],'publish_content')) {
+					$sys_lanai->getErrorBox(_NEWS_NO_PERMISSION);
+					break;
+				}
 				$news->setNewsActive($_REQUEST['mid'],$_REQUEST['v']);
 				$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
 			break;
@@ -51,6 +56,9 @@
 				$midarr=$_REQUEST['mid'];
 				for ($i=0;$i<count($midarr);$i++) {
 					$rsdwn=$news->getNewsById($midarr[$i]);
+					if ($rsdwn->recordcount()<1 || !$sys_lanai->userCanActOnContent($rsdwn->fields['userId'],'publish_content')) {
+						continue;
+					}
 					if ($rsdwn->fields['nwsActive']=='y') {
 					    $value="n";
 					} else {
@@ -67,6 +75,10 @@
 				}
 				$midarr=$_REQUEST['mid'];
 				for ($i=0;$i<count($midarr);$i++) {
+					$rsdel=$news->getNewsById($midarr[$i]);
+					if ($rsdel->recordcount()<1 || !$sys_lanai->userCanActOnContent($rsdel->fields['userId'],'delete_content')) {
+						continue;
+					}
 					$news->setDeleteNews($midarr[$i]);					
 				}
 				$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);				
@@ -120,6 +132,11 @@
 		case "edit": 
 				if (!$sys_lanai->validateCsrfToken('news', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
 					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
+				$rsedit=$news->getNewsById($_REQUEST['mid']);
+				if ($rsedit->recordcount()<1 || !$sys_lanai->userCanActOnContent($rsedit->fields['userId'],'edit_content')) {
+					$sys_lanai->getErrorBox(_NEWS_NO_PERMISSION);
 					break;
 				}
 				if (empty($_REQUEST['nwsTitle'])) {

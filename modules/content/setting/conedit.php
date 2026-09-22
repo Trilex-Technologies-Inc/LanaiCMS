@@ -34,6 +34,11 @@
 					$sys_lanai->getErrorBox("Invalid request, please try again.");
 					break;
 				}
+				$rsown=$content->getContentById($_REQUEST['mid']);
+				if ($rsown->recordcount()<1 || !$sys_lanai->userCanActOnContent($rsown->fields['userId'],'publish_content')) {
+					$sys_lanai->getErrorBox(_CONTENT_NO_PERMISSION);
+					break;
+				}
 				$content->setContentActive($_REQUEST['mid'],$_REQUEST['v']);
 				$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
 			break;
@@ -45,6 +50,9 @@
 				$midarr=$_REQUEST['mid'];
 				for ($i=0;$i<count($midarr);$i++) {
 					$rsdwn=$content->getContentById($midarr[$i]);
+					if ($rsdwn->recordcount()<1 || !$sys_lanai->userCanActOnContent($rsdwn->fields['userId'],'publish_content')) {
+						continue;
+					}
 					if ($rsdwn->fields['conActive']=='y') {
 					    $value="n";
 					} else {
@@ -62,6 +70,10 @@
 				
 				$midarr=$_REQUEST['mid'];
 				for ($i=0;$i<count($midarr);$i++) {
+					$rsdel=$content->getContentById($midarr[$i]);
+					if ($rsdel->recordcount()<1 || !$sys_lanai->userCanActOnContent($rsdel->fields['userId'],'delete_content')) {
+						continue;
+					}
 					$content->setDeleteContent($midarr[$i]);					
 				}
 				$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
@@ -78,6 +90,11 @@
 				//$contact->setUpdateContact($_REQUEST['conId'],$_REQUEST['conFname'],$_REQUEST['conLname'],$_REQUEST['conPosition'],$_REQUEST['conAddress1'],$_REQUEST['conAddress2'],$_REQUEST['conCity'],$_REQUEST['conState'],$_REQUEST['cntId'],$_REQUEST['conZipcode'],$_REQUEST['conPhone'],$_REQUEST['conFax'],$_REQUEST['conMobile'],$_REQUEST['conEmail'],$_REQUEST['conURL']);
 				if (!$sys_lanai->validateCsrfToken('content', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
 					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
+				$rsedit=$content->getContentById($_REQUEST['mid']);
+				if ($rsedit->recordcount()<1 || !$sys_lanai->userCanActOnContent($rsedit->fields['userId'],'edit_content')) {
+					$sys_lanai->getErrorBox(_CONTENT_NO_PERMISSION);
 					break;
 				}
 				if (empty($_REQUEST['conTitle'])) {

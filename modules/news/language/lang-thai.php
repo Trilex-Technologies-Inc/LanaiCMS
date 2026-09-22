@@ -36,6 +36,7 @@
 	define("_NEWS_GROUP_EDIT_INSTRUCTION","กรุณากรอกข้อมูลลงในแบบฟอร์มข้างล่างให้สมบูรณ์");
 	define("_NEWS_GROUP_TITLE","ชื่อกลุ่ม"); 
 	define("_NEWS_GROUP_DESCTIPRION","รายละเอียด");
+	define("_NEWS_NO_PERMISSION","คุณไม่มีสิทธิ์ทำรายการนี้");
 	define("_NEWS_GROUP_NEW_INSTRUCTION","คลิก 'บันทึก' เพื่อสร้างกลุ่มข่าวใหม่ คลิก 'กลับ' เพื่อกลับไปหน้าตั้งค่า");
 
 	define("_NWS_LIST","ข่าว");

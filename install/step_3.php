@@ -113,6 +113,7 @@ $sql = "CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."user` (
     `userActivationToken` VARCHAR(64) DEFAULT NULL,
 
     `userPrivilege` ENUM('a','m','u') NOT NULL DEFAULT 'u',
+    `userRoleId` INT(11) DEFAULT NULL,
 
     `userCreated` DATETIME DEFAULT NULL,
     `userActive` ENUM('y','n') DEFAULT 'y',
@@ -131,6 +132,38 @@ dbexecute("Create Table Users",$sql);
             `userPrivilege` enum('a','u','m') NOT NULL
           )";
     dbexecute("Create Table Privilege",$sql);
+?>
+    <li>
+<?php
+    $sql="CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."role` (
+              `roleId` int(10) unsigned NOT NULL auto_increment,
+              `roleName` varchar(50) NOT NULL,
+              `roleTitle` varchar(100) NOT NULL,
+              `roleOrder` int(10) unsigned NOT NULL default '0',
+              PRIMARY KEY  (`roleId`),
+              UNIQUE KEY roleName (roleName)
+          )";
+    dbexecute("Create Table Role",$sql);
+?>
+    <li>
+<?php
+    $sql="CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."capability` (
+              `capId` int(10) unsigned NOT NULL auto_increment,
+              `capName` varchar(50) NOT NULL,
+              `capTitle` varchar(150) NOT NULL,
+              PRIMARY KEY  (`capId`),
+              UNIQUE KEY capName (capName)
+          )";
+    dbexecute("Create Table Capability",$sql);
+?>
+    <li>
+<?php
+    $sql="CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."role_capability` (
+              `roleId` int(10) unsigned NOT NULL,
+              `capId` int(10) unsigned NOT NULL,
+              PRIMARY KEY  (`roleId`,`capId`)
+          )";
+    dbexecute("Create Table Role Capability",$sql);
 ?>
     <li>
 <?php
@@ -429,6 +462,100 @@ $sql = "CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."meta (
 ?>
     <li>
 <?php
+    $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."ctype (
+			  ctpId int(10) unsigned NOT NULL auto_increment,
+			  ctpName varchar(50) NOT NULL,
+			  ctpTitle varchar(100) NOT NULL,
+			  ctpSlug varchar(50) NOT NULL,
+			  ctpActive enum('y','n') NOT NULL default 'y',
+			  ctpOrder int(10) unsigned NOT NULL default '0',
+			  PRIMARY KEY  (ctpId),
+			  UNIQUE KEY ctpName (ctpName),
+			  UNIQUE KEY ctpSlug (ctpSlug)
+          )";
+    dbexecute("Create Table Content Type",$sql);
+?>
+    <li>
+<?php
+    $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."cfield (
+			  cfdId int(10) unsigned NOT NULL auto_increment,
+			  ctpId int(10) unsigned NOT NULL,
+			  cfdName varchar(50) NOT NULL,
+			  cfdLabel varchar(100) NOT NULL,
+			  cfdType enum('text','textarea','richtext','number','date','select','checkbox','image','file') NOT NULL default 'text',
+			  cfdOptions text,
+			  cfdRequired enum('y','n') NOT NULL default 'n',
+			  cfdOrder int(10) unsigned NOT NULL default '0',
+			  PRIMARY KEY  (cfdId),
+			  UNIQUE KEY ctpId_cfdName (ctpId,cfdName),
+			  KEY ctpId (ctpId)
+          )";
+    dbexecute("Create Table Content Field",$sql);
+?>
+    <li>
+<?php
+    $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."citem (
+			  citId int(10) unsigned NOT NULL auto_increment,
+			  ctpId int(10) unsigned NOT NULL,
+			  citTitle varchar(255) NOT NULL,
+			  citSlug varchar(255),
+			  citActive enum('y','n') NOT NULL default 'y',
+			  citCreated datetime,
+			  citUpdated datetime,
+			  userId int(10) unsigned,
+			  PRIMARY KEY  (citId),
+			  KEY ctpId_citActive (ctpId,citActive)
+          )";
+    dbexecute("Create Table Content Item",$sql);
+?>
+    <li>
+<?php
+    $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."cvalue (
+			  citId int(10) unsigned NOT NULL,
+			  cfdId int(10) unsigned NOT NULL,
+			  cvalText text,
+			  cvalNumber decimal(20,4),
+			  PRIMARY KEY  (citId,cfdId),
+			  KEY cfdId (cfdId)
+          )";
+    dbexecute("Create Table Content Value",$sql);
+?>
+    <li>
+<?php
+    $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."media (
+			  mediaId int(10) unsigned NOT NULL auto_increment,
+			  fileName varchar(255) NOT NULL,
+			  origName varchar(255) NOT NULL,
+			  filePath varchar(255) NOT NULL,
+			  thumbPath varchar(255) default NULL,
+			  mediaType enum('image','file') NOT NULL default 'file',
+			  mimeType varchar(100) default NULL,
+			  fileSize int(10) unsigned default NULL,
+			  width int(10) unsigned default NULL,
+			  height int(10) unsigned default NULL,
+			  altText varchar(255) default NULL,
+			  userId int(10) unsigned default NULL,
+			  createdAt datetime default NULL,
+			  PRIMARY KEY  (mediaId)
+          )";
+    dbexecute("Create Table Media",$sql);
+?>
+    <li>
+<?php
+    $sql="CREATE TABLE IF NOT EXISTS ".$_SESSION['tablepre']."api_token (
+			  tokenId int(10) unsigned NOT NULL auto_increment,
+			  userId int(10) unsigned NOT NULL,
+			  tokenHash char(64) NOT NULL,
+			  label varchar(100) default NULL,
+			  createdAt datetime default NULL,
+			  lastUsedAt datetime default NULL,
+			  PRIMARY KEY  (tokenId),
+			  UNIQUE KEY tokenHash (tokenHash)
+          )";
+    dbexecute("Create Table Api Token",$sql);
+?>
+    <li>
+<?php
 $sql1 = "INSERT INTO ".$_SESSION['tablepre']."banner
 (`banId`, `banTitle`, `banDescription`, `banImage`, `banURL`, `banPosition`, `banActive`, `banDate`, `banShow`, `banClick`)
 VALUES (NULL, 'example 1', 'description 1',
@@ -465,18 +592,55 @@ dbexecute("Insert Banner 3", $sql3);
 <ul>
     <li>
 <?php
-    $sql="INSERT INTO `".$_SESSION['tablepre']."user` (`userId`, `userFname`, `userLname`, `userAddress1`, `userAddress2`, `userCity`, `userState`, `cntId`, `userZipcode`, `userPhone`, `userFax`, `userMobile`, `userEmail`, `userURL`, `userLogin`, `userPassword`, `userPrivilege`, `userCreated`, `userActive`)
+    $sql="INSERT INTO `".$_SESSION['tablepre']."user` (`userId`, `userFname`, `userLname`, `userAddress1`, `userAddress2`, `userCity`, `userState`, `cntId`, `userZipcode`, `userPhone`, `userFax`, `userMobile`, `userEmail`, `userURL`, `userLogin`, `userPassword`, `userPrivilege`, `userRoleId`, `userCreated`, `userActive`)
             VALUES (1, 'Lanai', 'Core',
                 ' ', ' ',
                 ' ', ' ', 'TH', ' ', ' ', ' ',
                 ' ', '".$_SESSION['cfg_email']."',
                 ' ',
-                '".$_SESSION['username']."', '".md5($_SESSION['password'])."',
-                'a',
+                '".$_SESSION['username']."', '".password_hash($_SESSION['password'], PASSWORD_BCRYPT)."',
+                'a', 1,
                 NOW(), 'y')";
     dbexecute("Update Adminstrator information",$sql);
 ?>
     <li>
+<?php
+    $sql="INSERT INTO `".$_SESSION['tablepre']."capability` (`capId`, `capName`, `capTitle`)
+            VALUES  (1, 'access_admin', 'Access admin area'),
+                    (2, 'manage_options', 'Manage site settings'),
+                    (3, 'manage_users', 'Manage users and roles'),
+                    (4, 'manage_modules', 'Manage modules and themes'),
+                    (5, 'manage_content_types', 'Manage custom content types'),
+                    (6, 'edit_content', 'Edit any content'),
+                    (7, 'edit_own_content', 'Edit own content only'),
+                    (8, 'publish_content', 'Publish/activate content'),
+                    (9, 'delete_content', 'Delete content'),
+                    (10, 'manage_media', 'Manage media library')
+            ";
+    dbexecute("Update Capability Data",$sql);
+?>
+    <li>
+<?php
+    $sql="INSERT INTO `".$_SESSION['tablepre']."role` (`roleId`, `roleName`, `roleTitle`, `roleOrder`)
+            VALUES  (1, 'administrator', 'Administrator', 1),
+                    (2, 'editor', 'Editor', 2),
+                    (3, 'author', 'Author', 3),
+                    (4, 'contributor', 'Contributor', 4),
+                    (5, 'subscriber', 'Subscriber', 5)
+            ";
+    dbexecute("Update Role Data",$sql);
+?>
+    <li>
+<?php
+    $sql="INSERT INTO `".$_SESSION['tablepre']."role_capability` (`roleId`, `capId`)
+            VALUES  (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),
+                    (2,1),(2,5),(2,6),(2,8),(2,9),(2,10),
+                    (3,1),(3,7),(3,8),(3,10),
+                    (4,1),(4,7),
+                    (5,1)
+            ";
+    dbexecute("Update Role Capability Data",$sql);
+?>
 <?php
     $sql="INSERT INTO `".$_SESSION['tablepre']."country` (`cntId`, `cntName`)
             VALUES ('AF', 'Afghanistan'),
@@ -836,7 +1000,11 @@ dbexecute("Update Block Data",$sql);
 					(24, 'info', 'info', 'y', 2, 'y'),
 					(25, 'carousel', 'carousel', 'y', 2, 'y'),
 					(27, 'log', 'log', 'y', 2, 'y'),
-					(30, 'search', 'search', 'y', 2, 'y')		
+					(30, 'search', 'search', 'y', 2, 'y'),
+					(31, 'ctype', 'ctype', 'y', 2, 'y'),
+					(32, 'role', 'role', 'y', 2, 'y'),
+					(33, 'media', 'media', 'y', 2, 'y'),
+					(34, 'apitoken', 'apitoken', 'y', 2, 'y')		
             ";
     dbexecute("Update Module Data",$sql);
 ?>
@@ -858,7 +1026,11 @@ dbexecute("Update Block Data",$sql);
 					('y', 15, 'a'),
 					('y', 20, 'a'),
 					('y', 24, 'a'),
-					('y', 25, 'a')
+					('y', 25, 'a'),
+					('y', 31, 'a'),
+					('y', 32, 'a'),
+					('y', 33, 'a'),
+					('y', 34, 'a')
             ";
     dbexecute("Update Privilege Data",$sql);
 ?>

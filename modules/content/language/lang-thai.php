@@ -25,5 +25,6 @@
 	define("_CONTENT_TITLE","หัวข้อ");
 	define("_CONTENT_MENU","สร้างเมนู");
 	define("_CONTENT_NOT_FOUND","ไม่พบข้อมูล");
+	define("_CONTENT_NO_PERMISSION","คุณไม่มีสิทธิ์ทำรายการนี้");
 	
 ?>

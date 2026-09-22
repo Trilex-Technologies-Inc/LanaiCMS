@@ -242,19 +242,23 @@
     <div class="sidebar-menu">
       <ul>
         <li><a href="setting.php?modname=backup"><i class="bi bi-hdd-stack"></i> Manage Backup</a></li>
+        <li><a href="setting.php?modname=apitoken"><i class="bi bi-key"></i> Manage API Tokens</a></li>
         <li><a href="setting.php?modname=carousel"><i class="bi bi-images"></i> Manage Carousel</a></li>
         <li><a href="setting.php?modname=block"><i class="bi bi-grid-3x3-gap-fill"></i> Manage Block</a></li>
         <li><a href="setting.php?modname=config"><i class="bi bi-gear"></i> Manage Config</a></li>
         <li><a href="setting.php?modname=contact"><i class="bi bi-person-lines-fill"></i> Manage Contact</a></li>
         <li><a href="setting.php?modname=content"><i class="bi bi-file-earmark-text"></i> Manage Content</a></li>
+        <li><a href="setting.php?modname=ctype"><i class="bi bi-diagram-3"></i> Manage Content Types</a></li>
         <li><a href="setting.php?modname=explorer"><i class="bi bi-folder2-open"></i> Manage Explorer</a></li>
         <li><a href="setting.php?modname=info"><i class="bi bi-info-circle"></i> Manage Info</a></li>
         <li><a href="setting.php?modname=language"><i class="bi bi-translate"></i> Manage Language</a></li>
         <li><a href="setting.php?modname=member"><i class="bi bi-people-fill"></i> Manage Member</a></li>
+        <li><a href="setting.php?modname=media"><i class="bi bi-images"></i> Manage Media</a></li>
         <li><a href="setting.php?modname=menu"><i class="bi bi-list"></i> Manage Menu</a></li>
         <li><a href="setting.php?modname=module"><i class="bi bi-puzzle"></i> Manage Module</a></li>
         <li><a href="setting.php?modname=news"><i class="bi bi-newspaper"></i> Manage News</a></li>
         <li><a href="setting.php?modname=poll"><i class="bi bi-bar-chart"></i> Manage Poll</a></li>
+        <li><a href="setting.php?modname=role"><i class="bi bi-person-badge"></i> Manage Roles</a></li>
         <li><a href="setting.php?modname=rssthai"><i class="bi bi-rss"></i> Manage Rssthai</a></li>
         <li><a href="setting.php?modname=theme"><i class="bi bi-palette-fill"></i> Manage Theme</a></li>
 

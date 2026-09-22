@@ -46,9 +46,21 @@ class Systems
 
             parse_str($parts['query'], $params);
 
-            // Only apply SEO for news module
-            if (!isset($params['modname']) || $params['modname'] !== 'news') {
+            // Only apply SEO for news and ctype modules
+            if (!isset($params['modname']) || !in_array($params['modname'], array('news', 'ctype'), true)) {
                 return $url;
+            }
+
+            if ($params['modname'] === 'ctype') {
+                // Build SEO-friendly link for content-type items: type/<ctp>[/<item>]
+                if (empty($params['ctp'])) {
+                    return $url;
+                }
+                $link = 'type/' . rawurlencode($params['ctp']);
+                if (!empty($params['item'])) {
+                    $link .= '/' . rawurlencode($params['item']);
+                }
+                return $link;
             }
 
             // Build SEO-friendly link for news
@@ -268,6 +280,56 @@ class Systems
         } else {
             return false;
         }
+    }
+
+    /**
+     * Check whether a user (defaults to the current session user) has a
+     * named capability, via their assigned role. Legacy 'a' (admin) users
+     * always pass, since they predate the roles/capabilities system.
+     */
+    function userHasCapability($capName, $uid = null)
+    {
+        global $db, $tablepre;
+
+        if ($uid === null) {
+            $uid = isset($_SESSION['uid']) ? $_SESSION['uid'] : 0;
+        }
+        $uid = intval($uid);
+        if ($uid <= 0) {
+            return false;
+        }
+
+        $rs = $db->execute("SELECT userPrivilege, userRoleId FROM " . $tablepre . "user WHERE userId=" . $uid);
+        if (!$rs || $rs->recordcount() < 1) {
+            return false;
+        }
+        if ($rs->fields['userPrivilege'] === 'a') {
+            return true;
+        }
+        if (empty($rs->fields['userRoleId'])) {
+            return false;
+        }
+
+        $sql = "SELECT rc.roleId FROM " . $tablepre . "role_capability rc
+                INNER JOIN " . $tablepre . "capability c ON c.capId = rc.capId
+                WHERE rc.roleId=" . intval($rs->fields['userRoleId']) . " AND c.capName=" . $db->qstr($capName);
+        $capRs = $db->execute($sql);
+        return $capRs && $capRs->recordcount() > 0;
+    }
+
+    /**
+     * True if the current session user may act on a piece of content: either
+     * they hold the blanket capability, or they own it (ownerUserId matches
+     * the session user) and hold the "own content only" capability.
+     */
+    function userCanActOnContent($ownerUserId, $blanketCap, $ownCap = 'edit_own_content')
+    {
+        if ($this->userHasCapability($blanketCap)) {
+            return true;
+        }
+        $ownerUserId = (int) $ownerUserId;
+        $uid = isset($_SESSION['uid']) ? (int) $_SESSION['uid'] : 0;
+        return $ownerUserId > 0 && $ownerUserId === $uid && $this->userHasCapability($ownCap);
     }
 
     // getRealUid($_SESSION['uid']);

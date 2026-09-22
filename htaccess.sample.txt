@@ -1,5 +1,7 @@
 RewriteEngine On
-RewriteBase /laniazip/
+# Use "/" for a root install. If LanaiCMS lives in a subfolder
+# (e.g. http://example.com/lanaicms/), change this to "/lanaicms/".
+RewriteBase /
 
 # Skip real files and directories
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -8,8 +10,42 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # Automatically route clean URLs to module.php
 # Example: /contact → /module.php?modname=contact
 RewriteRule ^([^/]+)/?$ module.php?modname=$1 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^news/([^/]+)/([0-9]+)/?$ module.php?modname=news&mf=$1&cid=$2 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^content/([0-9]+)/?$ module.php?modname=content&cid=$1 [L,QSA]
+
+# SEO-friendly content-type URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^type/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ module.php?modname=ctype&ctp=$1&item=$2 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^type/([a-zA-Z0-9_-]+)/?$ module.php?modname=ctype&ctp=$1 [L,QSA]
+
 # SEO-friendly search URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^search/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/(.+)/?$ module.php?modname=search&item=$1&method=$2&keyword=$3 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^search/([a-zA-Z0-9_-]+)/(.+)/?$ module.php?modname=search&item=$1&keyword=$2 [L,QSA]
+
+# REST API
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/([a-zA-Z]+)/?$ api.php?resource=$1 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/([a-zA-Z]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ api.php?resource=$1&id=$2&sub=$3 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/([a-zA-Z]+)/([a-zA-Z0-9_-]+)/?$ api.php?resource=$1&id=$2 [L,QSA]

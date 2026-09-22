@@ -106,14 +106,14 @@ class User
         $this->activationColumnEnsured = true;
     }
 
-    function setNewUser($userFname, $userLname, $userAddress1, $userAddress2, $userCity, $userState, $cntId, $userZipcode, $userPhone, $userFax, $userMobile, $userEmail, $userURL, $userLogin, $userPassword, $userPrivilege)
+    function setNewUser($userFname, $userLname, $userAddress1, $userAddress2, $userCity, $userState, $cntId, $userZipcode, $userPhone, $userFax, $userMobile, $userEmail, $userURL, $userLogin, $userPassword, $userPrivilege, $userRoleId = null)
     {
         global $sys_lanai;
         $sql = "INSERT INTO " . $this->cfg['tablepre'] . "user 
-					(userFname,userLname,userAddress1,userAddress2,userCity,userState,cntId,userZipcode,userPhone,userFax,userMobile,userEmail,userURL,userLogin,userPassword,userPrivilege,userCreated,userActive) 
+					(userFname,userLname,userAddress1,userAddress2,userCity,userState,cntId,userZipcode,userPhone,userFax,userMobile,userEmail,userURL,userLogin,userPassword,userPrivilege,userRoleId,userCreated,userActive) 
 					VALUES (" . $this->db->qstr($userFname) . "," . $this->db->qstr($userLname) . "," . $this->db->qstr($userAddress1) . "," . $this->db->qstr($userAddress2) . "," . $this->db->qstr($userCity) . ",
 					" . $this->db->qstr($userState) . "," . $this->db->qstr($cntId) . "," . $this->db->qstr($userZipcode) . "," . $this->db->qstr($userPhone) . "," . $this->db->qstr($userFax) . "," . $this->db->qstr($userMobile) . ",
-					" . $this->db->qstr($userEmail) . "," . $this->db->qstr($userURL) . "," . $this->db->qstr($userLogin) . "," . $this->db->qstr($sys_lanai->hashPassword($userPassword)) . "," . $this->db->qstr($userPrivilege) . ",NOW(),'y')";
+					" . $this->db->qstr($userEmail) . "," . $this->db->qstr($userURL) . "," . $this->db->qstr($userLogin) . "," . $this->db->qstr($sys_lanai->hashPassword($userPassword)) . "," . $this->db->qstr($userPrivilege) . "," . (empty($userRoleId) ? "NULL" : intval($userRoleId)) . ",NOW(),'y')";
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -133,12 +133,12 @@ class User
         return $rs ? $activationToken : false;
     }
 
-    function setUpdateUser($uid, $userFname, $userLname, $userAddress1, $userAddress2, $userCity, $userState, $cntId, $userZipcode, $userPhone, $userFax, $userMobile, $userEmail, $userURL, $userLogin, $userPrivilege)
+    function setUpdateUser($uid, $userFname, $userLname, $userAddress1, $userAddress2, $userCity, $userState, $cntId, $userZipcode, $userPhone, $userFax, $userMobile, $userEmail, $userURL, $userLogin, $userPrivilege, $userRoleId = null)
     {
         global $db, $tablepre;
         $sql = "UPDATE " . $tablepre . "user 
 					SET userFname=" . $db->qstr($userFname) . ", userLname=" . $db->qstr($userLname) . ", userAddress1=" . $db->qstr($userAddress1) . ", userAddress2=" . $db->qstr($userAddress2) . ", userCity=" . $db->qstr($userCity) . ", userState=" . $db->qstr($userState) . ", cntId=" . $db->qstr($cntId) . ",
-						userZipcode=" . $db->qstr($userZipcode) . ", userPhone=" . $db->qstr($userPhone) . ", userFax=" . $db->qstr($userFax) . ", userMobile=" . $db->qstr($userMobile) . ", userEmail=" . $db->qstr($userEmail) . ", userURL=" . $db->qstr($userURL) . ", userLogin=" . $db->qstr($userLogin) . ",userPrivilege=" . $db->qstr($userPrivilege) . " 
+						userZipcode=" . $db->qstr($userZipcode) . ", userPhone=" . $db->qstr($userPhone) . ", userFax=" . $db->qstr($userFax) . ", userMobile=" . $db->qstr($userMobile) . ", userEmail=" . $db->qstr($userEmail) . ", userURL=" . $db->qstr($userURL) . ", userLogin=" . $db->qstr($userLogin) . ",userPrivilege=" . $db->qstr($userPrivilege) . ", userRoleId=" . (empty($userRoleId) ? "NULL" : intval($userRoleId)) . " 
 					WHERE userId=" . intval($uid);
         //$db->debug=true;
         $rs = $db->execute($sql);

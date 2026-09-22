@@ -219,10 +219,10 @@ switch ($resource) {
             api_respond(array('items' => $items, 'limit' => $limit, 'offset' => $offset));
         }
 
-        $itemRs = $ctype->getItemBySlug($ctpId, $itemSlug);
-        if ($method === 'GET' && $itemRs->recordcount() < 1) {
-            api_error('Item not found', 404);
-        }
+$itemRs = $ctype->getItemBySlug($ctpId, $itemSlug);
+if ($itemRs->recordcount() < 1) {
+    api_error('Item not found', 404);
+}
 
         if ($method === 'PUT' || $method === 'PATCH') {
             api_require_auth();

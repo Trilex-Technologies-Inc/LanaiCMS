@@ -32,6 +32,10 @@ function api_respond($data, $status = 200)
 {
     http_response_code($status);
     echo json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        // Avoid persisting API-authenticated uid into a browser session.
+        session_abort();
+    }
     exit;
 }
 

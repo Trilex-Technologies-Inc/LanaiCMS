@@ -21,10 +21,10 @@
     ## Site
     $cfg_title="<?=$_SESSION['cfg_title']; ?>";
     $cfg_footer="&amp;reg; Power by La-Nai Content Management System.<br/><a href=\"http://la-nai.sourceforge.net\" target=\"_blank\">La-Nai</a> is Free Software released under the <a href=\"license.txt\" title=\"GNU/GPL License\" target=\"_blank\">GNU/GPL license</a>.";
-    $cfg_url="<?=$_SESSION['cfg_url']; ?>";
-    $cfg_datadir="<?=$_SESSION['cfg_dir'].$sys_lanai->getPath()."datacenter"; ?>";
-    $cfg_packagedir="<?=$_SESSION['cfg_dir'].$sys_lanai->getPath()."datacenter".$sys_lanai->getPath()."package"; ?>";
-    $cfg_dir="<?=$_SESSION['cfg_dir']; ?>";
+    $cfg_url=<?=htmlspecialchars(var_export(rtrim($_SESSION['cfg_url'], '/'), true), ENT_QUOTES, 'UTF-8'); ?>;
+    $cfg_datadir=<?=htmlspecialchars(var_export(rtrim($_SESSION['cfg_dir'], '/\\') . DIRECTORY_SEPARATOR . 'datacenter', true), ENT_QUOTES, 'UTF-8'); ?>;
+    $cfg_packagedir=<?=htmlspecialchars(var_export(rtrim($_SESSION['cfg_dir'], '/\\') . DIRECTORY_SEPARATOR . 'datacenter' . DIRECTORY_SEPARATOR . 'package', true), ENT_QUOTES, 'UTF-8'); ?>;
+    $cfg_dir=<?=htmlspecialchars(var_export(rtrim($_SESSION['cfg_dir'], '/\\'), true), ENT_QUOTES, 'UTF-8'); ?>;
     $cfg_email="<?=$_SESSION['cfg_email']; ?>";
     $cfg_theme="<?=$_SESSION['cfg_theme']; ?>";
 
@@ -32,8 +32,6 @@
     $cfg_off="no";
     $cfg_offsettime=<?=$_SESSION['cfg_offsettime']; ?>;
     $cfg_sendmail="<?=$_SESSION['cfg_sendmail']; ?>";
-    $cfg_log="no";
-
     ## smtp
     $cfg_smtp_host="<?=$_SESSION['smtp_host']; ?>";
     $cfg_smtp_port="<?=$_SESSION['smtp_port']; ?>";

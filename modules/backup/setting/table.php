@@ -19,6 +19,7 @@
 <form name="backup" method="post" action="setting.php">
 <input type="hidden" name="modname" value="backup">
 <input type="hidden" name="mf" value="backup">
+<?php $sys_lanai->renderCsrfField('backup'); ?>
   <tr>
     <td>
         <select name="table[]" size="10" multiple="multiple">

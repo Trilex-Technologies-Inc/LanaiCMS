@@ -7,6 +7,8 @@ if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 $module_name = basename(dirname(substr(__FILE__, 0, strlen(dirname(__FILE__)))));
 $modfunction = "modules/$module_name/module.php";
 include_once($modfunction);
+include_once("modules/role/module.php");
+$role = new Role();
 
 $member = new User();
 
@@ -26,6 +28,7 @@ $member = new User();
     <input type="hidden" name="mf" value="memedit">
     <input type="hidden" name="modname" value="<?=$module_name; ?>">
     <input type="hidden" name="ac" value="new">
+    <?php $sys_lanai->renderCsrfField('member'); ?>
 
     <table border="0" cellspacing="2" cellpadding="3">
 
@@ -117,6 +120,24 @@ $member = new User();
                 <select name="userPrivilege">
                     <option value="u"><?=_USER; ?></option>
                     <option value="a"><?=_ADMIN; ?></option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td><?=_USER_ROLE; ?></td>
+            <td>
+                <select name="userRoleId">
+                    <option value=""><?=_USER_ROLE_NONE; ?></option>
+                    <?php
+                    $rsr = $role->getRoles();
+                    while (!$rsr->EOF) {
+                        ?>
+                        <option value="<?=$rsr->fields['roleId'];?>"><?=htmlspecialchars($rsr->fields['roleTitle']);?></option>
+                        <?php
+                        $rsr->movenext();
+                    }
+                    ?>
                 </select>
             </td>
         </tr>

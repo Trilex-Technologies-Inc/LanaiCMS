@@ -24,6 +24,7 @@
 	<input type="hidden" name="mf" value="plledit">
 	<input type="hidden" name="ac" value="new">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
+	<?php $sys_lanai->renderCsrfField('poll'); ?>
 	<tr>
 		<td><?=_POLL_TITLE; ?></td>
 		<td><input type="text" name="pllTitle" size="30">*</td>

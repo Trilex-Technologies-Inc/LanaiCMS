@@ -30,7 +30,6 @@ define("_FOUND","ค้นหาพบ");
 define("_ITEMS","รายการ"); 
 
 // search array type
-$SEARCH_LANG['news']="ข่าว";
 $SEARCH_LANG['forum']="กระดานสนทนา";
 $SEARCH_LANG['content']="เนื้อหา";
 

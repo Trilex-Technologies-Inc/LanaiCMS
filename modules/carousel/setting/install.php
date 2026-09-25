@@ -4,6 +4,8 @@
        die ( "You can't access this file directly..." );
     }
 
+    global $db;
+
     $module_name = basename( dirname( substr( __FILE__, 0, strlen( dirname( __FILE__ ) ) ) ) );
 
     /* load class package */
@@ -38,6 +40,10 @@
             $objPackage->execQuery($sql);
         } else {
             $sql="ALTER TABLE " . $tableName . " MODIFY banActive ENUM('y','n') NOT NULL DEFAULT 'y'";
+            $objPackage->execQuery($sql);
+        }
+        if (!isset($columns['BANCOLOR'])) {
+            $sql="ALTER TABLE " . $tableName . " ADD banColor VARCHAR(20) NOT NULL DEFAULT '#000000' AFTER banPosition";
             $objPackage->execQuery($sql);
         }
         ?>

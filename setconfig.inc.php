@@ -31,7 +31,7 @@ include_once('include/phptimer/class.phpTimer.php');
 $requiredConfigVars = array(
     'dbtype', 'dbhost', 'dbuser', 'dbpw', 'dbname',
     'cfg_url', 'cfg_title', 'cfg_theme', 'cfg_lang', 'cfg_dir',
-    'cfg_datadir', 'cfg_packagedir', 'tablepre', 'cfg_log',
+    'cfg_datadir', 'cfg_packagedir', 'tablepre',
     'cfg_email', 'cfg_sendmail', 'cfg_smtp_host', 'cfg_smtp_port',
     'cfg_offsettime', 'cfg_seo'
 );
@@ -43,6 +43,8 @@ foreach ($requiredConfigVars as $requiredVarName) {
 }
 
 
+require_once __DIR__ . '/include/lanai/site_url.php';
+$cfg_url = lanai_effective_site_url($cfg_url, $_SERVER, __DIR__);
 $cfg['url'] = $cfg_url;
 $cfg['title'] = $cfg_title;
 
@@ -51,8 +53,9 @@ $cfg['lang'] = $cfg_lang;
 $cfg['dir'] = $cfg_dir;
 $cfg['datadir'] = $cfg_datadir;
 $cfg['packdir'] = $cfg_packagedir;
+if (isset($cfg_explorer_roots) && is_array($cfg_explorer_roots)) $cfg['explorer_roots'] = $cfg_explorer_roots;
+if (isset($cfg_explorer_trash) && is_string($cfg_explorer_trash)) $cfg['explorer_trash'] = $cfg_explorer_trash;
 $cfg['tablepre'] = $tablepre;
-$cfg['log'] = $cfg_log;
 $cfg['email'] = $cfg_email;
 $cfg['sendmail'] = $cfg_sendmail;
 $cfg['smtp_host'] = $cfg_smtp_host;
@@ -82,6 +85,10 @@ include_once('include/lanai/class.system.php');
 include_once('include/lanai/class.html.php');
 include_once('include/lanai/class.pager.php');
 $sys_lanai = new Systems();
+
+include_once('include/lanai/class.analytics.php');
+$lanaiAnalytics = new LanaiAnalytics($db, $tablepre);
+$lanaiAnalytics->trackRequest();
 
 
 /* second security level check */
@@ -125,11 +132,6 @@ if (empty($loadlang) || $loadlang === 'yes') {
     if (file_exists('modules/ezshopingcart/cartsession.php')) {
         include_once('modules/ezshopingcart/cartsession.php');
     }
-}
-
-if ($cfg['log'] == 'yes') {
-    // write click stream
-    $sys_lanai->setLogs();
 }
 
 // offline
@@ -210,14 +212,6 @@ if (is_array($metaRow)) {
             : $field;
         $obMeta->{$propertyName} = $value;
     }
-}
-
-// setlog
-if (file_exists("modules/log/module.php")) {
-    include_once("modules/log/module.php");
-    $obsyslog = new SysLog();
-    $obsyslog->setLog();
-    unset($obsyslog);
 }
 
 ?>

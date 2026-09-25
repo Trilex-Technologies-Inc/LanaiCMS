@@ -30,7 +30,9 @@ switch($ac){
         break;
     case "doedit":
         $userPri=$mem_lanai->getUserPrivilege($_SESSION['uid']);
-        if (empty($_REQUEST['userFname']) OR empty($_REQUEST['userLname']) OR empty($_REQUEST['userLogin'])  OR empty($_REQUEST['userEmail'])) {
+        if (!$sys_lanai->validateCsrfToken('member', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+            $sys_lanai->getErrorBox("Invalid request, please try again.");
+        } else if (empty($_REQUEST['userFname']) OR empty($_REQUEST['userLname']) OR empty($_REQUEST['userLogin'])  OR empty($_REQUEST['userEmail'])) {
             $sys_lanai->getErrorBox(_REQUIRE_FIELDS_BACK);
         } else {
             // update info
@@ -40,7 +42,7 @@ switch($ac){
             } else {
                 if (($_REQUEST['userPassword1'])==($_REQUEST['userPassword2'])){
                     $mem_lanai->setUpdateUser($_SESSION['uid'],$_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin'],$userPri);
-                    $mem_lanai->setUpdateUserPassword($_SESSION['uid'],md5($_REQUEST['userPassword1']));
+                    $mem_lanai->setUpdateUserPassword($_SESSION['uid'],$_REQUEST['userPassword1']);
                     //$sys_lanai->go2Page("?modname=member&mf=meminfo");
                 } else {
                     $sys_lanai->getErrorBox(_PASSWORD_NOT_EQUAL_BACK);
@@ -84,6 +86,7 @@ switch($ac){
                 <input type="hidden" name="modname" value="member"/>
                 <input type="hidden" name="mf" value="meminfo"/>
                 <input type="hidden" name="ac" value="doedit"/>
+                <?php $sys_lanai->renderCsrfField('member'); ?>
                 <tr>
                     <td><?=_USER_FNAME; ?></td><td><input type="text" name="userFname" value="<?=$rs->fields['userFname']?>">*</td>
                 </tr>

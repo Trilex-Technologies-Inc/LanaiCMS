@@ -40,23 +40,23 @@ $rs = $content->getContentById($_REQUEST['mid']);
         content_css: false // keep user CSS classes intact
     });
 </script>
-</script>
 
 <span class="txtContentTitle"><?= _CONTENT_SETTING; ?></span><br/><br/>
 <?= _CONTENT_EDIT_INSTRUCTION; ?><br/><br/>
 
 <img src="theme/<?= $cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-<a href="#" onClick="javascript:document.form.submit();"><?= _SAVE; ?></a>&nbsp;&nbsp;
+<button type="submit" form="content-form"><?= _SAVE; ?></button>&nbsp;&nbsp;
 
 <img src="theme/<?= $cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
-<a href="#" onClick="javascript:history.back();"><?= _BACK; ?></a>
+<a href="setting.php?modname=content"><?= _BACK; ?></a>
 <br><br>
 
-<form name="form" method="post" action="<?= $_SERVER['PHP_SELF']; ?>">
+<form id="content-form" name="form" method="post" action="<?= $_SERVER['PHP_SELF']; ?>">
     <input type="hidden" name="mf" value="conedit">
     <input type="hidden" name="modname" value="<?= $module_name; ?>">
     <input type="hidden" name="mid" value="<?= $_REQUEST['mid']; ?>">
     <input type="hidden" name="ac" value="edit">
+    <?php $sys_lanai->renderCsrfField('content'); ?>
 
     <table cellpadding="3" cellspacing="1">
         <tr>
@@ -64,6 +64,11 @@ $rs = $content->getContentById($_REQUEST['mid']);
             <td width="100%">
                 <input type="text" name="conTitle" size="40" value="<?= $rs->fields['conTitle']; ?>">*
             </td>
+        </tr>
+
+        <tr>
+            <td><?= _CONTENT_ALLOW_COMMENTS; ?></td>
+            <td><label><input type="checkbox" name="conAllowComments" value="y"<?= $rs->fields['conAllowComments'] === 'y' ? ' checked' : ''; ?>> <?= _YES; ?></label></td>
         </tr>
 
         <tr>

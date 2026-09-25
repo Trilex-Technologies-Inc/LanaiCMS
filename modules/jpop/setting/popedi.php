@@ -13,6 +13,10 @@ if (!$rs) {
 	$sys_lanai->getErrorBox("Data not found!");
 }  else {
 	if ($_REQUEST['ac']=="edit") {
+		if (!$sys_lanai->validateCsrfToken('jpop', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+			$sys_lanai->getErrorBox("Invalid request, please try again.");
+			return;
+		}
 		$objJpop->poptitle=$_REQUEST['popTitle'];
 		$objJpop->popdescription=$_REQUEST['popDescription'];
 		$objJpop->popbgtitle=$_REQUEST['popBgTitle'];
@@ -29,11 +33,12 @@ if (!$rs) {
 <a href="#" onclick="javascript:history.back();"><?=_JPOP_BACK; ?></a><br><br>
 
 	<table>
-	<form name="addform" method="get" action="setting.php">
+	<form name="addform" method="post" action="setting.php">
 	<input type="hidden" name="modname" value="jpop">
 	<input type="hidden" name="mf" value="popedi">
 	<input type="hidden" name="ac" value="edit">
 	<input type="hidden" name="i" value="<?=$_REQUEST['i']; ?>">
+	<?php $sys_lanai->renderCsrfField('jpop'); ?>
 	<tr><td><?=_JPOP_TITLE; ?> : </td><td><input type="text" id="popTitle" name="popTitle" size="40" value="<?=$objJpop->poptitle;?>"></td></tr>
 	<tr valign="top"><td><?=_JPOP_DES; ?> : </td>
 	<td>

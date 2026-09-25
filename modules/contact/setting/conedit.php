@@ -14,6 +14,10 @@
 		case "new":
 				//$prefix=substr(md5(rand(1000,9999)),0,20);
 				//$mnu_lanai->setNewMenu($_REQUEST['method'],$prefix,$_REQUEST['userfile'],$_REQUEST['zippath']);
+				if (!$sys_lanai->validateCsrfToken('contact', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				if (empty($_REQUEST['conFname']) OR empty($_REQUEST['conLname']) OR empty($_REQUEST['conEmail'])) {
 			   		$sys_lanai->getErrorBox(_REQUIRE_FIELDS." <a href=\"#\" onClick=\"javascript:history.back();\">"._BACK."</a>");
 				} else {
@@ -22,10 +26,18 @@
 				}
 			break;
 		case "active": 
+				if (!$sys_lanai->validateCsrfToken('contact', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				$contact->setContactActive($_REQUEST['mid'],$_REQUEST['v']);
 				$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
 			break;
 		case "mactive": 
+				if (!$sys_lanai->validateCsrfToken('contact', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				$midarr=$_REQUEST['mid'];
 				for ($i=0;$i<count($midarr);$i++) {
 					$rsdwn=$contact->getContactById($midarr[$i]);
@@ -39,6 +51,10 @@
 				$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
 			break;
 		case "mdelete":
+				if (!$sys_lanai->validateCsrfToken('contact', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				
 				$midarr=$_REQUEST['mid'];
 				for ($i=0;$i<count($midarr);$i++) {
@@ -55,6 +71,10 @@
 		*/
 		case "edit": 
 				//edit
+				if (!$sys_lanai->validateCsrfToken('contact', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				$contact->setUpdateContact($_REQUEST['conId'],$_REQUEST['conFname'],$_REQUEST['conLname'],$_REQUEST['conPosition'],$_REQUEST['conAddress1'],$_REQUEST['conAddress2'],$_REQUEST['conCity'],$_REQUEST['conState'],$_REQUEST['cntId'],$_REQUEST['conZipcode'],$_REQUEST['conPhone'],$_REQUEST['conFax'],$_REQUEST['conMobile'],$_REQUEST['conEmail'],$_REQUEST['conURL']);
 				$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
 			break;

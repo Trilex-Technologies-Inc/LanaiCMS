@@ -73,11 +73,15 @@ foreach ($schemaarr as $val) {
             <?php
         } else {
             $sql = preg_replace("/%tablepre%/", $cfg['tablepre'], $sql);
+            $keyword = trim($_REQUEST['keyword']);
+            // escape LIKE wildcards so user input can't widen the match pattern
+            $keywordEsc = addcslashes($keyword, '%_\\');
             if ($searchMethod == "phase") {
-                $sql = preg_replace("/%keyword%/", "%" . trim($_REQUEST['keyword']) . "%", $sql);
+                $quoted = $db->qstr("%" . $keywordEsc . "%");
             } else {
-                $sql = preg_replace("/%keyword%/", trim($_REQUEST['keyword']), $sql);
+                $quoted = $db->qstr($keywordEsc);
             }
+            $sql = preg_replace("/%keyword%/", addcslashes($quoted, '\\$'), $sql);
 
             $pager = new SearchPage($db, $sql, 30);
             $pager->item = $searchItem;

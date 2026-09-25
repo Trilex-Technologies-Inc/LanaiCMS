@@ -22,7 +22,7 @@ class LanaiSeach {
 }
 
 class SearchPage extends Pager {
-	var $item="news";
+	var $item="content";
 	
 	function __construct ($db,$sql,$offset) {
 		parent::__construct($db, $sql, $offset);

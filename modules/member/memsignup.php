@@ -11,7 +11,7 @@ include_once($modfunction);
 $mem_lanai = new User();
 $signupSendResult = null;
 
-function member_get_activation_url($userLogin, $passwordHash)
+function member_get_activation_url($userLogin, $activationToken)
 {
     global $cfg;
 
@@ -33,10 +33,10 @@ function member_get_activation_url($userLogin, $passwordHash)
         }
     }
 
-    return rtrim($baseUrl, '/') . '/module.php?modname=member&mf=memactivate&u=' . urlencode($userLogin) . '&p=' . urlencode($passwordHash);
+    return rtrim($baseUrl, '/') . '/module.php?modname=member&mf=memactivate&u=' . urlencode($userLogin) . '&p=' . urlencode($activationToken);
 }
 
-function member_send_activation_email($userFname, $userLname, $userEmail, $userLogin, $passwordHash)
+function member_send_activation_email($userFname, $userLname, $userEmail, $userLogin, $activationToken)
 {
     global $cfg;
 
@@ -46,7 +46,7 @@ function member_send_activation_email($userFname, $userLname, $userEmail, $userL
 
     require_once("include/phpmailer/class.phpmailer.php");
 
-    $activationUrl = member_get_activation_url($userLogin, $passwordHash);
+    $activationUrl = member_get_activation_url($userLogin, $activationToken);
     $fromEmail = !empty($cfg['email']) ? $cfg['email'] : $userEmail;
     $fromName = !empty($cfg['title']) ? $cfg['title'] : 'Lanai CMS';
 
@@ -132,13 +132,15 @@ if ($rslogin->recordcount() > 0) {
 
         if (empty($userFname) || empty($userLname) || empty($userEmail) || empty($userLogin) || empty($userPassword1) || empty($userPassword2)) {
             $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
+        } elseif (!$sys_lanai->validateCsrfToken('member', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+            $sys_lanai->getErrorBox("Invalid request, please try again.");
         } else {
             if ($userPassword1 == $userPassword2 && $captchaOk) {
-                $rs = $mem_lanai->setUserRegister($userFname, $userLname, $userEmail, $userLogin, $userPassword1);
-                if (empty($rs)) {
+                $activationToken = $mem_lanai->setUserRegister($userFname, $userLname, $userEmail, $userLogin, $userPassword1);
+                if (empty($activationToken)) {
                     $sys_lanai->getErrorBox(_CANNOT_REGISTER . " <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
                 } else {
-                    $signupSendResult = member_send_activation_email($userFname, $userLname, $userEmail, $userLogin, md5($userPassword1));
+                    $signupSendResult = member_send_activation_email($userFname, $userLname, $userEmail, $userLogin, $activationToken);
                     // success message
                     ?>
                     <div class="alert alert-success d-flex align-items-center" role="alert">
@@ -167,6 +169,7 @@ if ($rslogin->recordcount() > 0) {
             <input type="hidden" name="modname" value="member"/>
             <input type="hidden" name="mf" value="memsignup"/>
             <input type="hidden" name="ac" value="lostpass"/>
+            <?php $sys_lanai->renderCsrfField('member'); ?>
 
             <div class="col-md-6">
                 <label for="userFname" class="form-label"><?=_USER_FNAME;?></label>

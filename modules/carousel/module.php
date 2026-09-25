@@ -24,6 +24,11 @@ class banner extends ADOdb_Active_Record {
         return isset($positions[$position]) ? $position : 'l';
     }
 
+    function normalizeColor($color) {
+        $color = trim((string) $color);
+        return preg_match('/^#[0-9a-fA-F]{6}$/', $color) ? $color : '#000000';
+    }
+
     function getPositionLabel($position) {
         $positions = $this->getPositionOptions();
         return isset($positions[$position]) ? $positions[$position] : $positions['l'];
@@ -88,6 +93,7 @@ class banner extends ADOdb_Active_Record {
         $id = intval($data['banId']);
         $banDate = !empty($data['banDate']) ? $data['banDate'] : date("Y-m-d H:i:s");
         $banPosition = $this->normalizePosition(isset($data['banPosition']) ? $data['banPosition'] : 'l');
+        $banColor = $this->normalizeColor(isset($data['banColor']) ? $data['banColor'] : '#000000');
         $banShow = isset($data['banShow']) ? intval($data['banShow']) : 0;
         $banClick = isset($data['banClick']) ? intval($data['banClick']) : 0;
         $banActive = isset($data['banActive']) && $data['banActive'] === 'n' ? 'n' : 'y';
@@ -101,6 +107,7 @@ class banner extends ADOdb_Active_Record {
             banimage      = " . $db->qstr($data['banImage']) . ",
             banurl        = " . $db->qstr($data['banURL']) . ",
             banposition   = " . $db->qstr($banPosition) . ",
+            bancolor      = " . $db->qstr($banColor) . ",
             bandate       = " . $db->qstr($banDate) . ",
             banshow       = " . $banShow . ",
             banclick      = " . $banClick . ",
@@ -124,19 +131,21 @@ class banner extends ADOdb_Active_Record {
 
         $banDate = !empty($data['banDate']) ? $data['banDate'] : date("Y-m-d H:i:s");
         $banPosition = $this->normalizePosition(isset($data['banPosition']) ? $data['banPosition'] : 'l');
+        $banColor = $this->normalizeColor(isset($data['banColor']) ? $data['banColor'] : '#000000');
         $banShow = isset($data['banShow']) ? intval($data['banShow']) : 0;
         $banClick = isset($data['banClick']) ? intval($data['banClick']) : 0;
         $banActive = isset($data['banActive']) && $data['banActive'] === 'n' ? 'n' : 'y';
 
         $sql = "
         INSERT INTO {$this->_table}
-            (banTitle, banDescription, banImage, banURL, banPosition, banDate, banShow, banClick, banActive)
+            (banTitle, banDescription, banImage, banURL, banPosition, banColor, banDate, banShow, banClick, banActive)
         VALUES
             (" . $db->qstr($data['banTitle']) . ",
              " . $db->qstr($data['banDescription']) . ",
              " . $db->qstr($data['banImage']) . ",
              " . $db->qstr($data['banURL']) . ",
              " . $db->qstr($banPosition) . ",
+             " . $db->qstr($banColor) . ",
              " . $db->qstr($banDate) . ",
              " . $banShow . ",
              " . $banClick . ",
@@ -206,6 +215,7 @@ class bannerPager extends Pager {
 		<td class="dataColumnHeader"><input type="checkbox" value="select_all" onclick="selectall(this);" class="radioButton" /></td>
 		<td class="dataColumnHeader" width="30%" align="center"><?=_BANN_TITLE; ?></td>
 		<td class="dataColumnHeader" align="center"><?=_BANN_POSITION; ?></td>
+		<td class="dataColumnHeader" align="center"><?=_BANN_COLOR; ?></td>
 		<td class="dataColumnHeader" align="center"><?=_BANN_ACTIVE; ?></td>
 		<td class="dataColumnHeader" width="60%" align="center"><?=_BANN_DESCRIPTION; ?></td>
 		<td class="dataColumnHeader" align="center"><?=_BANN_SHOW; ?></td>
@@ -230,6 +240,9 @@ class bannerPager extends Pager {
            </td>
            <td class="dataColumn"><?=$this->rs->fields['banTitle']; ?></td>
            <td class="dataColumn" align="center"><?=$this->getPositionLabel($this->rs->fields['banPosition']); ?></td>
+           <td class="dataColumn" align="center">
+           <span style="display:inline-block;width:16px;height:16px;border:1px solid #ccc;vertical-align:middle;background-color:<?=htmlspecialchars((string)($this->rs->fields['banColor'] ?? '#000000'), ENT_QUOTES, 'UTF-8'); ?>;"></span>
+           </td>
            <td class="dataColumn" align="center">
            <?php if ($this->rs->fields['banActive'] === 'n') { ?>
                <button type="submit" name="ac" value="active" onclick="return prepareCarouselAction('<?=$this->rs->fields['banId']; ?>', 'y');" style="border:0;background:none;padding:0;cursor:pointer;">

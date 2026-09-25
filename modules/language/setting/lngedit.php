@@ -11,6 +11,11 @@
 	
 	$lng_lanai=new Language();
 	
+	if (!$sys_lanai->validateCsrfToken('language', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+		$sys_lanai->getErrorBox("Invalid request, please try again.");
+		return;
+	}
+
 	$lng_lanai->setUpdateLanguage($_REQUEST['lngname']);	
 	$sys_lanai->goBack();
 	

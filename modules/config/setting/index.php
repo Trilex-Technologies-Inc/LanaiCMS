@@ -81,6 +81,7 @@ $turnstileSecretKey = isset($cfg['turnstile_secret_key']) ? $cfg['turnstile_secr
         <form id="configForm" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="card p-4 shadow-sm">
             <input type="hidden" name="modname" value="config">
             <input type="hidden" name="mf" value="editconfig">
+            <?php $sys_lanai->renderCsrfField('config'); ?>
 
             <?php
             $varno  = ($status == "no") ? "selected" : "";

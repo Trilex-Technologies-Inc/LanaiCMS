@@ -8,6 +8,11 @@ $objbanner = new banner();
 
 if (!empty($_REQUEST['ac']) && $_REQUEST['ac']=="add") {
 
+	if (!$sys_lanai->validateCsrfToken('carousel', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+		$sys_lanai->getErrorBox("Invalid request, please try again.");
+		return;
+	}
+
 	$result = $objbanner->createBanner($_REQUEST);
 
 if (!$result) { 
@@ -31,16 +36,18 @@ if (!$result) {
 	}
 </script>
 <table>
-<form name="addform" method="get" action="setting.php">
+<form name="addform" method="post" action="setting.php">
 <input type="hidden" name="modname" value="carousel">
 <input type="hidden" name="mf" value="add">
 <input type="hidden" name="ac" value="add">
+<?php $sys_lanai->renderCsrfField('carousel'); ?>
 <?php $positions = $objbanner->getPositionOptions(); ?>
 <tr><td><?=_BANN_TITLE; ?></td><td><input type="text" id="banTitle" name="banTitle" size="30">*</td></tr>
 <tr><td valign="top"><?=_BANN_DES; ?></td><td><textarea name="banDescription" cols="30" rows="5"></textarea>*</td></tr>
 <tr><td><?=_BANN_IMAGE_URL; ?></td><td><input type="text" id="banImage" name="banImage" size="50" onblur="javacript:loadImage()">*</td></tr>
 <tr><td><?=_BANN_URL; ?></td><td><input type="text" id="banURL" name="banURL" size="40">*</td></tr>
 <tr><td><?=_BANN_POSITION; ?></td><td><select id="banPosition" name="banPosition"><?php foreach ($positions as $key => $label) { ?><option value="<?=$key; ?>"<?=$key == 'l' ? ' selected' : ''; ?>><?=$label; ?></option><?php } ?></select>*</td></tr>
+<tr><td><?=_BANN_COLOR; ?></td><td><input type="color" id="banColor" name="banColor" value="#000000"></td></tr>
 <tr><td><?=_BANN_ACTIVE; ?></td><td><select id="banActive" name="banActive"><option value="y" selected><?=_YES; ?></option><option value="n"><?=_NO; ?></option></select></td></tr>
 <tr><td>&nbsp;</td><td><img src="modules/carousel/images/space.gif" name="banView" ></td></tr>
 <tr><td>&nbsp;</td><td><input  type="submit" value="<?=_SAVE; ?>" class="inputButton"> <input  type="reset" value="<?=_RESET; ?>" class="inputButton"></td></tr>

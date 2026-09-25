@@ -13,6 +13,10 @@
 	
 	switch($_REQUEST['ac']){
 		case "new":
+				if (!$sys_lanai->validateCsrfToken('member', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				//$prefix=substr(md5(rand(1000,9999)),0,20);
 				//$member->setNewModule($_REQUEST['method'],$prefix,$_REQUEST['userfile'],$_REQUEST['zippath']);
 				//Find member unique login
@@ -27,7 +31,7 @@
 					 		//$mem_lanai->setUpdateUser($_SESSION['uid'],$_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin']);
 							//$mem_lanai->setUpdateUserPassword($_SESSION['uid'],$_REQUEST['userPassword1']);
 							//$sys_lanai->go2Page("?modname=member&mf=meminfo");
-							$member->setNewUser($_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin'],$_REQUEST['userPassword1'],$_REQUEST['userPrivilege']);
+							$member->setNewUser($_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin'],$_REQUEST['userPassword1'],$_REQUEST['userPrivilege'],isset($_REQUEST['userRoleId']) ? $_REQUEST['userRoleId'] : null);
 						} else {
 							$sys_lanai->getErrorBox(_PASSWORD_NOT_EQUAL." <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
 						}
@@ -77,10 +81,18 @@
 				}
 			break;
 		case "active": 
+				if (!$sys_lanai->validateCsrfToken('member', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				$member->setUserActive($_REQUEST['mid'],$_REQUEST['v']);
 				$sys_lanai->goBack();
 			break;
 		case "mactive": 
+				if (!$sys_lanai->validateCsrfToken('member', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				$midarr=$_REQUEST['mid'];
 				for ($i=0;$i<count($midarr);$i++) {
 					$rsdwn=$member->getUser($midarr[$i]);
@@ -94,6 +106,10 @@
 				$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
 			break;
 		case "mdelete":
+				if (!$sys_lanai->validateCsrfToken('member', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				
 				$midarr=$_REQUEST['mid'];
 				for ($i=0;$i<count($midarr);$i++) {
@@ -109,18 +125,21 @@
 			break;
 			*/
 		case "edit": 
-				
+				if (!$sys_lanai->validateCsrfToken('member', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				if (empty($_REQUEST['userFname']) OR empty($_REQUEST['userLname']) OR empty($_REQUEST['userLogin'])  OR empty($_REQUEST['userEmail'])) {
 			   	$sys_lanai->getErrorBox(_REQUIRE_FIELDS." <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
 				} else {
 					// update info
 					if ((empty($_REQUEST['userPassword1']) AND empty($_REQUEST['userPassword2']))) {
-					    $member->setUpdateUser($_REQUEST['mid'],$_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin'],$_REQUEST['userPrivilege']);
+					    $member->setUpdateUser($_REQUEST['mid'],$_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin'],$_REQUEST['userPrivilege'],isset($_REQUEST['userRoleId']) ? $_REQUEST['userRoleId'] : null);
 						//$sys_lanai->go2Page("?modname=member&mf=meminfo");
 					} else {
 						if (($_REQUEST['userPassword1'])==($_REQUEST['userPassword2'])){
-						 	$member->setUpdateUser($_REQUEST['mid'],$_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin'],$_REQUEST['userPrivilege']);
-							$member->setUpdateUserPassword($_REQUEST['mid'],md5($_REQUEST['userPassword1']));
+						 	$member->setUpdateUser($_REQUEST['mid'],$_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin'],$_REQUEST['userPrivilege'],isset($_REQUEST['userRoleId']) ? $_REQUEST['userRoleId'] : null);
+							$member->setUpdateUserPassword($_REQUEST['mid'],$_REQUEST['userPassword1']);
 							//$sys_lanai->go2Page("?modname=member&mf=meminfo");
 						} else {
 							$sys_lanai->getErrorBox(_PASSWORD_NOT_EQUAL_BACK);

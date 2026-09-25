@@ -25,6 +25,7 @@
 	<input type="hidden" name="mf" value="modedit">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="ac" value="new">
+	<?php $sys_lanai->renderCsrfField('module'); ?>
 	<tr>
 		<td valign="top"><input type="radio" name="method" value="3" class="radioButton" checked></td>
 		<td><?=_MODULE_DIR_REMOTE; ?><br><br><input type="text" size="40" name="modpath" value=""></td>

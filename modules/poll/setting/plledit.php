@@ -12,6 +12,10 @@
 	
 	switch($_REQUEST['ac']){
 		case "new":
+				if (!$sys_lanai->validateCsrfToken('poll', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				$ppoItem=$_REQUEST['ppoTitle'];
 				if ((empty($_REQUEST['pllTitle'])) OR (($pll->getPollOptionItemCount($ppoItem)) < 2 )) {
 			   		$sys_lanai->getErrorBox(_REQUIRE_FIELDS." <a href=\"#\" onClick=\"javascript:history.back();\">"._BACK."</a>");
@@ -30,10 +34,18 @@
 				
 			break;
 		case "active": 
+				if (!$sys_lanai->validateCsrfToken('poll', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				$pll->setPollItemActive($_REQUEST['mid'],$_REQUEST['v']);
 				$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
 			break;
 		case "mactive": 
+				if (!$sys_lanai->validateCsrfToken('poll', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				$midarr=$_REQUEST['mid'];
 				for ($i=0;$i<count($midarr);$i++) {
 					$rsdwn=$pll->getPollItemById($midarr[$i]);
@@ -48,6 +60,10 @@
 			break;
 		
 		case "mdelete":
+				if (!$sys_lanai->validateCsrfToken('poll', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 				
 				$midarr=$_REQUEST['mid'];
 				for ($i=0;$i<count($midarr);$i++) {
@@ -59,6 +75,10 @@
 			break;
 		
 		case "edit": 
+				if (!$sys_lanai->validateCsrfToken('poll', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+					$sys_lanai->getErrorBox("Invalid request, please try again.");
+					break;
+				}
 		 		$ppoItem=$_REQUEST['ppoTitle'];
 				if ((empty($_REQUEST['pllTitle'])) OR (($pll->getPollOptionItemCount($ppoItem)) < 2 )) {
 			   		$sys_lanai->getErrorBox(_REQUIRE_FIELDS." <a href=\"#\" onClick=\"javascript:history.back();\">"._BACK."</a>");

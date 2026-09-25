@@ -17,15 +17,25 @@
 <script language="JavaScript" type="text/javascript">
     function ckdelete(id){
         if (confirm("<?=_DELETE_QUESTION; ?>")){
-		    location.href="<?=$cfg['url']; ?>"+"/setting.php?modname=backup&mf=delete&f="+id;
+		    document.backupActions.mf.value = 'delete';
+		    document.backupActions.f.value = id;
+		    document.backupActions.submit();
 		}
     }
     function ckrestore(id){
         if (confirm("<?=_RESTORE_QUESTION; ?>")){
-		    location.href="<?=$cfg['url']; ?>"+"/setting.php?modname=backup&mf=restore&f="+id;
+		    document.backupActions.mf.value = 'restore';
+		    document.backupActions.f.value = id;
+		    document.backupActions.submit();
 		}
     }
 </script>
+<form name="backupActions" method="post" action="setting.php">
+<input type="hidden" name="modname" value="backup">
+<input type="hidden" name="mf" value="">
+<input type="hidden" name="f" value="">
+<?php $sys_lanai->renderCsrfField('backup'); ?>
+</form>
 <table cellpadding="3" cellspacing="1" width="100%">
 <tr>
 <th class="tblRowSolidTopDown"><?=_FILENAME; ?></th>

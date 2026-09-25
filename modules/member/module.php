@@ -17,6 +17,7 @@ class User
     var $db;
     var $cfg;
     var $_sql;
+    var $activationColumnEnsured = false;
 
     function __construct()
     {
@@ -42,7 +43,7 @@ class User
         if ($mid == "0") {
             $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "user";
         } else {
-            $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "user WHERE userId=$mid";
+            $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "user WHERE userId=" . intval($mid);
         }
         $this->_sql = $sql;
         $rs = $this->db->execute($sql);
@@ -51,7 +52,7 @@ class User
 
     function getUserLogin($login)
     {
-        $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "user WHERE userLogin='" . $login . "'";
+        $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "user WHERE userLogin=" . $this->db->qstr($login);
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -60,7 +61,7 @@ class User
     function getUserPrivilege($mid)
     {
         global $db, $tablepre;
-        $sql = "SELECT * FROM " . $tablepre . "user WHERE userId=$mid";
+        $sql = "SELECT * FROM " . $tablepre . "user WHERE userId=" . intval($mid);
         //$db->debug=true;
         $rs = $db->execute($sql);
         return $rs->fields['userPrivilege'];
@@ -68,16 +69,18 @@ class User
 
     function getUserIdByLogin($login)
     {
-        $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "user WHERE userLogin='" . $login . "'";
+        $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "user WHERE userLogin=" . $this->db->qstr($login);
         $rs = $this->db->execute($sql);
         return ($rs->fields['userId']);
     }
 
     function setUserActive($mid, $value)
     {
+        $value = $value === 'n' ? 'n' : 'y';
         $sql = "UPDATE " . $this->cfg['tablepre'] . "user 
-					SET userActive='" . $value . "'
-					WHERE userId=" . $mid;
+					SET userActive=" . $this->db->qstr($value) .
+            ($value === 'y' ? ", userActivationToken=NULL" : "") . "
+					WHERE userId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -85,58 +88,85 @@ class User
 
     function setDeleteUser($mid)
     {
-        $sql = "DELETE FROM " . $this->cfg['tablepre'] . "user WHERE userId=$mid";
+        $sql = "DELETE FROM " . $this->cfg['tablepre'] . "user WHERE userId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
 
-    function setNewUser($userFname, $userLname, $userAddress1, $userAddress2, $userCity, $userState, $cntId, $userZipcode, $userPhone, $userFax, $userMobile, $userEmail, $userURL, $userLogin, $userPassword, $userPrivilege)
+    function ensureActivationTokenColumn()
     {
+        if ($this->activationColumnEnsured) {
+            return;
+        }
+        $table = $this->cfg['tablepre'] . 'user';
+        $columns = $this->db->MetaColumns($table);
+        if ($columns !== false && !isset($columns['USERACTIVATIONTOKEN'])) {
+            $this->db->Execute("ALTER TABLE " . $table . " ADD userActivationToken VARCHAR(64) DEFAULT NULL");
+        }
+        $this->activationColumnEnsured = true;
+    }
+
+    function setNewUser($userFname, $userLname, $userAddress1, $userAddress2, $userCity, $userState, $cntId, $userZipcode, $userPhone, $userFax, $userMobile, $userEmail, $userURL, $userLogin, $userPassword, $userPrivilege, $userRoleId = null)
+    {
+        global $sys_lanai;
         $sql = "INSERT INTO " . $this->cfg['tablepre'] . "user 
-					(userFname,userLname,userAddress1,userAddress2,userCity,userState,cntId,userZipcode,userPhone,userFax,userMobile,userEmail,userURL,userLogin,userPassword,userPrivilege,userCreated,userActive) 
-					VALUES ('" . $userFname . "','" . $userLname . "','" . $userAddress1 . "','" . $userAddress2 . "','" . $userCity . "',
-					'" . $userState . "','" . $cntId . "','" . $userZipcode . "','" . $userPhone . "','" . $userFax . "','" . $userMobile . "',
-					'" . $userEmail . "','" . $userURL . "','" . $userLogin . "','" . md5($userPassword) . "','" . $userPrivilege . "',NOW(),'y')";
+					(userFname,userLname,userAddress1,userAddress2,userCity,userState,cntId,userZipcode,userPhone,userFax,userMobile,userEmail,userURL,userLogin,userPassword,userPrivilege,userRoleId,userCreated,userActive) 
+					VALUES (" . $this->db->qstr($userFname) . "," . $this->db->qstr($userLname) . "," . $this->db->qstr($userAddress1) . "," . $this->db->qstr($userAddress2) . "," . $this->db->qstr($userCity) . ",
+					" . $this->db->qstr($userState) . "," . $this->db->qstr($cntId) . "," . $this->db->qstr($userZipcode) . "," . $this->db->qstr($userPhone) . "," . $this->db->qstr($userFax) . "," . $this->db->qstr($userMobile) . ",
+					" . $this->db->qstr($userEmail) . "," . $this->db->qstr($userURL) . "," . $this->db->qstr($userLogin) . "," . $this->db->qstr($sys_lanai->hashPassword($userPassword)) . "," . $this->db->qstr($userPrivilege) . "," . (empty($userRoleId) ? "NULL" : intval($userRoleId)) . ",NOW(),'y')";
         $rs = $this->db->execute($sql);
         return $rs;
     }
 
+    /**
+     * Register a new (inactive) user and return the activation token to email, or false on failure.
+     */
     function setUserRegister($userFname, $userLname, $userEmail, $userLogin, $userPassword)
     {
+        global $sys_lanai;
+        $this->ensureActivationTokenColumn();
+        $activationToken = bin2hex(random_bytes(20));
         $sql = "INSERT INTO " . $this->cfg['tablepre'] . "user 
-					(userFname,userLname,userEmail,userLogin,userPassword,userCreated,userActive)
-					VALUES ('" . $userFname . "','" . $userLname . "','" . $userEmail . "','" . $userLogin . "','" . md5($userPassword) . "',NOW(),'n')";
+					(userFname,userLname,userEmail,userLogin,userPassword,userActivationToken,userCreated,userActive)
+					VALUES (" . $this->db->qstr($userFname) . "," . $this->db->qstr($userLname) . "," . $this->db->qstr($userEmail) . "," . $this->db->qstr($userLogin) . "," . $this->db->qstr($sys_lanai->hashPassword($userPassword)) . "," . $this->db->qstr($activationToken) . ",NOW(),'n')";
         $rs = $this->db->execute($sql);
-        return $rs;
+        return $rs ? $activationToken : false;
     }
 
-    function setUpdateUser($uid, $userFname, $userLname, $userAddress1, $userAddress2, $userCity, $userState, $cntId, $userZipcode, $userPhone, $userFax, $userMobile, $userEmail, $userURL, $userLogin, $userPrivilege)
+    function setUpdateUser($uid, $userFname, $userLname, $userAddress1, $userAddress2, $userCity, $userState, $cntId, $userZipcode, $userPhone, $userFax, $userMobile, $userEmail, $userURL, $userLogin, $userPrivilege, $userRoleId = null)
     {
         global $db, $tablepre;
         $sql = "UPDATE " . $tablepre . "user 
-					SET userFname='" . $userFname . "', userLname='" . $userLname . "', userAddress1='" . $userAddress1 . "', userAddress2='" . $userAddress2 . "', userCity='" . $userCity . "', userState='" . $userState . "', cntId='" . $cntId . "',
-						userZipcode='" . $userZipcode . "', userPhone='" . $userPhone . "', userFax='" . $userFax . "', userMobile='" . $userMobile . "', userEmail='" . $userEmail . "', userURL='" . $userURL . "', userLogin='" . $userLogin . "',userPrivilege='" . $userPrivilege . "' 
-					WHERE userId=$uid";
+					SET userFname=" . $db->qstr($userFname) . ", userLname=" . $db->qstr($userLname) . ", userAddress1=" . $db->qstr($userAddress1) . ", userAddress2=" . $db->qstr($userAddress2) . ", userCity=" . $db->qstr($userCity) . ", userState=" . $db->qstr($userState) . ", cntId=" . $db->qstr($cntId) . ",
+						userZipcode=" . $db->qstr($userZipcode) . ", userPhone=" . $db->qstr($userPhone) . ", userFax=" . $db->qstr($userFax) . ", userMobile=" . $db->qstr($userMobile) . ", userEmail=" . $db->qstr($userEmail) . ", userURL=" . $db->qstr($userURL) . ", userLogin=" . $db->qstr($userLogin) . ",userPrivilege=" . $db->qstr($userPrivilege) . ", userRoleId=" . (empty($userRoleId) ? "NULL" : intval($userRoleId)) . " 
+					WHERE userId=" . intval($uid);
         //$db->debug=true;
         $rs = $db->execute($sql);
         return $rs;
     }
 
-    function setUpdateUserPassword($uid, $userPassword1)
+    /**
+     * Set a user's password. Accepts a plaintext password and hashes it internally.
+     */
+    function setUpdateUserPassword($uid, $userPassword)
     {
-        global $db, $tablepre;
+        global $db, $tablepre, $sys_lanai;
         $sql = "UPDATE " . $tablepre . "user 
-					SET userPassword='" . $userPassword1 . "' 
-					WHERE userId=$uid";
+					SET userPassword=" . $db->qstr($sys_lanai->hashPassword($userPassword)) . " 
+					WHERE userId=" . intval($uid);
         //$db->debug=true;
         $rs = $db->execute($sql);
         return $rs;
     }
 
-    function getUserActivate($u, $p)
+    /**
+     * Look up a pending activation by login + activation token.
+     */
+    function getUserActivate($userLogin, $token)
     {
+        $this->ensureActivationTokenColumn();
         $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "user
-                    WHERE userLogin='" . $u . "' AND userPassword='" . $p . "' ";
+                    WHERE userLogin=" . $this->db->qstr($userLogin) . " AND userActivationToken=" . $this->db->qstr($token) . " ";
         $rs = $this->db->execute($sql);
         return ($rs);
     }
@@ -144,7 +174,7 @@ class User
     function isUserExist($mid)
     {
         global $db, $tablepre;
-        $sql = "SELECT * FROM " . $tablepre . "user WHERE userId=$mid";
+        $sql = "SELECT * FROM " . $tablepre . "user WHERE userId=" . intval($mid);
         $rs = $db->execute($sql);
         if ($rs->recordcount() > 0) {
             return true;
@@ -166,7 +196,7 @@ class User
     function getCountry($cntid)
     {
         global $db, $tablepre;
-        $sql = "SELECT * FROM " . $tablepre . "country WHERE cntId='$cntid'";
+        $sql = "SELECT * FROM " . $tablepre . "country WHERE cntId=" . $db->qstr($cntid);
         $rs = $db->execute($sql);
         return $rs->fields['cntName'];
     }

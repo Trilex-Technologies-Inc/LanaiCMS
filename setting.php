@@ -18,14 +18,25 @@ if (empty($_SESSION['uid']) || $_SESSION['uid'] <= 0) {
 
     $mem = $mem_lanai->getUser($_SESSION['uid']);
     $theme = new Theme();
+    $settingUserName = trim($mem->fields['userFname'] . ' ' . $mem->fields['userLname']);
+    if ($settingUserName === '') {
+        $settingUserName = $mem->fields['userLogin'];
+    }
+    $smarty->assign("settingUserName", htmlspecialchars($settingUserName, ENT_QUOTES, 'UTF-8'));
     $smarty->assign("getLogoHeader", $theme->getLogoHeader());
     $smarty->assign("getFooter", $theme->getFooter());
     $smarty->assign("setBlockLeft", $theme->setBlock("l"));
     $smarty->assign("setBlockRight", $theme->setBlock("r"));
-    $smarty->assign("setModule", $theme->getSettingModule(
-        $modname,
-        $mf
-    ));
+    $settingModule = '';
+    if ($modname === 'statistics') {
+        include_once('include/lanai/class.analytics.php');
+        ob_start();
+        include('modules/statistics/setting/index.php');
+        $settingModule = ob_get_clean();
+    } elseif ($modname !== '') {
+        $settingModule = $theme->getSettingModule($modname, $mf);
+    }
+    $smarty->assign("setModule", $settingModule);
 
 //$smarty->assign ("setBlockCenter", $theme->setBlock("c"));
     $smarty->assign("setBlockTop", $theme->setBlock("t"));

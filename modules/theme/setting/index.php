@@ -32,10 +32,11 @@
 
 	?>
 	<table cellpadding="3" cellspacing="1">
-	<form name="form" method="get"  action="<?=$_SERVER['PHP_SELF']; ?>">	
+	<form name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>">	
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="mf" value="thmedit">
 	<input type="hidden" name="ac" value="save">
+	<?php $sys_lanai->renderCsrfField('theme'); ?>
 	<tr>
 		<td valign="top">
 		<?=_THEME_NAME; ?>

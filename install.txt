@@ -24,8 +24,6 @@ Install La-Nai on Unix, Linux, OSX
 4. Browse to http://your-domain-name/lanai-dir/
 5. It 'll start web installation follow the instruction until finish.
 6. Delete 'install' directory after finish.
-
-
 Anonymous CVS Access
 ====================
 
@@ -57,4 +55,4 @@ $export CVS_RSH=ssh
  
 $cvs -z3 -d:ext:developername@la-nai.cvs.sourceforge.net:/cvsroot/la-nai co -P modulename
 
-NOTE: UNIX file and directory names are case sensitive. The path to the project CVSROOT must be specified using lowercase characters (i.e. /cvsroot/la-nai) 
+NOTE: UNIX file and directory names are case sensitive. The path to the project CVSROOT must be specified using lowercase characters (i.e. /cvsroot/la-nai)

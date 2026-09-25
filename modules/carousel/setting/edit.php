@@ -36,6 +36,11 @@ if (empty($banner)) {
 } else {
     if (!empty($_REQUEST['ac']) && $_REQUEST['ac'] == "edit") {
 
+        if (!$sys_lanai->validateCsrfToken('carousel', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
+            $sys_lanai->getErrorBox("Invalid request, please try again.");
+            return;
+        }
+
         $result = $objbanner->saveBanner($_REQUEST);
 
         if (!$result) {
@@ -59,6 +64,7 @@ if (empty($banner)) {
                 <input type="hidden" name="ac" value="edit">
                 <input type="hidden" name="banId" value="<?=$id; ?>">
                 <input type="hidden" name="id" value="<?=$id; ?>">
+                <?php $sys_lanai->renderCsrfField('carousel'); ?>
 
                 <tr>
                     <td><?=_BANN_TITLE; ?></td>
@@ -83,6 +89,11 @@ if (empty($banner)) {
                 <tr>
                     <td><?=_BANN_POSITION; ?></td>
                     <td><select id="banPosition" name="banPosition"><?php foreach ($positions as $key => $label) { ?><option value="<?=$key; ?>"<?=isset($banner['banposition']) && $banner['banposition'] == $key ? ' selected' : ''; ?>><?=htmlspecialchars((string)$label, ENT_QUOTES, 'UTF-8'); ?></option><?php } ?></select>*</td>
+                </tr>
+
+                <tr>
+                    <td><?=_BANN_COLOR; ?></td>
+                    <td><input type="color" id="banColor" name="banColor" value="<?=htmlspecialchars((string)(!empty($banner['bancolor']) ? $banner['bancolor'] : '#000000'), ENT_QUOTES, 'UTF-8'); ?>"></td>
                 </tr>
 
                 <tr>

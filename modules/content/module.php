@@ -39,13 +39,13 @@ class Content
     function getContentById($cid)
     {
         $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "content 
-					WHERE conId=$cid";
+					WHERE conId=" . intval($cid);
         $this->_sql = $sql;
         $rs = $this->db->execute($sql);
         return $rs;
     }
 
-    function setEditContent($conId, $conTitle, $conBody1, $conBody2)
+    function setEditContent($conId, $conTitle, $conBody1, $conBody2, $allowComments = 'n')
     {
         $conId = (int)$conId;
         $uid = (int)$this->uid;
@@ -53,6 +53,7 @@ class Content
         $conTitle = $this->db->qstr($conTitle);
         $conBody1 = $this->db->qstr($conBody1);
         $conBody2 = $this->db->qstr($conBody2);
+        $allowComments = $this->db->qstr($allowComments === 'y' ? 'y' : 'n');
 
         $sql = "
         UPDATE {$this->cfg['tablepre']}content
@@ -61,6 +62,7 @@ class Content
             conTitle    = $conTitle,
             conBody1    = $conBody1,
             conBody2    = $conBody2,
+            conAllowComments = $allowComments,
             conModified = NOW()
         WHERE conId = $conId
     ";
@@ -77,18 +79,19 @@ class Content
 
 
     //conId  userId  conTitle  conBody1  conBody2  conModified  conActive
-    function setNewContent($conTitle, $conBody1, $conBody2)
+    function setNewContent($conTitle, $conBody1, $conBody2, $allowComments = 'n')
     {
         $uid = (int)$this->uid;
 
         $conTitle = $this->db->qstr($conTitle);
         $conBody1 = $this->db->qstr($conBody1);
         $conBody2 = $this->db->qstr($conBody2);
+        $allowComments = $this->db->qstr($allowComments === 'y' ? 'y' : 'n');
 
         $sql = "
         INSERT INTO {$this->cfg['tablepre']}content
-        (userId, conTitle, conBody1, conBody2, conModified, conActive)
-        VALUES ($uid, $conTitle, $conBody1, $conBody2, NOW(), 'y')
+        (userId, conTitle, conBody1, conBody2, conAllowComments, conModified, conActive)
+        VALUES ($uid, $conTitle, $conBody1, $conBody2, $allowComments, NOW(), 'y')
     ";
 
         $rs = $this->db->Execute($sql);
@@ -104,17 +107,19 @@ class Content
 
     function setDeleteContent($mid)
     {
+        $this->db->execute("DELETE FROM " . $this->cfg['tablepre'] . "comment WHERE catTitle='content' AND catId=" . intval($mid));
         $sql = "DELETE FROM " . $this->cfg['tablepre'] . "content 
-					WHERE conId=" . $mid;
+					WHERE conId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
 
     function setContentActive($mid, $value)
     {
+        $value = $value === 'n' ? 'n' : 'y';
         $sql = "UPDATE " . $this->cfg['tablepre'] . "content  
-					SET conActive='" . $value . "'
-					WHERE conId=" . $mid;
+					SET conActive=" . $this->db->qstr($value) . "
+					WHERE conId=" . intval($mid);
         $rs = $this->db->execute($sql);
         return $rs;
     }
@@ -129,7 +134,7 @@ class Content
     function getContentIdByTitle($title)
     {
         $sql = "SELECT * FROM " . $this->cfg['tablepre'] . "content 
-						WHERE conTitle LIKE '" . $title . "' 
+						WHERE conTitle LIKE " . $this->db->qstr($title) . " 
 						ORDER BY conId DESC";
         $rs = $this->db->execute($sql);
         return ($rs->fields['conId']);
@@ -139,7 +144,7 @@ class Content
     {
         $sql = "INSERT INTO " . $this->cfg['tablepre'] . "menu 
 					(mnuParentId,mnuTitle,conId,mnuType,mnuActive,mnuOrder)
-					VALUES (0,'" . $title . "',$conid,'c','y'," . $this->getMaxMenuWeight() . ")";
+					VALUES (0," . $this->db->qstr($title) . "," . intval($conid) . ",'c','y'," . $this->getMaxMenuWeight() . ")";
         $rs = $this->db->execute($sql);
         return $rs;
     }

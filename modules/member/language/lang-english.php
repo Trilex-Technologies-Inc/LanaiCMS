@@ -60,6 +60,8 @@
 	define("_REG_COMPLETE","Your account has been registered.");
 	define("_REG_SEND_COMPLETE","Your register information was sent to your E-Mail.");
 	define("_USER_PRIVILEGE","Privilege");
+	define("_USER_ROLE","Role");
+	define("_USER_ROLE_NONE","-- None --");
 	define("_MEMBER_NEW","Member Setting");
 	define("_MEMBER_NEW_INSTRUCTION","Please complete following form (*) are required!");
 	define("_MEMBER_ACTIVATE_SUBJECT","Activate your account");

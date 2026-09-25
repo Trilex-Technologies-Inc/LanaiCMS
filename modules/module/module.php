@@ -36,15 +36,16 @@
 		
 		function getModuleById($mid){
 			$sql="SELECT * FROM ".$this->cfg['tablepre']."module 
-					WHERE modId=$mid";
+					WHERE modId=".intval($mid);
 			$rs=$this->db->execute($sql);	
 			return $rs;
 		}
 		
 		function setModuleActive($mid,$value){
+			$value = $value === 'n' ? 'n' : 'y';
 			$sql="UPDATE ".$this->cfg['tablepre']."module 
-					SET modActive='".$value."'
-					WHERE modId=".$mid;
+					SET modActive=".$this->db->qstr($value)."
+					WHERE modId=".intval($mid);
 			$rs=$this->db->execute($sql);	
 			return $rs;		
 		}
@@ -57,15 +58,15 @@
 		
 		function setDeleteModule($mid){
 			$sql="DELETE FROM ".$this->cfg['tablepre']."module 
-					WHERE modId=".$mid;
+					WHERE modId=".intval($mid);
 			$rs=$this->db->execute($sql);	
 			return $rs;	
 		}
 		
 		function setEditModule($mid,$modTitle){
 			$sql="UPDATE ".$this->cfg['tablepre']."module 
-					SET modTitle='".$modTitle."' 
-					WHERE modId=".$mid;
+					SET modTitle=".$this->db->qstr($modTitle)." 
+					WHERE modId=".intval($mid);
 			$rs=$this->db->execute($sql);	
 			return $rs;	
 		}

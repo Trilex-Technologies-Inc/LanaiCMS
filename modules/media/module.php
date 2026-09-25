@@ -159,7 +159,11 @@ class Media
                 (fileName, origName, filePath, thumbPath, mediaType, mimeType, fileSize, width, height, altText, userId, createdAt)
                 VALUES (" . $this->db->qstr($filename) . ", " . $this->db->qstr(basename($fileArr['name'])) . ",
                         " . $this->db->qstr($webPath) . ", " . $this->db->qstr($thumbWebPath) . ",
+<<<<<<< HEAD
                         " . $this->db->qstr($isImage ? 'image' : 'file') . ", " . $this->db->qstr($serverMimeType) . ",
+=======
+                        " . $this->db->qstr($isImage ? 'image' : 'file') . ", " . $this->db->qstr(function_exists('mime_content_type') ? @mime_content_type($destPath) : (isset($fileArr['type']) ? $fileArr['type'] : '')) . ",
+>>>>>>> 471332ec9ca38ac3c0ce5e2519e3b9116636b7c1
                         " . intval($fileArr['size']) . ",
                         " . ($imgInfo ? intval($imgInfo[0]) : "NULL") . ", " . ($imgInfo ? intval($imgInfo[1]) : "NULL") . ",
                         " . $this->db->qstr($altText) . ", " . (int) $this->uid . ", NOW())";

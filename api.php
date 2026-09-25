@@ -30,6 +30,10 @@ function api_respond($data, $status = 200)
 {
     http_response_code($status);
     echo json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    if (session_status() === PHP_SESSION_ACTIVE) {
+        // Avoid persisting API-authenticated uid into a browser session.
+        session_abort();
+    }
     exit;
 }
 
@@ -181,10 +185,17 @@ switch ($resource) {
             api_respond(array('items' => $items, 'limit' => $limit, 'offset' => $offset));
         }
 
+<<<<<<< HEAD
         $itemRs = $ctype->getItemBySlug($ctpId, $itemSlug);
         if ($itemRs->recordcount() < 1) {
             api_error('Item not found', 404);
         }
+=======
+$itemRs = $ctype->getItemBySlug($ctpId, $itemSlug);
+if ($itemRs->recordcount() < 1) {
+    api_error('Item not found', 404);
+}
+>>>>>>> 471332ec9ca38ac3c0ce5e2519e3b9116636b7c1
 
         if ($method === 'PUT' || $method === 'PATCH') {
             $userId = api_require_auth();

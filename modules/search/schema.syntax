@@ -1,3 +1,2 @@
 content#SELECT * FROM %tablepre%content WHERE conBody1 LIKE %keyword% OR conBody2 LIKE %keyword%
-news#SELECT * FROM %tablepre%news WHERE nwsTitle LIKE %keyword% OR nwsPreface LIKE %keyword% OR nwsBody LIKE %keyword% 
-forum#SELECT * FROM %tablepre%forum_items WHERE fitTitle LIKE %keyword% OR fitDescription LIKE %keyword% 
+forum#SELECT * FROM %tablepre%forum_items WHERE fitTitle LIKE %keyword% OR fitDescription LIKE %keyword%

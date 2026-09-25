@@ -13,10 +13,6 @@ RewriteRule ^([^/]+)/?$ module.php?modname=$1 [L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^news/([^/]+)/([0-9]+)/?$ module.php?modname=news&mf=$1&cid=$2 [L,QSA]
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^content/([0-9]+)/?$ module.php?modname=content&cid=$1 [L,QSA]
 
 # SEO-friendly content-type URLs

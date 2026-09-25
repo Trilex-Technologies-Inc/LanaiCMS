@@ -8,6 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/vendor/bootstrap-icons/font/bootstrap-icons.css">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
@@ -565,7 +566,6 @@
                     <label for="item" class="form-label text-light">Locate in</label>
                     <select name="item" id="item" class="form-select bg-secondary text-light border-0 mb-2">
                         <option value="content">Content</option>
-                        <option value="news">News</option>
                         <option value="forum">Forum</option>
                     </select>
                     <div class="form-check form-check-inline">
@@ -728,5 +728,6 @@
     });
 </script>
 <script src="assets/vendor/sweetalert2/sweetalert2.all.min.js"></script>
+<script src="assets/js/lanai-bootstrap-icons.js"></script>
 </body>
 </html>

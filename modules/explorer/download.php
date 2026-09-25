@@ -1,17 +1,10 @@
 <?php
-
-include_once("../../config.inc.php");
-session_start();
-if (($_SESSION['uid']>0))  {
-	if (file_exists($cfg_dir."/".$_REQUEST['f'])) {
-		$fp=fopen($cfg_dir."/".$_REQUEST['f'],"r");
-		$content=fread($fp,filesize($cfg_dir."/".$_REQUEST['f']));
-		fclose($fp);
-		Header("Content-type: application/application/x-unknown");
-		Header("Content-Disposition: attachment; filename=".$_REQUEST['f']);
-		echo $content;
-		exit;
-	}
-}
-
-?>
+require __DIR__ . '/bootstrap.php';
+explorer_admin();
+try {
+    $files = new ExplorerFiles($cfg);
+    $root = explorer_string($_GET, 'root', array_key_first($files->roots));
+    $relative = explorer_string($_GET, 'path', explorer_string($_GET, 'f'));
+    $path = $files->path($root, $relative);
+    ExplorerResponse::stream($path, basename($path), explorer_string($_GET, 'preview') === '1');
+} catch (Throwable $e) { http_response_code(404); header('Content-Type: text/plain'); echo 'File not available.'; }

@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../include/lanai/site_url.php';
 function getLanguage() {
     if ($handle = opendir("../language/")) {
         $i=0;
@@ -29,16 +30,15 @@ function getLanguage() {
         <div class="mb-3 row">
             <label class="col-sm-3 col-form-label"><?=_SETUP_URL; ?></label>
             <div class="col-sm-9">
-                <input type="text" name="cfg_url" class="form-control" value="https://<?=$_SERVER["SERVER_NAME"]; ?>">
+                <input type="text" name="cfg_url" class="form-control" value="<?=htmlspecialchars(lanai_install_url($_SERVER, dirname(__DIR__)), ENT_QUOTES, 'UTF-8'); ?>">
             </div>
         </div>
 
         <div class="mb-3 row">
             <label class="col-sm-3 col-form-label"><?=_SETUP_DIR; ?></label>
             <div class="col-sm-9">
-                <input type="text" name="cfg_dir" class="form-control" value="<?=substr(getcwd(),0,(strlen(getcwd())-8)); ?>">
+                <input type="text" name="cfg_dir" class="form-control" value="<?=htmlspecialchars(dirname(__DIR__), ENT_QUOTES, 'UTF-8'); ?>">
                 <input type="hidden" name="cfg_off" value="no">
-                <input type="hidden" name="cfg_log" value="yes">
             </div>
         </div>
 

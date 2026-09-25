@@ -30,7 +30,6 @@ define("_FOUND","found");
 define("_ITEMS","items"); 
 
 // search array type
-$SEARCH_LANG['news']="News";
 $SEARCH_LANG['forum']="Forum";
 $SEARCH_LANG['content']="Content";
 

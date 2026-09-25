@@ -252,9 +252,9 @@ class ContentType
      * Save an item (insert when $citId is empty, update otherwise) plus its
      * flexible field values. $values is [cfdId => rawValue] keyed by field id.
      */
-    function setSaveItem($citId, $ctpId, $title, $values)
+    function setSaveItem($citId, $ctpId, $title, $values, $ownerUserId = null)
     {
-        $uid = (int) $this->uid;
+        $uid = $ownerUserId === null ? (int) $this->uid : (int) $ownerUserId;
         $tablepre = $this->cfg['tablepre'];
 
         if (empty($citId)) {

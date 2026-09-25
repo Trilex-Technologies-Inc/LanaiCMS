@@ -1,6 +1,6 @@
 <?php
 
-$font = "include/VeraSeBd.ttf";
+$font = __DIR__ . "/include/VeraSeBd.ttf";
 $fontsize = 18;
 $signature = "lanaicmslanaicmslanaicmslanaicmslanaicms";
 
@@ -24,6 +24,7 @@ $imghgt = 40;
 
 // Set the content-type
 header("Content-type: image/png");
+header("Cache-Control: no-store, no-cache, must-revalidate");
 
 // Create the image
 $im = imagecreatetruecolor($imgwid, $imghgt);

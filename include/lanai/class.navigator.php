@@ -17,7 +17,7 @@
 					if ($rsmx->fields['mnuType']=="m") {
 						$rsmod=$sys_lanai->getModule($rsmx->fields['modId']);
 						if ($cfg['seo']=="yes") { 
-							$prelink="/".$rsmod->fields['modName'];
+							$prelink=rtrim($cfg['url'], '/')."/".$rsmod->fields['modName'];
 						} else {
 							$prelink="module.php?modname=".$rsmod->fields['modName'];
 						}

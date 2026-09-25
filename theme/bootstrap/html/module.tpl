@@ -1,5 +1,6 @@
 <!-- Bootstrap CSS -->
 <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="assets/vendor/bootstrap-icons/font/bootstrap-icons.css">
 
 <!-- Font Awesome -->
 <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
@@ -56,6 +57,10 @@
   .article-content {
     overflow-wrap: anywhere;
   }
+  .module-content-shell {
+    padding-top: 6rem;
+    padding-bottom: 3rem;
+  }
   .article-content table {
     display: block;
     max-width: 100%;
@@ -74,6 +79,10 @@
     main > .container.my-5 {
       margin-top: 1.5rem !important;
       margin-bottom: 1.5rem !important;
+    }
+    .module-content-shell {
+      padding-top: 5rem;
+      padding-bottom: 1.5rem;
     }
     .article-content {
       padding: 1rem !important;
@@ -115,7 +124,6 @@
           <label for="item" class="form-label text-light">Locate in</label>
           <select name="item" id="item" class="form-select bg-secondary text-light border-0 mb-2">
             <option value="content">Content</option>
-            <option value="news">News</option>
             <option value="forum">Forum</option>
           </select>
           <div class="form-check form-check-inline">
@@ -173,23 +181,11 @@
 </header>
 
 <main>
-  <!-- Article Hero -->
-  {if $nameModule|strstr:'content' || ($nameModule|strstr:'news' && $mf=='nwsview')}
+  <!-- Content pages render their own title and body. -->
+  {if $nameModule|strstr:'content'}
     {$setModule}
   {else}
-    <section class="article-hero">
-      <div class="container">
-        <h1 class="display-5 fw-bold">The Future of Technology</h1>
-        <div class="article-meta mt-2">
-          <i class="fas fa-calendar-alt"></i> October 25, 2025 &nbsp;|&nbsp;
-          <i class="fas fa-user"></i> By Admin &nbsp;|&nbsp;{$nameModule}
-          <i class="fas fa-folder"></i> Tech
-        </div>
-      </div>
-    </section>
-
-    <!-- Main Article Content -->
-    <div class="container my-5">
+    <div class="container module-content-shell">
       <div class="row g-5">
         {if $nameModule|strstr:'forum'}
           <div class="col-md-12">
@@ -224,3 +220,4 @@
 
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="assets/vendor/sweetalert2/sweetalert2.all.min.js"></script>
+<script src="assets/js/lanai-bootstrap-icons.js"></script>

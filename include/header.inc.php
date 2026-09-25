@@ -39,6 +39,7 @@ $sys_lanai->loadAjaxFunction($modname);
 ?>
     <meta http-equiv="Content-Type" content="text/html; charset=<?= _CHARSET; ?>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="<?= htmlspecialchars(rtrim($cfg['url'], '/') . '/', ENT_QUOTES, 'UTF-8'); ?>">
     <meta http-equiv="expires" content="0">
     <meta name="description" content="<?= htmlspecialchars($description, ENT_QUOTES) ?>" />
     <meta name="abstract" content="<?= htmlspecialchars($abstract, ENT_QUOTES) ?>" />

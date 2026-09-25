@@ -318,18 +318,22 @@ class Systems
     }
 
     /**
-     * True if the current session user may act on a piece of content: either
-     * they hold the blanket capability, or they own it (ownerUserId matches
-     * the session user) and hold the "own content only" capability.
+     * True if a user may act on a piece of content: either they hold the
+     * blanket capability, or they own it and hold the "own content only"
+     * capability. Defaults to the current session user when no ID is passed.
      */
-    function userCanActOnContent($ownerUserId, $blanketCap, $ownCap = 'edit_own_content')
+    function userCanActOnContent($ownerUserId, $blanketCap, $ownCap = 'edit_own_content', $uid = null)
     {
-        if ($this->userHasCapability($blanketCap)) {
+        if ($uid === null) {
+            $uid = isset($_SESSION['uid']) ? (int) $_SESSION['uid'] : 0;
+        } else {
+            $uid = (int) $uid;
+        }
+        if ($this->userHasCapability($blanketCap, $uid)) {
             return true;
         }
         $ownerUserId = (int) $ownerUserId;
-        $uid = isset($_SESSION['uid']) ? (int) $_SESSION['uid'] : 0;
-        return $ownerUserId > 0 && $ownerUserId === $uid && $this->userHasCapability($ownCap);
+        return $ownerUserId > 0 && $ownerUserId === $uid && $this->userHasCapability($ownCap, $uid);
     }
 
     // getRealUid($_SESSION['uid']);
@@ -421,54 +425,6 @@ class Systems
         ?>
         <script> history.back(<?=$page; ?>);   </script><?php
     }
-
-    function setLogs()
-    {
-        global $db, $tablepre, $cfg_offsettime;
-        $time = time();
-        $time2 = gmdate("YmdHis", time() + ($cfg_offsettime * 3600));
-        if ($_SESSION['uid'] == "") {
-            $uid = 0;
-        } else {
-            $uid = $_SESSION['uid'];
-        }
-        //$db->debug=TRUE;
-        $sql = "SELECT * FROM " . $tablepre . "logs WHERE userId=" . $uid . " AND logModified > " . ($time - 10) . " ORDER BY logModified DESC";
-
-        $rs = $db->execute($sql);
-        if (($rs->recordcount()) > 0) {
-            $visit = 0;
-        } else {
-            $visit = 1;
-        }
-        $remoteAddress = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
-        $userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
-        $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-        $sql = "INSERT INTO " . $tablepre . "logs VALUES (null," . $uid . "," . $db->qstr($this->getCountryByIp($remoteAddress)) . "," . $db->qstr($userAgent) . "," . $db->qstr($remoteAddress) . "," . $db->qstr($requestUri) . "," . $visit . ",'" . $time . "',$time2)";
-        //$db->debug=TRUE;
-        $rs = $db->execute($sql);
-    }
-
-
-    function getCountryByIp($ip)
-    {
-        global $cfg;
-        include_once($cfg['dir'] . "/include/geoip/geoip.inc");
-        $gi = geoip_open($cfg['dir'] . "/include/geoip/GeoIP.dat", 1);
-        $cnid = geoip_country_code_by_addr($gi, $ip);
-        geoip_close($gi);
-        return $cnid;
-    }
-
-    /*
-    function getCountryByIp($ip){
-        global $db,$tablepre;
-        $long=sprintf("%u",ip2long($ip));
-        $sql="SELECT * FROM ".$tablepre."ip WHERE $long BETWEEN start AND end";
-        $rs=$db->execute($sql);
-        return $rs->fields[0];
-    }
-    */
 
     function isWin()
     {

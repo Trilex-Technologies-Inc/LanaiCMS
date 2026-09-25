@@ -27,4 +27,13 @@
 	define("_CONTENT_NOT_FOUND","ไม่พบข้อมูล");
 	define("_CONTENT_NO_PERMISSION","คุณไม่มีสิทธิ์ทำรายการนี้");
 	
+	define("_CONTENT_ALLOW_COMMENTS","Allow comments");
+	define("_CONTENT_COMMENTS","Comments");
+	define("_CONTENT_POST_COMMENT","Post comment");
+	define("_CONTENT_COMMENT_REQUIRED","Please complete all comment fields.");
+	define("_CONTENT_CAPTCHA_INVALID","The verification code is incorrect.");
+	define("_CONTENT_COMMENT_NAME","ชื่อ");
+	define("_CONTENT_COMMENT_EMAIL","อีเมล");
+	define("_CONTENT_COMMENT_VERIFY","รหัสยืนยัน");
+	define("_CONTENT_COMMENT_FAILED","ไม่สามารถบันทึกความคิดเห็นได้ กรุณาลองอีกครั้ง");
 ?>

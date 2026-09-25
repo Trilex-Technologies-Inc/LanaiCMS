@@ -33,6 +33,52 @@ class Media
         return $rs;
     }
 
+    function canManage()
+    {
+        if (empty($_SESSION['uid'])) return false;
+        $user = new User();
+        return $user->getUserPrivilege($_SESSION['uid']) === 'a';
+    }
+
+    // Additive upgrade for existing installations; called only by admin screens.
+    function ensureLibraryFields()
+    {
+        $table = $this->cfg['tablepre'] . 'media';
+        $columns = $this->db->MetaColumns($table);
+        if (!$columns) return false;
+        $names = array_map('strtolower', array_keys($columns));
+        foreach (array('title' => "varchar(255) NOT NULL DEFAULT ''", 'caption' => 'text NULL', 'explorerRoot' => 'varchar(64) NULL', 'explorerPath' => 'text NULL', 'explorerTrashId' => 'varchar(32) NULL') as $name => $definition) {
+            if (!in_array(strtolower($name), $names, true) && !$this->db->Execute("ALTER TABLE " . $table . " ADD COLUMN " . $name . " " . $definition)) return false;
+        }
+        return true;
+    }
+
+    function libraryWhere($filters)
+    {
+        $conditions = array('explorerTrashId IS NULL');
+        if ($filters['q'] !== '') {
+            $needle = $this->db->qstr('%' . str_replace(array('!', '%', '_'), array('!!', '!%', '!_'), $filters['q']) . '%');
+            $conditions[] = "(origName LIKE $needle ESCAPE '!' OR title LIKE $needle ESCAPE '!' OR caption LIKE $needle ESCAPE '!' OR altText LIKE $needle ESCAPE '!')";
+        }
+        if ($filters['type'] === 'image') $conditions[] = "mediaType='image'";
+        if ($filters['type'] === 'file') $conditions[] = "mediaType='file'";
+        if ($filters['type'] === 'pdf') $conditions[] = "mimeType='application/pdf'";
+        foreach (array('from', 'to') as $key) {
+            $date = $filters[$key];
+            if (!preg_match('/^\d{4}-\d{2}-\d{2}$/D', $date)) continue;
+            $parsed = DateTime::createFromFormat('!Y-m-d', $date);
+            if ($parsed && $parsed->format('Y-m-d') === $date) {
+                $conditions[] = 'createdAt ' . ($key === 'from' ? '>= ' : '< ') . $this->db->qstr($key === 'from' ? $date : $parsed->modify('+1 day')->format('Y-m-d'));
+            }
+        }
+        return implode(' AND ', $conditions);
+    }
+
+    function updateDetails($id, $title, $caption, $altText)
+    {
+        return $this->db->Execute('UPDATE ' . $this->cfg['tablepre'] . 'media SET title=' . $this->db->qstr($title) . ', caption=' . $this->db->qstr($caption) . ', altText=' . $this->db->qstr($altText) . ' WHERE mediaId=' . (int) $id);
+    }
+
     function getMediaList($rows = 24)
     {
         $this->getMedia();
@@ -66,6 +112,8 @@ class Media
      */
     function saveUpload($fileArr, $altText = '')
     {
+        if (!isset($fileArr['error'], $fileArr['name'], $fileArr['tmp_name'], $fileArr['size']) || $fileArr['error'] !== UPLOAD_ERR_OK || !is_string($fileArr['name']) || !is_string($fileArr['tmp_name']) || !is_numeric($fileArr['size'])) return false;
+        if (!class_exists('finfo') || mb_strlen(basename($fileArr['name'])) > 255) return false;
         if (empty($fileArr['tmp_name']) || !is_uploaded_file($fileArr['tmp_name'])) {
             return false;
         }
@@ -103,15 +151,21 @@ class Media
             $thumbWebPath = $this->generateThumbnail($destPath, $destDir, $filename, $ext);
         }
 
+        // Derive MIME type server-side from file contents (more reliable than client-provided type)
+        $fileInfo = new finfo(FILEINFO_MIME_TYPE);
+        $serverMimeType = $fileInfo->file($destPath);
+
         $sql = "INSERT INTO " . $this->cfg['tablepre'] . "media
                 (fileName, origName, filePath, thumbPath, mediaType, mimeType, fileSize, width, height, altText, userId, createdAt)
                 VALUES (" . $this->db->qstr($filename) . ", " . $this->db->qstr(basename($fileArr['name'])) . ",
                         " . $this->db->qstr($webPath) . ", " . $this->db->qstr($thumbWebPath) . ",
-                        " . $this->db->qstr($isImage ? 'image' : 'file') . ", " . $this->db->qstr($fileArr['type']) . ",
+                        " . $this->db->qstr($isImage ? 'image' : 'file') . ", " . $this->db->qstr($serverMimeType) . ",
                         " . intval($fileArr['size']) . ",
                         " . ($imgInfo ? intval($imgInfo[0]) : "NULL") . ", " . ($imgInfo ? intval($imgInfo[1]) : "NULL") . ",
                         " . $this->db->qstr($altText) . ", " . (int) $this->uid . ", NOW())";
         if (!$this->db->Execute($sql)) {
+            @unlink($destPath);
+            if ($thumbWebPath) @unlink($destDir . DIRECTORY_SEPARATOR . 'thumb_' . $filename);
             return false;
         }
         return $this->db->Insert_ID();
@@ -196,6 +250,15 @@ class Media
         $rs = $this->getMediaById($mediaId);
         if ($rs->recordcount() < 1) {
             return false;
+        }
+        if (!empty($rs->fields['explorerRoot'])) {
+            require_once dirname(__DIR__) . '/explorer/class.ExplorerFiles.php';
+            require_once dirname(__DIR__) . '/explorer/class.ExplorerMedia.php';
+            $row = $rs->fields;
+            if (!empty($row['explorerTrashId'])) return false;
+            $files = new ExplorerFiles($this->cfg, new ExplorerMedia($this->db, $this->cfg));
+            $files->locked(function () use ($files, $row) { $files->trash($row['explorerRoot'], $row['explorerPath']); });
+            return true;
         }
         $base = dirname(dirname(__DIR__)); // web root (modules/media -> modules -> root)
         foreach (array($rs->fields['filePath'], $rs->fields['thumbPath']) as $relPath) {

@@ -29,7 +29,7 @@ class MediaPager extends ADODB_Pager
                 <div class="col-md-2 col-sm-3 col-4">
                     <div class="card h-100">
                         <?php if ($this->rs->fields['mediaType'] === 'image') { ?>
-                            <img src="<?=htmlspecialchars($preview);?>" class="card-img-top" style="height:100px;object-fit:cover;">
+                            <img src="<?=htmlspecialchars($preview);?>" class="card-img-top" style="height:100px;object-fit:cover;" alt="<?=htmlspecialchars($this->rs->fields['altText'] ? $this->rs->fields['altText'] : $this->rs->fields['origName']);?>">
                         <?php } else { ?>
                             <div class="card-img-top d-flex align-items-center justify-content-center" style="height:100px;background:#f1f1f1;">
                                 <i class="bi bi-file-earmark"></i>

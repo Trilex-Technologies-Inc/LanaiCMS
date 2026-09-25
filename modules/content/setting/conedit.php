@@ -21,7 +21,7 @@
 				if (empty($_REQUEST['conTitle'])) {
 			   		$sys_lanai->getErrorBox(_REQUIRE_FIELDS." <a href=\"#\" onClick=\"javascript:history.back();\">"._BACK."</a>");
 				} else {
-					$content->setNewContent($_REQUEST['conTitle'],$_REQUEST['conBody1'],$_REQUEST['conBody2']);
+					$content->setNewContent($_REQUEST['conTitle'],$_REQUEST['conBody1'],$_REQUEST['conBody2'],isset($_REQUEST['conAllowComments']) ? 'y' : 'n');
 					$id=$content->getContentIdByTitle($_REQUEST['conTitle']);
 					if (($id>0) AND ($_REQUEST['conMenu']=="yes")) {
 						$content->setContentMenu($id,$_REQUEST['conTitle']);
@@ -100,7 +100,7 @@
 				if (empty($_REQUEST['conTitle'])) {
 			   		$sys_lanai->getErrorBox(_REQUIRE_FIELDS." <a href=\"#\" onClick=\"javascript:history.back();\">"._BACK."</a>");
 				} else {
-					$content->setEditContent($_REQUEST['mid'],$_REQUEST['conTitle'],$_REQUEST['conBody1'],$_REQUEST['conBody2']);
+					$content->setEditContent($_REQUEST['mid'],$_REQUEST['conTitle'],$_REQUEST['conBody1'],$_REQUEST['conBody2'],isset($_REQUEST['conAllowComments']) ? 'y' : 'n');
 					$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
 				}
 				

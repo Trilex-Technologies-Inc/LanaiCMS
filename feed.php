@@ -3,16 +3,16 @@
 include_once("include/feedcreater/feedcreator.class.php");
 $loadlang="no";
 include_once('setconfig.inc.php');
-include_once('modules/news/module.php');
+include_once('modules/content/module.php');
 
-$nws=new News();
+$content=new Content();
 
 $rss = new UniversalFeedCreator();
 $rss->encoding="utf-8";
 $rss->useCached();
 $rss->title = $cfg['title'];
-$rss->description = "Daily News from ".$cfg['title'];
-$rss->link = $cfg['url']."/module.php?modname=news";
+$rss->description = "Content from ".$cfg['title'];
+$rss->link = $cfg['url'];
 $rss->syndicationURL = $cfg['url'].(isset($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : '/feed.php');
 
 $image = new FeedImage();
@@ -22,13 +22,13 @@ $image->link = $cfg['url'];
 $image->description = "Feed provided by ".$cfg['title']." Click to visit.";
 $rss->image = $image;
 
-$news=$nws->getShowNews(10);
+$items=$db->SelectLimit("SELECT * FROM ".$cfg['tablepre']."content WHERE conActive='y' ORDER BY conModified DESC", 10, 0);
 
-while(!$news->EOF){
+while($items && !$items->EOF){
     $item = new FeedItem();
-    $item->title = $news->fields['nwsTitle'];
-    $item->link = $cfg['url'].(("/module.php?modname=news&mf=nwsview&cid=")).$news->fields['nwsId'];
-    $words = $news->fields['nwsPreface'];
+    $item->title = $items->fields['conTitle'];
+    $item->link = $cfg['url']."/module.php?modname=content&cid=".$items->fields['conId'];
+    $words = $items->fields['conBody1'];
 	$words = preg_replace("'<script[^>]*>.*?</script>'si","",$words);
 	$words = preg_replace('/<a\s+.*?href="([^"]+)"[^>]*>([^<]+)<\/a>/is','\2 (\1)', $words);
 	$words = preg_replace('/<!--.+?-->/','',$words);
@@ -39,11 +39,11 @@ while(!$news->EOF){
 	$words = strip_tags($words);
 	$words = htmlspecialchars($words);
     $item->description = $words;
-    $item->date = adodb_date2("r",$news->fields['nwsCreate']);
+    $item->date = adodb_date2("r",$items->fields['conModified']);
     $item->source = $cfg['url'];
     $item->author = "";
     $rss->addItem($item);
-    $news->movenext();
+    $items->movenext();
 }
 
 switch ($_REQUEST['feed']) {

@@ -4,7 +4,6 @@
  * Lightweight REST API.
  *
  * Routes (see htaccess.sample.txt for the pretty-URL rewrites):
- *   GET  /api.php?resource=news[&id=NWSID]
  *   GET  /api.php?resource=content[&id=CONID]
  *   GET  /api.php?resource=ctype[&id=CTP_SLUG[&sub=ITEM_SLUG]]
  *   POST/PUT/DELETE /api.php?resource=ctype&id=CTP_SLUG[&sub=ITEM_SLUG]  (Bearer token required)
@@ -21,7 +20,6 @@ ob_start();
 include_once('setconfig.inc.php');
 ob_end_clean();
 
-include_once('modules/news/module.php');
 include_once('modules/content/module.php');
 include_once('modules/ctype/module.php');
 include_once('modules/apitoken/module.php');
@@ -61,8 +59,8 @@ function api_bearer_token()
 }
 
 /**
- * Require a valid bearer token and stash the resolved userId into the PHP
- * session so existing model code (which reads $_SESSION['uid']) works as-is.
+ * Require a valid bearer token and return its user ID. API authorization is
+ * kept request-local rather than changing the browser session identity.
  */
 function api_require_auth()
 {
@@ -70,7 +68,6 @@ function api_require_auth()
     if ($userId === false) {
         api_error('Missing or invalid API token', 401);
     }
-    $_SESSION['uid'] = $userId;
     return $userId;
 }
 
@@ -94,38 +91,6 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($resource) {
 
-    case 'news':
-        $news = new News();
-        if (!empty($_REQUEST['id'])) {
-            $rs = $news->getNewsById($_REQUEST['id']);
-            if ($rs->recordcount() < 1 || $rs->fields['nwsActive'] !== 'y') {
-                api_error('News item not found', 404);
-            }
-            api_respond(array(
-                'id' => (int) $rs->fields['nwsId'],
-                'title' => $rs->fields['nwsTitle'],
-                'preface' => $rs->fields['nwsPreface'],
-                'body' => $rs->fields['nwsBody'],
-                'created' => $rs->fields['nwsCreate'],
-            ));
-        }
-        list($limit, $offset) = api_pagination();
-        global $db, $cfg;
-        $sql = "SELECT * FROM " . $cfg['tablepre'] . "news WHERE nwsActive='y' ORDER BY nwsCreate DESC";
-        $rs = $db->SelectLimit($sql, $limit, $offset);
-        $items = array();
-        while ($rs && !$rs->EOF) {
-            $items[] = array(
-                'id' => (int) $rs->fields['nwsId'],
-                'title' => $rs->fields['nwsTitle'],
-                'preface' => $rs->fields['nwsPreface'],
-                'created' => $rs->fields['nwsCreate'],
-            );
-            $rs->movenext();
-        }
-        api_respond(array('items' => $items, 'limit' => $limit, 'offset' => $offset));
-        break;
-
     case 'content':
         $content = new Content();
         if (!empty($_REQUEST['id'])) {
@@ -138,6 +103,7 @@ switch ($resource) {
                 'title' => $rs->fields['conTitle'],
                 'body1' => $rs->fields['conBody1'],
                 'body2' => $rs->fields['conBody2'],
+                'allow_comments' => $rs->fields['conAllowComments'] === 'y',
             ));
         }
         list($limit, $offset) = api_pagination();
@@ -180,8 +146,8 @@ switch ($resource) {
         $ctpId = $typeRs->fields['ctpId'];
 
         if ($method === 'POST' && $itemSlug === '') {
-            api_require_auth();
-            if (!$sys_lanai->userHasCapability('edit_content') && !$sys_lanai->userHasCapability('edit_own_content')) {
+            $userId = api_require_auth();
+            if (!$sys_lanai->userHasCapability('edit_content', $userId) && !$sys_lanai->userHasCapability('edit_own_content', $userId)) {
                 api_error('Missing edit_content/edit_own_content capability', 403);
             }
             $body = api_json_body();
@@ -197,7 +163,7 @@ switch ($resource) {
                     }
                 }
             }
-            $citId = $ctype->setSaveItem(null, $ctpId, $body['title'], $values);
+            $citId = $ctype->setSaveItem(null, $ctpId, $body['title'], $values, $userId);
             api_respond(array('id' => $citId), 201);
         }
 
@@ -216,14 +182,14 @@ switch ($resource) {
         }
 
         $itemRs = $ctype->getItemBySlug($ctpId, $itemSlug);
-        if ($method === 'GET' && $itemRs->recordcount() < 1) {
+        if ($itemRs->recordcount() < 1) {
             api_error('Item not found', 404);
         }
 
         if ($method === 'PUT' || $method === 'PATCH') {
-            api_require_auth();
+            $userId = api_require_auth();
             $existing = $ctype->getItemById($itemRs->fields['citId']);
-            if ($existing->recordcount() < 1 || !$sys_lanai->userCanActOnContent($existing->fields['userId'], 'edit_content')) {
+            if ($existing->recordcount() < 1 || !$sys_lanai->userCanActOnContent($existing->fields['userId'], 'edit_content', 'edit_own_content', $userId)) {
                 api_error('Forbidden', 403);
             }
             $body = api_json_body();
@@ -242,9 +208,9 @@ switch ($resource) {
         }
 
         if ($method === 'DELETE') {
-            api_require_auth();
+            $userId = api_require_auth();
             $existing = $ctype->getItemById($itemRs->fields['citId']);
-            if ($existing->recordcount() < 1 || !$sys_lanai->userCanActOnContent($existing->fields['userId'], 'delete_content')) {
+            if ($existing->recordcount() < 1 || !$sys_lanai->userCanActOnContent($existing->fields['userId'], 'delete_content', 'edit_own_content', $userId)) {
                 api_error('Forbidden', 403);
             }
             $ctype->setDeleteItem($existing->fields['citId']);

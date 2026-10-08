@@ -99,6 +99,7 @@
 		
 		// target combo 
 		function getTargetCombo($name,$value){
+			$none = $blank = $parent = $self = $top = '';
 			if ($value=="") {
 			    $none="selected";
 			} else if ($value=="_blank") {

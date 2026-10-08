@@ -1,0 +1,464 @@
+english	spanish	german	french	portuguese_brazil	japanese
+The visual editor could not load. You can still edit the HTML and use the insert controls above.	No se pudo cargar el editor visual. Puedes editar el HTML y usar los controles de inserción.	Der visuelle Editor konnte nicht geladen werden. Sie können HTML bearbeiten und die Einfügefunktionen verwenden.	L’éditeur visuel n’a pas pu être chargé. Vous pouvez modifier le HTML et utiliser les commandes d’insertion.	O editor visual não carregou. Você pode editar o HTML e usar os controles de inserção.	ビジュアルエディターを読み込めませんでした。HTMLの編集と上の挿入機能は使用できます。
+Choose an existing poll, image, document or contact and click Insert. Create items using the links above, then save and reopen this page to refresh the choices.	Elige una encuesta, imagen, documento o contacto y pulsa Insertar. Crea elementos con los enlaces anteriores, guarda y vuelve a abrir la página para actualizar las opciones.	Wählen Sie eine Umfrage, ein Bild, Dokument oder einen Kontakt und klicken Sie auf Einfügen. Erstellen Sie Einträge über die Links oben, speichern Sie und öffnen Sie die Seite erneut.	Choisissez un sondage, une image, un document ou un contact puis cliquez sur Insérer. Créez des éléments avec les liens ci-dessus, enregistrez et rouvrez la page pour actualiser les choix.	Escolha uma enquete, imagem, documento ou contato e clique em Inserir. Crie itens pelos links acima, salve e reabra a página para atualizar as opções.	既存の投票、画像、文書、連絡先を選んで挿入を押します。上のリンクから項目を作成し、保存してこのページを開き直すと選択肢が更新されます。
+Enable JavaScript to use insert controls. You can still enter and save HTML below.	Activa JavaScript para usar los controles de inserción. Puedes introducir y guardar HTML abajo.	Aktivieren Sie JavaScript für die Einfügefunktionen. HTML kann unten eingegeben und gespeichert werden.	Activez JavaScript pour les commandes d’insertion. Vous pouvez saisir et enregistrer du HTML ci-dessous.	Ative JavaScript para usar os controles de inserção. Você pode digitar e salvar HTML abaixo.	挿入機能を使うにはJavaScriptを有効にしてください。下の欄でHTMLの入力と保存はできます。
+Cookie preferences	Preferencias de cookies	Cookie-Einstellungen	Préférences des cookies	Preferências de cookies	Cookie設定
+Your preferences have been saved.	Se guardaron tus preferencias.	Ihre Einstellungen wurden gespeichert.	Vos préférences ont été enregistrées.	Suas preferências foram salvas.	設定を保存しました。
+Necessary storage remains available. Choose which optional categories to allow.	El almacenamiento necesario sigue disponible. Elige las categorías opcionales que permites.	Notwendiger Speicher bleibt verfügbar. Wählen Sie die erlaubten optionalen Kategorien.	Le stockage nécessaire reste disponible. Choisissez les catégories facultatives autorisées.	O armazenamento necessário continua disponível. Escolha as categorias opcionais permitidas.	必須の保存機能は利用可能です。許可する任意のカテゴリを選択してください。
+Analytics	Análisis	Analyse	Analyse	Análises	分析
+External media	Contenido externo	Externe Medien	Médias externes	Mídia externa	外部メディア
+Marketing	Marketing	Marketing	Marketing	Marketing	マーケティング
+Do not allow	No permitir	Nicht erlauben	Ne pas autoriser	Não permitir	許可しない
+Allow	Permitir	Erlauben	Autoriser	Permitir	許可する
+Manage personal data and privacy requests	Gestionar datos personales y solicitudes de privacidad	Persönliche Daten und Datenschutzanfragen verwalten	Gérer les données personnelles et demandes de confidentialité	Gerenciar dados pessoais e solicitações de privacidade	個人データとプライバシー申請を管理
+Require fields <a href="javascript:history.back();">back</a>	Completa los campos obligatorios. <a href="javascript:history.back();">Volver</a>	Füllen Sie die Pflichtfelder aus. <a href="javascript:history.back();">Zurück</a>	Remplissez les champs obligatoires. <a href="javascript:history.back();">Retour</a>	Preencha os campos obrigatórios. <a href="javascript:history.back();">Voltar</a>	必須項目を入力してください。<a href="javascript:history.back();">戻る</a>
+Wrong image type <a href="javascript:history.back();">back</a>	Tipo de imagen no válido. <a href="javascript:history.back();">Volver</a>	Ungültiger Bildtyp. <a href="javascript:history.back();">Zurück</a>	Type d’image invalide. <a href="javascript:history.back();">Retour</a>	Tipo de imagem inválido. <a href="javascript:history.back();">Voltar</a>	画像形式が正しくありません。<a href="javascript:history.back();">戻る</a>
+Password not equal <a href="javascript:history.back();">back</a>	Las contraseñas no coinciden. <a href="javascript:history.back();">Volver</a>	Passwörter stimmen nicht überein. <a href="javascript:history.back();">Zurück</a>	Les mots de passe ne correspondent pas. <a href="javascript:history.back();">Retour</a>	As senhas não coincidem. <a href="javascript:history.back();">Voltar</a>	パスワードが一致しません。<a href="javascript:history.back();">戻る</a>
+Generate bearer tokens for the REST API (api.php). Each token acts on behalf of the selected user and their role's capabilities.	Genera tokens Bearer para la API REST (api.php). Cada token usa la identidad y los permisos del usuario seleccionado.	Erstellen Sie Bearer-Token für die REST-API (api.php). Jedes Token verwendet die Identität und Rollenberechtigungen des ausgewählten Benutzers.	Générez des jetons Bearer pour l’API REST (api.php). Chaque jeton utilise l’identité et les permissions de l’utilisateur choisi.	Gere tokens Bearer para a API REST (api.php). Cada token usa a identidade e as permissões do usuário selecionado.	REST API（api.php）用のBearerトークンを生成します。トークンは選択したユーザーの権限で動作します。
+Use it as: Authorization: Bearer <token>	Úsalo así: Authorization: Bearer <token>	Verwendung: Authorization: Bearer <token>	Utilisation : Authorization: Bearer <token>	Use assim: Authorization: Bearer <token>	使用方法：Authorization: Bearer <token>
+Click 'New' to create new backup, click 'Back' go to site setting menu.	Pulsa Nuevo para crear una copia de seguridad o Volver para regresar a la configuración.	Klicken Sie auf Neu für eine Sicherung oder auf Zurück für die Einstellungen.	Cliquez sur Nouveau pour créer une sauvegarde ou sur Retour pour revenir aux paramètres.	Clique em Novo para criar um backup ou em Voltar para retornar às configurações.	新規を押してバックアップを作成するか、戻るを押して設定に戻ります。
+Click 'Save' to create new back up table , click 'Back' go to site setting menu.	Pulsa Guardar para crear la copia de las tablas o Volver para regresar a la configuración.	Klicken Sie auf Speichern für eine Tabellensicherung oder auf Zurück für die Einstellungen.	Cliquez sur Enregistrer pour sauvegarder les tables ou sur Retour pour revenir aux paramètres.	Clique em Salvar para criar o backup das tabelas ou em Voltar para retornar às configurações.	保存を押してテーブルをバックアップするか、戻るを押して設定に戻ります。
+Click 'New' to create new block, click 'Back' go to site setting menu.	Pulsa Nuevo para crear un bloque o Volver para regresar a la configuración.	Klicken Sie auf Neu für einen Block oder auf Zurück für die Einstellungen.	Cliquez sur Nouveau pour créer un bloc ou sur Retour pour revenir aux paramètres.	Clique em Novo para criar um bloco ou em Voltar para retornar às configurações.	新規を押してブロックを作成するか、戻るを押して設定に戻ります。
+Choose install block type then click 'Save' to create new block.	Elige el tipo de bloque y pulsa Guardar para crearlo.	Wählen Sie den Blocktyp und klicken Sie auf Speichern, um ihn zu erstellen.	Choisissez le type de bloc puis cliquez sur Enregistrer pour le créer.	Escolha o tipo de bloco e clique em Salvar para criá-lo.	ブロックの種類を選び、保存を押して作成してください。
+Click 'New' to add new carousel, click 'delete' to delete carousel or click 'back' back to previous page.	Pulsa Nuevo para añadir un carrusel, Eliminar para borrarlo o Volver para regresar.	Klicken Sie auf Neu für ein Karussell, Löschen zum Entfernen oder Zurück zur vorherigen Seite.	Cliquez sur Nouveau pour ajouter un carrousel, Supprimer pour le retirer ou Retour pour revenir.	Clique em Novo para adicionar um carrossel, Excluir para removê-lo ou Voltar para retornar.	新規でカルーセルを追加、削除で削除、戻るで前のページに戻ります。
+Cannot write config file, please check file permission	No se puede escribir la configuración. Revisa los permisos del archivo.	Konfigurationsdatei nicht beschreibbar. Prüfen Sie die Dateiberechtigungen.	Impossible d’écrire la configuration. Vérifiez les permissions du fichier.	Não é possível gravar a configuração. Verifique as permissões do arquivo.	設定ファイルに書き込めません。ファイルの権限を確認してください。
+Click 'New' to add new contact, click 'Back' go to site setting menu.	Pulsa Nuevo para añadir un contacto o Volver para regresar a la configuración.	Klicken Sie auf Neu für einen Kontakt oder auf Zurück für die Einstellungen.	Cliquez sur Nouveau pour ajouter un contact ou sur Retour pour revenir aux paramètres.	Clique em Novo para adicionar um contato ou em Voltar para retornar às configurações.	新規を押して連絡先を追加するか、戻るを押して設定に戻ります。
+Click 'New' to create new content, click 'Back' go to site setting menu.	Pulsa Nuevo para crear contenido o Volver para regresar a la configuración.	Klicken Sie auf Neu für einen Inhalt oder auf Zurück für die Einstellungen.	Cliquez sur Nouveau pour créer du contenu ou sur Retour pour revenir aux paramètres.	Clique em Novo para criar conteúdo ou em Voltar para retornar às configurações.	新規を押してコンテンツを作成するか、戻るを押して設定に戻ります。
+Define custom content types (e.g. Product, Testimonial, Portfolio Item) with your own fields. Click 'New' to create a type.	Define tipos de contenido con tus propios campos, como productos, testimonios o proyectos. Pulsa Nuevo para crear un tipo.	Definieren Sie Inhaltstypen mit eigenen Feldern, etwa Produkte, Referenzen oder Projekte. Klicken Sie auf Neu, um einen Typ zu erstellen.	Définissez des types de contenu avec vos champs, comme des produits, témoignages ou projets. Cliquez sur Nouveau pour créer un type.	Defina tipos de conteúdo com seus campos, como produtos, depoimentos ou projetos. Clique em Novo para criar um tipo.	商品、お客様の声、制作実績など、独自のフィールドを持つコンテンツタイプを定義します。新規を押して作成してください。
+Add the fields that make up this content type, then manage items using them.	Añade los campos de este tipo de contenido y gestiona los elementos que los utilizan.	Fügen Sie die Felder dieses Inhaltstyps hinzu und verwalten Sie damit die Einträge.	Ajoutez les champs de ce type de contenu puis gérez les éléments qui les utilisent.	Adicione os campos deste tipo de conteúdo e gerencie os itens que os utilizam.	このコンテンツタイプのフィールドを追加して、それを使う項目を管理します。
+Check your production information, version and license.	Consulta la información del producto, la versión y la licencia.	Prüfen Sie Produktinformationen, Version und Lizenz.	Consultez les informations du produit, la version et la licence.	Consulte informações do produto, versão e licença.	製品情報、バージョン、ライセンスを確認します。
+Please register this product at	Registra este producto en	Registrieren Sie dieses Produkt unter	Enregistrez ce produit sur	Registre este produto em	製品の登録先：
+Upload, search, and filter files in a compact list. Select a filename to edit its title, caption, and alternative text.	Sube, busca y filtra archivos. Selecciona un archivo para editar el título, la leyenda y el texto alternativo.	Laden Sie Dateien hoch, suchen und filtern Sie sie. Wählen Sie eine Datei, um Titel, Beschriftung und Alternativtext zu bearbeiten.	Téléversez, recherchez et filtrez les fichiers. Choisissez un fichier pour modifier son titre, sa légende et son texte alternatif.	Envie, pesquise e filtre arquivos. Selecione um arquivo para editar título, legenda e texto alternativo.	ファイルのアップロード、検索、絞り込みができます。ファイル名を選択してタイトル、キャプション、代替テキストを編集します。
+Upload failed. Check the file type is allowed (jpg, jpeg, png, gif, webp, pdf, doc, docx, xls, xlsx, zip, txt).	Error al subir. Comprueba el formato permitido (jpg, jpeg, png, gif, webp, pdf, doc, docx, xls, xlsx, zip, txt).	Upload fehlgeschlagen. Prüfen Sie den zulässigen Dateityp (jpg, jpeg, png, gif, webp, pdf, doc, docx, xls, xlsx, zip, txt).	Échec du téléversement. Vérifiez le type autorisé (jpg, jpeg, png, gif, webp, pdf, doc, docx, xls, xlsx, zip, txt).	Falha no envio. Verifique o tipo permitido (jpg, jpeg, png, gif, webp, pdf, doc, docx, xls, xlsx, zip, txt).	アップロードに失敗しました。許可されている形式（jpg, jpeg, png, gif, webp, pdf, doc, docx, xls, xlsx, zip, txt）を確認してください。
+The datacenter/media folder isn't writable by PHP. Ask your host to fix folder permissions before uploading.	PHP no puede escribir en datacenter/media. Pide al proveedor que corrija los permisos antes de subir archivos.	PHP kann nicht in datacenter/media schreiben. Bitten Sie Ihren Hoster, die Berechtigungen vor dem Upload zu korrigieren.	PHP ne peut pas écrire dans datacenter/media. Demandez à votre hébergeur de corriger les permissions avant de téléverser.	O PHP não pode gravar em datacenter/media. Peça ao provedor para corrigir as permissões antes de enviar arquivos.	PHPがdatacenter/mediaに書き込めません。アップロード前にホスティング管理者に権限の修正を依頼してください。
+To signup new member, please complete the following form.	Completa el formulario para registrarte.	Füllen Sie das Formular zur Registrierung aus.	Remplissez le formulaire pour vous inscrire.	Preencha o formulário para se cadastrar.	メンバー登録するにはフォームに入力してください。
+Please enter your username, new password will sent to your e-mail address.	Introduce tu usuario. Se enviará una nueva contraseña a tu correo.	Geben Sie Ihren Benutzernamen ein. Ein neues Passwort wird per E-Mail gesendet.	Saisissez votre nom d’utilisateur. Un nouveau mot de passe sera envoyé par e-mail.	Informe seu usuário. Uma nova senha será enviada por e-mail.	ユーザー名を入力してください。新しいパスワードをメールで送信します。
+Click 'Edit' to edit your information.	Pulsa Editar para modificar tus datos.	Klicken Sie auf Bearbeiten, um Ihre Daten zu ändern.	Cliquez sur Modifier pour changer vos informations.	Clique em Editar para alterar seus dados.	編集を押して情報を変更してください。
+Click 'New' to create new member, click 'Back' go to site setting menu.	Pulsa Nuevo para crear un miembro o Volver para regresar a la configuración.	Klicken Sie auf Neu für ein Mitglied oder auf Zurück für die Einstellungen.	Cliquez sur Nouveau pour créer un membre ou sur Retour pour revenir aux paramètres.	Clique em Novo para criar um membro ou em Voltar para retornar às configurações.	新規を押してメンバーを追加するか、戻るを押して設定に戻ります。
+Your password has changed to	Tu nueva contraseña es	Ihr neues Passwort lautet	Votre nouveau mot de passe est	Sua nova senha é	新しいパスワード：
+Password cannot send.	No se pudo enviar la contraseña.	Passwort konnte nicht gesendet werden.	Impossible d’envoyer le mot de passe.	Não foi possível enviar a senha.	パスワードを送信できませんでした。
+Send password complete.	Contraseña enviada.	Passwort gesendet.	Mot de passe envoyé.	Senha enviada.	パスワードを送信しました。
+Thank you for register.\n\nYour register information :	Gracias por registrarte.\n\nTus datos de registro:	Vielen Dank für Ihre Registrierung.\n\nIhre Registrierungsdaten:	Merci pour votre inscription.\n\nVos informations d’inscription :	Obrigado por se cadastrar.\n\nSeus dados de cadastro:	ご登録ありがとうございます。\n\n登録情報：
+Your register information cannot sent please contact site administrator.	No se pudieron enviar los datos de registro. Contacta al administrador.	Registrierungsdaten konnten nicht gesendet werden. Kontaktieren Sie den Administrator.	Impossible d’envoyer les informations d’inscription. Contactez l’administrateur.	Não foi possível enviar os dados de cadastro. Contate o administrador.	登録情報を送信できませんでした。管理者にお問い合わせください。
+Your account is already active. Login to the system <a href="module.php?modname=member&mf=memloginform">click here</a>.	Tu cuenta ya está activa. <a href="module.php?modname=member&mf=memloginform">Inicia sesión</a>.	Ihr Konto ist bereits aktiv. <a href="module.php?modname=member&mf=memloginform">Anmelden</a>.	Votre compte est déjà actif. <a href="module.php?modname=member&mf=memloginform">Connectez-vous</a>.	Sua conta já está ativa. <a href="module.php?modname=member&mf=memloginform">Entre</a>.	アカウントは既に有効です。<a href="module.php?modname=member&mf=memloginform">ログイン</a>してください。
+Your account has been activated, thank you. Login to the system <a href="module.php?modname=member&mf=memloginform">click here</a>.	Tu cuenta ha sido activada. <a href="module.php?modname=member&mf=memloginform">Inicia sesión</a>.	Ihr Konto wurde aktiviert. <a href="module.php?modname=member&mf=memloginform">Anmelden</a>.	Votre compte a été activé. <a href="module.php?modname=member&mf=memloginform">Connectez-vous</a>.	Sua conta foi ativada. <a href="module.php?modname=member&mf=memloginform">Entre</a>.	アカウントを有効にしました。<a href="module.php?modname=member&mf=memloginform">ログイン</a>してください。
+Click 'New' to create new menu, click 'Back' go to site setting menu.	Pulsa Nuevo para crear un menú o Volver para regresar a la configuración.	Klicken Sie auf Neu für ein Menü oder auf Zurück für die Einstellungen.	Cliquez sur Nouveau pour créer un menu ou sur Retour pour revenir aux paramètres.	Clique em Novo para criar um menu ou em Voltar para retornar às configurações.	新規を押してメニューを作成するか、戻るを押して設定に戻ります。
+Choose menu type then click 'New' to create menu.	Elige el tipo de menú y pulsa Nuevo para crearlo.	Wählen Sie den Menütyp und klicken Sie auf Neu, um ihn zu erstellen.	Choisissez le type de menu puis cliquez sur Nouveau pour le créer.	Escolha o tipo de menu e clique em Novo para criá-lo.	メニューの種類を選び、新規を押して作成してください。
+Click 'New' to install new module, click 'Back' go to site setting menu.	Pulsa Nuevo para instalar un módulo o Volver para regresar a la configuración.	Klicken Sie auf Neu zum Installieren eines Moduls oder auf Zurück für die Einstellungen.	Cliquez sur Nouveau pour installer un module ou sur Retour pour revenir aux paramètres.	Clique em Novo para instalar um módulo ou em Voltar para retornar às configurações.	新規を押してモジュールをインストールするか、戻るを押して設定に戻ります。
+Click 'New' to create new poll.	Pulsa Nuevo para crear una encuesta.	Klicken Sie auf Neu, um eine Umfrage zu erstellen.	Cliquez sur Nouveau pour créer un sondage.	Clique em Novo para criar uma enquete.	新規を押して投票を作成してください。
+Define roles (e.g. Editor, Author, Contributor) and the capabilities each one grants. Assign a role to a user from the Member settings screen.	Define roles y sus permisos, como editor, autor o colaborador. Asigna un rol desde la configuración de miembros.	Definieren Sie Rollen und ihre Berechtigungen, etwa Redakteur, Autor oder Mitarbeiter. Weisen Sie Rollen in den Mitgliedseinstellungen zu.	Définissez les rôles et permissions, comme éditeur, auteur ou contributeur. Attribuez un rôle depuis les paramètres des membres.	Defina funções e permissões, como editor, autor ou colaborador. Atribua uma função nas configurações de membros.	編集者、投稿者、寄稿者などのロールと権限を定義します。メンバー設定でユーザーに割り当ててください。
+Please enter keyword and choose locate to search.	Introduce una palabra clave y elige dónde buscar.	Geben Sie ein Schlüsselwort ein und wählen Sie den Suchbereich.	Saisissez un mot-clé et choisissez où rechercher.	Digite uma palavra-chave e escolha onde pesquisar.	キーワードと検索対象を指定してください。
+Use following image link, add to your google site map.	Usa el siguiente enlace de imagen para añadirlo al mapa del sitio de Google.	Verwenden Sie den folgenden Bildlink für Ihre Google-Sitemap.	Utilisez le lien d’image suivant pour votre plan de site Google.	Use o link da imagem abaixo para adicionar ao mapa do site do Google.	以下の画像リンクをGoogleサイトマップに追加してください。
+Choose theme below then click 'Save' to apply, click 'Back' go to site setting menu.	Elige un tema y pulsa Guardar para aplicarlo o Volver para regresar.	Wählen Sie ein Theme und klicken Sie auf Speichern zum Anwenden oder auf Zurück.	Choisissez un thème et cliquez sur Enregistrer pour l’appliquer ou sur Retour.	Escolha um tema e clique em Salvar para aplicar ou em Voltar para retornar.	テーマを選んで保存を押して適用するか、戻るを押して設定に戻ります。
+Expand settings menu	Expandir menú de configuración	Einstellungsmenü ausklappen	Développer le menu des paramètres	Expandir menu de configurações	設定メニューを展開
+Expand menu	Expandir menú	Menü ausklappen	Développer le menu	Expandir menu	メニューを展開
+Manage {section} for your site.	Gestiona {section} en tu sitio.	Verwalten Sie {section} für Ihre Website.	Gérez {section} pour votre site.	Gerencie {section} no seu site.	サイトの{section}を管理します。
+Cookie settings	Configuración de cookies	Cookie-Einstellungen	Paramètres des cookies	Configurações de cookies	Cookie設定
+Your privacy choices	Tus opciones de privacidad	Ihre Datenschutzauswahl	Vos choix de confidentialité	Suas opções de privacidade	プライバシー設定
+Necessary storage supports sign-in, security, and your saved choices. Optional analytics, external media, and marketing stay off until you choose to allow them.	El almacenamiento necesario permite el inicio de sesión, la seguridad y recordar tus preferencias. Las estadísticas, el contenido externo y el marketing opcionales están desactivados hasta que los permitas.	Notwendiger Speicher ermöglicht Anmeldung, Sicherheit und gespeicherte Einstellungen. Optionale Analysen, externe Medien und Marketing bleiben deaktiviert, bis Sie zustimmen.	Le stockage nécessaire permet la connexion, la sécurité et vos préférences. Les analyses, médias externes et outils marketing facultatifs restent désactivés sans votre accord.	O armazenamento necessário permite o acesso, a segurança e suas preferências. Análises, mídia externa e marketing opcionais ficam desativados até sua autorização.	必要な保存機能はログイン、セキュリティ、設定の記憶に使用されます。任意の分析、外部メディア、マーケティングは許可するまで無効です。
+Privacy notice	Aviso de privacidad	Datenschutzhinweise	Avis de confidentialité	Aviso de privacidade	プライバシー通知
+Cookie policy	Política de cookies	Cookie-Richtlinie	Politique des cookies	Política de cookies	Cookieポリシー
+Accept optional cookies	Aceptar cookies opcionales	Optionale Cookies akzeptieren	Accepter les cookies facultatifs	Aceitar cookies opcionais	任意のCookieを許可
+Reject optional cookies	Rechazar cookies opcionales	Optionale Cookies ablehnen	Refuser les cookies facultatifs	Rejeitar cookies opcionais	任意のCookieを拒否
+Manage preferences	Gestionar preferencias	Einstellungen verwalten	Gérer les préférences	Gerenciar preferências	設定を管理
+Choose what to allow	Elige qué permitir	Wählen Sie, was Sie erlauben	Choisissez ce que vous autorisez	Escolha o que permitir	許可する項目を選択
+Necessary: always available for requested site functions.	Necesarias: siempre disponibles para las funciones solicitadas del sitio.	Notwendig: für angeforderte Website-Funktionen immer verfügbar.	Nécessaires : toujours disponibles pour les fonctions demandées du site.	Necessários: sempre disponíveis para as funções solicitadas do site.	必須：サイトの機能に必要なため、常に利用されます。
+Analytics — site visit statistics	Análisis: estadísticas de visitas	Analyse — Besuchsstatistiken	Analyse — statistiques de visite	Análises — estatísticas de visitas	分析：サイト訪問統計
+External media — optional embeds and external scripts	Contenido externo: inserciones y scripts opcionales	Externe Medien — optionale Einbettungen und externe Skripte	Médias externes — intégrations et scripts facultatifs	Mídia externa — incorporações e scripts opcionais	外部メディア：任意の埋め込みと外部スクリプト
+Marketing — optional marketing scripts	Marketing: scripts opcionales	Marketing — optionale Marketing-Skripte	Marketing — scripts marketing facultatifs	Marketing — scripts de marketing opcionais	マーケティング：任意のマーケティングスクリプト
+Changes take effect after the page reloads. You can change your choices at any time.	Los cambios se aplican al recargar la página. Puedes modificarlos cuando quieras.	Änderungen gelten nach dem Neuladen. Sie können Ihre Auswahl jederzeit ändern.	Les changements s’appliquent après rechargement. Vous pouvez modifier vos choix à tout moment.	As alterações entram em vigor após recarregar a página. Você pode mudar suas opções a qualquer momento.	ページの再読み込み後に適用されます。設定はいつでも変更できます。
+Save preferences	Guardar preferencias	Einstellungen speichern	Enregistrer les préférences	Salvar preferências	設定を保存
+Manage preferences without JavaScript	Gestionar preferencias sin JavaScript	Einstellungen ohne JavaScript verwalten	Gérer les préférences sans JavaScript	Gerenciar preferências sem JavaScript	JavaScriptを使わずに設定を管理
+Preferences could not be saved. Reload the page and try again.	No se pudieron guardar las preferencias. Recarga la página e inténtalo de nuevo.	Einstellungen konnten nicht gespeichert werden. Laden Sie die Seite neu und versuchen Sie es erneut.	Impossible d’enregistrer les préférences. Rechargez la page et réessayez.	Não foi possível salvar as preferências. Recarregue a página e tente novamente.	設定を保存できませんでした。ページを再読み込みしてもう一度お試しください。
+Overview	Resumen	Übersicht	Aperçu	Visão geral	概要
+Profile	Perfil	Profil	Profil	Perfil	プロフィール
+Account & security	Cuenta y seguridad	Konto und Sicherheit	Compte et sécurité	Conta e segurança	アカウントとセキュリティ
+Site administration	Administración del sitio	Website-Verwaltung	Administration du site	Administração do site	サイト管理
+Member since	Miembro desde	Mitglied seit	Membre depuis	Membro desde	登録日
+Welcome to your member area. Manage your personal details and account settings here.	Bienvenido a tu área de miembro. Gestiona tus datos personales y tu cuenta aquí.	Willkommen im Mitgliederbereich. Verwalten Sie hier Ihre persönlichen Daten und Kontoeinstellungen.	Bienvenue dans votre espace membre. Gérez vos informations personnelles et votre compte ici.	Bem-vindo à área de membros. Gerencie seus dados pessoais e sua conta aqui.	メンバーエリアへようこそ。個人情報とアカウント設定を管理できます。
+Update your name, contact details, website, and avatar. These details are stored in your member account.	Actualiza tu nombre, datos de contacto, sitio web y avatar. Se guardan en tu cuenta.	Aktualisieren Sie Namen, Kontaktdaten, Website und Profilbild. Diese Daten werden in Ihrem Konto gespeichert.	Modifiez votre nom, vos coordonnées, votre site et votre avatar. Ces données sont enregistrées dans votre compte.	Atualize nome, contatos, site e avatar. Esses dados ficam armazenados na sua conta.	名前、連絡先、ウェブサイト、アバターを更新できます。これらの情報はアカウントに保存されます。
+Manage your username, email, and password. Enter your current password to save changes.	Gestiona tu usuario, correo y contraseña. Introduce la contraseña actual para guardar.	Verwalten Sie Benutzername, E-Mail und Passwort. Geben Sie zum Speichern Ihr aktuelles Passwort ein.	Gérez votre nom d’utilisateur, e-mail et mot de passe. Saisissez le mot de passe actuel pour enregistrer.	Gerencie usuário, e-mail e senha. Informe a senha atual para salvar.	ユーザー名、メール、パスワードを管理します。保存するには現在のパスワードを入力してください。
+Address line 2	Dirección, línea 2	Adresszeile 2	Complément d’adresse	Complemento do endereço	住所（2行目）
+Current password	Contraseña actual	Aktuelles Passwort	Mot de passe actuel	Senha atual	現在のパスワード
+New password	Nueva contraseña	Neues Passwort	Nouveau mot de passe	Nova senha	新しいパスワード
+Confirm new password	Confirmar nueva contraseña	Neues Passwort bestätigen	Confirmer le nouveau mot de passe	Confirmar nova senha	新しいパスワードの確認
+Leave both new password fields empty to keep your password. Use at least 12 characters, with a maximum of 72 bytes.	Deja ambos campos vacíos para conservar la contraseña. Usa al menos 12 caracteres y como máximo 72 bytes.	Lassen Sie beide neuen Passwortfelder leer, um Ihr Passwort zu behalten. Verwenden Sie mindestens 12 Zeichen und höchstens 72 Bytes.	Laissez les deux champs vides pour conserver le mot de passe. Utilisez au moins 12 caractères et au maximum 72 octets.	Deixe os dois campos vazios para manter a senha. Use pelo menos 12 caracteres e no máximo 72 bytes.	パスワードを変更しない場合は両方の欄を空にしてください。12文字以上、72バイト以内で入力してください。
+GIF only. Maximum 2 MB and 2048 × 2048 pixels.	Solo GIF. Máximo 2 MB y 2048 × 2048 píxeles.	Nur GIF. Höchstens 2 MB und 2048 × 2048 Pixel.	GIF uniquement. Maximum 2 Mo et 2048 × 2048 pixels.	Somente GIF. Máximo de 2 MB e 2048 × 2048 pixels.	GIFのみ。最大2 MB、2048 × 2048ピクセル。
+Your account details have been saved.	Se guardaron los datos de tu cuenta.	Ihre Kontodaten wurden gespeichert.	Les informations de votre compte ont été enregistrées.	Os dados da sua conta foram salvos.	アカウント情報を保存しました。
+Your form has expired. Please try again.	El formulario ha caducado. Inténtalo de nuevo.	Das Formular ist abgelaufen. Versuchen Sie es erneut.	Le formulaire a expiré. Réessayez.	O formulário expirou. Tente novamente.	フォームの有効期限が切れました。もう一度お試しください。
+Please complete all required fields.	Completa todos los campos obligatorios.	Bitte füllen Sie alle Pflichtfelder aus.	Remplissez tous les champs obligatoires.	Preencha todos os campos obrigatórios.	すべての必須項目を入力してください。
+One or more fields exceed the allowed length.	Uno o más campos superan la longitud permitida.	Ein oder mehrere Felder überschreiten die zulässige Länge.	Un ou plusieurs champs dépassent la longueur autorisée.	Um ou mais campos excedem o tamanho permitido.	入力内容が最大長を超えている項目があります。
+Enter a complete website address starting with https:// or http://.	Introduce una dirección completa que empiece por https:// o http://.	Geben Sie eine vollständige Website-Adresse mit https:// oder http:// ein.	Saisissez une adresse complète commençant par https:// ou http://.	Informe um endereço completo começando com https:// ou http://.	https://またはhttp://で始まる完全なURLを入力してください。
+Please select a country.	Selecciona un país.	Bitte wählen Sie ein Land.	Choisissez un pays.	Selecione um país.	国を選択してください。
+Enter a valid email address.	Introduce un correo electrónico válido.	Geben Sie eine gültige E-Mail-Adresse ein.	Saisissez une adresse e-mail valide.	Informe um e-mail válido.	有効なメールアドレスを入力してください。
+Your current password is incorrect.	La contraseña actual es incorrecta.	Ihr aktuelles Passwort ist falsch.	Votre mot de passe actuel est incorrect.	Sua senha atual está incorreta.	現在のパスワードが正しくありません。
+The new passwords do not match.	Las nuevas contraseñas no coinciden.	Die neuen Passwörter stimmen nicht überein.	Les nouveaux mots de passe ne correspondent pas.	As novas senhas não coincidem.	新しいパスワードが一致しません。
+Use at least 12 characters and no more than 72 bytes for your new password.	Usa al menos 12 caracteres y como máximo 72 bytes para la nueva contraseña.	Verwenden Sie mindestens 12 Zeichen und höchstens 72 Bytes für Ihr neues Passwort.	Utilisez au moins 12 caractères et au maximum 72 octets pour votre nouveau mot de passe.	Use pelo menos 12 caracteres e no máximo 72 bytes na nova senha.	新しいパスワードは12文字以上、72バイト以内にしてください。
+That username or email address is already in use.	Ese usuario o correo ya está en uso.	Dieser Benutzername oder diese E-Mail-Adresse wird bereits verwendet.	Ce nom d’utilisateur ou cette adresse e-mail est déjà utilisé.	Esse usuário ou e-mail já está em uso.	このユーザー名またはメールアドレスは既に使われています。
+Your changes could not be saved. Please try again.	No se pudieron guardar los cambios. Inténtalo de nuevo.	Änderungen konnten nicht gespeichert werden. Versuchen Sie es erneut.	Impossible d’enregistrer les modifications. Réessayez.	Não foi possível salvar as alterações. Tente novamente.	変更を保存できませんでした。もう一度お試しください。
+Choose a valid GIF image up to 2 MB and 2048 × 2048 pixels.	Selecciona un GIF válido de hasta 2 MB y 2048 × 2048 píxeles.	Wählen Sie ein gültiges GIF mit höchstens 2 MB und 2048 × 2048 Pixeln.	Choisissez un GIF valide de 2 Mo et 2048 × 2048 pixels maximum.	Escolha um GIF válido de até 2 MB e 2048 × 2048 pixels.	2 MB、2048 × 2048ピクセル以内の有効なGIF画像を選択してください。
+Your details were saved, but the avatar could not be uploaded. Please try again.	Se guardaron tus datos, pero no se pudo subir el avatar. Inténtalo de nuevo.	Ihre Daten wurden gespeichert, aber das Profilbild konnte nicht hochgeladen werden. Versuchen Sie es erneut.	Vos données ont été enregistrées, mais l’avatar n’a pas pu être téléversé. Réessayez.	Seus dados foram salvos, mas o avatar não foi enviado. Tente novamente.	情報を保存しましたが、アバターをアップロードできませんでした。もう一度お試しください。
+Invalid or already used verification code, or too many attempts.	Código inválido o ya utilizado, o demasiados intentos.	Ungültiger oder bereits verwendeter Code oder zu viele Versuche.	Code invalide ou déjà utilisé, ou trop de tentatives.	Código inválido ou já utilizado, ou tentativas em excesso.	確認コードが無効、使用済み、または試行回数が多すぎます。
+Authenticator or recovery code	Código del autenticador o de recuperación	Authenticator- oder Wiederherstellungscode	Code d’authentification ou de récupération	Código do autenticador ou de recuperação	認証アプリまたはリカバリーコード
+Manage two-factor authentication	Gestionar autenticación de dos factores	Zwei-Faktor-Authentifizierung verwalten	Gérer l’authentification à deux facteurs	Gerenciar autenticação de dois fatores	二要素認証を管理
+Choose Installation Language	Seleccionar idioma de instalación	Installationssprache auswählen	Choisir la langue d’installation	Selecionar idioma da instalação	インストール言語を選択
+Next License Agreement	Siguiente: licencia	Weiter: Lizenzvereinbarung	Suivant : licence	Próximo: licença	次へ：ライセンス
+I read GNU/GPL license above already,	He leído la licencia GNU/GPL anterior.	Ich habe die obige GNU/GPL-Lizenz gelesen.	J’ai lu la licence GNU/GPL ci-dessus.	Li a licença GNU/GPL acima.	上記のGNU/GPLライセンスを読みました。
+I agree	Acepto	Ich stimme zu	J’accepte	Concordo	同意する
+I disagree	No acepto	Ich stimme nicht zu	Je refuse	Não concordo	同意しない
+Please change permission these directories allow writeable by web server.	Permite que el servidor web escriba en estos directorios.	Erlauben Sie dem Webserver Schreibzugriff auf diese Verzeichnisse.	Autorisez le serveur web à écrire dans ces dossiers.	Permita que o servidor web grave nestes diretórios.	ウェブサーバーがこれらのディレクトリに書き込めるように権限を変更してください。
+Writeable	Se puede escribir	Beschreibbar	Accessible en écriture	Gravável	書き込み可能
+Create after complete configuration	Crear después de configurar	Nach der Konfiguration erstellen	Créer après la configuration	Criar após a configuração	設定完了後に作成
+Cannot write	No se puede escribir	Nicht beschreibbar	Écriture impossible	Não é possível gravar	書き込み不可
+Next Configuration	Siguiente: configuración	Weiter: Konfiguration	Suivant : configuration	Próximo: configuração	次へ：設定
+Site information	Información del sitio	Website-Informationen	Informations du site	Informações do site	サイト情報
+Administrator information	Información del administrador	Administratorinformationen	Informations de l’administrateur	Informações do administrador	管理者情報
+Database information	Información de la base de datos	Datenbankinformationen	Informations de la base de données	Informações do banco de dados	データベース情報
+Mail information	Configuración de correo	E-Mail-Konfiguration	Configuration e-mail	Configuração de e-mail	メール設定
+Site Name	Nombre del sitio	Website-Name	Nom du site	Nome do site	サイト名
+Directory	Directorio	Verzeichnis	Dossier	Diretório	ディレクトリ
+Language	Idioma	Sprache	Langue	Idioma	言語
+Theme	Tema	Theme	Thème	Tema	テーマ
+Timezone	Zona horaria	Zeitzone	Fuseau horaire	Fuso horário	タイムゾーン
+Database	Base de datos	Datenbank	Base de données	Banco de dados	データベース
+Host	Servidor	Host	Hôte	Servidor	ホスト
+Database Name	Nombre de la base de datos	Datenbankname	Nom de la base de données	Nome do banco de dados	データベース名
+Table Prefix	Prefijo de tablas	Tabellenpräfix	Préfixe des tables	Prefixo das tabelas	テーブル接頭辞
+Existing Tables	Tablas existentes	Vorhandene Tabellen	Tables existantes	Tabelas existentes	既存のテーブル
+Use old tables and preserve their data	Usar las tablas existentes y conservar sus datos	Vorhandene Tabellen verwenden und Daten behalten	Utiliser les tables existantes et conserver leurs données	Usar tabelas existentes e preservar os dados	既存テーブルを使用してデータを保持
+Recreate the CMS tables	Volver a crear las tablas del CMS	CMS-Tabellen neu erstellen	Recréer les tables du CMS	Recriar as tabelas do CMS	CMSテーブルを再作成
+Recreating tables permanently deletes existing CMS data with this prefix.	Volver a crear las tablas elimina permanentemente los datos del CMS con este prefijo.	Das Neuerstellen löscht vorhandene CMS-Daten mit diesem Präfix dauerhaft.	La recréation supprime définitivement les données du CMS avec ce préfixe.	Recriar as tabelas exclui permanentemente os dados do CMS com este prefixo.	テーブルを再作成すると、この接頭辞の既存CMSデータが完全に削除されます。
+Existing CMS tables were kept. No schema or sample data was changed.	Se conservaron las tablas existentes. No se modificaron la estructura ni los datos de ejemplo.	Vorhandene CMS-Tabellen wurden beibehalten. Struktur und Beispieldaten wurden nicht geändert.	Les tables existantes ont été conservées. La structure et les données d’exemple n’ont pas été modifiées.	As tabelas existentes foram mantidas. A estrutura e os dados de exemplo não foram alterados.	既存のCMSテーブルを保持しました。構造とサンプルデータは変更されていません。
+SMTP Host	Servidor SMTP	SMTP-Host	Hôte SMTP	Servidor SMTP	SMTPホスト
+SMTP Port	Puerto SMTP	SMTP-Port	Port SMTP	Porta SMTP	SMTPポート
+Send to Admin.	Enviar al administrador	An Administrator senden	Envoyer à l’administrateur	Enviar ao administrador	管理者に送信
+Next Create Tables	Siguiente: crear tablas	Weiter: Tabellen erstellen	Suivant : créer les tables	Próximo: criar tabelas	次へ：テーブル作成
+Create System Tables	Crear tablas del sistema	Systemtabellen erstellen	Créer les tables système	Criar tabelas do sistema	システムテーブルを作成
+Update Tables	Actualizar tablas	Tabellen aktualisieren	Mettre à jour les tables	Atualizar tabelas	テーブルを更新
+OK	Correcto	OK	OK	OK	成功
+FAILED	FALLÓ	FEHLGESCHLAGEN	ÉCHEC	FALHOU	失敗
+Next Create Config File	Siguiente: crear configuración	Weiter: Konfigurationsdatei erstellen	Suivant : créer la configuration	Próximo: criar configuração	次へ：設定ファイル作成
+Cannot connect to database, create database	No se puede conectar a la base de datos. Crea la base de datos	Keine Datenbankverbindung. Erstellen Sie die Datenbank	Impossible de se connecter. Créez la base de données	Não foi possível conectar. Crie o banco de dados	接続できません。データベースを作成してください
+then refresh this page.	y actualiza esta página.	und aktualisieren Sie diese Seite.	puis actualisez cette page.	e atualize esta página.	その後、このページを更新してください。
+Copy code below to create config file	Copia el código para crear el archivo de configuración	Kopieren Sie den Code zum Erstellen der Konfigurationsdatei	Copiez le code pour créer le fichier de configuration	Copie o código para criar o arquivo de configuração	以下のコードをコピーして設定ファイルを作成してください
+Next Verify Configuration	Siguiente: verificar configuración	Weiter: Konfiguration prüfen	Suivant : vérifier la configuration	Próximo: verificar configuração	次へ：設定確認
+Next Clean Up	Siguiente: limpieza	Weiter: Bereinigung	Suivant : nettoyage	Próximo: limpeza	次へ：クリーンアップ
+Check configuration files	Verificar archivos de configuración	Konfigurationsdateien prüfen	Vérifier les fichiers de configuration	Verificar arquivos de configuração	設定ファイルを確認
+Setup Complete!	Instalación completada.	Installation abgeschlossen.	Installation terminée.	Instalação concluída.	インストール完了。
+Please delete 'install' directory before you continue!	Elimina el directorio «install» antes de continuar.	Löschen Sie das Verzeichnis „install“, bevor Sie fortfahren.	Supprimez le dossier « install » avant de continuer.	Exclua o diretório «install» antes de continuar.	続行する前に「install」ディレクトリを削除してください。
+Go to Home page	Ir a la página de inicio	Zur Startseite	Aller à l’accueil	Ir para a página inicial	ホームへ
+Go to Administrator page	Ir a la administración	Zur Administration	Aller à l’administration	Ir para a administração	管理画面へ
+Administration	Administración	Administration	Administration	Administração	管理画面
+Skip to content	Saltar al contenido	Zum Inhalt springen	Aller au contenu	Pular para o conteúdo	コンテンツへ移動
+Settings navigation	Navegación de configuración	Einstellungsnavigation	Navigation des paramètres	Navegação das configurações	設定メニュー
+Lanai settings	Configuración de Lanai	Lanai-Einstellungen	Paramètres Lanai	Configurações do Lanai	Lanai設定
+Collapse settings menu	Contraer menú de configuración	Einstellungsmenü einklappen	Réduire le menu des paramètres	Recolher menu de configurações	設定メニューを折りたたむ
+Collapse menu	Contraer menú	Menü einklappen	Réduire le menu	Recolher menu	メニューを折りたたむ
+Dashboard	Panel de control	Übersicht	Tableau de bord	Painel	ダッシュボード
+Content types	Tipos de contenido	Inhaltstypen	Types de contenu	Tipos de conteúdo	コンテンツタイプ
+Media	Multimedia	Medien	Médias	Mídia	メディア
+Carousel	Carrusel	Karussell	Carrousel	Carrossel	カルーセル
+Contacts	Contactos	Kontakte	Contacts	Contatos	連絡先
+Polls	Encuestas	Umfragen	Sondages	Enquetes	投票
+Site	Sitio	Website	Site	Site	サイト
+Menus	Menús	Menüs	Menus	Menus	メニュー
+Blocks	Bloques	Blöcke	Blocs	Blocos	ブロック
+Privacy &amp; Compliance	Privacidad y cumplimiento	Datenschutz und Compliance	Confidentialité et conformité	Privacidade e conformidade	プライバシーとコンプライアンス
+Configuration	Configuración	Konfiguration	Configuration	Configuração	設定
+Workspace	Espacio de trabajo	Arbeitsbereich	Espace de travail	Área de trabalho	ワークスペース
+Members	Miembros	Mitglieder	Membres	Membros	メンバー
+Roles	Roles	Rollen	Rôles	Funções	ロール
+API tokens	Tokens de API	API-Token	Jetons API	Tokens de API	APIトークン
+Modules	Módulos	Module	Modules	Módulos	モジュール
+System	Sistema	System	Système	Sistema	システム
+Backup	Copia de seguridad	Sicherung	Sauvegarde	Backup	バックアップ
+File explorer	Explorador de archivos	Dateimanager	Explorateur de fichiers	Explorador de arquivos	ファイル管理
+System info	Información del sistema	Systeminformationen	Informations système	Informações do sistema	システム情報
+Statistics	Estadísticas	Statistiken	Statistiques	Estatísticas	統計
+View site	Ver sitio	Website ansehen	Voir le site	Ver site	サイトを表示
+Log out	Cerrar sesión	Abmelden	Se déconnecter	Sair	ログアウト
+Open settings menu	Abrir menú de configuración	Einstellungsmenü öffnen	Ouvrir le menu des paramètres	Abrir menu de configurações	設定メニューを開く
+My account	Mi cuenta	Mein Konto	Mon compte	Minha conta	マイアカウント
+Settings	Configuración	Einstellungen	Paramètres	Configurações	設定
+A little overview of everything happening on your site.	Un resumen de la actividad de tu sitio.	Ein Überblick über die Aktivitäten auf Ihrer Website.	Un aperçu de l’activité de votre site.	Uma visão geral da atividade do seu site.	サイトの活動状況を確認できます。
+Manage your LanaiCMS site and workspace.	Gestiona tu sitio LanaiCMS y espacio de trabajo.	Verwalten Sie Ihre LanaiCMS-Website und Ihren Arbeitsbereich.	Gérez votre site LanaiCMS et votre espace de travail.	Gerencie seu site LanaiCMS e sua área de trabalho.	LanaiCMSサイトとワークスペースを管理します。
+Choose a setting	Elige una configuración	Einstellung auswählen	Choisissez un paramètre	Escolha uma configuração	設定を選択
+Select an item from the menu to manage that part of your site.	Elige una opción del menú para gestionar esa parte del sitio.	Wählen Sie einen Menüpunkt, um diesen Bereich Ihrer Website zu verwalten.	Choisissez une entrée du menu pour gérer cette partie du site.	Selecione um item do menu para gerenciar essa parte do site.	メニューから項目を選択してサイトを管理してください。
+New content	Nuevo contenido	Neuer Inhalt	Nouveau contenu	Novo conteúdo	コンテンツを追加
+Edit content	Editar contenido	Inhalt bearbeiten	Modifier le contenu	Editar conteúdo	コンテンツを編集
+Your content has been saved.	El contenido se ha guardado.	Ihr Inhalt wurde gespeichert.	Votre contenu a été enregistré.	Seu conteúdo foi salvo.	コンテンツを保存しました。
+Pages you write are sent to an editor for review and appear on the site once approved. Only basic formatting, links and images are kept.	Tus páginas se envían a revisión y se publican al aprobarse. Solo se conservan el formato básico, los enlaces y las imágenes.	Ihre Seiten werden zur Prüfung gesendet und nach Freigabe veröffentlicht. Nur einfache Formatierung, Links und Bilder bleiben erhalten.	Vos pages sont soumises à validation et publiées après approbation. Seuls la mise en forme simple, les liens et les images sont conservés.	Suas páginas são enviadas para revisão e publicadas após aprovação. Apenas formatação básica, links e imagens são mantidos.	作成したページは編集者の確認後、承認されると公開されます。基本的な書式、リンク、画像のみ保持されます。
+Submitted for review. An editor will publish it once approved.	Enviado a revisión. Un editor lo publicará cuando se apruebe.	Zur Prüfung eingereicht. Nach Freigabe veröffentlicht ein Redakteur den Inhalt.	Soumis à validation. Un éditeur le publiera après approbation.	Enviado para revisão. Um editor publicará após a aprovação.	確認を依頼しました。承認後に編集者が公開します。
+Pending review: this page is not visible to the public yet.	Pendiente de revisión: esta página aún no es pública.	Prüfung ausstehend: Diese Seite ist noch nicht öffentlich.	En attente de validation : cette page n’est pas encore publique.	Aguardando revisão: esta página ainda não está pública.	確認待ち：このページはまだ公開されていません。
+The page was saved, but its menu link could not be created. Add a content link from Menus.	La página se guardó, pero no se creó el enlace. Añádelo desde Menús.	Die Seite wurde gespeichert, aber der Menülink konnte nicht erstellt werden. Fügen Sie ihn unter Menüs hinzu.	La page a été enregistrée, mais le lien de menu n’a pas pu être créé. Ajoutez-le depuis Menus.	A página foi salva, mas o link do menu não foi criado. Adicione-o em Menus.	ページを保存しましたが、メニューリンクを作成できませんでした。メニュー設定から追加してください。
+Page title	Título de la página	Seitentitel	Titre de la page	Título da página	ページタイトル
+Also add a menu link to this page	Añadir también un enlace de menú	Auch einen Menülink zu dieser Seite hinzufügen	Ajouter aussi un lien de menu vers cette page	Adicionar também um link no menu	このページへのメニューリンクも追加
+Page content	Contenido de la página	Seiteninhalt	Contenu de la page	Conteúdo da página	ページ内容
+Additional content (optional)	Contenido adicional (opcional)	Zusätzlicher Inhalt (optional)	Contenu supplémentaire (facultatif)	Conteúdo adicional (opcional)	追加コンテンツ（任意）
+Save content	Guardar contenido	Inhalt speichern	Enregistrer le contenu	Salvar conteúdo	コンテンツを保存
+View page	Ver página	Seite ansehen	Voir la page	Ver página	ページを表示
+Back to content	Volver al contenido	Zurück zum Inhalt	Retour au contenu	Voltar ao conteúdo	コンテンツ一覧に戻る
+Approve and publish	Aprobar y publicar	Freigeben und veröffentlichen	Approuver et publier	Aprovar e publicar	承認して公開
+Insert into your page	Insertar en tu página	In Ihre Seite einfügen	Insérer dans votre page	Inserir na sua página	ページに挿入
+Insert into	Insertar en	Einfügen in	Insérer dans	Inserir em	挿入先
+Additional content	Contenido adicional	Zusätzlicher Inhalt	Contenu supplémentaire	Conteúdo adicional	追加コンテンツ
+Insert poll	Insertar encuesta	Umfrage einfügen	Insérer un sondage	Inserir enquete	投票を挿入
+Insert media	Insertar multimedia	Medien einfügen	Insérer un média	Inserir mídia	メディアを挿入
+Insert contact	Insertar contacto	Kontakt einfügen	Insérer un contact	Inserir contato	連絡先を挿入
+No items available yet	Aún no hay elementos	Noch keine Einträge vorhanden	Aucun élément disponible	Nenhum item disponível	項目がまだありません
+Upload / manage media	Subir / gestionar multimedia	Medien hochladen / verwalten	Téléverser / gérer les médias	Enviar / gerenciar mídia	メディアのアップロード・管理
+Manage poll	Gestionar encuestas	Umfragen verwalten	Gérer les sondages	Gerenciar enquetes	投票を管理
+Manage contact	Gestionar contactos	Kontakte verwalten	Gérer les contacts	Gerenciar contatos	連絡先を管理
+Require field	Campo obligatorio	Pflichtfeld	Champ obligatoire	Campo obrigatório	必須項目
+Please login befor access this page.	Inicia sesión para acceder a esta página.	Bitte melden Sie sich an, um diese Seite aufzurufen.	Connectez-vous pour accéder à cette page.	Entre para acessar esta página.	このページにアクセスするにはログインしてください。
+Cannot upload file!	No se pudo subir el archivo.	Die Datei konnte nicht hochgeladen werden.	Impossible de téléverser le fichier.	Não foi possível enviar o arquivo.	ファイルをアップロードできませんでした。
+Module file not found!	No se encontró el archivo del módulo.	Moduldatei nicht gefunden.	Fichier du module introuvable.	Arquivo do módulo não encontrado.	モジュールファイルが見つかりません。
+File not found!	Archivo no encontrado.	Datei nicht gefunden.	Fichier introuvable.	Arquivo não encontrado.	ファイルが見つかりません。
+Order	Orden	Reihenfolge	Ordre	Ordem	表示順
+Active	Activo	Aktiv	Actif	Ativo	有効
+Edit	Editar	Bearbeiten	Modifier	Editar	編集
+Delete	Eliminar	Löschen	Supprimer	Excluir	削除
+New	Nuevo	Neu	Nouveau	Novo	新規
+Back	Volver	Zurück	Retour	Voltar	戻る
+Save	Guardar	Speichern	Enregistrer	Salvar	保存
+Read more	Leer más	Weiterlesen	Lire la suite	Leia mais	続きを読む
+Page	Página	Seite	Page	Página	ページ
+Visit	Visita	Besuch	Visite	Visita	訪問
+Hits	Visitas	Aufrufe	Vues	Visualizações	閲覧数
+Guest	Invitado	Gast	Invité	Visitante	ゲスト
+Member	Miembro	Mitglied	Membre	Membro	メンバー
+Do you want to delete ?	¿Quieres eliminar este elemento?	Möchten Sie diesen Eintrag löschen?	Voulez-vous supprimer cet élément ?	Deseja excluir este item?	この項目を削除しますか？
+Cannot Login!	No se pudo iniciar sesión.	Anmeldung fehlgeschlagen.	Échec de la connexion.	Não foi possível entrar.	ログインできませんでした。
+Top	Arriba	Oben	Haut	Superior	上
+Bottom	Abajo	Unten	Bas	Inferior	下
+Left	Izquierda	Links	Gauche	Esquerda	左
+Right	Derecha	Rechts	Droite	Direita	右
+Center	Centro	Mitte	Centre	Centro	中央
+Administrator	Administrador	Administrator	Administrateur	Administrador	管理者
+No upload file!	No se seleccionó ningún archivo.	Keine Datei ausgewählt.	Aucun fichier sélectionné.	Nenhum arquivo selecionado.	ファイルが選択されていません。
+Weight	Prioridad	Gewichtung	Priorité	Prioridade	優先度
+Save Weight	Guardar prioridad	Gewichtung speichern	Enregistrer la priorité	Salvar prioridade	優先度を保存
+Cannot write config file, please check file permission!	No se puede escribir la configuración. Revisa los permisos del archivo.	Konfigurationsdatei nicht beschreibbar. Prüfen Sie die Dateiberechtigungen.	Impossible d’écrire la configuration. Vérifiez les permissions du fichier.	Não é possível gravar a configuração. Verifique as permissões do arquivo.	設定ファイルに書き込めません。ファイルの権限を確認してください。
+Module class not found!	Clase del módulo no encontrada.	Modulklasse nicht gefunden.	Classe du module introuvable.	Classe do módulo não encontrada.	モジュールクラスが見つかりません。
+Language file not found!	Archivo de idioma no encontrado.	Sprachdatei nicht gefunden.	Fichier de langue introuvable.	Arquivo de idioma não encontrado.	言語ファイルが見つかりません。
+Page execution	Tiempo de ejecución	Ausführungszeit	Temps d’exécution	Tempo de execução	処理時間
+Reset	Restablecer	Zurücksetzen	Réinitialiser	Redefinir	リセット
+No	No	Nein	Non	Não	いいえ
+Yes	Sí	Ja	Oui	Sim	はい
+Sec	Segundos	Sekunden	Secondes	Segundos	秒
+next  &gt;	Siguiente &gt;	Weiter &gt;	Suivant &gt;	Próximo &gt;	次へ &gt;
+&lt; previous	&lt; Anterior	&lt; Zurück	&lt; Précédent	&lt; Anterior	&lt; 前へ
+|&lt; first	|&lt; Primero	|&lt; Erste	|&lt; Premier	|&lt; Primeiro	|&lt; 最初
+last &gt;|	Último &gt;|	Letzte &gt;|	Dernier &gt;|	Último &gt;|	最後 &gt;|
+Title	Título	Titel	Titre	Título	タイトル
+Name	Nombre	Name	Nom	Nome	名前
+Description	Descripción	Beschreibung	Description	Descrição	説明
+Content	Contenido	Inhalt	Contenu	Conteúdo	コンテンツ
+Type	Tipo	Typ	Type	Tipo	種類
+Position	Posición	Position	Position	Posição	位置
+URL	URL	URL	URL	URL	URL
+Browse	Examinar	Durchsuchen	Parcourir	Procurar	参照
+Refresh	Actualizar	Aktualisieren	Actualiser	Atualizar	更新
+Upload	Subir	Hochladen	Téléverser	Enviar	アップロード
+Download	Descargar	Herunterladen	Télécharger	Baixar	ダウンロード
+Filename	Nombre de archivo	Dateiname	Nom du fichier	Nome do arquivo	ファイル名
+Size	Tamaño	Größe	Taille	Tamanho	サイズ
+Modified	Modificado	Geändert	Modifié	Modificado	更新日時
+Restore	Restaurar	Wiederherstellen	Restaurer	Restaurar	復元
+Execute	Ejecutar	Ausführen	Exécuter	Executar	実行
+rows	filas	Zeilen	lignes	linhas	行
+Cannot execute	No se pudo ejecutar	Ausführung fehlgeschlagen	Impossible d’exécuter	Não foi possível executar	実行できません
+Backup Complete	Copia de seguridad completada	Sicherung abgeschlossen	Sauvegarde terminée	Backup concluído	バックアップ完了
+Back up Setting	Copias de seguridad	Sicherungen	Sauvegardes	Backups	バックアップ設定
+Choose Table to Back up.	Selecciona las tablas para la copia de seguridad.	Wählen Sie die zu sichernden Tabellen.	Choisissez les tables à sauvegarder.	Selecione as tabelas para o backup.	バックアップするテーブルを選択してください。
+Backup schema	Respaldar estructura	Struktur sichern	Sauvegarder la structure	Salvar estrutura	構造をバックアップ
+Backup value	Respaldar datos	Daten sichern	Sauvegarder les données	Salvar dados	データをバックアップ
+Do you want restore your data ?	¿Quieres restaurar los datos?	Möchten Sie Ihre Daten wiederherstellen?	Voulez-vous restaurer vos données ?	Deseja restaurar seus dados?	データを復元しますか？
+Please complete following form (*) are required!	Completa el formulario. Los campos con (*) son obligatorios.	Bitte füllen Sie das Formular aus. Felder mit (*) sind erforderlich.	Remplissez le formulaire. Les champs marqués (*) sont obligatoires.	Preencha o formulário. Os campos com (*) são obrigatórios.	フォームに入力してください。（*）は必須項目です。
+Please complete the following form (*) are required.	Completa el formulario. Los campos con (*) son obligatorios.	Bitte füllen Sie das Formular aus. Felder mit (*) sind erforderlich.	Remplissez le formulaire. Les champs marqués (*) sont obligatoires.	Preencha o formulário. Os campos com (*) são obrigatórios.	フォームに入力してください。（*）は必須項目です。
+Block Setting	Bloques	Blöcke	Blocs	Blocos	ブロック設定
+Install Block Type	Tipo de bloque	Blocktyp	Type de bloc	Tipo de bloco	ブロックの種類
+Content Type	Tipo de contenido	Inhaltstyp	Type de contenu	Tipo de conteúdo	コンテンツタイプ
+Upload Block	Subir bloque	Block hochladen	Téléverser un bloc	Enviar bloco	ブロックをアップロード
+Exist Block Path	Ruta del bloque existente	Pfad zum vorhandenen Block	Chemin du bloc existant	Caminho do bloco existente	既存ブロックのパス
+Block path dose not exist!	La ruta del bloque no existe.	Der Blockpfad existiert nicht.	Le chemin du bloc n’existe pas.	O caminho do bloco não existe.	ブロックのパスが存在しません。
+Carousel Setting	Carrusel	Karussell	Carrousel	Carrossel	カルーセル設定
+Show	Mostrar	Anzeigen	Afficher	Mostrar	表示
+Click	Clic	Klick	Clic	Clique	クリック
+Image URL	URL de imagen	Bild-URL	URL de l’image	URL da imagem	画像URL
+Caption Color	Color del texto	Beschriftungsfarbe	Couleur de légende	Cor da legenda	キャプションの色
+Add New Banner	Añadir banner	Banner hinzufügen	Ajouter une bannière	Adicionar banner	バナーを追加
+Edit Banner	Editar banner	Banner bearbeiten	Modifier la bannière	Editar banner	バナーを編集
+Banner data not found!	Banner no encontrado.	Banner nicht gefunden.	Bannière introuvable.	Banner não encontrado.	バナーが見つかりません。
+Please enter carousel title.	Introduce el título del carrusel.	Geben Sie einen Karusselltitel ein.	Saisissez le titre du carrousel.	Informe o título do carrossel.	カルーセルのタイトルを入力してください。
+Please enter carousel description.	Introduce la descripción del carrusel.	Geben Sie eine Karussellbeschreibung ein.	Saisissez la description du carrousel.	Informe a descrição do carrossel.	カルーセルの説明を入力してください。
+Please enter carousel image URL.	Introduce la URL de la imagen.	Geben Sie die Bild-URL ein.	Saisissez l’URL de l’image.	Informe a URL da imagem.	画像URLを入力してください。
+Please enter URL.	Introduce la URL.	Geben Sie die URL ein.	Saisissez l’URL.	Informe a URL.	URLを入力してください。
+Please enter position.	Introduce la posición.	Geben Sie die Position ein.	Saisissez la position.	Informe a posição.	位置を入力してください。
+Config & Meta Data Setting	Configuración y metadatos	Konfiguration und Metadaten	Configuration et métadonnées	Configuração e metadados	設定とメタデータ
+Site Offline	Sitio fuera de línea	Website offline	Site hors ligne	Site fora do ar	サイトをオフラインにする
+Keyword	Palabra clave	Schlüsselwort	Mot-clé	Palavra-chave	キーワード
+Abstract	Resumen	Zusammenfassung	Résumé	Resumo	概要
+Author	Autor	Autor	Auteur	Autor	作成者
+Distribution	Distribución	Verbreitung	Diffusion	Distribuição	配信範囲
+Copyright	Derechos de autor	Urheberrecht	Droits d’auteur	Direitos autorais	著作権
+Contact	Contacto	Kontakt	Contact	Contato	お問い合わせ
+Select Contact	Seleccionar contacto	Kontakt auswählen	Choisir un contact	Selecionar contato	連絡先を選択
+Subject	Asunto	Betreff	Objet	Assunto	件名
+Message	Mensaje	Nachricht	Message	Mensagem	メッセージ
+Send!	Enviar	Senden	Envoyer	Enviar	送信
+First Name	Nombre	Vorname	Prénom	Nome	名
+Last Name	Apellido	Nachname	Nom de famille	Sobrenome	姓
+Address	Dirección	Adresse	Adresse	Endereço	住所
+City	Ciudad	Stadt	Ville	Cidade	市区町村
+State	Estado o provincia	Bundesland	Région	Estado	都道府県
+Country	País	Land	Pays	País	国
+Zipcode	Código postal	Postleitzahl	Code postal	CEP	郵便番号
+Phone	Teléfono	Telefon	Téléphone	Telefone	電話番号
+Fax	Fax	Fax	Fax	Fax	FAX
+FAX	Fax	Fax	Fax	Fax	FAX
+Mobile	Móvil	Mobiltelefon	Portable	Celular	携帯電話
+Verify	Verificar	Überprüfen	Vérifier	Verificar	確認
+E-Mail	Correo electrónico	E-Mail	E-mail	E-mail	メールアドレス
+Email	Correo electrónico	E-Mail	E-mail	E-mail	メールアドレス
+Contact Setting	Contactos	Kontakte	Contacts	Contatos	連絡先設定
+Message cannot send.	No se pudo enviar el mensaje.	Nachricht konnte nicht gesendet werden.	Impossible d’envoyer le message.	Não foi possível enviar a mensagem.	メッセージを送信できませんでした。
+Message has been sent.	Mensaje enviado.	Nachricht gesendet.	Message envoyé.	Mensagem enviada.	メッセージを送信しました。
+Content Setting	Gestión de contenido	Inhaltsverwaltung	Gestion du contenu	Gerenciamento de conteúdo	コンテンツ設定
+Create Menu	Crear enlace de menú	Menülink erstellen	Créer un lien de menu	Criar link no menu	メニューリンクを作成
+Content not found	Contenido no encontrado	Inhalt nicht gefunden	Contenu introuvable	Conteúdo não encontrado	コンテンツが見つかりません
+You don't have permission to do that.	No tienes permiso para realizar esta acción.	Sie haben keine Berechtigung für diese Aktion.	Vous n’avez pas l’autorisation d’effectuer cette action.	Você não tem permissão para realizar esta ação.	この操作を行う権限がありません。
+Allow comments	Permitir comentarios	Kommentare erlauben	Autoriser les commentaires	Permitir comentários	コメントを許可
+Comments	Comentarios	Kommentare	Commentaires	Comentários	コメント
+Post comment	Publicar comentario	Kommentar senden	Publier le commentaire	Publicar comentário	コメントを投稿
+Please complete all comment fields.	Completa todos los campos del comentario.	Bitte füllen Sie alle Kommentarfelder aus.	Remplissez tous les champs du commentaire.	Preencha todos os campos do comentário.	コメントのすべての項目を入力してください。
+The verification code is incorrect.	El código de verificación es incorrecto.	Der Bestätigungscode ist falsch.	Le code de vérification est incorrect.	O código de verificação está incorreto.	確認コードが正しくありません。
+Verification code	Código de verificación	Bestätigungscode	Code de vérification	Código de verificação	確認コード
+Your comment could not be saved. Please go back and try again.	No se pudo guardar el comentario. Vuelve e inténtalo de nuevo.	Ihr Kommentar konnte nicht gespeichert werden. Gehen Sie zurück und versuchen Sie es erneut.	Impossible d’enregistrer votre commentaire. Revenez en arrière et réessayez.	Não foi possível salvar seu comentário. Volte e tente novamente.	コメントを保存できませんでした。戻ってもう一度お試しください。
+Content Types	Tipos de contenido	Inhaltstypen	Types de contenu	Tipos de conteúdo	コンテンツタイプ
+Type Title	Título del tipo	Typname	Titre du type	Título do tipo	タイプのタイトル
+URL Slug	Identificador de URL	URL-Kurzname	Identifiant d’URL	Identificador da URL	URLスラッグ
+Fields	Campos	Felder	Champs	Campos	フィールド
+New Content Type	Nuevo tipo de contenido	Neuer Inhaltstyp	Nouveau type de contenu	Novo tipo de conteúdo	コンテンツタイプを追加
+Edit Content Type	Editar tipo de contenido	Inhaltstyp bearbeiten	Modifier le type de contenu	Editar tipo de conteúdo	コンテンツタイプを編集
+Content type not found	Tipo de contenido no encontrado	Inhaltstyp nicht gefunden	Type de contenu introuvable	Tipo de conteúdo não encontrado	コンテンツタイプが見つかりません
+Manage Fields	Gestionar campos	Felder verwalten	Gérer les champs	Gerenciar campos	フィールドを管理
+Manage Items	Gestionar elementos	Einträge verwalten	Gérer les éléments	Gerenciar itens	項目を管理
+Field Label	Etiqueta del campo	Feldbezeichnung	Libellé du champ	Rótulo do campo	フィールドのラベル
+Field Type	Tipo de campo	Feldtyp	Type de champ	Tipo do campo	フィールドの種類
+Options (for Select)	Opciones (para selección)	Optionen (für Auswahl)	Options (pour une liste)	Opções (para seleção)	選択肢（選択フィールド用）
+Required	Obligatorio	Erforderlich	Obligatoire	Obrigatório	必須
+Add Field	Añadir campo	Feld hinzufügen	Ajouter un champ	Adicionar campo	フィールドを追加
+Manage items for this content type.	Gestiona los elementos de este tipo de contenido.	Verwalten Sie die Einträge dieses Inhaltstyps.	Gérez les éléments de ce type de contenu.	Gerencie os itens deste tipo de conteúdo.	このコンテンツタイプの項目を管理します。
+Item Title	Título del elemento	Eintragstitel	Titre de l’élément	Título do item	項目のタイトル
+New Item	Nuevo elemento	Neuer Eintrag	Nouvel élément	Novo item	項目を追加
+Edit Item	Editar elemento	Eintrag bearbeiten	Modifier l’élément	Editar item	項目を編集
+Item not found	Elemento no encontrado	Eintrag nicht gefunden	Élément introuvable	Item não encontrado	項目が見つかりません
+No items found.	No se encontraron elementos.	Keine Einträge gefunden.	Aucun élément trouvé.	Nenhum item encontrado.	項目がありません。
+Permission	Permiso	Berechtigung	Permission	Permissão	権限
+File	Archivo	Datei	Fichier	Arquivo	ファイル
+Lanai Explorer	Explorador de Lanai	Lanai-Dateimanager	Explorateur Lanai	Explorador Lanai	Lanaiファイル管理
+Choose menu item below to manage your files.	Elige una opción para gestionar los archivos.	Wählen Sie eine Option zur Dateiverwaltung.	Choisissez une option pour gérer vos fichiers.	Escolha uma opção para gerenciar seus arquivos.	ファイルを管理するメニューを選択してください。
+Browse your files, click 'Save' to upload.	Selecciona los archivos y pulsa Guardar para subirlos.	Wählen Sie Dateien und klicken Sie zum Hochladen auf Speichern.	Choisissez les fichiers puis cliquez sur Enregistrer pour les téléverser.	Selecione os arquivos e clique em Salvar para enviá-los.	ファイルを選択し、保存を押してアップロードしてください。
+Product Information	Información del producto	Produktinformationen	Informations sur le produit	Informações do produto	製品情報
+Info	Información	Informationen	Informations	Informações	情報
+License	Licencia	Lizenz	Licence	Licença	ライセンス
+The license text is currently unavailable.	El texto de la licencia no está disponible.	Der Lizenztext ist derzeit nicht verfügbar.	Le texte de la licence est indisponible.	O texto da licença não está disponível.	ライセンスの内容を現在表示できません。
+Credits	Créditos	Mitwirkende	Crédits	Créditos	クレジット
+Version	Versión	Version	Version	Versão	バージョン
+Serial	Número de serie	Seriennummer	Numéro de série	Número de série	シリアル番号
+License to	Licenciado a	Lizenziert für	Licence accordée à	Licenciado para	ライセンス所有者
+POP UP Setting	Ventanas emergentes	Pop-ups	Fenêtres contextuelles	Pop-ups	ポップアップ設定
+prev	Anterior	Zurück	Précédent	Anterior	前へ
+next	Siguiente	Weiter	Suivant	Próximo	次へ
+Activate	Activar	Aktivieren	Activer	Ativar	有効にする
+Deactivate	Desactivar	Deaktivieren	Désactiver	Desativar	無効にする
+New POP UP	Nueva ventana emergente	Neues Pop-up	Nouvelle fenêtre contextuelle	Novo pop-up	ポップアップを追加
+Edit POP UP	Editar ventana emergente	Pop-up bearbeiten	Modifier la fenêtre contextuelle	Editar pop-up	ポップアップを編集
+Detail	Detalle	Details	Détails	Detalhes	詳細
+Title Background Color	Color de fondo del título	Hintergrundfarbe des Titels	Couleur de fond du titre	Cor de fundo do título	タイトルの背景色
+Detail Background Color	Color de fondo del detalle	Hintergrundfarbe der Details	Couleur de fond des détails	Cor de fundo dos detalhes	詳細の背景色
+Border Background Color	Color del borde	Rahmenfarbe	Couleur de bordure	Cor da borda	枠線の色
+Language Setting	Configuración de idioma	Spracheinstellungen	Paramètres de langue	Configurações de idioma	言語設定
+Please choose your interface language.	Elige el idioma de la interfaz.	Wählen Sie Ihre Oberflächensprache.	Choisissez la langue de l’interface.	Escolha o idioma da interface.	表示言語を選択してください。
+Select Language	Seleccionar idioma	Sprache auswählen	Choisir la langue	Selecionar idioma	言語を選択
+Media Library	Biblioteca multimedia	Mediathek	Médiathèque	Biblioteca de mídia	メディアライブラリ
+Alt text (optional)	Texto alternativo (opcional)	Alternativtext (optional)	Texte alternatif (facultatif)	Texto alternativo (opcional)	代替テキスト（任意）
+Username	Nombre de usuario	Benutzername	Nom d’utilisateur	Nome de usuário	ユーザー名
+Password	Contraseña	Passwort	Mot de passe	Senha	パスワード
+Re-Password	Confirmar contraseña	Passwort bestätigen	Confirmer le mot de passe	Confirmar senha	パスワードの確認
+Homepage	Página web	Website	Site web	Site	ウェブサイト
+Avatar	Avatar	Profilbild	Avatar	Avatar	アバター
+(don't change leave blank)	Déjalo vacío para mantener el valor actual.	Leer lassen, um den aktuellen Wert beizubehalten.	Laissez vide pour conserver la valeur actuelle.	Deixe em branco para manter o valor atual.	変更しない場合は空欄にしてください。
+Member Information	Información del miembro	Mitgliedsinformationen	Informations du membre	Informações do membro	メンバー情報
+Member Edit	Editar miembro	Mitglied bearbeiten	Modifier le membre	Editar membro	メンバーを編集
+Member Setting	Miembros	Mitglieder	Membres	Membros	メンバー設定
+Privilege	Privilegio	Berechtigung	Privilège	Privilégio	権限
+Role	Rol	Rolle	Rôle	Função	ロール
+-- None --	-- Ninguno --	-- Keine --	-- Aucun --	-- Nenhum --	-- なし --
+Password Changed!	Contraseña cambiada.	Passwort geändert.	Mot de passe modifié.	Senha alterada.	パスワードを変更しました。
+Username not exist!	El usuario no existe.	Benutzername existiert nicht.	Ce nom d’utilisateur n’existe pas.	Nome de usuário não encontrado.	ユーザー名が見つかりません。
+Register Member	Registrar miembro	Mitglied registrieren	Inscrire un membre	Cadastrar membro	メンバー登録
+Username exist!	El nombre de usuario ya existe.	Benutzername bereits vorhanden.	Ce nom d’utilisateur existe déjà.	O nome de usuário já existe.	このユーザー名は既に使われています。
+Cannot register!	No se pudo registrar la cuenta.	Registrierung fehlgeschlagen.	Échec de l’inscription.	Não foi possível cadastrar a conta.	登録できませんでした。
+Your account has been registered.	Tu cuenta ha sido registrada.	Ihr Konto wurde registriert.	Votre compte a été créé.	Sua conta foi cadastrada.	アカウントを登録しました。
+Your register information was sent to your E-Mail.	Se enviaron los datos de registro a tu correo.	Ihre Registrierungsdaten wurden per E-Mail gesendet.	Vos informations d’inscription ont été envoyées par e-mail.	Seus dados de cadastro foram enviados por e-mail.	登録情報をメールで送信しました。
+Activate your account	Activa tu cuenta	Konto aktivieren	Activez votre compte	Ative sua conta	アカウントを有効にする
+Thank you for registering. Please open the link below to activate your account:	Gracias por registrarte. Abre el siguiente enlace para activar tu cuenta:	Vielen Dank für Ihre Registrierung. Öffnen Sie diesen Link, um Ihr Konto zu aktivieren:	Merci pour votre inscription. Ouvrez ce lien pour activer votre compte :	Obrigado por se cadastrar. Abra o link abaixo para ativar sua conta:	ご登録ありがとうございます。以下のリンクを開いてアカウントを有効にしてください：
+An activation link has been sent to your E-Mail.	Se envió un enlace de activación a tu correo.	Ein Aktivierungslink wurde an Ihre E-Mail-Adresse gesendet.	Un lien d’activation a été envoyé à votre adresse e-mail.	Um link de ativação foi enviado para seu e-mail.	有効化リンクをメールで送信しました。
+Your account cannot activate, please check your activation information.	No se pudo activar la cuenta. Revisa los datos de activación.	Kontoaktivierung fehlgeschlagen. Prüfen Sie Ihre Aktivierungsdaten.	Impossible d’activer le compte. Vérifiez les informations d’activation.	Não foi possível ativar a conta. Verifique os dados de ativação.	アカウントを有効にできませんでした。有効化情報を確認してください。
+Enter captcha	Introduce el código de verificación	Bestätigungscode eingeben	Saisissez le code de vérification	Digite o código de verificação	確認コードを入力
+Sign In	Iniciar sesión	Anmelden	Se connecter	Entrar	ログイン
+Login	Iniciar sesión	Anmelden	Se connecter	Entrar	ログイン
+SignUp	Registrarse	Registrieren	S’inscrire	Cadastrar-se	新規登録
+Lost password	Recuperar contraseña	Passwort vergessen	Mot de passe oublié	Esqueci minha senha	パスワードを忘れた場合
+Member Info	Información del miembro	Mitgliedsinformationen	Informations du membre	Informações do membro	メンバー情報
+Site Setting	Configuración del sitio	Website-Einstellungen	Paramètres du site	Configurações do site	サイト設定
+Logout	Cerrar sesión	Abmelden	Se déconnecter	Sair	ログアウト
+Menu Setting	Menús	Menüs	Menus	Menus	メニュー設定
+Module	Módulo	Modul	Module	Módulo	モジュール
+Link	Enlace	Link	Lien	Link	リンク
+Target	Destino	Ziel	Cible	Destino	リンク先
+None	Ninguno	Keine	Aucun	Nenhum	なし
+Parent	Elemento superior	Übergeordnet	Parent	Item pai	親項目
+Module Setting	Módulos	Module	Modules	Módulos	モジュール設定
+Module Title	Título del módulo	Modultitel	Titre du module	Título do módulo	モジュールのタイトル
+Module Name	Nombre del módulo	Modulname	Nom du module	Nome do módulo	モジュール名
+Upload module ZIP file	Subir archivo ZIP del módulo	Modul-ZIP hochladen	Téléverser le ZIP du module	Enviar ZIP do módulo	モジュールのZIPファイルをアップロード
+Extract remote module ZIP file	Extraer ZIP remoto del módulo	Entfernte Modul-ZIP entpacken	Extraire le ZIP distant du module	Extrair ZIP remoto do módulo	リモートモジュールのZIPを展開
+Exist Remote Module Directory	Directorio del módulo existente	Vorhandenes Modulverzeichnis	Dossier du module existant	Diretório do módulo existente	既存モジュールのディレクトリ
+Select Topic	Seleccionar tema	Thema auswählen	Choisir un sujet	Selecionar tema	トピックを選択
+-- Select Topic --	-- Seleccionar tema --	-- Thema auswählen --	-- Choisir un sujet --	-- Selecionar tema --	-- トピックを選択 --
+Poll Setting	Encuestas	Umfragen	Sondages	Enquetes	投票設定
+Topic	Tema	Thema	Sujet	Tema	トピック
+Lag	Intervalo entre votos	Abstimmungsintervall	Intervalle entre votes	Intervalo entre votos	投票間隔
+Sec.	Seg.	Sek.	Sec.	Seg.	秒
+Option	Opción	Option	Option	Opção	選択肢
+Total Vote	Total de votos	Stimmen insgesamt	Total des votes	Total de votos	総投票数
+Result!	Resultados	Ergebnis	Résultats	Resultado	結果
+Vote!	Votar	Abstimmen	Voter	Votar	投票
+Poll	Encuesta	Umfrage	Sondage	Enquete	投票
+Roles &amp; Capabilities	Roles y permisos	Rollen und Berechtigungen	Rôles et permissions	Funções e permissões	ロールと権限
+Role Title	Nombre del rol	Rollenname	Nom du rôle	Nome da função	ロール名
+Capabilities	Permisos	Berechtigungen	Permissions	Permissões	権限
+New Role	Nuevo rol	Neue Rolle	Nouveau rôle	Nova função	ロールを追加
+Edit Role	Editar rol	Rolle bearbeiten	Modifier le rôle	Editar função	ロールを編集
+Role not found	Rol no encontrado	Rolle nicht gefunden	Rôle introuvable	Função não encontrada	ロールが見つかりません
+Search	Buscar	Suchen	Rechercher	Pesquisar	検索
+Locate in	Buscar en	Suchen in	Rechercher dans	Pesquisar em	検索対象
+Word	Palabra	Wort	Mot	Palavra	単語
+Phase	Frase	Wortgruppe	Expression	Frase	フレーズ
+found	resultados	gefunden	trouvés	encontrados	件見つかりました
+items	elementos	Einträge	éléments	itens	項目
+Manage	Gestionar	Verwalten	Gérer	Gerenciar	管理
+Site Map	Mapa del sitio	Sitemap	Plan du site	Mapa do site	サイトマップ
+Theme Setting.	Temas	Themes	Thèmes	Temas	テーマ設定
+Theme Name	Nombre del tema	Theme-Name	Nom du thème	Nome do tema	テーマ名
+API Tokens	Tokens de API	API-Token	Jetons API	Tokens de API	APIトークン
+Generate	Generar	Erstellen	Générer	Gerar	生成
+Label (optional)	Etiqueta (opcional)	Bezeichnung (optional)	Libellé (facultatif)	Rótulo (opcional)	ラベル（任意）
+User	Usuario	Benutzer	Utilisateur	Usuário	ユーザー
+Created	Creado	Erstellt	Créé	Criado	作成日時
+Last Used	Último uso	Zuletzt verwendet	Dernière utilisation	Último uso	最終使用日時
+Revoke	Revocar	Widerrufen	Révoquer	Revogar	取り消す
+New token generated — copy it now, it won't be shown again:	Token generado. Cópialo ahora; no volverá a mostrarse:	Token erstellt. Kopieren Sie es jetzt; es wird nicht erneut angezeigt:	Jeton généré. Copiez-le maintenant ; il ne sera plus affiché :	Token gerado. Copie agora; ele não será exibido novamente:	トークンを生成しました。再表示されないため、今すぐコピーしてください：

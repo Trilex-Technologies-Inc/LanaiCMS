@@ -1,88 +1,18 @@
 <?php
-
-if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
-    die ("You can't access this file directly...");
-}
-
-$module_name = basename(dirname(substr(__FILE__, 0, strlen(dirname(__FILE__)))));
-$modfunction = "modules/$module_name/module.php";
-include_once($modfunction);
-
+if (!defined('LANAI_ADMIN_REQUEST')) { http_response_code(403); exit; }
+require_once dirname(__DIR__).'/module.php';
+require_once dirname(__DIR__).'/editor.php';
 $content = new Content();
-$rs = $content->getContentById($_REQUEST['mid']);
-?>
-
-<script src="include/tinymce/js/tinymce/tinymce.min.js"></script>
-<script>
-    tinymce.init({
-        selector: 'textarea.tinymce',
-        height: 500,
-        menubar: true,
-        license_key: 'gpl',
-        plugins: " preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons",
-
-        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-        paste_as_text: false, // allow full HTML
-        valid_elements: '*[*]', // allow any tag and attribute
-        extended_valid_elements: '*[*]',
-        verify_html: false,
-        cleanup: false,
-        height: 400,
-        code_dialog_height: 500,
-        code_dialog_width: 800,
-        toolbar_mode: 'sliding',
-        setup: function (editor) {
-            editor.on('PastePreProcess', function (e) {
-                // allow raw HTML paste
-                e.content = e.content;
-            });
-        },
-        content_css: false // keep user CSS classes intact
-    });
-</script>
-
-<span class="txtContentTitle"><?= _CONTENT_SETTING; ?></span><br/><br/>
-<?= _CONTENT_EDIT_INSTRUCTION; ?><br/><br/>
-
-<img src="theme/<?= $cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-<button type="submit" form="content-form"><?= _SAVE; ?></button>&nbsp;&nbsp;
-
-<img src="theme/<?= $cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
-<a href="setting.php?modname=content"><?= _BACK; ?></a>
-<br><br>
-
-<form id="content-form" name="form" method="post" action="<?= $_SERVER['PHP_SELF']; ?>">
-    <input type="hidden" name="mf" value="conedit">
-    <input type="hidden" name="modname" value="<?= $module_name; ?>">
-    <input type="hidden" name="mid" value="<?= $_REQUEST['mid']; ?>">
-    <input type="hidden" name="ac" value="edit">
-    <?php $sys_lanai->renderCsrfField('content'); ?>
-
-    <table cellpadding="3" cellspacing="1">
-        <tr>
-            <td><?= _CONTENT_TITLE; ?></td>
-            <td width="100%">
-                <input type="text" name="conTitle" size="40" value="<?= $rs->fields['conTitle']; ?>">*
-            </td>
-        </tr>
-
-        <tr>
-            <td><?= _CONTENT_ALLOW_COMMENTS; ?></td>
-            <td><label><input type="checkbox" name="conAllowComments" value="y"<?= $rs->fields['conAllowComments'] === 'y' ? ' checked' : ''; ?>> <?= _YES; ?></label></td>
-        </tr>
-
-        <tr>
-            <td></td>
-            <td>
-                <textarea name="conBody1" class="tinymce"><?= htmlspecialchars($rs->fields['conBody1']); ?></textarea> *
-            </td>
-        </tr>
-
-        <tr>
-            <td></td>
-            <td>
-                <textarea name="conBody2" class="tinymce"><?= htmlspecialchars($rs->fields['conBody2']); ?></textarea>
-            </td>
-        </tr>
-    </table>
-</form>
+$contentAction = 'edit';
+$contentNeedsReview = lanai_content_needs_review($sys_lanai);
+try {
+    if (!$content->ensureEditorSchema()) throw new RuntimeException();
+    $record = $content->getContentById(is_scalar($_GET['mid']??null)?(int)$_GET['mid']:0);
+    if (!$record || $record->EOF || !lanai_content_can_edit($sys_lanai,$record->fields)) {
+        $sys_lanai->getErrorBox(_CONTENT_NO_PERMISSION); return;
+    }
+    $contentValues = $record->fields;
+} catch (Throwable $error) {
+    $sys_lanai->getErrorBox('The content could not be loaded. Check database access and the content schema.'); return;
+}
+include __DIR__.'/editor_form.php';

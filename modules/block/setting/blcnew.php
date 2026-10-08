@@ -14,17 +14,17 @@
 	<?=_BLOCK_TYPE_INSTRUCTION; ?><br/><br/>
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/new.gif" border="0" align="absmiddle"/>
-	<a href="#" onClick="javascript:document.form.submit();" ><?=_NEW; ?></a>&nbsp;&nbsp; 
+	<button type="submit" form="block-type-form"><?=_NEW; ?></button>&nbsp;&nbsp;
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
-	<a href="#" onClick="javascript:history.back();"><?=_BACK; ?></a>
+	<button type="button" onclick="history.back();"><?=_BACK; ?></button>
 	<br><br>
 	
-	<table>
-	<form name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>">	
+	<form id="block-type-form" name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="mf" value="blcnewform">
 	<input type="hidden" name="ac" value="new">
+	<table>
 	<tr>
 		<td valign="top"><?=_BLOCK_TYPE; ?></td>
 		<td>
@@ -37,3 +37,4 @@
 		</td>	
 	</tr>
 	</table>
+	</form>

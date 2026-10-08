@@ -14,18 +14,18 @@
 	<?=_MODULE_NEW_INSTRUCTION; ?><br/><br/>
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-	<a href="#" onClick="javascript:document.form.submit();" ><?=_SAVE; ?></a>&nbsp;&nbsp; 
+	<button type="submit" form="module-setting-modnew-form"><?=_SAVE; ?></button>&nbsp;&nbsp;
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
-	<a href="#" onClick="javascript:history.back();" ><?=_BACK; ?></a>
+	<button type="button" onclick="history.back();"><?=_BACK; ?></button>
 	<br><br>
 	
-	<table border="0" cellspacing="2" cellpadding="3">
-	<form name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>"  ENCTYPE="multipart/form-data" >
+	<form id="module-setting-modnew-form" name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>"  ENCTYPE="multipart/form-data" >
 	<input type="hidden" name="mf" value="modedit">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="ac" value="new">
 	<?php $sys_lanai->renderCsrfField('module'); ?>
+	<table border="0" cellspacing="2" cellpadding="3">
 	<tr>
 		<td valign="top"><input type="radio" name="method" value="3" class="radioButton" checked></td>
 		<td><?=_MODULE_DIR_REMOTE; ?><br><br><input type="text" size="40" name="modpath" value=""></td>
@@ -38,8 +38,8 @@
 		<td valign="top"><input type="radio" name="method" value="2" class="radioButton" ></td>
 		<td><?=_MODULE_ZIPFILE_REMOTE; ?><br><br><input type="text" size="40" name="zippath" value="<?=$cfg['datadir']; ?>"></td>
 	</tr>
-	</form>
 	</table>
+	</form>
 <?php
 
 ?>

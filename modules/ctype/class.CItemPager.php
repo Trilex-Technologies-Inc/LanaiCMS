@@ -31,14 +31,13 @@ class CItemPager extends ADODB_Pager
                 }
             }
             function prepareActiveToggle(id, value) {
-                document.form.ac.value = 'active';
+                document.getElementById("ctype-list-form").ac.value = 'active';
                 document.getElementById('single-citId').value = id;
                 document.getElementById('single-v').value = value;
                 return true;
             }
         </script>
-        <table cellpadding="3" cellspacing="1" width="100%">
-            <form name="form" method="post" action="<?=$_SERVER['PHP_SELF']?>">
+            <form id="ctype-list-form" name="form" method="post" action="<?=$_SERVER['PHP_SELF']?>">
                 <input type="hidden" name="modname" value="ctype">
                 <input type="hidden" name="mf" value="itemedit">
                 <input type="hidden" name="ac" value="">
@@ -46,6 +45,7 @@ class CItemPager extends ADODB_Pager
                 <input type="hidden" name="citId" id="single-citId" value="">
                 <input type="hidden" name="v" id="single-v" value="">
                 <?php global $sys_lanai; $sys_lanai->renderCsrfField('ctype'); ?>
+        <table cellpadding="3" cellspacing="1" width="100%">
                 <tr>
                     <th class="tblRowSolidTopDown" align="center"><input type="checkbox" onclick="selectall(this);" class="radioButton" /></th>
                     <th class="tblRowSolidTopDown" width="80%"><?=_CTYPE_ITEM_TITLE; ?></th>
@@ -81,8 +81,8 @@ class CItemPager extends ADODB_Pager
                     $this->rs->movenext();
                 }
                 ?>
-            </form>
         </table>
+        </form>
         <?php
         $s = ob_get_contents();
         ob_end_clean();

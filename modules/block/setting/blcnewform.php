@@ -13,13 +13,12 @@
 <?=_BLOCK_NEW_INSTRUCTION; ?><br/><br/>
 
 <img src="theme/<?=$cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-<a href="#" onClick="javascript:document.form.submit();" ><?=_SAVE; ?></a>&nbsp;&nbsp; 
+<button type="submit" form="block-new-form"><?=_SAVE; ?></button>&nbsp;&nbsp;
 
 <img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
-<a href="#" onClick="javascript:history.back();"><?=_BACK; ?></a><br><br>
+<button type="button" onclick="history.back();"><?=_BACK; ?></button><br><br>
 
-<table>
-<form name="form" method="post" action="<?=$_SERVER['PHP_SELF']; ?>" ENCTYPE="multipart/form-data">	
+<form id="block-new-form" name="form" method="post" action="<?=$_SERVER['PHP_SELF']; ?>" ENCTYPE="multipart/form-data">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="mf" value="blcedit">
 	<input type="hidden" name="ac" value="new">	
@@ -27,6 +26,7 @@
 
 <?php $sys_lanai->renderCsrfField('block'); ?>
 
+<table>
 <?php
 	switch($_REQUEST['m']){
 		case 'c': 

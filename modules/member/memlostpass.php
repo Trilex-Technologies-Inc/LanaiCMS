@@ -20,7 +20,7 @@ $turnstile_enabled = ($captcha_provider === 'cloudflare' && $turnstile_site_key 
 if (isset($_REQUEST['ac']) && $_REQUEST['ac'] == "lostpass") {
 
     if (empty($_REQUEST['userLogin'])) {
-        $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <a href=\"#\">_BACK</a>");
+        $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <button type=\"button\" onclick=\"history.back();\">_BACK</button>");
     } elseif (!$sys_lanai->validateCsrfToken('member', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
         $sys_lanai->getErrorBox("Invalid request, please try again.");
     } else {
@@ -104,7 +104,7 @@ if (isset($_REQUEST['ac']) && $_REQUEST['ac'] == "lostpass") {
         } else {
             $sys_lanai->getErrorBox(
                 _LOGIN_NOTEXIST .
-                " <a href=\"#\" onClick=\"history.back();\">_BACK</a>"
+                " <button type=\"button\" onclick=\"history.back();\">_BACK</button>"
             );
         }
     }

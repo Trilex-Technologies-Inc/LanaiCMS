@@ -19,7 +19,7 @@ if (!$sys_lanai->validateCsrfToken('ctype', isset($_REQUEST['csrf_token']) ? $_R
 switch ($_REQUEST['ac']) {
     case "new":
         if (empty($_REQUEST['cfdLabel'])) {
-            $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <a href=\"#\" onClick=\"javascript:history.back();\">" . _BACK . "</a>");
+            $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <button type=\"button\" onclick=\"history.back();\">" . _BACK . "</button>");
         } else {
             $ctype->setNewField(
                 $ctpId,

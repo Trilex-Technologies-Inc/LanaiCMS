@@ -27,13 +27,13 @@ if ($type->recordcount() < 1) {
 <?=_CTYPE_NEW_INSTRUCTION; ?><br/><br/>
 
 <img src="theme/<?=$cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-<a href="#" onClick="javascript:document.form.submit();"><?=_SAVE; ?></a>&nbsp;&nbsp;
+<button type="submit" form="ctype-setting-itemnewform-form"><?=_SAVE; ?></button>&nbsp;&nbsp;
 
 <img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
-<a href="#" onClick="javascript:history.back();"><?=_BACK; ?></a>
+<button type="button" onclick="history.back();"><?=_BACK; ?></button>
 <br><br>
 
-<form name="form" method="post" action="<?=$_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
+<form id="ctype-setting-itemnewform-form" name="form" method="post" action="<?=$_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
     <input type="hidden" name="mf" value="itemedit">
     <input type="hidden" name="modname" value="<?=$module_name; ?>">
     <input type="hidden" name="ctpId" value="<?=$ctpId;?>">

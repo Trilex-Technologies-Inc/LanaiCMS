@@ -18,7 +18,7 @@ if (!$sys_lanai->validateCsrfToken('role', isset($_REQUEST['csrf_token']) ? $_RE
 switch ($_REQUEST['ac']) {
     case "new":
         if (empty($_REQUEST['roleTitle'])) {
-            $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <a href=\"#\" onClick=\"javascript:history.back();\">" . _BACK . "</a>");
+            $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <button type=\"button\" onclick=\"history.back();\">" . _BACK . "</button>");
         } else {
             $role->setNewRole($_REQUEST['roleTitle'], isset($_REQUEST['capId']) ? $_REQUEST['capId'] : array());
             $sys_lanai->go2Page($_SERVER['PHP_SELF'] . "?modname=" . $module_name);
@@ -27,7 +27,7 @@ switch ($_REQUEST['ac']) {
 
     case "edit":
         if (empty($_REQUEST['roleTitle'])) {
-            $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <a href=\"#\" onClick=\"javascript:history.back();\">" . _BACK . "</a>");
+            $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <button type=\"button\" onclick=\"history.back();\">" . _BACK . "</button>");
         } else {
             $role->setEditRole($_REQUEST['roleId'], $_REQUEST['roleTitle'], isset($_REQUEST['capId']) ? $_REQUEST['capId'] : array());
             $sys_lanai->go2Page($_SERVER['PHP_SELF'] . "?modname=" . $module_name);

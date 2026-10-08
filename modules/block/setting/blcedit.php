@@ -21,7 +21,7 @@
 					break;
 				}
 				if ((empty($_REQUEST['blcTitle']) OR (trim($_REQUEST['blcTitle'])==""))) {
-				     $sys_lanai->getErrorBox(_REQUIRE_FIELDS." "._BLOCK_TITLE." <a href=\"javascript:history.back();\">"._BACK2FILL."</a>");
+				     $sys_lanai->getErrorBox(_REQUIRE_FIELDS." "._BLOCK_TITLE." <a href=\"javascript:history.back();\">"._BACK."</a>");
 				} else {
 					switch($_REQUEST['m']){
 						case 'c': 
@@ -50,7 +50,7 @@
 							    $blc_lanai->setNewBlock($_REQUEST['blcTitle'],$_REQUEST['blcPath'],"","",0,$_REQUEST['blcPosition'],'b');
 								$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
 							} else {
-								$sys_lanai->getErrorBox(_BLOCK_PATH_NOT_EXIST." <a href=\"javascript:history.back();\">"._BACK2FILL."</a>");
+								$sys_lanai->getErrorBox(_BLOCK_PATH_NOT_EXIST." <a href=\"javascript:history.back();\">"._BACK."</a>");
 							}							
 							break;
 					} // switch
@@ -149,7 +149,7 @@
 					break;
 				}
 				if ((empty($_REQUEST['blcTitle']) OR (trim($_REQUEST['blcTitle'])==""))) {
-				     $sys_lanai->getErrorBox(_REQUIRE_FIELDS." "._BLOCK_TITLE." <a href=\"javascript:history.back();\">"._BACK2FILL."</a>");
+				     $sys_lanai->getErrorBox(_REQUIRE_FIELDS." "._BLOCK_TITLE." <a href=\"javascript:history.back();\">"._BACK."</a>");
 				} else {
 					switch($_REQUEST['m']){
 						case 'c': 

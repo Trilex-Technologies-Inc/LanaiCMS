@@ -1,93 +1,17 @@
 <?php
-
-	if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
-	    die ( "You can't access this file directly..." );
-	} 
-	
-	$module_name = basename( dirname( substr( __FILE__, 0, strlen( dirname( __FILE__ ) ) ) ) );
-	$modfunction = "modules/$module_name/module.php";
-	include_once( $modfunction ); 
-	
-	$content = new Content();
-?>
-
-<!-- TinyMCE -->
-
-<script src="include/tinymce/js/tinymce/tinymce.min.js"></script>
-
-<script>
-    tinymce.init({
-        selector: 'textarea.tinymce',
-        license_key: 'gpl',
-        height: 500,
-        menubar: true,
-        plugins: " preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons",
-
-        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-        paste_as_text: false, // allow full HTML
-        valid_elements: '*[*]', // allow any tag and attribute
-        extended_valid_elements: '*[*]',
-        verify_html: false,
-        cleanup: false,
-        height: 400,
-        code_dialog_height: 500,
-        code_dialog_width: 800,
-        toolbar_mode: 'sliding',
-        setup: function (editor) {
-            editor.on('PastePreProcess', function (e) {
-                // allow raw HTML paste
-                e.content = e.content;
-            });
-        },
-        content_css: false // keep user CSS classes intact
-    });
-</script>
-
-
-
-<span class="txtContentTitle"><?=_CONTENT_SETTING; ?></span><br/><br/>
-<?=_CONTENT_NEW_INSTRUCTION; ?><br/><br/>
-
-<img src="theme/<?=$cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-<button type="submit" form="content-form"><?=_SAVE; ?></button>&nbsp;&nbsp;
-
-<img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
-<a href="setting.php?modname=content"><?=_BACK; ?></a>
-<br><br>
-
-<form id="content-form" name="form" method="post" action="<?=$_SERVER['PHP_SELF']; ?>">
-	<input type="hidden" name="mf" value="conedit">
-	<input type="hidden" name="modname" value="<?=$module_name; ?>">
-	<input type="hidden" name="ac" value="new">
-	<?php $sys_lanai->renderCsrfField('content'); ?>
-
-	<table cellpadding="3" cellspacing="1" border="0">
-		<tr>
-			<td><?=_CONTENT_TITLE; ?></td>
-			<td><input type="text" name="conTitle" size="40">*</td>	
-		</tr>
-		<tr>
-			<td><?=_CONTENT_MENU; ?></td>
-			<td>
-				<input type="radio" name="conMenu" value="yes"><?=_YES; ?>&nbsp;
-				<input type="radio" name="conMenu" value="no" checked><?=_NO; ?>
-			</td>	
-		</tr>
-		<tr>
-			<td><?=_CONTENT_ALLOW_COMMENTS; ?></td>
-			<td><label><input type="checkbox" name="conAllowComments" value="y"> <?=_YES; ?></label></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>
-				<textarea name="conBody1" class="tinymce">This is some <strong>sample text</strong>.</textarea> *
-			</td>	
-		</tr>
-		<tr>
-			<td></td>
-			<td>
-				<textarea name="conBody2" class="tinymce"></textarea>
-			</td>	
-		</tr>
-	</table>
-</form>
+if (!defined('LANAI_ADMIN_REQUEST')) { http_response_code(403); exit; }
+require_once dirname(__DIR__).'/module.php';
+require_once dirname(__DIR__).'/editor.php';
+$content = new Content();
+if (!$sys_lanai->userHasCapability('edit_content') && !$sys_lanai->userHasCapability('edit_own_content')) {
+    $sys_lanai->getErrorBox(_CONTENT_NO_PERMISSION); return;
+}
+$contentNeedsReview = lanai_content_needs_review($sys_lanai);
+$contentAction = 'new';
+$contentValues = array('conTitle'=>'','conBody1'=>'','conBody2'=>'','conAllowComments'=>'n','conMenu'=>'no');
+try {
+    if (!$content->ensureEditorSchema()) throw new RuntimeException();
+} catch (Throwable $error) {
+    $contentError = 'Content storage needs an upgrade. The database account must be able to add the comments column before saving.';
+}
+include __DIR__.'/editor_form.php';

@@ -18,7 +18,7 @@ if (!$sys_lanai->validateCsrfToken('ctype', isset($_REQUEST['csrf_token']) ? $_R
 switch ($_REQUEST['ac']) {
     case "new":
         if (empty($_REQUEST['ctpTitle'])) {
-            $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <a href=\"#\" onClick=\"javascript:history.back();\">" . _BACK . "</a>");
+            $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <button type=\"button\" onclick=\"history.back();\">" . _BACK . "</button>");
         } else {
             $ctype->setNewType($_REQUEST['ctpTitle']);
             $sys_lanai->go2Page($_SERVER['PHP_SELF'] . "?modname=" . $module_name);
@@ -27,7 +27,7 @@ switch ($_REQUEST['ac']) {
 
     case "edit":
         if (empty($_REQUEST['ctpTitle'])) {
-            $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <a href=\"#\" onClick=\"javascript:history.back();\">" . _BACK . "</a>");
+            $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <button type=\"button\" onclick=\"history.back();\">" . _BACK . "</button>");
         } else {
             $ctype->setEditType($_REQUEST['ctpId'], $_REQUEST['ctpTitle'], $_REQUEST['ctpSlug']);
             $sys_lanai->go2Page($_SERVER['PHP_SELF'] . "?modname=" . $module_name);

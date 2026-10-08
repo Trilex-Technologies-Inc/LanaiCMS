@@ -89,7 +89,7 @@ $ac = isset($_REQUEST['ac']) ? $_REQUEST['ac'] : '';
 $rslogin = $mem_lanai->getUserLogin($userLogin);
 
 if ($rslogin->recordcount() > 0) {
-    $sys_lanai->getErrorBox(_LOGIN_EXIST . " <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
+    $sys_lanai->getErrorBox(_LOGIN_EXIST . " <button type=\"button\" onclick=\"history.back();\">_BACK</button>");
 } else {
     if ($ac == "lostpass") {
         // use isset for all fields
@@ -131,14 +131,14 @@ if ($rslogin->recordcount() > 0) {
         }
 
         if (empty($userFname) || empty($userLname) || empty($userEmail) || empty($userLogin) || empty($userPassword1) || empty($userPassword2)) {
-            $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
+            $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <button type=\"button\" onclick=\"history.back();\">_BACK</button>");
         } elseif (!$sys_lanai->validateCsrfToken('member', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
             $sys_lanai->getErrorBox("Invalid request, please try again.");
         } else {
             if ($userPassword1 == $userPassword2 && $captchaOk) {
                 $activationToken = $mem_lanai->setUserRegister($userFname, $userLname, $userEmail, $userLogin, $userPassword1);
                 if (empty($activationToken)) {
-                    $sys_lanai->getErrorBox(_CANNOT_REGISTER . " <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
+                    $sys_lanai->getErrorBox(_CANNOT_REGISTER . " <button type=\"button\" onclick=\"history.back();\">_BACK</button>");
                 } else {
                     $signupSendResult = member_send_activation_email($userFname, $userLname, $userEmail, $userLogin, $activationToken);
                     // success message

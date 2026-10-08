@@ -22,10 +22,10 @@
 				//Find member unique login
 				$rslogin=$member->getUserLogin($_REQUEST['userLogin']);
 				if (($rslogin->recordcount())>0) {
-				    $sys_lanai->getErrorBox(_LOGIN_EXIST." <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
+        $sys_lanai->getErrorBox(_LOGIN_EXIST." <button type=\"button\" onclick=\"history.back();\">_BACK</button>");
 				} else {
 					if (empty($_REQUEST['userFname']) OR empty($_REQUEST['userLname']) OR empty($_REQUEST['userLogin'])  OR empty($_REQUEST['userEmail'])) {
-					   	$sys_lanai->getErrorBox(_REQUIRE_FIELDS." <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
+         $sys_lanai->getErrorBox(_REQUIRE_FIELDS." <button type=\"button\" onclick=\"history.back();\">_BACK</button>");
 					} else {
 						if (($_REQUEST['userPassword1'])==($_REQUEST['userPassword2'])){
 					 		//$mem_lanai->setUpdateUser($_SESSION['uid'],$_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin']);
@@ -33,7 +33,7 @@
 							//$sys_lanai->go2Page("?modname=member&mf=meminfo");
 							$member->setNewUser($_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin'],$_REQUEST['userPassword1'],$_REQUEST['userPrivilege'],isset($_REQUEST['userRoleId']) ? $_REQUEST['userRoleId'] : null);
 						} else {
-							$sys_lanai->getErrorBox(_PASSWORD_NOT_EQUAL." <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
+       $sys_lanai->getErrorBox(_PASSWORD_NOT_EQUAL." <button type=\"button\" onclick=\"history.back();\">_BACK</button>");
 						}
 					}
 				}
@@ -130,7 +130,7 @@
 					break;
 				}
 				if (empty($_REQUEST['userFname']) OR empty($_REQUEST['userLname']) OR empty($_REQUEST['userLogin'])  OR empty($_REQUEST['userEmail'])) {
-			   	$sys_lanai->getErrorBox(_REQUIRE_FIELDS." <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
+       $sys_lanai->getErrorBox(_REQUIRE_FIELDS." <button type=\"button\" onclick=\"history.back();\">_BACK</button>");
 				} else {
 					// update info
 					if ((empty($_REQUEST['userPassword1']) AND empty($_REQUEST['userPassword2']))) {

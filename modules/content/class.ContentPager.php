@@ -99,6 +99,8 @@
 			$gSQLBlockRows = $this->rows;
 			//rs2html($this->rs,$this->gridAttributes,$this->gridHeader,$this->htmlSpecialChars);
 			$mod_lanai=new Content();
+			global $sys_lanai;
+			$canPublish = $sys_lanai->userHasCapability('publish_content');
 			?>
 			<script language="javascript" type="text/javascript"> 
 		
@@ -113,21 +115,21 @@
 				} 
 			} 
 			function prepareActiveToggle(id, value) {
-				document.form.ac.value = 'active';
+				document.getElementById("content-list-form").ac.value = 'active';
 				document.getElementById('single-mid').value = id;
 				document.getElementById('single-v').value = value;
 				return true;
 			}
 			
 			</script> 
-			<table cellpadding="3" cellspacing="1" width="100%">
-			<form name="form" method="post" action="<?=$_SERVER['PHP_SELF']?>">
+			<form id="content-list-form" name="form" method="post" action="<?=$_SERVER['PHP_SELF']?>">
 			<input type="hidden" name="modname" value="content">
 			<input type="hidden" name="mf" value="conedit">
 			<input type="hidden" name="ac" value="">
 			<input type="hidden" name="mid" id="single-mid" value="">
 			<input type="hidden" name="v" id="single-v" value="">
 			<?php global $sys_lanai; $sys_lanai->renderCsrfField('content'); ?>
+			<table cellpadding="3" cellspacing="1" width="100%">
 			<tr>
 				<th class="tblRowSolidTopDown"  align="center"><input type="checkbox" value="select_all" onclick="selectall(this);" class="radioButton" /></th>
 				<th class="tblRowSolidTopDown" width="80%"><?=_CONTENT_TITLE; ?></th>
@@ -143,21 +145,22 @@
 				</td>
 				<td class="tblRowDash">
 					<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/file.gif" border="0" align="absmiddle">
-					<?=$this->rs->fields['conTitle']; ?>
+					<a href="module.php?modname=content&amp;cid=<?= (int)$this->rs->fields['conId']; ?>" target="_blank" rel="noopener"><?= htmlspecialchars((string)$this->rs->fields['conTitle'], ENT_QUOTES, 'UTF-8'); ?></a>
+					<?php if (($this->rs->fields['conPending'] ?? 'n') === 'y'): ?> <span class="badge bg-warning text-dark">Pending review</span><?php endif; ?>
 				</td>
 				<td class="tblRowDash" align="center">
 				<?php
 					if ($this->rs->fields['conActive']=='y') {
 					    ?>
-						<button type="submit" onclick="return prepareActiveToggle('<?=$this->rs->fields['conId']; ?>','n');" style="border:0;background:none;padding:0;cursor:pointer;">
+						<?php if ($canPublish): ?><button type="submit" onclick="return prepareActiveToggle('<?=$this->rs->fields['conId']; ?>','n');" style="border:0;background:none;padding:0;cursor:pointer;"><?php endif; ?>
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/ok.gif" border="0" align="absmiddle">
-						</button>
+						<?php if ($canPublish): ?></button><?php endif; ?>
 						<?php
 					} else {
 						?>
-						<button type="submit" onclick="return prepareActiveToggle('<?=$this->rs->fields['conId']; ?>','y');" style="border:0;background:none;padding:0;cursor:pointer;">
+						<?php if ($canPublish): ?><button type="submit" onclick="return prepareActiveToggle('<?=$this->rs->fields['conId']; ?>','y');" style="border:0;background:none;padding:0;cursor:pointer;"><?php endif; ?>
 						<img src="theme/<?=$mod_lanai->cfg['theme'];?>/images/cancel.gif" border="0" align="absmiddle">
-						</button>
+						<?php if ($canPublish): ?></button><?php endif; ?>
 						<?php
 					}
 				?>					
@@ -171,7 +174,7 @@
 			<?php
 				$this->rs->movenext();
 			} // while{
-			?></table><?php
+			?></table></form><?php
 			$s = ob_get_contents();
 			ob_end_clean();
 			return $s;

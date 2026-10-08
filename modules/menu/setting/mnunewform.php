@@ -14,17 +14,17 @@
 	<?=_MENU_NEW_INSTRUCTION; ?><br/><br/>
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-	<a href="#" onClick="javascript:document.form.submit();" ><?=_SAVE; ?></a>&nbsp;&nbsp; 
+	<button type="submit" form="menu-setting-mnunewform-form"><?=_SAVE; ?></button>&nbsp;&nbsp;
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
 	<a href="setting.php?modname=menu&mf=mnunew"><?=_BACK; ?></a><br><br>
-	<table >
-	<form name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>">	
+	<form id="menu-setting-mnunewform-form" name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="mf" value="mnuedit">
 	<input type="hidden" name="ac" value="new">	
 	<input type="hidden" name="m" value="<?=$_REQUEST['m']?>">
 	<?php $sys_lanai->renderCsrfField('menu'); ?>
+	<table >
 	<?php 
 		switch($_REQUEST['m']){
 			case 'c': 
@@ -92,4 +92,4 @@
 				break;
 		} // switch
 	?>	
-	</table>
+	</table></form>

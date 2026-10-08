@@ -6,14 +6,14 @@ if (session_id() == '') {
 include_once("../include/lanai/class.system.php");
 $sys_lanai = new Systems();
 
-if (empty($_SESSION['lang'])) {
-    require_once("language/lang-english.php");
-} else {
-    require_once("language/lang-" . $_SESSION['lang'] . ".php");
-}
+require_once __DIR__.'/../include/lanai/localization.php';
+$installLanguage = $_REQUEST['set'] ?? ($_SESSION['lang'] ?? 'english');
+if (!is_string($installLanguage) || !isset(lanai_languages()[$installLanguage])) $installLanguage = 'english';
+$_SESSION['lang'] = $installLanguage;
+require_once __DIR__.'/language/lang-'.$installLanguage.'.php';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= htmlspecialchars(lanai_language_locale($installLanguage), ENT_QUOTES, 'UTF-8') ?>">
 <head>
     <meta charset="UTF-8">
     <title>Setup</title>

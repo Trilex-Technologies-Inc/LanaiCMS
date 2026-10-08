@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/modules/privacy/module.php';
+ob_start('lanai_privacy_output');
 if (!file_exists('config.inc.php')) {
     ?>
     <SCRIPT LANGUAGE="JavaScript">

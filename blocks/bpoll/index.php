@@ -11,7 +11,7 @@
 		<form method="post" action="module.php">
 		<input type="hidden" name="mid" value="<?=$rsBPoll->fields['pllId']; ?>">
 		<input type="hidden" name="modname" value="poll">
-		<input type="hidden" name="mf" value="pllvote">
+		<input type="hidden" name="mf" value="pllvote"><?php $sys_lanai->renderCsrfField('poll_vote'); ?>
 		<tr>
 			<td><span class="txtContentTitle"><?=$rsBPoll->fields['pllTitle']; ?></span></td>
 		</tr>

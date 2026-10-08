@@ -11,6 +11,20 @@ Lanai Content Management System
 
 ## Recent changes
 
+### Interface languages
+
+- Added Spanish, German, French, Brazilian Portuguese and Japanese packs alongside English and Thai, selectable in administration and installation.
+- Added shared translations for admin navigation, content editing, member account labels and cookie controls, with English fallback. See the [language guide](language/README.md) for coverage, remaining English screens and maintenance checks.
+
+### Privacy and personal data
+
+- Added a Privacy & Compliance module with visitor cookie preferences, policy pages, and optional script configuration. Analytics now require opt-in. Existing sites should save privacy settings once to initialize storage; see the [privacy guide](modules/privacy/README.md) for setup and integration limits.
+- Added authenticated account exports, a private request history and administrator review queue, reviewed account erasure, consent receipts, privacy activity records and configurable CLI retention cleanup. Schedule cleanup and review the data inventory before processing erasure requests.
+
+### Member security and content embeds
+
+- Added optional authenticator MFA with encrypted secrets, single-use recovery codes, a pending login challenge, and account-level verification limits. Configure the server key before enrollment; see the [MFA setup guide](modules/member/MFA.md).
+- Added Insert poll and Insert contact controls to the content editor. Public articles render active referenced items, and poll voting now checks CSRF, option ownership, and the poll cooldown. See the [embed guide](modules/content/EMBEDS.md).
 ### Content and comments
 
 - Added an **Allow comments** option to content creation and editing, with English and Thai interface text.

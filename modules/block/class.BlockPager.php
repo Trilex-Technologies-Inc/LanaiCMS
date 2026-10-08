@@ -114,20 +114,20 @@
 			} 
 			
 			function prepareActiveToggle(id, value) {
-				document.form.ac.value = 'active';
+				document.getElementById("block-list-form").ac.value = 'active';
 				document.getElementById('single-mid').value = id;
 				document.getElementById('single-v').value = value;
 				return true;
 			}
 			</script> 
-			<table cellpadding="3" cellspacing="1" width="100%">
-			<form name="form" method="post" action="<?=$_SERVER['PHP_SELF']?>">
+			<form id="block-list-form" name="form" method="post" action="<?=$_SERVER['PHP_SELF']?>">
 			<input type="hidden" name="modname" value="block">
 			<input type="hidden" name="mf" value="blcedit">
 			<input type="hidden" name="ac" value="">
 			<input type="hidden" name="mid" id="single-mid" value="">
 			<input type="hidden" name="v" id="single-v" value="">
 			<?php global $sys_lanai; $sys_lanai->renderCsrfField('block'); ?>
+			<table cellpadding="3" cellspacing="1" width="100%">
 			<tr>
 				<th class="tblRowSolidTopDown"  align="center"><input type="checkbox" value="select_all" onclick="selectall(this);" class="radioButton" /></th>
 				<th class="tblRowSolidTopDown" width="40%"><?=_BLOCK_TITLE; ?></th>
@@ -236,7 +236,7 @@
 				$rownum++;
 				$this->rs->movenext();
 			} // while{
-			?></form></table><?php
+			?></table></form><?php
 			$s = ob_get_contents();
 			ob_end_clean();
 			return $s;

@@ -14,17 +14,17 @@
 	<?=_MENU_TYPE_INSTRUCTION; ?><br/><br/>
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/new.gif" border="0" align="absmiddle"/>
-	<a href="#" onClick="javascript:document.form.submit();" ><?=_NEW; ?></a>&nbsp;&nbsp; 
+	<button type="submit" form="menu-setting-mnunew-form"><?=_NEW; ?></button>&nbsp;&nbsp;
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
 	<a href="setting.php?modname=menu"><?=_BACK; ?></a>
 	<br><br>
 	
-	<table>
-	<form name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>">
+	<form id="menu-setting-mnunew-form" name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="mf" value="mnunewform">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="ac" value="new">
+	<table>
 	<tr>
 		<td valign="top"><?=_MENU_TYPE; ?></td>
 		<td>
@@ -35,4 +35,4 @@
 			</select>
 		</td>	
 	</tr>
-	</table>
+	</table></form>

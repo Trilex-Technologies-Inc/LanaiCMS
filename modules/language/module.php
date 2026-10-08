@@ -25,18 +25,7 @@
 		}
 		
 		function getLanguage() {
-			if ($handle = opendir('language/')) {
-				$i=0;
-			   while (false !== ($file = readdir($handle))) { 
-			  		//if ($file != "." && $file != ".."  && !is_file($file) && file_exists("language/".$file."/theme.php")) {
-			   		if ($file != "." && $file != ".."  && !is_file($file)) {
-						$arTheme[$i]=$file;
-						$i++;
-					}
-			   }
-			   closedir($handle); 
-			}
-			return ($arTheme);
+			return array_map('basename', glob(__DIR__.'/../../language/lang-*.php') ?: array());
 		}
 		
 		function getCurrentLanguage() {
@@ -62,6 +51,10 @@
 		}
 		
 		function setUpdateLanguage($tname){
+			if (!is_string($tname) || !preg_match('/^[a-zA-Z0-9_-]+$/D', $tname)
+				|| !in_array('lang-'.$tname.'.php', $this->getLanguage(), true)) {
+				throw new InvalidArgumentException('Unknown interface language.');
+			}
 			$lines = file('config.inc.php');			
 			$lines[$this->_get_line()]="\t$"."cfg_lang=\"".$tname."\"".";\n";
 			$handle = fopen('config.inc.php', "w+");

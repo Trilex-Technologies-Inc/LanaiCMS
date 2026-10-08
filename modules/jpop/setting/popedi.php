@@ -30,15 +30,15 @@ if (!$rs) {
 ?>
 
 <span class="txtContentTitle"><?=_JPOP_EDIT_SETTING; ?></span><br><br>
-<a href="#" onclick="javascript:history.back();"><?=_JPOP_BACK; ?></a><br><br>
+<button type="button" onclick="history.back();"><?=_JPOP_BACK; ?></button><br><br>
 
-	<table>
 	<form name="addform" method="post" action="setting.php">
 	<input type="hidden" name="modname" value="jpop">
 	<input type="hidden" name="mf" value="popedi">
 	<input type="hidden" name="ac" value="edit">
 	<input type="hidden" name="i" value="<?=$_REQUEST['i']; ?>">
 	<?php $sys_lanai->renderCsrfField('jpop'); ?>
+	<table>
 	<tr><td><?=_JPOP_TITLE; ?> : </td><td><input type="text" id="popTitle" name="popTitle" size="40" value="<?=$objJpop->poptitle;?>"></td></tr>
 	<tr valign="top"><td><?=_JPOP_DES; ?> : </td>
 	<td>
@@ -58,8 +58,8 @@ if (!$rs) {
 	<tr><td><?=_JPOP_BG_DES; ?> : </td><td><input type="text" id="popBgDes" name="popBgDes" maxlength="7" value="<?=$objJpop->popbgdes;?>"></td></tr>
 	<tr><td><?=_JPOP_BG_BORDER; ?> : </td><td><input type="text" id="popBgBorder" name="popBgBorder" maxlength="7" value="<?=$objJpop->popbgborder;?>"></td></tr>
 	<tr><td>&nbsp;</td><td><input type="submit" value="<?=_SAVE; ?>" class="inputButton">&nbsp;<input type="reset" value="<?=_RESET; ?>" class="inputButton"></td></tr>
-	</form>
 	</table>
+	</form>
 <?php
 	} // edit action
 } // data found

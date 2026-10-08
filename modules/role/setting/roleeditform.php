@@ -23,13 +23,13 @@ $assignedCapIds = $role->getRoleCapabilityIds($roleId);
 <?=_ROLE_EDIT_INSTRUCTION; ?><br/><br/>
 
 <img src="theme/<?=$cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-<a href="#" onClick="javascript:document.form.submit();"><?=_SAVE; ?></a>&nbsp;&nbsp;
+<button type="submit" form="role-setting-roleeditform-form"><?=_SAVE; ?></button>&nbsp;&nbsp;
 
 <img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
-<a href="#" onClick="javascript:history.back();"><?=_BACK; ?></a>
+<button type="button" onclick="history.back();"><?=_BACK; ?></button>
 <br><br>
 
-<form name="form" method="post" action="<?=$_SERVER['PHP_SELF']; ?>">
+<form id="role-setting-roleeditform-form" name="form" method="post" action="<?=$_SERVER['PHP_SELF']; ?>">
     <input type="hidden" name="mf" value="roleedit">
     <input type="hidden" name="modname" value="<?=$module_name; ?>">
     <input type="hidden" name="roleId" value="<?=$roleId;?>">

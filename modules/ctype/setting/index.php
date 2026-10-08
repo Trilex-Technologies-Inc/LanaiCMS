@@ -17,21 +17,21 @@ $ctype = new ContentType();
 <a href="<?=$_SERVER['PHP_SELF']?>?modname=<?=$module_name?>&mf=typenewform"><?=_NEW; ?></a>&nbsp;&nbsp;
 
 <img src="theme/<?=$cfg['theme']; ?>/images/ok.gif" border="0" align="absmiddle"/>
-<a href="javascript:chk_active();"><?=_ACTIVE; ?></a>&nbsp;&nbsp;
+<button type="button" onclick="chk_active();"><?=_ACTIVE; ?></button>&nbsp;&nbsp;
 
 <img src="theme/<?=$cfg['theme']; ?>/images/delete.gif" border="0" align="absmiddle"/>
-<a href="javascript:chk_delete();"><?=_DELETE; ?></a>
+<button type="button" onclick="chk_delete();"><?=_DELETE; ?></button>
 <br><br>
 <script language="javascript">
     function chk_delete() {
         if (confirm("<?=_DELETE_QUESTION; ?>")) {
-            document.form.ac.value = "mdelete";
-            document.form.submit();
+            document.getElementById("ctype-list-form").ac.value = "mdelete";
+            document.getElementById("ctype-list-form").requestSubmit();
         }
     }
     function chk_active() {
-        document.form.ac.value = "mactive";
-        document.form.submit();
+        document.getElementById("ctype-list-form").ac.value = "mactive";
+        document.getElementById("ctype-list-form").requestSubmit();
     }
 </script>
 <?php

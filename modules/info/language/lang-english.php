@@ -22,6 +22,7 @@ define("_INFO_SETTING_INSTRUCTION","Check your production information, version a
 
 define("_INFO","Info");
 define("_LICENSE","License");
+define("_LICENSE_UNAVAILABLE","The license text is currently unavailable.");
 define("_CREDIT","Credits");
 define("_VERSION","Version");
 define("_SERIAL","Serial");

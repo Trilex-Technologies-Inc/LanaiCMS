@@ -56,7 +56,7 @@ function ctype_can_act($item, $blanketCap, $ownCap)
 switch ($_REQUEST['ac']) {
     case "new":
         if (empty($_REQUEST['citTitle'])) {
-            $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <a href=\"#\" onClick=\"javascript:history.back();\">" . _BACK . "</a>");
+            $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <button type=\"button\" onclick=\"history.back();\">" . _BACK . "</button>");
         } else {
             $values = ctype_collect_values($ctype, $ctpId);
             $ctype->setSaveItem(null, $ctpId, $_REQUEST['citTitle'], $values);
@@ -71,7 +71,7 @@ switch ($_REQUEST['ac']) {
             break;
         }
         if (empty($_REQUEST['citTitle'])) {
-            $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <a href=\"#\" onClick=\"javascript:history.back();\">" . _BACK . "</a>");
+            $sys_lanai->getErrorBox(_REQUIRE_FIELDS . " <button type=\"button\" onclick=\"history.back();\">" . _BACK . "</button>");
         } else {
             $values = ctype_collect_values($ctype, $ctpId);
             $ctype->setSaveItem($_REQUEST['citId'], $ctpId, $_REQUEST['citTitle'], $values);

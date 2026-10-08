@@ -8,18 +8,18 @@
 <span class="txtContentTitle"><?=_BACKUP_CHOOSE_TABLE_SETTING; ?></span><br/><br/>
 <?=_BACKUP_CHOOSE_TABLE_INSTRUCTION; ?><br/><br/>
 <img src="theme/<?=$cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-<a href="javascript:document.backup.submit();"><?=_SAVE; ?></a>&nbsp;
+<button type="submit" form="backup-tables-form"><?=_SAVE; ?></button>&nbsp;
 <img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
 <a href="setting.php?modname=<?=$module_name; ?>"><?=_BACK; ?></a><br/><br/>
 <?php
   $bup=new DBBackup();
   $rs=$bup->ListTable();
 ?>
-<table>
-<form name="backup" method="post" action="setting.php">
+<form id="backup-tables-form" name="backup" method="post" action="setting.php">
 <input type="hidden" name="modname" value="backup">
 <input type="hidden" name="mf" value="backup">
 <?php $sys_lanai->renderCsrfField('backup'); ?>
+<table>
   <tr>
     <td>
         <select name="table[]" size="10" multiple="multiple">
@@ -37,4 +37,4 @@
         <input type="checkbox" name="value" value="v" checked="checked" />&nbsp;<?=_BACKUP_VALUE; ?>
     </td>
   </tr>
-</table>
+</table></form>

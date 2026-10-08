@@ -44,7 +44,7 @@
 
     if ($db->NConnect($_SESSION['dbhost'],$_SESSION['dbuser'], $_SESSION['dbpw'], $_SESSION['dbname'])) {
         $coreTables = array(
-            'user', 'privilege', 'role', 'capability', 'role_capability',
+            'user', 'user_mfa', 'privacy_settings', 'privacy_request', 'privacy_audit', 'privacy_consent', 'privilege', 'role', 'capability', 'role_capability',
             'module', 'block', 'menu', 'contact', 'content',
             'country', 'poll', 'poll_option',
             'poll_stat', 'tag', 'item_tag', 'meta', 'read', 'comment',
@@ -123,6 +123,11 @@ $sql = "CREATE TABLE IF NOT EXISTS `".$_SESSION['tablepre']."user` (
 )";
 
 dbexecute("Create Table Users",$sql);
+require_once __DIR__ . '/../include/lanai/class.mfa.php';
+dbexecute('Create Table MFA', LanaiMfa::schema($_SESSION['tablepre'] . 'user_mfa'));
+require_once __DIR__ . '/../modules/privacy/module.php';
+dbexecute('Create Table Privacy Settings', LanaiPrivacy::schema($_SESSION['tablepre'] . 'privacy_settings'));
+foreach (LanaiPrivacyData::schemas($_SESSION['tablepre']) as $privacyTable=>$privacySql) dbexecute('Create Table '.$privacyTable, $privacySql);
 
 ?>
     <li>
@@ -251,6 +256,7 @@ dbexecute("Create Table Users",$sql);
             `conBody2` text NOT NULL,
             `conCategory` char(1) NOT NULL default 'c',
             `conAllowComments` enum('y','n') NOT NULL default 'n',
+            `conPending` enum('y','n') NOT NULL default 'n',
             `conModified` timestamp NULL,
             `conActive` enum('y','n') default NULL,
             PRIMARY KEY  (`conId`)

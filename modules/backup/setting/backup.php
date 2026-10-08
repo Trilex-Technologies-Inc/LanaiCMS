@@ -8,9 +8,12 @@
         $sys_lanai->getErrorBox("Invalid request, please try again.");
     } else if ((empty($_REQUEST['schema'])) AND (empty($_REQUEST['value']))) {
         $sys_lanai->getErrorBox(_SELECT_OPTION);
+    } else if (empty($_REQUEST['table']) || !is_array($_REQUEST['table'])) {
+        $sys_lanai->getErrorBox(_SELECT_OPTION);
     } else {
-      if ($_REQUEST['schema']=="s") $schema=true; else $schema=false;
-      if ($_REQUEST['value']=="v") $value=true; else $value=false;
+      $schema = ($_REQUEST['schema'] ?? '') === 's';
+      $value = ($_REQUEST['value'] ?? '') === 'v';
+      $sqlStr = '';
       if ((count($_REQUEST['table'])) > 0) {
           for ($i=0;$i<(count($_REQUEST['table']));$i++) {
             $sqlStr.=$bup->BackUpTable($_REQUEST['table'][$i],$schema,$value);

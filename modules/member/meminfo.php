@@ -1,213 +1,146 @@
 <?php
-if (stripos($_SERVER['PHP_SELF'], "module.php") === false) {
-    die ("You can't access this file directly...");
+if (stripos($_SERVER['PHP_SELF'], 'module.php') === false) { http_response_code(403); exit; }
+global $db, $cfg, $cfg_datadir, $sys_lanai;
+include_once __DIR__ . '/module.php';
+// Keep older activation links working independently of the account area.
+if (isset($_GET['ac']) && $_GET['ac'] === 'activate') { include __DIR__ . '/memactivate.php'; return; }
+if (empty($_SESSION['uid']) || !is_numeric($_SESSION['uid']) || (int)$_SESSION['uid'] <= 0) {
+    echo '<p><a href="module.php?modname=member&amp;mf=memloginform">' . _SIGNIN . '</a></p>';
+    return;
 }
-
-$module_name = basename(dirname(__FILE__));
-$modfunction="modules/$module_name/module.php";
-include_once($modfunction);
-
-// get userinfo
-$mem_lanai=new User();
-$rs=$mem_lanai->getUser($_SESSION['uid']);
-$ac = isset($_REQUEST['ac']) ? $_REQUEST['ac'] : '';
-
-switch($ac){
-    case "activate" :
-        $mitem=$mem_lanai->getUserActivate($_REQUEST['u'],$_REQUEST['p']);
-        if ($mitem->recordcount() > 0) {
-            $mem_lanai->setUserActive($mitem->fields['userId'],"y");
-            ?>
-            <img src="theme/<?=$cfg['theme']; ?>/images/ok.gif" border="0" align="absmiddle"/>
-            <?=_MEMBER_ACTIVATE_COMPLETE; ?>
-            <?php
-        } else {
-            ?>
-            <img src="theme/<?=$cfg['theme']; ?>/images/worning.gif" border="0" align="absmiddle"/>
-            <?=_MEMBER_CANNOT_ACTIVATE; ?>
-            <?php
+$member = new User();
+$record = $member->getUser((int)$_SESSION['uid']);
+if (!$record || $record->EOF || $record->fields['userActive'] !== 'y') { return; }
+$user = $record->fields;
+if (!defined('LANAI_MEMBER_AREA')) { define('LANAI_MEMBER_AREA', true); }
+require_once __DIR__ . '/account.php';
+$labels = require __DIR__ . '/language/account-' . (($cfg['lang'] ?? '') === 'thai' ? 'thai' : 'english') . '.php';
+require_once __DIR__.'/../../include/lanai/localization.php';
+if (($cfg['lang'] ?? '') !== 'thai') $labels = array_map('lanai_translate', $labels);
+$escape = static function ($value) { return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8'); };
+// This allowlist is the extension point for future account sections.
+$sections = array('overview' => $labels['overview'], 'profile' => $labels['profile'], 'security' => $labels['security']);
+$section = memberAreaInput($_GET, 'section');
+if ($section === '' && memberAreaInput($_REQUEST, 'ac') === 'edit') { $section = 'profile'; }
+if (!isset($sections[$section])) { $section = 'overview'; }
+$base = 'module.php?modname=member&mf=meminfo';
+$errors = array();
+$saved = false;
+$values = $user;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && in_array($section, array('profile','security'), true)) {
+    if (!$sys_lanai->validateCsrfToken('member', memberAreaInput($_POST, 'csrf_token'))) {
+        $errors[] = 'csrf';
+    } else {
+        list($changes, $errors) = memberAreaValidate($_POST, $user, $section, $sys_lanai);
+        if ($section === 'security' && !empty($_SESSION['mfa_verified']) && !$errors) {
+            try { if (!lanai_mfa_service()->verify((int)$user['userId'], memberAreaInput($_POST, 'mfaCode'))) $errors[] = 'mfa'; }
+            catch (Throwable $error) { $errors[] = 'mfa'; }
         }
-        break;
-    case "doedit":
-        $userPri=$mem_lanai->getUserPrivilege($_SESSION['uid']);
-        if (!$sys_lanai->validateCsrfToken('member', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {
-            $sys_lanai->getErrorBox("Invalid request, please try again.");
-        } else if (empty($_REQUEST['userFname']) OR empty($_REQUEST['userLname']) OR empty($_REQUEST['userLogin'])  OR empty($_REQUEST['userEmail'])) {
-            $sys_lanai->getErrorBox(_REQUIRE_FIELDS_BACK);
-        } else {
-            // update info
-            if ((empty($_REQUEST['userPassword1']) AND empty($_REQUEST['userPassword2']))) {
-                $mem_lanai->setUpdateUser($_SESSION['uid'],$_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin'],$userPri);
-                //$sys_lanai->go2Page("?modname=member&mf=meminfo");
-            } else {
-                if (($_REQUEST['userPassword1'])==($_REQUEST['userPassword2'])){
-                    $mem_lanai->setUpdateUser($_SESSION['uid'],$_REQUEST['userFname'],$_REQUEST['userLname'],$_REQUEST['userAddress1'],$_REQUEST['userAddress2'],$_REQUEST['userCity'],$_REQUEST['userState'],$_REQUEST['cntId'],$_REQUEST['userZipcode'],$_REQUEST['userPhone'],$_REQUEST['userFax'],$_REQUEST['userMobile'],$_REQUEST['userEmail'],$_REQUEST['userURL'],$_REQUEST['userLogin'],$userPri);
-                    $mem_lanai->setUpdateUserPassword($_SESSION['uid'],$_REQUEST['userPassword1']);
-                    //$sys_lanai->go2Page("?modname=member&mf=meminfo");
-                } else {
-                    $sys_lanai->getErrorBox(_PASSWORD_NOT_EQUAL_BACK);
-                }
+        $values = array_merge($user, $changes);
+        if ($section === 'security') {
+            $duplicate = $db->execute('SELECT userId FROM ' . $cfg['tablepre'] . 'user WHERE userId <> ' . (int)$user['userId']
+                . ' AND (userLogin=' . $db->qstr($changes['userLogin']) . ' OR userEmail=' . $db->qstr($changes['userEmail']) . ')');
+            if (!$duplicate) { $errors[] = 'save'; }
+            elseif (!$duplicate->EOF) { $errors[] = 'duplicate'; }
+        }
+        $avatar = $_FILES['userAvatar'] ?? null;
+        $upload = $section === 'profile' && is_array($avatar) && ($avatar['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE;
+        if ($upload) {
+            $info = is_string($avatar['tmp_name'] ?? null) ? @getimagesize($avatar['tmp_name']) : false;
+            if (($avatar['error'] ?? -1) !== UPLOAD_ERR_OK || !$info || $info[2] !== IMAGETYPE_GIF
+                || ($avatar['size'] ?? 0) > 2097152 || $info[0] > 2048 || $info[1] > 2048
+                || !is_uploaded_file($avatar['tmp_name'])) { $errors[] = 'avatar'; }
+        }
+        if (!$errors) {
+            $assignments = array();
+            foreach ($changes as $field => $value) { $assignments[] = $field . '=' . $db->qstr($value); }
+            // The validated fields never include privilege, role, status, or another user's ID.
+            $saved = (bool)$db->execute('UPDATE ' . $cfg['tablepre'] . 'user SET ' . implode(', ', $assignments) . ' WHERE userId=' . (int)$user['userId']);
+            if (!$saved) { $errors[] = 'save'; }
+            if ($saved && $upload) {
+                $target = rtrim($cfg_datadir, '/\\') . DIRECTORY_SEPARATOR . 'uimage' . DIRECTORY_SEPARATOR . 'u' . (int)$user['userId'] . '.gif';
+                if (!move_uploaded_file($avatar['tmp_name'], $target)) { $errors[] = 'upload'; }
             }
+            if ($saved) { $user = array_merge($user, $changes); }
         }
-
-        if (!empty($_FILES['userAvatar']['name'])) {
-            if (strtolower(substr($_FILES['userAvatar']['name'],strlen($_FILES['userAvatar']['name'])-3,3))!="gif") {
-                $sys_lanai->getErrorBox(_WRONG_IMAGE_TYPE);
-            } else {
-                // upload file
-                global $cfg_datadir;
-                $uploaddir = $cfg_datadir;
-                $uploadfile = $uploaddir .$sys_lanai->getPath()."uimage".$sys_lanai->getPath(). "u".$_SESSION['uid'].".gif";
-                //echo $uploadfile;
-                if (move_uploaded_file($_FILES['userAvatar']['tmp_name'], $uploadfile)) {
-                    $sys_lanai->go2Page("?modname=member&mf=meminfo");
-                } else {
-                    $sys_lanai->getErrorBox(_CANNOT_UPLOAD_FILE);
-                }
-            }
-        } else {
-            $sys_lanai->go2Page("?modname=member&mf=meminfo");
-        }
-
-        break;
-    case "edit":
-        // edit form
-        ?><span class="txtContentTitle"><?=_MEMBER_EDIT; ?></span><br/><br/>
-        <?=_MEMBER_EDIT_INSTRUCTION; ?><br/><br/>
-
-        <img src="theme/<?=$cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-        <a href="#" onClick="javascript:document.form.submit();"><?=_SAVE; ?></a>&nbsp;&nbsp;
-
-        <img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
-        <a href="#" onClick="javascript:history.back();" ><?=_BACK; ?></a>
-        <br><br>
-        <table cellpadding="2">
-            <form method="post" enctype="multipart/form-data" name="form" action="<?=$_SERVER['PHP_SELF']; ?>">
-                <input type="hidden" name="modname" value="member"/>
-                <input type="hidden" name="mf" value="meminfo"/>
-                <input type="hidden" name="ac" value="doedit"/>
-                <?php $sys_lanai->renderCsrfField('member'); ?>
-                <tr>
-                    <td><?=_USER_FNAME; ?></td><td><input type="text" name="userFname" value="<?=$rs->fields['userFname']?>">*</td>
-                </tr>
-                <tr>
-                    <td><?=_USER_LNAME; ?></td><td><input type="text" name="userLname" value="<?=$rs->fields['userLname']?>">*</td>
-                </tr>
-                <tr>
-                    <td><?=_USER_ADDRESS1; ?></td><td><input type="text" name="userAddress1" size="40" value="<?=$rs->fields['userAddress1']?>"></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_ADDRESS2; ?></td><td><input type="text" name="userAddress2" size="40" value="<?=$rs->fields['userAddress2']?>"></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_CITY; ?></td><td><input type="text" name="userCity" value="<?=$rs->fields['userCity']?>"></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_STATE; ?></td><td><input type="text" name="userState" value="<?=$rs->fields['userState']?>"></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_COUNTRY; ?></td><td><?=$mem_lanai->setCountryCombo($rs->fields['cntId'],"cntId"); ?></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_ZIPCODE; ?></td><td><input type="text" name="userZipcode" value="<?=$rs->fields['userZipcode']?>"></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_PHONE; ?></td><td><input type="text" name="userPhone" value="<?=$rs->fields['userPhone']?>"></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_FAX; ?></td><td><input type="text" name="userFax" value="<?=$rs->fields['userFax']?>"></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_MOBILE; ?></td><td><input type="text" name="userMobile" value="<?=$rs->fields['userMobile']?>"></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_EMAIL; ?></td><td><input type="text" name="userEmail" value="<?=$rs->fields['userEmail']?>">*</td>
-                </tr>
-                <tr>
-                    <td><?=_USER_URL; ?></td><td><input type="text" name="userURL" value="<?=$rs->fields['userURL']?>"></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_LOGIN; ?></td><td><input type="text" name="userLogin" value="<?=$rs->fields['userLogin']?>">*</td>
-                </tr>
-                <tr>
-                    <td><?=_USER_PASSWORD; ?></td><td><input type="password" name="userPassword1" value="">* <?=_USER_LEAVE_BLANK; ?></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_RE_PASSWORD; ?></td><td><input type="password" name="userPassword2" value="">* <?=_USER_LEAVE_BLANK; ?></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_AVATAR; ?></td><td><input type="file" name="userAvatar"></td>
-                </tr>
-            </form>
-        </table>
-        <?php
-        break;
-    default:
-        // show data
-        ?>
-        <span class="txtContentTitle"><?=_MEMBER_INFORMATION; ?></span><br/><br/>
-        <?=_MEMBER_INFO_INSTRUCTION; ?><br/><br/>
-
-        <img src="theme/<?=$cfg['theme']; ?>/images/edit.gif" border="0" align="absmiddle"/>
-        <a href="#" onClick="javascript:document.form.submit();"><?=_EDIT; ?></a>&nbsp;&nbsp;
-        <img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
-        <a href="#" onClick="javascript:history.back();" ><?=_BACK; ?></a>
-        <br/><br/>
-        <table cellpadding="2">
-            <form method="post" name="form" action="<?=$_SERVER['PHP_SELF']; ?>">
-                <input type="hidden" name="modname" value="member"/>
-                <input type="hidden" name="mf" value="meminfo"/>
-                <input type="hidden" name="ac" value="edit"/>
-                <tr>
-                    <td><?=_USER_FNAME; ?></td><td><?=$rs->fields['userFname']?></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_LNAME; ?></td><td><?=$rs->fields['userLname']?></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_ADDRESS1; ?></td><td><?=$rs->fields['userAddress1']?></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_ADDRESS2; ?></td><td><?=$rs->fields['userAddress2']?></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_CITY; ?></td><td><?=$rs->fields['userCity']?></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_STATE; ?></td><td><?=$rs->fields['userState']?></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_COUNTRY; ?></td><td><?=$mem_lanai->getCountry($rs->fields['cntId']); ?></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_ZIPCODE; ?></td><td><?=$rs->fields['userZipcode']?></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_PHONE; ?></td><td><?=$rs->fields['userPhone']?></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_FAX; ?></td><td><?=$rs->fields['userFax']?></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_MOBILE; ?></td><td><?=$rs->fields['userMobile']?></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_EMAIL; ?></td><td><?=$rs->fields['userEmail']?></td>
-                </tr>
-                <tr>
-                    <td><?=_USER_URL; ?></td><td><?=$rs->fields['userURL']?></td>
-                </tr>
-                <!--
-	<tr>
-		<td><?=_USER_LOGIN; ?></td><td><?=$rs->fields['userLogin']?></td>
-	</tr>
-	<tr>
-		<td><?=_USER_PASSWORD; ?></td><td><?=$rs->fields['userPassword']?></td>
-	</tr>
-	-->
-            </form>
-        </table>
-    <?php
-} // switch
-
+    }
+}
+$field = static function ($name, $label, $type = 'text', $required = false, $limit = 255) use ($escape, &$values) {
+    echo '<label class="member-field" for="ma-' . $escape($name) . '"><span>' . $escape($label) . ($required ? ' *' : '') . '</span>';
+    echo '<input id="ma-' . $escape($name) . '" name="' . $escape($name) . '" type="' . $type . '" maxlength="' . (int)$limit . '"'
+        . ($required ? ' required' : '') . ($type === 'password' ? ' autocomplete="' . ($name === 'currentPassword' ? 'current-password' : 'new-password') . '"' : '')
+        . ' value="' . ($type === 'password' ? '' : $escape($values[$name] ?? '')) . '"></label>';
+};
 ?>
+<link rel="stylesheet" href="assets/member-area.css">
+<section class="member-area" aria-labelledby="member-title">
+    <header class="member-header">
+        <div class="member-avatar" aria-hidden="true"><?php if ($member->isUserImageExist((int)$user['userId'])): ?>
+            <img src="datacenter/uimage/u<?= (int)$user['userId'] ?>.gif?v=<?= $saved ? time() : 0 ?>" alt="">
+        <?php else: ?><?= $escape(mb_substr($user['userFname'] ?: $user['userLogin'], 0, 1)) ?><?php endif; ?></div>
+        <div><h1 id="member-title"><?= $escape($labels['title']) ?></h1><p><?= $escape(trim($user['userFname'] . ' ' . $user['userLname'])) ?></p></div>
+    </header>
+    <?php
+    // Role-based staff (for example contributors) get the same entry point as administrators.
+    $memberIsStaff = false;
+    if (($user['userPrivilege'] ?? '') !== 'a' && isset($sys_lanai) && method_exists($sys_lanai, 'userHasCapability')) {
+        require_once __DIR__ . '/../../administrator/access.php';
+        $memberIsStaff = (bool)lanai_staff_modules($user, static function ($capability) use ($sys_lanai, $user) {
+            return $sys_lanai->userHasCapability($capability, (int)$user['userId']);
+        });
+    }
+    ?>
+    <div class="member-layout">
+        <nav class="member-nav" aria-label="<?= $escape($labels['title']) ?>">
+            <a href="module.php?modname=privacy&amp;view=data"><?= $escape(($cfg['lang']??'')==='thai'?'ข้อมูลส่วนบุคคล':'Personal data') ?></a>
+            <?php foreach ($sections as $key => $label): ?><a href="<?= $escape($base . '&section=' . $key) ?>" <?= $section === $key ? 'aria-current="page"' : '' ?>><?= $escape($label) ?></a><?php endforeach; ?>
+            <?php if ($user['userPrivilege'] === 'a' || $memberIsStaff): ?><a href="setting.php"><?= $escape($labels['admin']) ?></a><?php endif; ?>
+            <a href="module.php?modname=member&amp;mf=memlogout"><?= _USER_LOGOUT ?></a>
+        </nav>
+        <div class="member-panel">
+            <h2><?= $escape($sections[$section]) ?></h2>
+            <?php foreach (array_unique($errors) as $error): ?><p class="member-error" role="alert"><?= $escape($labels[$error]) ?></p><?php endforeach; ?>
+            <?php if ($saved): ?><p class="member-success" role="status"><?= $escape($labels['saved']) ?></p><?php endif; ?>
+            <?php if ($section === 'overview'): ?>
+                <p><?= $escape($labels['intro']) ?></p>
+                <dl class="member-details"><dt><?= _USER_LOGIN ?></dt><dd><?= $escape($user['userLogin']) ?></dd><dt><?= _USER_EMAIL ?></dt><dd><?= $escape($user['userEmail']) ?></dd><dt><?= $escape($labels['joined']) ?></dt><dd><?= $escape($user['userCreated']) ?></dd></dl>
+                <div class="member-cards"><?php foreach (array('profile','security') as $key): ?><a href="<?= $escape($base . '&section=' . $key) ?>"><strong><?= $escape($sections[$key]) ?></strong><span><?= $escape($labels[$key . '_hint']) ?></span></a><?php endforeach; ?></div>
+            <?php else: ?>
+                <p><?= $escape($labels[$section . '_hint']) ?></p>
+                <form method="post" action="<?= $escape($base . '&section=' . $section) ?>" enctype="multipart/form-data">
+                    <?php $sys_lanai->renderCsrfField('member'); ?>
+                    <div class="member-fields">
+                    <?php if ($section === 'profile'):
+                        $field('userFname', _USER_FNAME, 'text', true, 100);
+                        $field('userLname', _USER_LNAME, 'text', true, 100);
+                        $field('userURL', _USER_URL, 'url', false, 255);
+                        $field('userPhone', _USER_PHONE, 'tel', false, 20);
+                        $field('userMobile', _USER_MOBILE, 'tel', false, 20);
+                        $field('userFax', _USER_FAX, 'tel', false, 20);
+                        $field('userAddress1', _USER_ADDRESS1, 'text', false, 150);
+                        $field('userAddress2', $labels['address2'], 'text', false, 150);
+                        $field('userCity', _USER_CITY, 'text', false, 100);
+                        $field('userState', _USER_STATE, 'text', false, 100);
+                        $field('userZipcode', _USER_ZIPCODE, 'text', false, 15);
+                    ?>
+                        <label class="member-field"><span><?= _USER_COUNTRY ?></span><select name="cntId" required><?php
+                        $countries = $db->execute('SELECT cntId, cntName FROM ' . $cfg['tablepre'] . 'country ORDER BY cntName');
+                        if ($countries) { while (!$countries->EOF) { ?><option value="<?= $escape($countries->fields['cntId']) ?>" <?= $values['cntId'] === $countries->fields['cntId'] ? 'selected' : '' ?>><?= $escape($countries->fields['cntName']) ?></option><?php $countries->moveNext(); } }
+                        ?></select></label>
+                        <label class="member-field"><span><?= _USER_AVATAR ?></span><input type="file" name="userAvatar" accept="image/gif"><small><?= $escape($labels['avatar_hint']) ?></small></label>
+                    <?php else:
+                        $field('userLogin', _USER_LOGIN, 'text', true, 50);
+                        $field('userEmail', _USER_EMAIL, 'email', true, 254);
+                        $field('currentPassword', $labels['current_label'], 'password', true, 255);
+                        $field('userPassword1', $labels['new_password'], 'password', false, 72);
+                        $field('userPassword2', $labels['confirm_password'], 'password', false, 72);
+                    endif; ?>
+                    </div>
+                    <?php if ($section === 'security' && !empty($_SESSION['mfa_verified'])) { $field('mfaCode', $labels['mfa_code'], 'text', true, 40); } ?>
+                    <?php if ($section === 'security'): ?><p><a href="module.php?modname=member&amp;mf=memmfa"><?= $escape($labels['mfa_manage']) ?></a></p><p><?= $escape($labels['password_hint']) ?></p><?php endif; ?>
+                    <button class="member-save" type="submit"><?= _SAVE ?></button>
+                </form>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>

@@ -3,7 +3,9 @@
 			die ("You can't access this file directly...");
 	}
 	
-	$module_name = basename(dirname(__FILE__));
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !$sys_lanai->validateCsrfToken('login', isset($_POST['csrf_token']) && is_string($_POST['csrf_token']) ? $_POST['csrf_token'] : '')) { $sys_lanai->getErrorBox('Invalid sign-in request.'); return; }
+    foreach (array('username','password','captext','cf-turnstile-response') as $key) { if (isset($_POST[$key]) && !is_string($_POST[$key])) { return; } }
+    $module_name = basename(dirname(__FILE__));
 	$modfunction="modules/$module_name/module.php";
 	include_once($modfunction);
 
@@ -18,7 +20,7 @@
 	$captcha_ok = false;
 
 	if ($captcha_provider === 'default') {
-		$captext = isset($_REQUEST['captext']) ? trim($_REQUEST['captext']) : '';
+		$captext = isset($_POST['captext']) ? trim($_POST['captext']) : '';
 		$sessionCaptcha = isset($_SESSION['captcha']) ? trim($_SESSION['captcha']) : '';
 		$captcha_ok = ($captext !== '' && $sessionCaptcha !== '' && strcasecmp($captext, $sessionCaptcha) === 0);
 	} elseif ($turnstile_enabled) {
@@ -34,7 +36,7 @@
 			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($verify_data));
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 			$response = curl_exec($ch);
 			if (!curl_errno($ch)) {
 				$result = json_decode($response, true);
@@ -47,12 +49,14 @@
 		return;
 	}
 
+	unset($_SESSION['captcha']);
 	if ($captcha_ok) {
-		$xuid=$sys_lanai->getUserAuthentication($_REQUEST['username'],$_REQUEST['password']);
+		$xuid=$sys_lanai->getUserAuthentication(($_POST['username'] ?? ''),($_POST['password'] ?? ''));
 	}
 	if (isset($xuid) && $xuid>0) {
-	    $_SESSION['uid']=$xuid;
-		$sys_lanai->go2Page("module.php?modname=member&mf=memloginform");
+        require_once 'include/lanai/class.mfa.php';
+        try { $sys_lanai->go2Page(lanai_begin_login($xuid)); }
+        catch (Throwable $error) { unset($_SESSION['uid']); $sys_lanai->getErrorBox('Sign-in is temporarily unavailable. Please contact the site administrator.'); }
 	} else {
 		$sys_lanai->getErrorBox(_LOGIN_FAIL);
 	}

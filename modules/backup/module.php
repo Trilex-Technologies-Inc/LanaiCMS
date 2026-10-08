@@ -39,7 +39,7 @@ class DBBackup {
 
     function _CreateTable($table){
         $this->db->execute("LOCK TABLES ".$table." WRITE");
-		$getDumpTable .= "<query>DROP TABLE IF EXISTS ".$table.$this->end;
+		$getDumpTable = "<query>DROP TABLE IF EXISTS ".$table.$this->end;
 		$result = $this->db->execute("SHOW CREATE TABLE ".$table);
         $getDumpTable .= "<query>".str_replace("\n",$this->end, $result->fields[1]).$this->end;
         $this->db->execute("UNLOCK TABLES");
@@ -71,6 +71,7 @@ class DBBackup {
     }
 
     function getBackupFile() {
+        $arFile = array();
     	if ($handle = opendir($this->cfg['datadir']."/backup/")) {
     		$i=0;
     	   while (false !== ($file = readdir($handle))) {
@@ -132,6 +133,8 @@ class DBRestore {
         $contents = str_replace("\r\n","", $contents);
         $exploe = explode("<query>",$contents);
         $nExploe = sizeof($exploe);
+        $a = 0;
+        $b = 0;
         for($n=1;$n<$nExploe;$n++){
 		    //$mysql_escape = mysql_escape_string($exploe[$n]);
             $query=$this->db->execute($exploe[$n]);

@@ -7,6 +7,11 @@ $module_name = basename(dirname(__FILE__));
 $modfunction = "modules/$module_name/module.php";
 include_once($modfunction);
 
+if (!empty($_SESSION['uid']) && (int)$_SESSION['uid'] > 0) {
+    include __DIR__ . '/meminfo.php';
+    return;
+}
+
 $mem_lanai = new User();
 $captcha_provider = isset($cfg['captcha_provider']) ? $cfg['captcha_provider'] : 'default';
 if ($captcha_provider !== 'cloudflare') {
@@ -38,7 +43,16 @@ $turnstile_enabled = ($captcha_provider === 'cloudflare' && $turnstile_site_key 
                             <img src="theme/<?= $cfg['theme']; ?>/images/user.gif" class="me-1" alt=""> <?= _USER_INFO; ?>
                         </a>
 
-                        <?php if ($mem_lanai->getUserPrivilege($_SESSION['uid']) == "a"): ?>
+                        <?php
+                        $loginFormStaff = false;
+                        if ($mem_lanai->getUserPrivilege($_SESSION['uid']) != "a") {
+                            require_once __DIR__ . '/../../administrator/access.php';
+                            $loginFormStaff = (bool)lanai_staff_modules($mem->fields, static function ($capability) use ($sys_lanai) {
+                                return $sys_lanai->userHasCapability($capability);
+                            });
+                        }
+                        ?>
+                        <?php if ($mem_lanai->getUserPrivilege($_SESSION['uid']) == "a" || $loginFormStaff): ?>
                             <a href="setting.php?modname=setting" class="text-decoration-none">
                                 <img src="theme/<?= $cfg['theme']; ?>/images/setting.gif" class="me-1" alt=""> <?= _SITE_SETTING; ?>
                             </a>
@@ -65,7 +79,7 @@ $turnstile_enabled = ($captcha_provider === 'cloudflare' && $turnstile_site_key 
 
             <form method="post" action="module.php" class="p-3 border rounded bg-light">
                 <input type="hidden" name="modname" value="member">
-                <input type="hidden" name="mf" value="memlogin">
+                <input type="hidden" name="mf" value="memlogin"><?php $sys_lanai->renderCsrfField('login'); ?>
 
                 <div class="mb-3">
                     <label class="form-label"><?= _USERNAME; ?></label>

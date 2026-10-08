@@ -16,22 +16,22 @@
 	<?=_CONTACT_EDIT_INSTRUCTION; ?><br/><br/>
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-	<a href="#" onClick="javascript:document.form.submit();" ><?=_SAVE; ?></a>&nbsp;&nbsp; 
+	<button type="submit" form="contact-setting-coneditform-form"><?=_SAVE; ?></button>&nbsp;&nbsp;
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
-	<a href="#" onClick="javascript:history.back();"><?=_BACK; ?></a>
+	<button type="button" onclick="history.back();"><?=_BACK; ?></button>
 	<br><br>
 	<?php
 	//conFname  conLname  conPosition  conAddress1  conAddress2  conCity  conState  cntId  conZipcode  conPhone  conFax  conMobile  conEmail  conURL  conActive 
 		
 	?>
-	<table cellpadding="3" cellspacing="1" >
-	<form name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>">
+	<form id="contact-setting-coneditform-form" name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="mf" value="conedit">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="ac" value="edit">
 	<input type="hidden" name="conId" value="<?=$_REQUEST['mid']; ?>">
 	<?php $sys_lanai->renderCsrfField('contact'); ?>
+	<table cellpadding="3" cellspacing="1" >
 	<tr>
 		<td valign="top"><?=_USER_FNAME; ?></td>
 		<td><input type="text" name="conFname" value="<?=$rs->fields['conFname']?>" >*</td>	
@@ -88,4 +88,4 @@
 		<td valign="top"><?=_USER_URL; ?></td>
 		<td><input type="text" name="conURL" value="<?=$rs->fields['conURL'];?>"></td>	
 	</tr>
-	</table>
+	</table></form>

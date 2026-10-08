@@ -20,7 +20,7 @@
 	<?=_THEME_SETTING_INSTRUCTION; ?><br/><br/>
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-	<a href="#" onClick="javascript:document.form.submit();"><?=_SAVE; ?></a>&nbsp;&nbsp; 
+	<button type="submit" form="theme-setting-index-form"><?=_SAVE; ?></button>&nbsp;&nbsp;
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
 	<a href="module.php?modname=setting" ><?=_BACK; ?></a>
@@ -31,12 +31,12 @@
 
 
 	?>
-	<table cellpadding="3" cellspacing="1">
-	<form name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>">	
+	<form id="theme-setting-index-form" name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="mf" value="thmedit">
 	<input type="hidden" name="ac" value="save">
 	<?php $sys_lanai->renderCsrfField('theme'); ?>
+	<table cellpadding="3" cellspacing="1">
 	<tr>
 		<td valign="top">
 		<?=_THEME_NAME; ?>
@@ -58,8 +58,8 @@
 		</select >		
  		</td>
 	</tr>
-	</form>
 	</table>
+	</form>
 	<?php
 			} // check writable config 
 		

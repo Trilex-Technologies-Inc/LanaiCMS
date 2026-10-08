@@ -1,17 +1,7 @@
 <?php
 require_once __DIR__ . '/../include/lanai/site_url.php';
 function getLanguage() {
-    if ($handle = opendir("../language/")) {
-        $i=0;
-        while (false !== ($file = readdir($handle))) {
-            if ($file != "." && $file != ".." && !is_file($file)) {
-                $arTheme[$i]=$file;
-                $i++;
-            }
-        }
-        closedir($handle);
-    }
-    return ($arTheme);
+    return array_map('basename', glob(__DIR__.'/../language/lang-*.php') ?: array());
 }
 ?>
 
@@ -50,7 +40,8 @@ function getLanguage() {
                     $langar = getLanguage();
                     foreach ($langar as $value) {
                         $xvalue = substr($value,5,strlen($value)-9);
-                        echo '<option value="'.$xvalue.'" selected>'.ucwords($xvalue).'</option>';
+                        $selected = $xvalue === ($_SESSION['lang'] ?? 'english') ? ' selected' : '';
+                        echo '<option value="'.htmlspecialchars($xvalue, ENT_QUOTES, 'UTF-8').'"'.$selected.'>'.htmlspecialchars(lanai_languages()[$xvalue]['label'] ?? ucwords($xvalue), ENT_QUOTES, 'UTF-8').'</option>';
                     }
                 ?>
                 </select>

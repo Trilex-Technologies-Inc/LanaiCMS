@@ -35,12 +35,12 @@ if (!$result) {
 		//}
 	}
 </script>
-<table>
 <form name="addform" method="post" action="setting.php">
 <input type="hidden" name="modname" value="carousel">
 <input type="hidden" name="mf" value="add">
 <input type="hidden" name="ac" value="add">
 <?php $sys_lanai->renderCsrfField('carousel'); ?>
+<table>
 <?php $positions = $objbanner->getPositionOptions(); ?>
 <tr><td><?=_BANN_TITLE; ?></td><td><input type="text" id="banTitle" name="banTitle" size="30">*</td></tr>
 <tr><td valign="top"><?=_BANN_DES; ?></td><td><textarea name="banDescription" cols="30" rows="5"></textarea>*</td></tr>
@@ -51,8 +51,8 @@ if (!$result) {
 <tr><td><?=_BANN_ACTIVE; ?></td><td><select id="banActive" name="banActive"><option value="y" selected><?=_YES; ?></option><option value="n"><?=_NO; ?></option></select></td></tr>
 <tr><td>&nbsp;</td><td><img src="modules/carousel/images/space.gif" name="banView" ></td></tr>
 <tr><td>&nbsp;</td><td><input  type="submit" value="<?=_SAVE; ?>" class="inputButton"> <input  type="reset" value="<?=_RESET; ?>" class="inputButton"></td></tr>
-</form>
 </table>
+</form>
 <script language="JavaScript" src="include/jsvalidator/gen_validatorv2.js" type="text/javascript"></script>
 <script language="JavaScript" type="text/javascript">
 	//You should create the validator only after the definition of the HTML form

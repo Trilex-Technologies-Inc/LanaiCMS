@@ -10,6 +10,7 @@
 	
 	
 	$lng_lanai=new Language();
+	require_once __DIR__.'/../../../include/lanai/localization.php';
 	
 	if (!is_writeable('config.inc.php')) {
 		$sys_lanai->getErrorBox(_CONFIG_CANNOT_WRITE);
@@ -20,7 +21,7 @@
 	<?=_LANGUAGE_SETTING_INSTRUCTION; ?><br/><br/>
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-	<a href="#" onClick="javascript:document.form.submit();"><?=_SAVE; ?></a>&nbsp;&nbsp; 
+	<button type="submit" form="language-setting-index-form"><?=_SAVE; ?></button>&nbsp;&nbsp;
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
 	<a href="module.php?modname=setting" ><?=_BACK; ?></a>
@@ -29,12 +30,12 @@
 	<?php
 		$xlang=$lng_lanai->getLanguage();
 	?>
-	<table cellpadding="3" cellspacing="1">
-	<form name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>">	
+	<form id="language-setting-index-form" name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="mf" value="lngedit">
 	<input type="hidden" name="ac" value="save">
 	<?php $sys_lanai->renderCsrfField('language'); ?>
+	<table cellpadding="3" cellspacing="1">
 	<tr>
 		<td valign="top">
 		<?=_LANGUAGE_NAME; ?>
@@ -52,15 +53,15 @@
 					  $selected="";
 				}				
 		  	  ?>
-			  	<option value="<?=$xvalue; ?>" <?=$selected; ?> ><?=ucwords($xvalue); ?></option>
+			  	<option value="<?=htmlspecialchars($xvalue, ENT_QUOTES, 'UTF-8'); ?>" <?=$selected; ?> ><?=htmlspecialchars(lanai_languages()[$xvalue]['label'] ?? ucwords($xvalue), ENT_QUOTES, 'UTF-8'); ?></option>
 			  <?php
 			}	
 		?>
 		</select >		
  		</td>
 	</tr>
-	</form>
 	</table>
+	</form>
 	<?php
 		} // check writable config 
 		

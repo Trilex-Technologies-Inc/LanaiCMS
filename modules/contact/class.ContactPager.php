@@ -112,20 +112,20 @@
 				} 
 			} 			
 			function prepareActiveToggle(id, value) {
-				document.form.ac.value = 'active';
+				document.getElementById("contact-list-form").ac.value = 'active';
 				document.getElementById('single-mid').value = id;
 				document.getElementById('single-v').value = value;
 				return true;
 			}
 			</script> 
-			<table cellpadding="3" cellspacing="1" width="100%">
-			<form name="form" method="post" action="<?=$_SERVER['PHP_SELF']?>">
+			<form id="contact-list-form" name="form" method="post" action="<?=$_SERVER['PHP_SELF']?>">
 			<input type="hidden" name="modname" value="contact">
 			<input type="hidden" name="mf" value="conedit">
 			<input type="hidden" name="ac" value="">
 			<input type="hidden" name="mid" id="single-mid" value="">
 			<input type="hidden" name="v" id="single-v" value="">
 			<?php global $sys_lanai; $sys_lanai->renderCsrfField('contact'); ?>
+			<table cellpadding="3" cellspacing="1" width="100%">
 			<tr>
 				<th class="tblRowSolidTopDown" width="1"align="center"><input type="checkbox" value="select_all" onclick="selectall(this);" class="radioButton" /></th>
 				<th class="tblRowSolidTopDown" width="40%"><?=_CONTACT_NAME; ?></th>
@@ -173,7 +173,7 @@
 			<?php
 				$this->rs->movenext();
 			} // while{
-			?></table><?php
+			?></table></form><?php
 			$s = ob_get_contents();
 			ob_end_clean();
 			return $s;

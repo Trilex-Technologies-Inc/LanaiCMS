@@ -17,6 +17,30 @@
 					$sys_lanai->getErrorBox("Invalid request, please try again.");
 					break;
 				}
+				$method = $_REQUEST['method'] ?? '';
+				$requiredField = null;
+				if (!is_scalar($method) || !in_array((string) $method, array('1', '2', '3'), true)) {
+					$requiredField = _MODULE_NEW;
+				} elseif ((string) $method === '3') {
+					$modpath = $_REQUEST['modpath'] ?? '';
+					if (!is_string($modpath) || trim($modpath) === '') {
+						$requiredField = _MODULE_DIR_REMOTE;
+					} else {
+						$_REQUEST['modpath'] = trim($modpath);
+					}
+				} elseif ((string) $method === '2') {
+					$zippath = $_REQUEST['zippath'] ?? '';
+					if (!is_string($zippath) || trim($zippath) === '') {
+						$requiredField = _MODULE_ZIPFILE_REMOTE;
+					}
+				} elseif (empty($_FILES['userfile']['tmp_name']) || ($_FILES['userfile']['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
+					$requiredField = _MODULE_ZIPFILE_UPLOAD;
+				}
+				if ($requiredField !== null) {
+					$sys_lanai->getErrorBox(_REQUIRE_FIELDS . ': ' . $requiredField
+						. ' <a href="setting.php?modname=module&amp;mf=modnew">' . _BACK . '</a>');
+					break;
+				}
 				$prefix=substr(md5(rand(1000,9999)),0,20);
 				$mod_lanai->setNewModule(
 					$_REQUEST['method'],
@@ -69,7 +93,7 @@
 					break;
 				}
 				if (empty($_REQUEST['modTitle'])) {
-					   	$sys_lanai->getErrorBox(_REQUIRE_FIELDS." <a href=\"#\" onClick=\"javascript:history.back();\">_BACK</a>");
+         $sys_lanai->getErrorBox(_REQUIRE_FIELDS." <button type=\"button\" onclick=\"history.back();\">_BACK</button>");
 				} else {
 					$mod_lanai->setEditModule($_REQUEST['mid'],$_REQUEST['modTitle']);
 					$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
@@ -88,18 +112,18 @@
 	<?=_MODULE_EDIT_INSTRUCTION; ?><br/><br/>
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-	<a href="#" onClick="javascript:document.form.submit();"><?=_SAVE; ?></a>&nbsp;&nbsp; 
+	<button type="submit" form="module-setting-modedit-form"><?=_SAVE; ?></button>&nbsp;&nbsp;
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
-	<a href="#" onClick="javascript:history.back();" ><?=_BACK; ?></a>
+	<button type="button" onclick="history.back();"><?=_BACK; ?></button>
 	<br><br>
-	<table >
-	<form name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>"  ENCTYPE="multipart/form-data" >
+	<form id="module-setting-modedit-form" name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>"  ENCTYPE="multipart/form-data" >
 	<input type="hidden" name="mf" value="<?=$_REQUEST['mf']; ?>">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="mid" value="<?=$_REQUEST['mid']; ?>">
 	<input type="hidden" name="ac" value="doedit">
 	<?php $sys_lanai->renderCsrfField('module'); ?>
+	<table >
 	<tr>
 		<td><?=_MODULE_TITLE; ?></td>
 		<td><input type="text" name="modTitle" value="<?=$rs->fields['modTitle']?>">*</td>
@@ -129,8 +153,8 @@
 		</td>
 		</td>
 	</tr> -->
-	</form>
 	</table>
+	</form>
 	<?php
 			break;
 		

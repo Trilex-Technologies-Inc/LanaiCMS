@@ -85,7 +85,28 @@ include_once('include/lanai/class.system.php');
 include_once('include/lanai/class.html.php');
 include_once('include/lanai/class.pager.php');
 $sys_lanai = new Systems();
+// Existing sessions must prove the currently enrolled factor before gaining access.
+require_once __DIR__ . '/include/lanai/class.mfa.php';
+if (!empty($_SESSION['uid'])) {
+    try {
+        $sessionAccount=$db->Execute('SELECT userActive FROM '.$tablepre.'user WHERE userId='.(int)$_SESSION['uid']);
+        if (!$sessionAccount || $sessionAccount->EOF || $sessionAccount->fields['userActive']!=='y') throw new RuntimeException('Account is unavailable.');
+        $mfaState = lanai_mfa_service()->state((int)$_SESSION['uid']);
+        if (!$mfaState || !$mfaState['mfaEnabled']) unset($_SESSION['mfa_verified']);
+        if ($mfaState && $mfaState['mfaEnabled'] && !hash_equals($mfaState['mfaVersion'], (string)($_SESSION['mfa_verified'] ?? ''))) {
+            unset($_SESSION['uid'], $_SESSION['mfa_verified'], $_SESSION['mfa_pending']);
+        }
+    } catch (Throwable $error) {
+        unset($_SESSION['uid'], $_SESSION['mfa_verified'], $_SESSION['mfa_pending']);
+    }
+}
 
+require_once __DIR__ . '/modules/privacy/module.php';
+$lanaiPrivacy = new LanaiPrivacy($db, $tablepre, $cfg['url']);
+if (in_array(basename($_SERVER['SCRIPT_NAME'] ?? ''), array('index.php','module.php'), true) && !defined('LANAI_ADMIN_REQUEST')) {
+    $sys_lanai->getCsrfToken('privacy');
+    header('Cache-Control: no-store, private');
+}
 include_once('include/lanai/class.analytics.php');
 $lanaiAnalytics = new LanaiAnalytics($db, $tablepre);
 $lanaiAnalytics->trackRequest();
@@ -140,6 +161,7 @@ if (($cfg_off == "yes") and ($offpage != "yes") and (stripos($_SERVER['PHP_SELF'
 }
 
 // load sys lang
+require_once __DIR__.'/include/lanai/localization.php';
 if (empty($loadlang) || $loadlang === 'yes') {
 
     if (file_exists("language/lang-" . $cfg_lang . ".php")) {
@@ -149,12 +171,16 @@ if (empty($loadlang) || $loadlang === 'yes') {
     }
 }
 
+// Public themes are not loaded for the administrator interface.
+if (!defined('LANAI_ADMIN_REQUEST')) {
 // sys theme
 if (file_exists("theme/" . $cfg_theme . "/theme.php")) {
     include_once("theme/" . $cfg_theme . "/theme.php");
 } else {
     $cfg_theme = "default";
     include_once("theme/" . $cfg_theme . "/theme.php");
+}
+
 }
 
 // smarty
@@ -167,6 +193,7 @@ $smarty = new SmartyBC;
 $smarty->compile_dir = $cfg['datadir'] . "/cache";
 $smarty->template_dir = "theme/" . $cfg_theme . "/html";
 $smarty->assign("cfgTheme", $cfg_theme);
+$smarty->assign('cfgLocale', lanai_language_locale($cfg['lang'] ?? 'english'));
 
 // parse request value
 /*

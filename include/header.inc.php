@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="<?= htmlspecialchars(lanai_language_locale($cfg['lang'] ?? 'english'), ENT_QUOTES, 'UTF-8') ?>">
 <head>
 <?php
 $timer = new phpTimer();
@@ -57,7 +57,7 @@ $sys_lanai->loadAjaxFunction($modname);
     <link href="theme/<?= htmlspecialchars($cfg_theme, ENT_QUOTES); ?>/style/style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
     <link href="assets/vendor/fonts/poppins.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <?php
     $sys_lanai->loadAjaxCode($modname);

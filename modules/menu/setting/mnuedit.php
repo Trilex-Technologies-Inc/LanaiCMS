@@ -20,20 +20,20 @@
 					break;
 				}
 				if ((empty($_REQUEST['mnuTitle']) OR (trim($_REQUEST['mnuTitle'])==""))) {
-				     $sys_lanai->getErrorBox(_REQUIRE_FIELDS." "._MENU_TITLE." <a href=\"javascript:history.back();\">"._BACK2FILL."</a>");
+				     $sys_lanai->getErrorBox(_REQUIRE_FIELDS." "._MENU_TITLE." <a href=\"javascript:history.back();\">"._BACK."</a>");
 				} else {
 					switch($_REQUEST['m']){
 						case 'c': 
 							// add content
-							$mnu_lanai->setNewMenu($_REQUEST['mnuTitle'],$_REQUEST['mnuParentId'],$_REQUEST['mnuUrl'],$_REQUEST['mnuTarget'],$_REQUEST['conId'],0,$_REQUEST['m']);
+							$mnu_lanai->setNewMenu($_REQUEST['mnuTitle'],$_REQUEST['mnuParentId'],($_REQUEST['mnuUrl'] ?? ''),$_REQUEST['mnuTarget'],$_REQUEST['conId'],0,$_REQUEST['m']);
 							break;
 						case 'm': 
 							// add module
-							$mnu_lanai->setNewMenu($_REQUEST['mnuTitle'],$_REQUEST['mnuParentId'],$_REQUEST['mnuUrl'],$_REQUEST['mnuTarget'],0,$_REQUEST['modId'],$_REQUEST['m']);
+							$mnu_lanai->setNewMenu($_REQUEST['mnuTitle'],$_REQUEST['mnuParentId'],($_REQUEST['mnuUrl'] ?? ''),$_REQUEST['mnuTarget'],0,$_REQUEST['modId'],$_REQUEST['m']);
 							break;
 						case 'l': 
 							// add link
-							$mnu_lanai->setNewMenu($_REQUEST['mnuTitle'],$_REQUEST['mnuParentId'],$_REQUEST['mnuUrl'],$_REQUEST['mnuTarget'],0,0,$_REQUEST['m']);
+							$mnu_lanai->setNewMenu($_REQUEST['mnuTitle'],$_REQUEST['mnuParentId'],($_REQUEST['mnuUrl'] ?? ''),$_REQUEST['mnuTarget'],0,0,$_REQUEST['m']);
 							break;
 					} // switch
 					$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);
@@ -128,20 +128,20 @@
 					break;
 				}
 				if ((empty($_REQUEST['mnuTitle']) OR (trim($_REQUEST['mnuTitle'])==""))) {
-				     $sys_lanai->getErrorBox(_REQUIRE_FIELDS." "._MENU_TITLE." <a href=\"javascript:history.back();\">"._BACK2FILL."</a>");
+				     $sys_lanai->getErrorBox(_REQUIRE_FIELDS." "._MENU_TITLE." <a href=\"javascript:history.back();\">"._BACK."</a>");
 				} else {
 					switch($_REQUEST['m']){
 						case 'c': 
 							// add content
-							$mnu_lanai->setEditMenu($_REQUEST['mnid'],$_REQUEST['mnuParentId'],$_REQUEST['mnuTitle'],$_REQUEST['mnuUrl'],$_REQUEST['mnuTarget'],$_REQUEST['conId'],0,$_REQUEST['m']);
+							$mnu_lanai->setEditMenu($_REQUEST['mnid'],$_REQUEST['mnuParentId'],$_REQUEST['mnuTitle'],($_REQUEST['mnuUrl'] ?? ''),$_REQUEST['mnuTarget'],$_REQUEST['conId'],0,$_REQUEST['m']);
 							break;
 						case 'm': 
 							// add module
-							$mnu_lanai->setEditMenu($_REQUEST['mnid'],$_REQUEST['mnuParentId'],$_REQUEST['mnuTitle'],$_REQUEST['mnuUrl'],$_REQUEST['mnuTarget'],0,$_REQUEST['modId'],$_REQUEST['m']);
+							$mnu_lanai->setEditMenu($_REQUEST['mnid'],$_REQUEST['mnuParentId'],$_REQUEST['mnuTitle'],($_REQUEST['mnuUrl'] ?? ''),$_REQUEST['mnuTarget'],0,$_REQUEST['modId'],$_REQUEST['m']);
 							break;
 						case 'l': 
 							// add link
-							$mnu_lanai->setEditMenu($_REQUEST['mnid'],$_REQUEST['mnuParentId'],$_REQUEST['mnuTitle'],$_REQUEST['mnuUrl'],$_REQUEST['mnuTarget'],0,0,$_REQUEST['m']);
+							$mnu_lanai->setEditMenu($_REQUEST['mnid'],$_REQUEST['mnuParentId'],$_REQUEST['mnuTitle'],($_REQUEST['mnuUrl'] ?? ''),$_REQUEST['mnuTarget'],0,0,$_REQUEST['m']);
 							break;
 					} // switch
 					$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);

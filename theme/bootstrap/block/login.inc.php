@@ -1,76 +1,43 @@
 <?php
-include_once("include/lanai/class.system.php");
-$sys_lanai = new Systems();
-if (!empty($_REQUEST['vertexlogin']) && $_REQUEST['vertexlogin'] == "1") {
-    // do login script
-    $uxid = $sys_lanai->getUserAuthentication($_REQUEST['txtLogin'], $_REQUEST['txtPassword']);
-    if ($uxid > 0) {
-        $_SESSION['uid'] = $uxid;
-        $sys_lanai->goBack(1);
-    } else {
-        $sys_lanai->getErrorAlertBox("Cannot login, please verify your login and password!");
-        $sys_lanai->goBack(1);
-    }
-} else {
-    if (empty($_SESSION['uid']) || $_SESSION['uid'] <= 0) {
-        // show login form
-        ?>
-        <div class="login-form">
-            <form id="form" name="form1" method="post" action="">
-                <div class="d-flex align-items-center justify-content-end flex-wrap text-white">
-                   <span class="me-3"> Login to the system. Not member yet ? <a
-                               class="text-white" href="module.php?modname=member&amp;mf=memsignup">Signup</a> today.</span>
-                    <div class="d-flex">
-                        <input name="txtLogin" type="text" class="form-control me-2 bg-secondary text-light border-0" size="15" placeholder="Login" />
-                        <input name="txtPassword" type="password" class="form-control me-2 bg-secondary text-light border-0" size="15" placeholder="Password" />
-                        <input type="hidden" name="vertexlogin" value="1" />
-                        <button type="submit" class="btn btn-light">
-                            <i class="fas fa-sign-in-alt"></i> Login
-                        </button>
-                    </div>
-            </form>
-
-        </div>
-
-        <?php
-    } else {
-        // show user info
-        include_once("modules/member/module.php");
-        $mem_lanai = new User();
-        $mem = $mem_lanai->getUser($_SESSION['uid']);
-        ?>
-        <div class="user-info d-flex justify-content-between align-items-center text-white">
-        <div>
-            <i class="fas fa-user-circle me-2"></i>
-            <span> <?php
-                ?>Welcome, <?= $mem->fields['userFname'] . " " . $mem->fields['userLname']; ?>.</span>
-        </div>
-        <div>
-        <?php
-        if ($mem_lanai->getUserPrivilege($_SESSION['uid']) == "a") {
-            ?>
-            &nbsp;&nbsp;Now you can
-            <a class="btn btn-light btn-sm me-2" href="setting.php?modname=setting">
-                <i class="fas fa-cog me-1"></i>Setting
-            </a> your site or
-            <a class="btn btn-outline-light btn-sm" href="module.php?modname=member&mf=memlogout">
-                <i class="fas fa-sign-out-alt me-1"></i>Signout
-            </a>.
-            <?php
-        } else {
-            ?>
-            &nbsp;&nbsp;View your
-            <a class="btn btn-light btn-sm me-2" href="module.php?modname=member&mf=meminfo#">
-                <i class="fas fa-user me-1"></i>Profile
-            </a> or
-            <a class="btn btn-outline-light btn-sm" href="module.php?modname=member&mf=memlogout">
-                <i class="fas fa-sign-out-alt me-1"></i>Logout
-            </a>.
-            <?php
-        }
-        ?>
-
-        <?php
+global $sys_lanai, $cfg;
+require_once 'include/lanai/class.system.php';
+if (!isset($sys_lanai)) $sys_lanai = new Systems();
+$accountPanelUser = null;
+if (!empty($_SESSION['uid']) && is_numeric($_SESSION['uid']) && (int)$_SESSION['uid'] > 0) {
+    require_once 'modules/member/module.php';
+    $accountPanelMember = new User();
+    $accountPanelRecord = $accountPanelMember->getUser((int)$_SESSION['uid']);
+    if ($accountPanelRecord && !$accountPanelRecord->EOF && ($accountPanelRecord->fields['userActive'] ?? '') === 'y') {
+        $accountPanelUser = $accountPanelRecord->fields;
     }
 }
+$accountPanelStaff = false;
+if ($accountPanelUser && ($accountPanelUser['userPrivilege'] ?? '') !== 'a') {
+    require_once __DIR__ . '/../../../administrator/access.php';
+    $accountPanelStaff = (bool)lanai_staff_modules($accountPanelUser, static function ($capability) use ($sys_lanai, $accountPanelUser) {
+        return $sys_lanai->userHasCapability($capability, (int)$accountPanelUser['userId']);
+    });
+}
+$accountPanelEscape = static function($value) { return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8'); };
+$accountPanelThai = ($cfg['lang'] ?? '') === 'thai';
 ?>
+<?php if (!$accountPanelUser): ?>
+<div class="login-form">
+    <a class="btn btn-light" href="module.php?modname=member&amp;mf=memloginform"><?= $accountPanelThai ? 'เข้าสู่ระบบ' : 'Sign in' ?></a>
+    <a class="btn btn-light" href="module.php?modname=member&amp;mf=memsignup"><?= $accountPanelThai ? 'สมัครสมาชิก' : 'Sign up' ?></a>
+</div>
+<?php else: ?>
+<div class="user-info d-flex flex-wrap justify-content-between align-items-center gap-3 text-white">
+    <div>
+        <i class="fas fa-user-circle me-2" aria-hidden="true"></i>
+        <span><?= $accountPanelThai ? 'ยินดีต้อนรับ' : 'Welcome,' ?> <?= $accountPanelEscape(trim($accountPanelUser['userFname'].' '.$accountPanelUser['userLname']) ?: $accountPanelUser['userLogin']) ?></span>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-light btn-sm" href="module.php?modname=member&amp;mf=meminfo"><?= $accountPanelThai ? 'บัญชีของฉัน' : 'My account' ?></a>
+        <?php if ($accountPanelUser['userPrivilege'] === 'a' || $accountPanelStaff): ?>
+        <a class="btn btn-light btn-sm" href="setting.php"><?= $accountPanelThai ? 'ตั้งค่าเว็บไซต์' : 'Site settings' ?></a>
+        <?php endif; ?>
+        <a class="btn btn-outline-light btn-sm" href="module.php?modname=member&amp;mf=memlogout"><?= $accountPanelThai ? 'ออกจากระบบ' : 'Sign out' ?></a>
+    </div>
+</div>
+<?php endif; ?>

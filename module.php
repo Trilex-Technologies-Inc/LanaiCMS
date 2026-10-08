@@ -1,4 +1,16 @@
 <?php
+require_once __DIR__ . '/modules/privacy/module.php';
+ob_start('lanai_privacy_output');
+// Public module routes must not include nested administrator files.
+foreach (array('modname', 'mf') as $routeKey) {
+    $routeValue = $_REQUEST[$routeKey] ?? '';
+    if (!is_string($routeValue) || ($routeValue !== '' && !preg_match('/^[a-zA-Z0-9_]+$/D', $routeValue))) {
+        http_response_code(400);
+        exit('Invalid module route.');
+    }
+}
+
+if (($_REQUEST['modname'] ?? '') === 'member') { header('Cache-Control: no-store, private'); header('Referrer-Policy: no-referrer'); }
 
 // Some legacy includes close their PHP tags and emit whitespace. Buffer that
 // output so the HTML5 doctype in header.inc.php remains the first response data.

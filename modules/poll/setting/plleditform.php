@@ -17,18 +17,18 @@
 	<?=_POLL_EDIT_INSTRUCTION; ?><br/><br/>
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-	<a href="#" onClick="javascript:document.form.submit();" ><?=_SAVE; ?></a>&nbsp;&nbsp; 
+	<button type="submit" form="poll-setting-plleditform-form"><?=_SAVE; ?></button>&nbsp;&nbsp;
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
-	<a href="#" onClick="javascript:history.back();"><?=_BACK; ?></a>
+	<button type="button" onclick="history.back();"><?=_BACK; ?></button>
 	<br><br>
-	<table cellpadding="3" cellspacing="1" >
-	<form name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>" ENCTYPE="multipart/form-data" >
+	<form id="poll-setting-plleditform-form" name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>" ENCTYPE="multipart/form-data" >
 	<input type="hidden" name="mf" value="plledit">
 	<input type="hidden" name="ac" value="edit">
 	<input type="hidden" name="mid" value="<?=$_REQUEST['mid']; ?>">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<?php $sys_lanai->renderCsrfField('poll'); ?>
+	<table cellpadding="3" cellspacing="1" >
 	<tr>
 		<td><?=_POLL_TITLE; ?></td>
 		<td><input type="text" name="pllTitle" size="30" value="<?=$rsPoll->fields['pllTitle']; ?>">*</td>
@@ -54,5 +54,5 @@
 			$rsPollOption->MoveNext();
 		}
 	?>			
-	</form>
 	</table>
+	</form>

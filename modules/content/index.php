@@ -7,11 +7,24 @@ if (stripos($_SERVER['PHP_SELF'], 'module.php') === false) {
 $module_name = basename(dirname(__FILE__));
 include_once("modules/$module_name/module.php");
 
+require_once __DIR__ . '/embeds.php';
+$embeds = new LanaiContentEmbeds($GLOBALS['db'], $cfg['tablepre'], $sys_lanai, ($cfg['lang'] ?? '') === 'thai');
 $content = new Content();
 $contentId = isset($_REQUEST['cid']) ? (int) $_REQUEST['cid'] : 0;
 $rs = $content->getContentById($contentId);
-if (!$rs || $rs->recordcount() < 1 || $rs->fields['conActive'] !== 'y') {
-    $sys_lanai->getErrorBox(_CONTENT_NOT_FOUND);
+$contentPreview = false;
+if ($rs && $rs->recordcount() > 0 && $rs->fields['conActive'] !== 'y' && $sys_lanai->userCanActOnContent($rs->fields['userId'], 'edit_content')) {
+    // Authors and reviewers see unpublished pages so work can be checked before it goes live.
+    $contentPreview = true;
+    header('Cache-Control: no-store, private');
+    header('X-Robots-Tag: noindex, nofollow');
+}
+if (!$rs || $rs->recordcount() < 1 || ($rs->fields['conActive'] !== 'y' && !$contentPreview)) {
+    http_response_code(404);
+    echo '<section class="container module-content-shell"><div class="alert alert-warning" role="alert"><h1 class="h4">'
+        .htmlspecialchars(_CONTENT_NOT_FOUND,ENT_QUOTES,'UTF-8').'</h1><p>'
+        .(($cfg['lang']??'')==='thai'?'หน้านี้ไม่พร้อมใช้งาน อาจถูกลบหรือยังไม่ได้เผยแพร่':'This page is unavailable. It may have been removed or unpublished.')
+        .'</p><a href="index.php">'.(($cfg['lang']??'')==='thai'?'กลับหน้าแรก':'Return to the home page').'</a></div></section>';
     return;
 }
 
@@ -23,6 +36,9 @@ if ($allowComments) {
 ?>
 <?=$sys_lanai->setPageTitle($rs->fields['conTitle']);?>
 
+<?php if ($contentPreview) { ?>
+<div class="alert alert-warning text-center mb-0 rounded-0" role="status" style="margin-top:4.5rem">Preview: this page is not published and cannot be seen by the public.</div>
+<?php } ?>
 <section class="article-hero">
     <div class="container">
         <h1 class="display-5 fw-bold"><?=htmlspecialchars($rs->fields['conTitle'], ENT_QUOTES, 'UTF-8');?></h1>
@@ -34,8 +50,8 @@ if ($allowComments) {
 
 <div class="container my-5">
     <article class="article-content bg-white p-4 rounded shadow-sm">
-        <?=$rs->fields['conBody1'];?>
-        <?=$rs->fields['conBody2'];?>
+        <?=$embeds->render($rs->fields['conBody1'], $contentId);?>
+        <?=$embeds->render($rs->fields['conBody2'], $contentId);?>
     </article>
 
     <?php if ($allowComments) { ?>

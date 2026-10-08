@@ -14,18 +14,18 @@
 	<?=_MENU_EDIT_INSTRUCTION; ?><br/><br/>
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-	<a href="#" onClick="javascript:document.form.submit();" ><?=_SAVE; ?></a>&nbsp;&nbsp; 
+	<button type="submit" form="menu-setting-mnueditform-form"><?=_SAVE; ?></button>&nbsp;&nbsp;
 	
 	<img src="theme/<?=$cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
-	<a href="#" onClick="javascript:history.back();"><?=_BACK; ?></a><br><br>
-	<table >
-	<form name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>">	
+	<button type="button" onclick="history.back();"><?=_BACK; ?></button><br><br>
+	<form id="menu-setting-mnueditform-form" name="form" method="post"  action="<?=$_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="modname" value="<?=$module_name; ?>">
 	<input type="hidden" name="mf" value="mnuedit">
 	<input type="hidden" name="ac" value="edit">	
 	<input type="hidden" name="mnid" value="<?=$_REQUEST['mid']?>">	
 	<input type="hidden" name="m" value="<?=$_REQUEST['m']?>">
 	<?php $sys_lanai->renderCsrfField('menu'); ?>
+	<table >
 	<?php 
 		$rs=$mnu_lanai->getMenuById($_REQUEST['mid']);
 		switch($_REQUEST['m']){
@@ -94,4 +94,4 @@
 				break;
 		} // switch
 	?>	
-	</table>
+	</table></form>

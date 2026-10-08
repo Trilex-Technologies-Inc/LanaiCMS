@@ -18,7 +18,7 @@
 				}
 				$ppoItem=$_REQUEST['ppoTitle'];
 				if ((empty($_REQUEST['pllTitle'])) OR (($pll->getPollOptionItemCount($ppoItem)) < 2 )) {
-			   		$sys_lanai->getErrorBox(_REQUIRE_FIELDS." <a href=\"#\" onClick=\"javascript:history.back();\">"._BACK."</a>");
+        $sys_lanai->getErrorBox(_REQUIRE_FIELDS." <button type=\"button\" onclick=\"history.back();\">"._BACK."</button>");
 				} else {
 					// set poll
 					$pll->setNewPollItem($_REQUEST['pllTitle'],$_REQUEST['pllLag']);
@@ -81,7 +81,7 @@
 				}
 		 		$ppoItem=$_REQUEST['ppoTitle'];
 				if ((empty($_REQUEST['pllTitle'])) OR (($pll->getPollOptionItemCount($ppoItem)) < 2 )) {
-			   		$sys_lanai->getErrorBox(_REQUIRE_FIELDS." <a href=\"#\" onClick=\"javascript:history.back();\">"._BACK."</a>");
+        $sys_lanai->getErrorBox(_REQUIRE_FIELDS." <button type=\"button\" onclick=\"history.back();\">"._BACK."</button>");
 				} else {
 					// set poll
 					$pll->setEditPollItem($_REQUEST['mid'],$_REQUEST['pllTitle'],$_REQUEST['pllLag']);

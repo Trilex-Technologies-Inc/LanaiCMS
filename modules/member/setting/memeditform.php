@@ -18,19 +18,19 @@ $rs = $member->getUser($_REQUEST['mid']);
 <?= _MEMBER_EDIT_INSTRUCTION; ?><br/><br/>
 
 <img src="theme/<?= $cfg['theme']; ?>/images/save.gif" border="0" align="absmiddle"/>
-<a href="#" onClick="javascript:document.form.submit();"><?= _SAVE; ?></a>&nbsp;&nbsp;
+<button type="submit" form="member-setting-memeditform-form"><?= _SAVE; ?></button>&nbsp;&nbsp;
 
 <img src="theme/<?= $cfg['theme']; ?>/images/back.gif" border="0" align="absmiddle"/>
-<a href="#" onClick="javascript:history.back();"><?= _BACK; ?></a>
+<button type="button" onclick="history.back();"><?= _BACK; ?></button>
 <br><br>
 
-<table border="0" cellspacing="2" cellpadding="3">
-    <form name="form" method="post" action="<?= $_SERVER['PHP_SELF']; ?>" ENCTYPE="multipart/form-data">
+    <form id="member-setting-memeditform-form" name="form" method="post" action="<?= $_SERVER['PHP_SELF']; ?>" ENCTYPE="multipart/form-data">
         <input type="hidden" name="mf" value="memedit">
         <input type="hidden" name="modname" value="<?= $module_name; ?>">
         <input type="hidden" name="ac" value="edit">
         <input type="hidden" name="mid" value="<?= $rs->fields['userId'] ?>">
         <?php $sys_lanai->renderCsrfField('member'); ?>
+<table border="0" cellspacing="2" cellpadding="3">
         <tr>
             <td><?= _USER_FNAME; ?></td>
             <td><input type="text" name="userFname" value="<?= $rs->fields['userFname'] ?>">*</td>
@@ -144,5 +144,5 @@ $rs = $member->getUser($_REQUEST['mid']);
         }
         ?>
 
-    </form>
 </table>
+</form>

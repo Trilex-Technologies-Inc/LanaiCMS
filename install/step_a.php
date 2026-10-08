@@ -3,7 +3,7 @@ if (session_id() == '') {
     session_start();
 }
 
-if (!empty($_REQUEST['set'])) {
+if (isset($_REQUEST['set']) && is_string($_REQUEST['set']) && isset(lanai_languages()[$_REQUEST['set']])) {
     $_SESSION['lang'] = $_REQUEST['set'];
     ?>
     <script>
@@ -16,16 +16,7 @@ if (empty($_SESSION['lang'])) {
 }
 
 function getLanguage() {
-    $arTheme = [];
-    if ($handle = opendir('language/')) {
-        while (false !== ($file = readdir($handle))) {
-            if ($file != "." && $file != ".." && !is_file($file)) {
-                $arTheme[] = $file;
-            }
-        }
-        closedir($handle);
-    }
-    return $arTheme;
+    return array_map('basename', glob(__DIR__.'/language/lang-*.php') ?: array());
 }
 
 $langar = getLanguage();
@@ -49,7 +40,7 @@ $langar = getLanguage();
                             $selected = ((isset($_SESSION['lang']) ? $_SESSION['lang'] : '') == $xvalue) ? "selected" : "";
                             ?>
                             <option value="index.php?set=<?= $xvalue; ?>" <?= $selected; ?>>
-                                <?= ucwords($xvalue); ?>
+                                <?= htmlspecialchars(lanai_languages()[$xvalue]['label'] ?? ucwords($xvalue), ENT_QUOTES, 'UTF-8'); ?>
                             </option>
                             <?php
                         }

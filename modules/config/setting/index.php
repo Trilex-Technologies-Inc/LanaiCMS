@@ -76,6 +76,9 @@ $turnstileSecretKey = isset($cfg['turnstile_secret_key']) ? $cfg['turnstile_secr
             <a href="module.php?modname=setting" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> <?php echo _BACK; ?>
             </a>
+            <a href="setting.php?modname=config&amp;mf=mfa" class="btn btn-outline-primary ms-2">
+                <i class="bi bi-shield-lock"></i> Two-factor authentication
+            </a>
         </div>
 
         <form id="configForm" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="card p-4 shadow-sm">

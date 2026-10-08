@@ -6,13 +6,13 @@ if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 
 ?>
 <span class="txtContentTitle"><?=_JPOP_NEW_SETTING; ?></span><br><br>
-<a href="#" onclick="javascript:history.back();"><?=_JPOP_BACK; ?></a><br><br>
-<table>
+<button type="button" onclick="history.back();"><?=_JPOP_BACK; ?></button><br><br>
 <form name="addform" method="post" action="setting.php">
 <input type="hidden" name="modname" value="jpop">
 <input type="hidden" name="mf" value="popadd">
 <input type="hidden" name="ac" value="add">
 <?php $sys_lanai->renderCsrfField('jpop'); ?>
+<table>
 <tr><td><?=_JPOP_TITLE; ?> : </td><td><input type="text" id="popTitle" size="50" name="popTitle" ></td></tr>
 <tr><td valign="top"><?=_JPOP_DES; ?> : </td>
 <td>
@@ -32,8 +32,8 @@ if (stripos($_SERVER['PHP_SELF'], "setting.php") === false) {
 <tr><td><?=_JPOP_BG_DES; ?> : </td><td><input type="text" id="popBgDes" name="popBgDes" maxlength="7" value="#FFFFFF"></td></tr>
 <tr><td><?=_JPOP_BG_BORDER; ?> : </td><td><input type="text" id="popBgBorder" name="popBgBorder" maxlength="7" value="#990000"></td></tr>
 <tr><td>&nbsp;</td><td><input type="submit" value="<?=_SAVE; ?>" class="inputButton">&nbsp;<input type="reset" value="<?=_RESET; ?>" class="inputButton"></td></tr>
-</form>
 </table>
+</form>
 <?php
 if ($_REQUEST['ac']=="add") {
 if (!$sys_lanai->validateCsrfToken('jpop', isset($_REQUEST['csrf_token']) ? $_REQUEST['csrf_token'] : '')) {

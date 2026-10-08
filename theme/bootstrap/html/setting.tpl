@@ -171,11 +171,11 @@
     </header>
     <div class="settings-workspace">
       <header class="settings-page-heading">
-        <h1 id="settingsPageTitle">Settings</h1>
-        <p id="settingsPageDescription">Manage your LanaiCMS site and workspace.</p>
+        <h1 id="settingsPageTitle">{if $isSettingsDashboard}Dashboard{else}Settings{/if}</h1>
+        <p id="settingsPageDescription">{if $isSettingsDashboard}A little overview of everything happening on your site.{else}Manage your LanaiCMS site and workspace.{/if}</p>
       </header>
       <section class="settings-module">
-        <div class="settings-empty" id="settingsEmpty"><h2>Choose a setting</h2><p class="mb-0">Select an item from the menu to manage that part of your site.</p></div>
+        <div class="settings-empty" id="settingsEmpty"{if $setModule} hidden{/if}><h2>Choose a setting</h2><p class="mb-0">Select an item from the menu to manage that part of your site.</p></div>
         <div id="settingsModuleContent">{$setModule}</div>
       </section>
     </div>

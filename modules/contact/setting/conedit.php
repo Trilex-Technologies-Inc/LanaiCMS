@@ -19,7 +19,7 @@
 					break;
 				}
 				if (empty($_REQUEST['conFname']) OR empty($_REQUEST['conLname']) OR empty($_REQUEST['conEmail'])) {
-			   		$sys_lanai->getErrorBox(_REQUIRE_FIELDS." <a href=\"#\" onClick=\"javascript:history.back();\">"._BACK."</a>");
+        $sys_lanai->getErrorBox(_REQUIRE_FIELDS." <button type=\"button\" onclick=\"history.back();\">"._BACK."</button>");
 				} else {
 					$contact->setNewContact($_REQUEST['conFname'],$_REQUEST['conLname'],$_REQUEST['conPosition'],$_REQUEST['conAddress1'],$_REQUEST['conAddress2'],$_REQUEST['conCity'],$_REQUEST['conState'],$_REQUEST['cntId'],$_REQUEST['conZipcode'],$_REQUEST['conPhone'],$_REQUEST['conFax'],$_REQUEST['conMobile'],$_REQUEST['conEmail'],$_REQUEST['conURL']);
 					$sys_lanai->go2Page($_SERVER['PHP_SELF']."?modname=".$module_name);

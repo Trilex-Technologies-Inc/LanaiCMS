@@ -13,12 +13,14 @@ class LanaiAnalytics
 
     public function trackRequest()
     {
+        global $lanaiPrivacy;
+        if (!isset($lanaiPrivacy) || !$lanaiPrivacy->allows('analytics')) return;
         if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') {
             return;
         }
 
         $script = basename($_SERVER['SCRIPT_NAME'] ?? '');
-        if (in_array($script, array('setting.php', 'api.php'), true)) {
+        if (!in_array($script, array('index.php', 'module.php'), true) || in_array($_GET['modname'] ?? '', array('member','privacy'), true)) {
             return;
         }
 
